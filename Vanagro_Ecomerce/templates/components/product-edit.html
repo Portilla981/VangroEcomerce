@@ -1,0 +1,62 @@
+<div class="product-edit">
+    <h2 class="product-edit__title">Actualizar Producto</h2>
+
+    <form action="#" method="post" class="product-edit__container" enctype="multipart/form-data">
+        
+        <!-- Nombre, unidad, precio, pago, método -->
+        <div class="product-edit__row">
+            <label class="product-edit__label">
+                Nombre del producto
+                <input class="product-edit__input" value="Platano Verde" required />
+            </label>
+
+            <label class="product-edit__label">
+                Unidad de medida
+                <select class="product-edit__select product-edit__select--unit" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="kg" selected>Kilogramos</option>
+                    <option value="lt">Litros</option>
+                    <option value="lb">Libras</option>
+                </select>
+            </label>
+
+            <label class="product-edit__label">
+                Precio x unidad
+                <input class="product-edit__input" value="3200" required />
+            </label>
+
+            <label class="product-edit__label">
+                Método de envío
+                <select class="product-edit__select product-edit__select--unit" required>
+                    <option value="" >Seleccione una opción</option>
+                    <option value="domicilio" selected>Domicilio</option>
+                    <option value="recoger">Recoger en punto de entrega</option>
+                    
+                </select>
+            </label>
+
+            <label class="product-edit__label">
+                Método de pago
+                    <select class="product-edit__select product-edit__select--unit" required>
+                    <option value="" >Seleccione una opción</option>
+                    <option value="efectivo">Efectivo</option>
+                    <option value="transferencia">Transferencia bancaria</option>
+                    <option value="tarjeta">Tarjeta débito / crédito</option>
+                    <option value="tarjeta" selected>Todo tipo de pago</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Descripción -->
+        <label class="product-edit__label">
+            Descripción del Producto
+            <textarea class="product-edit__textarea" placeholder="Ingrese la descripción" required></textarea>
+        </label>
+
+        <!-- Botones -->
+        <div class="buttons">
+            <button type="reset" class="buttons__action--secondary" onclick="location.href='javascript:history.back()'">Cancelar</button>
+            <button type="submit" class="buttons__action--primary" onclick="location.href='/frontend/public/views/edit-product-two.html'">Siguiente</button>
+        </div>
+    </form>
+</div>

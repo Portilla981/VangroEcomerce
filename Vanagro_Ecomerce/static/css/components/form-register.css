@@ -1,0 +1,206 @@
+.trash-form-register__title{
+    text-align: center;
+    color: var(--gray-900);
+    margin-bottom: 10px;
+    font-size: var(--fs-md);
+    font-weight: bold;
+}
+
+.trash-form-register__form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--gray-800);
+    margin: 2rem;
+    width: 90%;   
+    height: 400px;
+    overflow: auto;
+}
+
+.trash-form-register__label{
+    text-align: left;
+    width: 80%;
+    font-size: var(--fs-xxxs);
+    color: var(--gray-900);
+    margin-bottom: 5px;
+}
+
+.trash-form-register__container{
+    display: flex;    
+    flex-direction: column;
+    align-items: center;  
+}
+
+.trash-form-register__fields{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    padding: 16px;
+    gap: 1.5rem;
+}
+
+.trash-form-register__input,
+.trash-form-register__select {
+    width: 200px;
+    height: 32px;
+    background-color: var(--secundary-400);
+    border-radius: 5px;
+}
+
+.trash-form-register__file{    
+    background-image: url(/frontend/public/assets/vanagro/camara.svg);
+    background-repeat: no-repeat;
+    background-size: 128px;
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+    margin: 20px 10px;
+    align-content: flex-end;
+    background-color: var(--white);
+}
+
+.trash-form-register__actions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    gap: 2rem; 
+    margin: 2rem 0;
+    padding: 1rem 0;
+    text-decoration: none;
+}
+
+.trash-form-register__identification{
+    align-items: baseline;
+    justify-content: space-evenly;
+    gap: 1rem;
+    width: 90%;
+}
+
+.trash-form-register__info {
+    font-size: var(--fs-xs);
+    width: 300px;
+    margin-left: 2rem;
+}
+
+.trash-form-register__photo{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.trash-form-register__fields-farm{ 
+    display: grid;   
+    justify-content: center;
+    width: 90%;
+    padding: 2rem;
+    gap: 2rem;
+    align-items: center;
+}
+
+.trash-form-register__file-farm{    
+    background-image: url(/frontend/public/assets/vanagro/camara.svg);
+    background-repeat: no-repeat;
+    background-size: 128px;
+    width: 200px;
+    height: 150px;
+    padding: 5px;
+    margin: 20px 10px;
+    align-content: flex-end;
+    text-align: center;
+    background-color: var(--white);
+}
+
+.trash-form-register__location{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.trash-location-map p{    
+    text-align: center;
+}
+
+.trash-form-register__map{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 1rem 0;
+    border: 2px solid var(--black);
+}
+
+@media (width > 768px){
+
+    .trash-form-register{
+        display: grid;
+        place-content: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    .trash-form-register__form{
+        height: auto;
+        width: 700px;
+        overflow: visible;
+    }
+
+    .trash-form-register__fields{
+        display: grid;
+        grid-template-columns: repeat(2, 2fr);
+        align-items: center;
+        width: 90%;
+        padding: 2rem;
+        gap: 1.5rem;
+    }
+
+    .trash-form-register__container{
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .trash-form-register__actions{
+        flex-direction: row;
+        width: 80%;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .trash-form-register__identification{
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-evenly;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .trash-form-register__fields-farm{ 
+        display: grid;   
+        align-items: center;
+        width: 90%;
+        padding: 2rem;
+        gap: 2rem;
+    }
+
+    .trash-form-register__file-farm{
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        width: 40%;
+    }
+
+    .trash-form-register__producter-location{
+        display: flex;    
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+}

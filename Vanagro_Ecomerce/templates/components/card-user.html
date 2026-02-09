@@ -1,0 +1,30 @@
+<div class="card-product">
+    <img src="{{imgProd}}" alt="[Imagen de producto]" class="card-product__image"/>
+
+    <div class="card-product__info">
+        <h3 class="card-product__title">{{title}}</h3>
+        <p class="card-product__description">{{description}}</p>
+        <strong class="card-product__price">{{price}}</strong>
+    </div>
+    
+    <div class="buttons">
+
+        <a href="#details">
+            <button type="button" class="buttons__action--secondary">Detalles</button>
+        </a>
+
+        <button type="button" class="buttons__action--icon added-product">
+            <ion-icon name="cart-outline"></ion-icon>
+        </button>
+    </div>   
+</div>
+<div class="popup" id="popupMessage">
+    <div class="popup__header">
+        <i class="fa-solid fa-check popup__icon"></i>
+    </div>
+    <div class="popup__body">
+        <h3 class="popup__title">¡PRODUCTO AÑADIDO!</h3>
+        <p class="popup__message">¡El producto se añadió al carrito exitosamente!</p>
+        <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+    </div>
+</div>

@@ -1,0 +1,311 @@
+.product-edit {
+  background-color: var(--white);
+  padding: 24px;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.50);
+  width: max-content;
+  margin: 28px auto;
+  display: grid;
+  gap: 24px;
+  font-size: var(--fs-xs);
+  font-family: var(--main-font);
+  color: var(--black);
+}
+
+/* Títulos y subtítulos */
+.product-edit__title {
+  text-align: center;
+  color: var(--black);
+  font-size: var(--fs-sm);
+  margin: auto;
+}
+
+.product-edit__subtitle {
+  text-align: center;
+  color: var(--gray-700);
+  font-size: var(--fs-xxs);
+}
+
+/* Contenedores principales */
+.product-edit__container,
+.product-edit__edit {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Filas: por defecto en columna, en desktop 2 columnas */
+.product-edit__row {
+  display: grid;
+  gap: 24px;
+}
+
+/* Forzar fila completa cuando haga falta */
+.product-edit__row--full {
+  grid-template-columns: 1fr !important;
+}
+
+/* Etiquetas generales */
+.product-edit__label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: var(--fs-xxxs);
+  color: var(--black);
+}
+
+/* Inputs, selects y textarea */
+.product-edit__input,
+.product-edit__select{
+  padding: 16px;
+  border-radius: 4px;
+  background-color: var(--white);
+  border: 1px solid var(--black);
+  width: 320px;
+  height: 56px;
+  font-size: var(--fs-xs);
+  font-family: var(--main-font);
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-edit__textarea {
+    padding: 16px;
+  border-radius: 4px;
+  background-color: var(--white);
+  border: 1px solid var(--black);
+  width: 100%;
+  height: 48px;
+  font-size: var(--fs-xs);
+  font-family: var(--main-font);
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Foco */
+.product-edit__input:focus,
+.product-edit__select:focus,
+.product-edit__textarea:focus {
+  outline: none;
+  border-color: var(--primary-900);
+  box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+/* Select con icono personalizado */
+.product-edit__select--unit {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg fill='%23000000' height='18' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+  cursor: pointer;
+  padding-right: 40px;
+}
+
+/* Select deshabilitado (modo edición) */
+.product-edit__select[disabled] {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
+  cursor: default;
+}
+
+/* Textarea */
+.product-edit__textarea {
+  /* min-height: 100px; */
+  resize: vertical;
+}
+
+/* Placeholders */
+.product-edit__input::placeholder,
+.product-edit__textarea::placeholder,
+.product-edit__select::placeholder {
+  color: var(--gray-800);
+  font-size: var(--fs-xs);
+}
+
+/* Checkboxes */
+.product-edit__row--checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.product-edit__row--checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-900);
+  cursor: pointer;
+}
+
+.product-edit__row--checkbox label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-xs);
+  color: var(--gray-800);
+}
+
+/* Fechas */
+.product-edit__dates {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: var(--primary-100);
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-edit__dates-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--fs-sm);
+  color: var(--primary-800);
+  font-weight: bold;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.product-edit__dates-input {
+  height: 48px;
+  padding: 16px;
+  border: 1px solid var(--gray-400);
+  border-radius: 4px;
+  background-color: var(--secundary-400);
+  font-size: var(--fs-xs);
+  width: 320px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-edit__dates-input:focus {
+  outline: none;
+  border-color: var(--primary-900);
+  box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+/* Imagen */
+.product-edit__image {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.product-edit__image-upload {
+  border: 2px dashed var(--gray-400);
+  border-radius: 4px;
+  padding: 16px;
+  color: var(--gray-600);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  background-color: var(--white);
+}
+
+.product-edit__image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.product-edit__image-preview img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--gray-300);
+}
+
+.product-edit__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  cursor: pointer;
+}
+
+
+@media (max-width: 640px) {
+
+  .product-edit {
+    padding: 24px;
+    margin: 16px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .product-edit__row {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .product-edit__input,
+  .product-edit__select,
+  .product-edit__dates-input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-edit__dates {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .product-edit__image-preview img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .product-edit__actions {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+@media (width > 768px) {
+  .product-edit__row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .product-edit__dates {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .product-edit__dates-input {
+    max-width: 250px;
+  }
+
+  .product-edit__row--checkbox {
+    gap: 3rem;
+    justify-content: flex-start;
+  }
+
+  .product-edit__actions {
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 2rem;
+  }
+}
+
+@media (width > 1024px) {
+  .product-edit__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .product-edit__row--checkbox {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+}

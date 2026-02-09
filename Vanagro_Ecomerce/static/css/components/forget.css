@@ -1,0 +1,46 @@
+.forget__block {
+    visibility: hidden;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.4s;
+}
+
+
+.forget__block:target{
+    visibility: visible;
+    /* opacity: 1;  */
+}
+
+.forget__block--view{
+    /* width: auto; */
+    background-color: var(--white);
+    padding: 16px; 
+    border-radius: 10px;   
+}
+
+.forget__img{
+    width: 50px;
+    height: 50px;
+    margin: 16px;
+}
+
+.forget__buttons{
+    display: flex;
+    padding: 16px;
+    cursor: pointer;
+    justify-content: space-evenly;    
+}
+
+.forget__info{
+    margin: 0 16px;    
+}
+.forget__input{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+}

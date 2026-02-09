@@ -1,0 +1,55 @@
+<!-- <script src="/frontend/public/js/components/buttons.js" defer></script> -->
+<!-- <h2 class="contact-form__title"></h2> -->
+<p><strong>CONTÁCTANOS</strong> Estamos para ayudarte con pedidos, soporte y preguntas.</p>
+<section class="contact-form">
+
+    <form class="contact-form__form">
+        <div class="contact-form__row">
+            <label class="contact-form__label">
+                Nombres
+                <input type="text" class="contact-form__input" placeholder="Pedro José" required>
+            </label>
+            <label class="contact-form__label">
+                Apellidos
+                <input type="text" class="contact-form__input" placeholder="Pérez Gallego" required>
+            </label>
+        </div> 
+
+
+        <div class="contact-form__row">
+            <label class="contact-form__label">
+                Teléfono
+                <input type="tel" class="contact-form__input" placeholder="3125678765" required>
+            </label>
+            <label class="contact-form__label">
+                Correo Electrónico
+                <input type="email" class="contact-form__input" placeholder="usuario@example.com" required>
+            </label>
+        </div>
+
+
+        <div class="contact-form__row contact-form__row--full">
+            <label class="contact-form__label">
+                Mensaje
+                <textarea name="mensaje" class="contact-form__input contact-form__textarea"
+                    placeholder="Ingresa aquí tu mensaje..." required></textarea>
+            </label>
+        </div>
+
+
+        <div class="buttons">
+            <button type="reset" class="buttons__action--secondary" onclick="cancelarFormulario()">Cancelar</button>
+            <button type="submit" class="buttons__action--primary sent-alert">Enviar</button>
+        </div>
+    </form>
+    <div class="popup" id="popupMessage">
+        <div class="popup__header">
+            <i class="fa-solid fa-check popup__icon"></i>
+        </div>
+        <div class="popup__body">
+            <h3 class="popup__title">¡MENSAJE ENVIADO!</h3>
+            <p class="popup__message">¡El mensaje ha sido enviado, gracias por contactarnos!</p>
+            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+        </div>
+    </div>
+</section>

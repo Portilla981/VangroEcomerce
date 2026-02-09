@@ -1,0 +1,49 @@
+<div class="payment-modal">
+  <div class="payment-modal__overlay">
+    <div class="payment-modal__content">
+      <div class="payment-modal__header">
+        <h2 class="payment-modal__title">VANAGRO - Mercado Campesino</h2>
+        <button class="payment-modal__close" id="close-payment">&times;</button>
+      </div>
+
+      <p class="payment-modal__subtitle">Pago de compra online</p>
+      <p class="payment-modal__amount">$63,000.00 COP</p>
+
+      <!-- Selección idioma y país -->
+      <div class="payment-modal__options">
+        <select class="payment-modal__select">
+          <option>Pereira</option>
+          <option>Santa Rosa</option>
+          <option>Marsella</option>
+          <option>Dosquebradas</option>
+          <option>Santuario</option>
+        </select>
+      </div>
+
+      <!-- Email -->
+      <input type="email" class="payment-modal__input" placeholder="tuemail@correo.com">
+
+      <!-- Métodos de pago -->
+      <h3 class="payment-modal__step">Seleccione el medio de pago</h3>
+      <ul class="payment-modal__methods">
+        <li class="payment-modal__method">Tarjeta de crédito</li>
+        <li class="payment-modal__method">Cuenta bancaria</li>
+        <li class="payment-modal__method">DaviPlata</li>
+        <li class="payment-modal__method">Efectivo</li>
+      </ul>
+
+      <!-- Botón pagar -->
+      <button class="buttons__action buttons__action--primary payment-alert">Pagar</button>
+    </div>
+  </div>
+</div>
+<div class="popup" id="popupMessage">
+  <div class="popup__header">
+      <i class="fa-solid fa-check popup__icon"></i>
+  </div>
+  <div class="popup__body">
+      <h3 class="popup__title">¡PAGO REALIZADO!</h3>
+      <p class="popup__message">¡El pago se realizó exitosamente!</p>
+      <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+</div>
+</div>

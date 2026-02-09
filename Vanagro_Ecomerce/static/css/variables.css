@@ -1,0 +1,123 @@
+:root {
+    /* Primary color*/
+
+    --primary-950: #4DB100;    
+    --primary-900: #55B40C;
+    --primary-800: #67BC26;
+    --primary-700: #79C43F;
+    --primary-600: #8BCC59;
+    --primary-500: #9DD472;
+    --primary-400: #AEDB8C;
+    --primary-300: #C0E3A5;
+    --primary-200: #D2EBBF;
+    --primary-100: #EAF3D8;
+    --primary-50: #F6FBF2;
+
+    /* Secundary color*/
+
+    --secundary-950:#FED638;
+    --secundary-900:#FED841;
+    --secundary-800:#FEDC55;
+    --secundary-700:#FEE069;
+    --secundary-600:#FEE47D;
+    --secundary-500:#FEE891;
+    --secundary-400:#FEECA5;
+    --secundary-300:#FEF0B9;
+    --secundary-200:#FEF4CD;
+    --secundary-100:#FEF8E1;
+    --secundary-50:#FEFCF5;
+
+    /* terciary color*/
+    --terciary-950: #2a1917;
+    --terciary-900: #472f2a;
+    --terciary-800: #5b3a35;
+    --terciary-700: #734a42;
+    --terciary-600: #8d5e52;
+    --terciary-500: #a97667;
+    --terciary-400: #c59783;
+    --terciary-300: #dcb8a4;
+    --terciary-200: #ecd6c9;
+    --terciary-100: #f8eee9;
+    --terciary-50: #fdf8f6;
+
+    /* Basic color*/
+    --white: #fff;
+    --black: #000;
+    --gray-950: #101010;
+    --gray-900: #262626;
+    --gray-800: #3B3B3B;
+    --gray-700: #515151;
+    --gray-600: #676767;
+    --gray-500: #7D7D7D;
+    --gray-400: #929292;
+    --gray-300: #A8A8A8;
+    --gray-200: #BEBEBE;
+    --gray-100: #D4D4D4;
+    --gray-50: #E9E9E9;
+
+    /* Font-family */
+    --main-font: Helvetica, Arial, sans-serif;
+
+    /* Font-size */
+    --fs-xxxxl: 8.0rem; /* Ultra grande */
+    --fs-xxxl: 6.4rem; /* Súper grande */
+    --fs-xxl: 4.8rem; /* Extra grande */
+    --fs-xl: 4.0rem;  /* Muy grande */
+    --fs-lg: 3.2rem;  /* Grande */
+    --fs-md: 2.4rem;  /* Mediano */
+    --fs-sm: 2.0rem;  /* Pequeño */
+    --fs-xs: 1.6rem;  /* Extra pequeño */
+    --fs-xxs: 1.4rem; /* Extra extra pequeño */
+    --fs-xxxs: 1.2rem; /* Mínimo */
+
+    /* Padding */
+    --pd-xs: 4px;      /* Espaciado muy pequeño */
+    --pd-sm: 8px;      /* Espaciado pequeño */
+    --pd-md: 16px;     /* Espaciado medio - Material */
+    --pd-lg: 24px;     /* Espaciado grande */
+    --pd-xl: 32px;     /* Espaciado extra grande */
+    --pd-xxl: 40px;    /* Muy grande */
+
+/* Padding de Material Design */
+    --spacing-4: 0.4rem;  /* 4px */
+    --spacing-8: 0.8rem;  /* 8px */
+    --spacing-12: 1.2rem;  /* 12px */
+    --spacing-16: 1.6rem;  /* 16px este padding estándar es para inputs/botones */
+    --spacing-24: 2.4rem;  /* 24px */
+    --spacing-32: 3.2rem;  /* 32px */
+    --spacing-40: 4.0rem;  /* 40px */
+    --spacing-48: 4.8rem;  /* 48px */
+
+    /* Border radius Material Design */
+    --radius-sm: 0.4rem;  /* Small */
+    --radius-md: 0.8rem;  /* Medium para inputs */
+    --radius-lg: 1.6rem;  /* Large para cards */
+    --radius-pill: 50rem; /* Botones redondeados */
+
+    --filter-gray-800-rgb: 59, 59, 59; /*filter*/
+    --filter-gray-900-rgb: 38, 38, 38; /*filter*/
+
+    /* Shadows elevaciones de Material Design */
+    /* --shadow-sm: 0 1px 2px --black (0,0,0,0.1);
+    --shadow-md: 0 2px 4px --black (0,0,0,0.15);
+    --shadow-lg: 0 4px 8px --black (0,0,0,0.2); */
+
+    /* ==== Breakpoints ====== */
+/* 
+Alias       max-width       uso tipico
+sm          640px           Telefonos grandes
+md          768px           Tablests
+lg          1024px          Laptos
+xl          1280px          Desktop
+2x1         1536px          BigScreem
+
+*/
+
+--scream-A: 640px;   /*Telefonos grandes*/
+--scream-B: 768px;   /*Tablests*/
+--scream-C: 1024px;  /*Laptos*/
+--scream-D: 1280px;  /*Desktop*/
+--scream-E: 1536px;  /*BigScreem*/
+
+
+}

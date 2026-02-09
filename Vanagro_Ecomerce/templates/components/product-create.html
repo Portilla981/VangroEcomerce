@@ -1,0 +1,61 @@
+<div class="product-form">
+    <h2 class="product-form__title">Crear Producto</h2>
+
+    <form action="#" method="post" class="product-form__container" enctype="multipart/form-data">
+        
+        <!-- Nombre, unidad, precio, pago, método -->
+        <div class="product-form__row">
+            <label class="product-form__label">
+                Nombre del producto
+                <input class="product-form__input" placeholder="Ingrese nombre del producto" required>
+            </label>
+
+            <label class="product-form__label">
+                Unidad de medida
+                <select class="product-form__select product-form__select--unit" required>
+                    <option value="" disabled selected>Seleccion una opción</option>
+                    <option value="kg">Kilogramos</option>
+                    <option value="lt">Litros</option>
+                    <option value="lb">Libras</option>
+                </select>
+            </label>
+
+            <label class="product-form__label">
+                Precio x unidad
+                <input class="product-form__input" placeholder="Ingrese el precio" required>
+            </label>
+
+            <label class="product-form__label">
+                Método de envío
+                <select class="product-form__select product-form__select--unit" required>
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="domicilio">Domicilio</option>
+                    <option value="recoger">Recoger en punto de entrega</option>
+                </select>
+            </label>
+
+            <label class="product-form__label">
+                Método de pago
+                    <select class="product-form__select product-form__select--unit" required>
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="efectivo">Efectivo</option>
+                    <option value="transferencia">Transferencia bancaria</option>
+                    <option value="tarjeta">Tarjeta débito / crédito</option>
+                    <option value="tarjeta">Todo tipo de pago</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Descripción -->
+        <label class="product-form__label">
+            Descripción del Producto
+            <textarea class="product-form__textarea" placeholder="Ingrese la descripción" required></textarea>
+        </label>
+    </form>
+    
+    <!-- Botones -->
+    <div class="buttons">
+        <button type="reset" class="buttons__action--secondary" onclick="location.href='javascript:history.back()'">Cancelar</button>
+        <button type="submit" class="buttons__action--primary" onclick="location.href='/frontend/public/views/create-product-two.html'">Siguiente</button>
+    </div>
+</div>

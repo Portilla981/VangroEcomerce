@@ -1,0 +1,103 @@
+.search-section__product{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* grid-template-columns: repeat(1, 1fr); */
+
+}
+
+.card-section__product {
+    display: grid;
+    gap: 2rem;
+    background-color: var(--gray-50);
+    padding: 2rem 0rem;
+    margin: 0rem 0rem;
+    width: 90%;
+    place-content: center;
+    grid-template-columns: 1fr;
+}
+
+
+/* Card individual */
+.card-product {
+    width: 95%;
+    max-width: 320px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    padding: 16px;
+    box-shadow: 0 2px 6px var(--primary-500);
+    cursor: pointer;
+}
+
+.card-product:hover {
+    scale: 1.1;
+}
+
+/* Imagen */
+.card-product__image {
+    width: 200px; 
+    height: 140px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.card-product__title {
+    font-family: var(--main-font);
+    font-size: var(--fs-xs);
+}
+
+/* Descripción */
+.card-product__description {
+    font-family: var(--main-font);
+    margin: 6px 0;
+    font-size: var(--fs-xs); 
+    text-align: center;
+    color: var(--gray-900);
+    width: 100%;
+}
+
+.card-product__title-farm {
+    font-family: var(--main-font);
+    font-size: var(--fs-xs);
+    margin-bottom: 10px;
+}
+
+/* Descripción */
+.card-product__description-farm {
+    font-family: var(--main-font);
+    margin: 16px;
+    font-size: var(--fs-xs); 
+    text-align: center;
+    color: var(--gray-900);
+    width: 100%;
+}
+
+/* Precio en negrilla */
+.card-product__price {
+    font-family: var(--main-font);
+    font-weight: bold;
+    color: var(--black);
+    font-size: var(--fs-sm); 
+}
+
+/* Media queries */
+/* Tablet - md (≥768px) */
+@media (min-width: 768px) {
+    .card-section__product {
+        grid-template-columns: repeat(2, 1fr); 
+        /* width: 95%; */
+    }
+}
+
+/* Desktop - xl (≥1280px) */
+@media (min-width: 1280px) {
+    .card-section__product {
+        grid-template-columns: repeat(4, 1fr);
+        /* width: 95%; */
+    }
+}

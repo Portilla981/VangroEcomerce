@@ -1,0 +1,119 @@
+<div class="form-register__head">
+    <!-- <h2 class="form-register__title">EDITAR USUARIO</h2> -->
+    <p><strong>Editar Cliente</strong></p>
+</div>
+
+<section class="form-register__block">
+    <div class="form-register__block--form">
+        <form action="#" method="" class="form-register__form">
+            <div class="form-register__group">
+                <label class="form-register__label">Nombres
+                    <input class="form-register__input" type="text" placeholder="Armando">
+                </label>
+                <label class="form-register__label">Apellidos
+                    <input class="form-register__input" type="text" placeholder="Puertas Casas">
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Tipo de documento
+                    <select class="form-register__input">
+                        <option>Cédula</option>
+                        <option>Tarjeta de Identidad</option>
+                        <option>Pasaporte</option>
+                    </select>
+                </label>
+                <label class="form-register__label">Número de identificación
+                    <input class="form-register__input" type="number" placeholder="1154123145">
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Departamento
+                    <select class="form-register__input">
+                        <option>Risaralda</option>
+                        <option>Caldas</option>
+                        <option>Quindío</option>
+                    </select>
+                </label>
+                <label class="form-register__label">Municipio
+                    <select class="form-register__input">
+                        <option>Marsella</option>
+                        <option>Apía</option>
+                        <option>Balboa</option>
+                        <option>Belén de Umbría</option>
+                        <option>Dosquebradas</option>
+                        <option>Guática</option>
+                        <option>La Celia</option>
+                        <option>La Virginia</option>
+                        <option>Mistrató</option>
+                        <option>Pereira</option>
+                        <option>Pueblo Rico</option>
+                        <option>Quinchía</option>
+                        <option>Santa Rosa de Cabal</option>
+                        <option>Santuario</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Dirección
+                    <input class="form-register__input" type="text"
+                        placeholder="Vereda la maravilla">
+                </label>
+                <label class="form-register__label">Correo Electrónico
+                    <input class="form-register__input" type="email" placeholder="user@example.com">
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Teléfono
+                    <input class="form-register__input" type="tel" placeholder="3252152545">
+                </label>
+                <label class="form-register__label">Teléfono Alterno
+                    <input class="form-register__input" type="tel" placeholder="3146587451">
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Contraseña
+                    <input class="form-register__input" type="password" disabled placeholder="***************">
+                </label>
+                <!-- <label class="form-register__label">Confirmar contraseña
+                    <input class="form-register__input" type="password" placeholder="***************">
+                </label>
+                 -->
+                <div class="btn__password">
+                <button type="button" class="buttons__action--terciary" onclick="location.href='#password'">Cambiar Contraseña</button>
+                </div>
+            </div>
+                
+        </form>
+
+        <div class="form-register__images">
+            <img class="form-register__images--img" src="/frontend/public/assets/vanagro/campesino.jpg"
+                alt="Foto productor">
+            <label class="form-register__label">Cargar foto de perfil
+                <input class="form-register__file" type="file">
+            </label>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button type="button" class="buttons__action--secondary btn-cancel"
+            onclick="location.href='javascript:history.back()'">Cancelar</button>
+        <button type="button" class="buttons__action--primary btn-save edit-user-alert">Guardar cambios</button>
+    </div>
+    
+    <div class="popup" id="popupMessage">
+        <div class="popup__header">
+            <i class="fa-solid fa-check popup__icon"></i>
+        </div>
+        <div class="popup__body">
+            <h3 class="popup__title">¡USUARIO ACTUALIZADO!</h3>
+            <p class="popup__message">¡Los cambios han sido actualizados exitosamente!</p>
+            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+        </div>
+    </div>
+
+</section>

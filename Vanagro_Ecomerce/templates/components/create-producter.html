@@ -1,0 +1,127 @@
+<div class="producter-register">
+    <p class="producter-register__title"><strong>Registrar Tienda</strong></p>
+
+    <form class="producter-register__form" action="">
+
+        <div class="producter-register__identification">
+            
+            <div class="profile__info--block">
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Nombres</label>
+                    <p class="profile__info--name">Julio Armando</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Apellidos</label>
+                    <p class="profile__info--name">Cifuentes Correa</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Tipo Documento</label>
+                    <p class="profile__info--name">Cédula</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Número Documento</label>
+                    <p class="profile__info--name">1154123145</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Departamento</label>
+                    <p class="profile__info--name">Risaralda</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Municipio</label>
+                    <p class="profile__info--name">Marsella</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Dirección</label>
+                    <p class="profile__info--name">calle 58 # 42-12 B/ El carmen misiones</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Correo Electrónico</label>
+                    <p class="profile__info--name">johandp@gmail.com</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Teléfono</label>
+                    <p class="profile__info--name">3252152545</p>
+                </div>
+                <div class="profile__info--space">
+                    <label class="profile__info--label" for="">Teléfono alterno</label>
+                    <p class="profile__info--name">32547852145</p>
+                </div>
+            </div>
+            <div class="producter-register__photo" placeholder="Insertar foto (finca)">
+                <p class="producter-register__label-farm">Foto</p>
+                <img class="producter-register__image" src="/frontend/public/assets/vanagro/camara.svg" alt="">
+                <input class="producter-register__file-farm" type="file">
+            </div>
+        </div>
+
+        <div class="producter-register__container">
+            <div class="producter-register__farm-location">
+                <div class="producter-register__fields-farm">
+
+                    <label class="form-register__label">Nombre Finca
+                        <input class="form-register__input" type="text" placeholder="Finca La Golondrina">
+                    </label>
+
+                    <label class="form-register__label">Departamento
+                        <select class="form-register__input">
+                            <option>Risaralda</option>
+                            <option>Caldas</option>
+                            <option>Quindío</option>
+                        </select>
+                    </label>
+                    <label class="form-register__label">Municipio
+                        <select class="form-register__input">
+                            <option>Marsella</option>
+                            <option>Apía</option>
+                            <option>Balboa</option>
+                            <option>Belén de Umbría</option>
+                            <option>Dosquebradas</option>
+                            <option>Guática</option>
+                            <option>La Celia</option>
+                            <option>La Virginia</option>
+                            <option>Mistrató</option>
+                            <option>Pereira</option>
+                            <option>Pueblo Rico</option>
+                            <option>Quinchía</option>
+                            <option>Santa Rosa de Cabal</option>
+                            <option>Santuario</option>
+                        </select>
+                    </label>
+
+                    <label class="form-register__label">Vereda
+                        <input class="form-register__input" type="text" placeholder="Vereda El cardal">
+                    </label>
+                </div>
+
+                <div class="producter-register__location">
+                    <p class="producter-register__label-farm">Ubicación en el mapa</p>
+                    <div class="producter-register__map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.303573490634!2d-75.6959316241372!3d4.813611643326024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a5e9b4f4d7f%3A0x8c6e6c5e6c5e6c5e!2sPereira%2C%20Risaralda%2C%20Colombia!5e0!3m2!1ses-419!2sus!4v1696356789012!5m2!1ses-419!2sus"
+                            width="300" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="producter-register__actions">
+            <a href="javascript:history.back()">
+                <button type="button" class="buttons__action--secondary">Cancelar</button>
+            </a>
+            <a href="/frontend/public/views/producter-profile.html">
+                <button type="button" class="buttons__action--primary create-producter-alert">Crear Tienda</button>
+            </a>
+        </div>
+    </form>
+    <div class="popup" id="popupMessage">
+        <div class="popup__header">
+            <i class="fa-solid fa-check popup__icon"></i>
+        </div>
+        <div class="popup__body">
+            <h3 class="popup__title">¡PRODUCTOR CREADO!</h3>
+            <p class="popup__message">¡El productor ha sido creado exitosamente!</p>
+            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+        </div>
+    </div>
+</div>

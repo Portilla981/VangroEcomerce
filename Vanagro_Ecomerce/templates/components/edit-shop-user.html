@@ -1,0 +1,76 @@
+<div class="edit-form__head">
+    <p><strong>Editar Tienda</strong></p> 
+</div>
+
+<section class="edit-form__block">
+    <div class="edit-form__block--form">
+        <form action="#" method="" class="edit-form__form">
+            <div class="edit-form__group">
+                <label class="edit-form__label">Finca Productora
+                    <input class="edit-form__input" type="text" value="Finca Las Bovinas" required>
+                </label>
+                <label class="edit-form__label">Dirección
+                    <input class="edit-form__input" type="text" placeholder="Vereda las palmas" required>
+                </label>              
+            
+                <label class="edit-form__label">Departamento
+                    <select class="edit-form__input" required>
+                        <option>Risaralda</option>
+                        <option>Caldas</option>
+                        <option>Quindío</option>
+                    </select>
+                </label>
+                <label class="edit-form__label">Municipio
+                    <select class="edit-form__input" required>
+                        <option>Marsella</option>
+                        <option>Apía</option>
+                        <option>Balboa</option>
+                        <option>Belén de Umbría</option>
+                        <option>Dosquebradas</option>
+                        <option>Guática</option>
+                        <option>La Celia</option>
+                        <option>La Virginia</option>
+                        <option>Mistrató</option>
+                        <option>Pereira</option>
+                        <option>Pueblo Rico</option>
+                        <option>Quinchía</option>
+                        <option>Santa Rosa de Cabal</option>
+                        <option>Santuario</option>
+                    </select>
+                </label>
+            </div>
+        </form>
+
+        <div class="edit-form__images">
+            <img class="edit-form__images--img" src="/frontend/public/assets/farms/finca5.jpg" alt="Foto finca">
+            <label class="edit-form__label">Actualizar foto
+                <input class="edit-form__file" type="file">
+            </label>
+        </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="buttons">
+        <button id="toggleStoreBtn" class="user-list__action-btn user-list__action-btn--disable" data-active="true">Deshabilitar tienda</button>
+
+        <div class="buttons__right">
+            <button type="reset" class="buttons__action--secondary"
+            onclick="location.href='javascript:history.back()'">
+            Cancelar</button>
+            <button type="submit" class="buttons__action--primary edit-producter-alert">
+            Guardar cambios</button>
+        </div>
+    </div>
+
+    <div class="popup" id="popupMessage">
+        <div class="popup__header">
+            <i class="fa-solid fa-check popup__icon"></i>
+        </div>
+        <div class="popup__body">
+            <h3 class="popup__title">¡PRODUCTOR ACTUALIZADO!</h3>
+            <p class="popup__message">¡Los cambios han sido actualizados exitosamente!</p>
+            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+        </div>
+    </div>
+
+</section>

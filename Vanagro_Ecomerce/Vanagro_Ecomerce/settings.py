@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Vanagro_Ecomerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,11 +112,24 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Redireccionamiento despues de no ser autenticado
+LOGIN_URL = 'login'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Ruta absoluta de la carpeta static
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+# Ruta absoluta para cargar archivos por parte del usuario
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -1,0 +1,35 @@
+/* El archivo main.css solo debe importar los demás para evitar múltiples solicitudes HTTP en producción: */
+@import url('variables.css');
+@import url('layout.css');
+
+/* Componentes de Vanagro */
+
+@import url('components/navbar-vanagro.css');
+@import url('components/begin-sesion.css');
+@import url('components/footer_vanagro.css');
+@import url('components/contact-vanagro.css');
+@import url('components/card-product.css');
+@import url('components/search.css');
+@import url('components/property-info.css');
+@import url('components/shopping-cart.css');
+@import url('components/form-register_user.css');
+@import url('components/producter-register.css');
+@import url('components/account-user.css');
+@import url('components/edit-producter.css');
+@import url('components/about-us.css');
+@import url('components/product-create.css');
+@import url('components/product-edit.css');
+@import url('components/navbar-logged-in.css');
+@import url('components/buttons.css');
+@import url('components/msj-view.css');
+@import url('components/hero-profile.css');
+@import url('components/product-details.css');
+@import url('components/list-users.css');
+@import url('components/payment.css');
+@import url('components/producter-profile.css');
+@import url('components/welcome.css');
+@import url('components/forget.css');
+@import url('components/alert-message.css');
+@import url('components/passwor-edir.css');
+@import url('components/alert-warning.css');
+

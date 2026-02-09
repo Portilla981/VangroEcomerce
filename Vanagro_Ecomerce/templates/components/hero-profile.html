@@ -1,0 +1,61 @@
+<div>
+<div class="hero__image">
+  <div class="hero__content">
+    <h2 class="hero__title">PRODUCTOR</h2>
+    <p class="hero__description">Tu trabajo representa el alma del campo. Gracias por ser parte de esta comunidad
+      que cultiva con amor</p>
+  </div>
+</div>
+
+<div class="hero__options">
+  <button class="profile__action" onclick="location.href='/frontend/public/views/create-product.html'">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    <span>Agregar Producto</span>
+  </button>
+
+  <button class="profile__action" onclick="location.href='/frontend/public/views/edit-product.html'">
+    <ion-icon name="create-outline"></ion-icon>
+    <span>Editar Producto</span>
+  </button>
+  <button class="profile__action">
+    <ion-icon name="business-outline"></ion-icon>
+    <span>Ver Empresas</span>
+  </button>
+
+  <button class="profile__action">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Ver Eventos</span>
+  </button>
+
+  <button class="profile__action" onclick="location.href='#report'">
+    <ion-icon name="document-text-outline"></ion-icon>
+    <span>Reportes</span>
+  </button>
+
+  <button class="profile__action" onclick="location.href='/frontend/public/views/edit-producter.html'">
+    <ion-icon name="settings-outline"></ion-icon>
+    <span>Ajustes</span>
+  </button>
+
+</div>
+<div class="profile__report" id="report">
+    <div class="profile__report--photo">
+      <div class="profile__report--phpto-head">
+        <img class="profile__report--img" src="/frontend/public/assets/vanagro/reporte.jpg" alt="">
+        <div class="profile__report--close">
+        <ion-icon onclick="location.href='javascript:history.back()'"  name="close-outline"></ion-icon>
+        </div>
+      </div>
+      <div class="profile__buttons">
+        <button class="buttons__action--primary" onclick="location.href='javascript:history.back()'">
+          <ion-icon name="print-outline"></ion-icon>
+          <span>Imprimir</span>
+        </button>
+        <button class="buttons__action--primary" onclick="location.href='javascript:history.back()'"> 
+          <ion-icon name="download-outline"></ion-icon>
+          <span>Descargar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

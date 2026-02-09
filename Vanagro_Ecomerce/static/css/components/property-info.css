@@ -1,0 +1,109 @@
+body {
+  background-color: var(--gray-50);
+  font-family: var(--main-font);
+  font-size: var(--fs-xs);
+}
+
+/* FINCAS */
+.properties {
+  text-align: center;
+  padding: 40px;
+}
+
+.property__title {
+  font-size: var(--fs-sm);
+}
+
+.fincas__grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+  background-color: var(--gray-50);
+  padding: 2rem;
+  margin: 2rem auto;
+  width: 90%;
+  justify-content: center;
+}
+
+/* CARD */
+.property-card {
+  background: var(--white);
+  padding: 24px;
+  width: 320px;
+  height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px var(--primary-500);
+  text-align: center;
+  margin: 10px auto;
+  transition: transform 0.2s ease;
+}
+
+.property-card:hover {
+  transform: scale(1.05);
+}
+
+.property-card__image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 100%;
+  margin-bottom: 12px;
+}
+
+.card__title {
+  font-size: var(--fs-xs);
+  margin-bottom: 10px;
+}
+
+.card__text {
+  font-size: var(--fs-xs);
+  margin-bottom: 15px;
+}
+
+.card__owner {
+  font-weight: bold;
+}
+
+.card__button {
+  background: var(--primary-900);
+  color: var(--black);
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: var(--fs-xs);
+}
+
+/* --- Responsividad para tablets --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .fincas__grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 tarjetas por fila */
+    width: 95%;
+  }
+
+  .property-card {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+
+  .property-card__image {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* --- Pantallas grandes (computadores) --- */
+@media (min-width: 1025px) {
+  .fincas__grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 por fila */
+    width: 98%;
+  }
+
+  .property-card {
+    width: 100%;
+    max-width: 280px;
+    max-height: 450px;
+  }
+}

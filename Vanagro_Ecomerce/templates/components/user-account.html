@@ -1,0 +1,75 @@
+<div class="profile__container">
+
+  <!-- Portada con leyenda -->
+  <div class="profile__hero">
+    <div class="profile__legend">
+      <h2 class="profile__role">CLIENTE</h2>
+      <p class="profile__message">
+        ¡Tu visita nos alegra el día! Gracias por apoyar a nuestros campesinos y por ser parte de este mercado con alma
+        rural.
+      </p>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="profile__content">
+
+    <!-- Columna izquierda: datos del productor -->
+    <div class="profile__info">
+      <img class="profile__avatar" src="/frontend/public/assets/vanagro/campesino.jpg" alt="Foto del productor">
+      <h3 class="profile__name">Johan David Portilla Zambrano</h3>
+      <p class="profile__joined">Se unió en 2025</p>
+      <p class="profile__detail"><strong>IDENTIFICACIÓN:</strong> CC 145498145</p>
+      <p class="profile__detail"><strong>UBICACIÓN:</strong> Marsella, Risaralda</p>
+      <p class="profile__detail"><strong>DIRECCIÓN:</strong> calle 58 # 42-12</p>
+      <p class="profile__detail"><strong>CORREO:</strong> johandp@gmail.com</p>
+      <p class="profile__detail"><strong>TELÉFONO:</strong> 3054331178 // 3252152545</p>
+    </div>
+
+    <!-- Columna derecha: opciones -->
+    <div class="profile__actions">
+      <button class="profile__action" onclick="location.href='/frontend/public/views/products-list.html'">
+        <ion-icon name="eye-outline"></ion-icon>
+        <span>Ver Productos</span>
+      </button>
+      <button class="profile__action" onclick="location.href='/frontend/public/views/list-buies.html'">
+        <ion-icon name="bag-add-outline"></ion-icon>
+        <span>Compras/Pedidos</span>
+      </button>
+      <!-- <button class="profile__action">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>Ver Eventos</span>
+      </button> -->
+      <button class="profile__action" onclick="location.href='#report'">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <span>Reportes</span>
+      </button>
+      <a class="profile__link" href="/frontend/public/views/edit-user.html">
+        <button type="button" class="profile__action">
+          <ion-icon name="settings-outline"></ion-icon>
+          <span>Editar Perfil</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div class="profile__report" id="report">
+    <div class="profile__report--photo">
+      <div class="profile__report--phpto-head">
+        <img class="profile__report--img" src="/frontend/public/assets/vanagro/reportecompras.PNG" alt="">
+        <div class="profile__report--close">
+          <ion-icon onclick="location.href='javascript:history.back()'"  name="close-outline"></ion-icon>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="buttons__action--primary" onclick="location.href='javascript:history.back()'">
+          Imprimir
+        </button>
+        <button class="buttons__action--primary" onclick="location.href='javascript:history.back()'"> 
+          Descargar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

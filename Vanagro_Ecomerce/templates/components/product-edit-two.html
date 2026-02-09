@@ -1,0 +1,78 @@
+<div class="product-edit">
+	<!-- <h2 class="product-edit__title">Creación de Productos</h2> -->
+
+	<edit
+		action="#"
+		method="post"
+		class="product-edit__container"
+		enctype="multipart/edit-data"
+	>
+		<div class="product-edit__row product-edit__row--checkbox">
+			<span class="product-edit__label"
+				><strong>Tipo de Producto:</strong></span
+			>
+			<label><input type="checkbox" /> Carnes</label>
+			<label><input type="checkbox" checked /> Frutas</label>
+			<label><input type="checkbox" /> Granos</label>
+			<label><input type="checkbox" /> Lácteos</label>
+			<label><input type="checkbox" /> Verduras</label>
+		</div>
+
+		<div class="product-edit__dates">
+			<h3 class="product-edit__dates-title">Caducidad</h3>
+
+			<div>
+				<p class="product-edit__label">Fecha de Elaboración</p>
+				<input type="date" class="product-edit__dates-input" required />
+			</div>
+
+			<div>
+				<p class="product-edit__label">Fecha de Vencimiento</p>
+				<input type="date" class="product-edit__dates-input" required />
+			</div>
+		</div>
+
+		<div class="product-edit__image">
+			<label class="product-edit__image-upload">
+				<span>Imagen del producto</span>
+				<div class="product-edit__image-preview">
+					<img
+						src="/frontend/public/assets/products/platano_verde.png"
+						alt="Imagen del producto"
+					/>
+				</div>
+			</label>
+		</div>
+
+		<!-- Botones -->
+		<div class="buttons">
+			<button
+				type="reset"
+				class="buttons__action--secondary"
+				onclick="location.href='javascript:history.back()'"
+			>
+				Volver
+			</button>
+			<a href="#details-2">
+				<button type="button" class="buttons__action--terciary">
+					Vista previa
+				</button>
+			</a>
+			<button type="submit" class="buttons__action--primary edit-product-alert">
+				Guardar
+			</button>
+		</div>
+	</edit>
+	<div class="popup" id="popupMessage">
+		<div class="popup__header">
+			<i class="fa-solid fa-check popup__icon"></i>
+		</div>
+		<div class="popup__body">
+			<h3 class="popup__title">¡PRODUCTO ACTUALIZADO!</h3>
+			<p class="popup__message">
+				¡Los cambios han sido actualizados exitosamente!
+			</p>
+			<p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+		</div>
+	</div>
+</div>

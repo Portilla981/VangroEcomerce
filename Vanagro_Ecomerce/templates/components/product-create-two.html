@@ -1,0 +1,78 @@
+<div class="product-form">
+	<!-- <h2 class="product-edit__title">Creación de Productos</h2> -->
+
+	<form
+		action="#"
+		method="post"
+		class="product-edit__container"
+		enctype="multipart/form-data"
+	>
+		<div class="product-form__row product-form__row--checkbox">
+			<span class="product-form__label"
+				><strong>Tipo de Producto:</strong></span
+			>
+			<label><input type="checkbox" /> Carnes</label>
+			<label><input type="checkbox" /> Frutas</label>
+			<label><input type="checkbox" /> Granos</label>
+			<label><input type="checkbox" /> Lácteos</label>
+			<label><input type="checkbox" /> Verduras</label>
+		</div>
+
+		<div class="product-form__dates">
+			<h3 class="product-form__dates-title">Caducidad</h3>
+
+			<div>
+				<p class="product-form__label">Fecha de Elaboración</p>
+				<input type="date" class="product-form__dates-input" required />
+			</div>
+
+			<div>
+				<p class="product-form__label">Fecha de Vencimiento</p>
+				<input type="date" class="product-form__dates-input" required />
+			</div>
+		</div>
+
+		<div class="product-form__image">
+			<label class="product-form__image-upload">
+				<span>Imagen del producto</span>
+				<div class="product-form__image-preview">
+					<input type="file" />
+				</div>
+			</label>
+		</div>
+
+		<!-- Botones -->
+		<div class="buttons">
+			<button
+				type="reset"
+				class="buttons__action--secondary"
+				onclick="location.href='javascript:history.back()'"
+			>
+				Volver
+			</button>
+
+			<!-- <div class="buttons"> -->
+				<a href="#details-2">
+					<button type="button" class="buttons__action--terciary">
+						Vista previa
+					</button>
+				</a>
+			<!-- </div> -->
+
+			<button type="submit" class="buttons__action--primary create-product">
+				Guardar Producto
+			</button>
+		</div>
+	</form>
+
+	<div class="popup" id="popupMessage">
+		<div class="popup__header">
+			<i class="fa-solid fa-check popup__icon"></i>
+		</div>
+		<div class="popup__body">
+			<h3 class="popup__title">¡PRODUCTO CREADO!</h3>
+			<p class="popup__message">¡El producto ha sido creado exitosamente!</p>
+			<p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,190 @@
+.producter-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.producter-register__title {
+  color: var(--black);
+  font-size: var(--fs-xs);
+}
+
+.producter-register__form {
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  width: 95%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --- Bloque superior (datos + foto) --- */
+.producter-register__identification {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: flex-start; */
+  gap: 16px;
+  align-items: center;
+}
+
+/* Datos del productor */
+.profile__info--block {
+  flex: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 10px;
+  text-align: justify;
+}
+
+.profile__info--space {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__info--label {
+  font-weight: bold;
+  color: var(--black);
+  font-size: var(--fs-xxs);
+}
+
+.profile__info--name {
+  color: var(--gray-800);
+  font-size: var(--fs-xxs);
+
+}
+
+/* Foto más pequeña y equilibrada */
+.producter-register__photo {
+  flex: 1;
+  border: 2px dashed var(--gray-400);
+  border-radius: 8px;
+  text-align: center;
+  padding: 12px;
+  background-color: var(--white);
+}
+
+.producter-register__label-farm {
+  font-weight: bold;
+  font-size: var(--fs-xxxs);
+  margin-bottom: 4px;
+}
+
+.producter-register__image {
+  width: 80px;
+  opacity: 0.9;
+  margin-bottom: 6px;
+}
+
+.producter-register__file-farm {
+  font-size: var(--fs-xxxs);
+  width: 100%;
+}
+
+/* --- Campos de finca y mapa --- */
+.producter-register__farm-location {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.producter-register__fields-farm {
+  flex: 1.2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+
+/* .form-register__label {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--fs-xxxs);
+  color: var(--gray-900);
+  font-weight: 500;
+}
+
+.form-register__input {
+  padding: 16px;
+  border: 1px solid var(--gray-400);
+  border-radius: 6px;
+  font-size: var(--fs-xxs);
+} */
+
+/* --- Mapa más pequeño --- */
+.producter-register__map iframe {
+  width: 260px;
+  height: 120px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-300);
+}
+
+/* --- Botones --- */
+.producter-register__actions {
+  display: flex;
+  justify-content: space-around; /* Antes estaba en flex-end */
+  align-items: center;
+  padding-top: 8px;
+  flex-direction: row;
+}
+
+.btn__password {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  /* margin-top: 8px; */
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .producter-register__identification,
+  .producter-register__farm-location {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile__info--block {
+    grid-template-columns: 1fr;
+  }
+
+  .producter-register__fields-farm {
+    grid-template-columns: 1fr;
+  }
+
+  .producter-register__actions {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+  }
+}
+
+/* --- Responsivo para tablets --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .producter-register__farm-location {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .producter-register__fields-farm {
+    flex: 1.5;
+    /* grid-template-columns: 1fr; */
+    gap: 10px;
+  }
+
+  .producter-register__map iframe {
+    width: 220px;
+    height: 120px;
+    border-radius: 8px;
+  }
+
+  .producter-register__map {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

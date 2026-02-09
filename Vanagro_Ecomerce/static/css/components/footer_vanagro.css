@@ -1,0 +1,67 @@
+.footer-vanagro {
+  background-color: var(--primary-900);  
+}
+
+.footer-vanagro__content {  
+  display: flex;
+  flex-direction: column;
+  /* place-content: center;   */
+}
+
+.footer-vanagro__text {
+  /* padding: 8px 0; */
+  /* font-size: var(--fs-xxs); */
+  text-align: center;
+}
+
+.footer-vanagro__parafo {
+  /* padding: 8px 0; */
+  font-size: var(--fs-xxxs);
+  /* text-align: center; */
+}
+
+.footer-vanagro__social {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  justify-content: space-between;
+  /* gap: 24px; */
+}
+
+.footer-vanagro__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--black);
+  text-decoration: none;
+  font-size: var(--fs-xxxs);
+  font-weight: 500;
+  border-radius: 50%; /* MD3: toque amigable */
+}
+
+.footer-vanagro__icon i {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@media (width >= 768px) {
+  .footer-vanagro__content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
+  .footer-vanagro__social {
+    flex-direction: row;
+    margin: 4px 0;
+    /* padding: 8px 0; */
+    gap: 24px;
+  }
+}
