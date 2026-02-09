@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="logo_gov">
-    <img class="image_gov"  src="{% static 'img/vanagro/govco.jpg '%}" alt="">    
+    <img class="image_gov"  src="{% static 'img/interfaz_vanagro/govco2.png '%}" alt="">    
 </div>
 
 <header class="header-vanagro">
@@ -21,7 +21,7 @@
                     <a href="" class="navbar-vanagro__link">Iniciar Sesión</a>
                 </li>
                 <li class="navbar-vanagro__item">
-                    <a href="" class="navbar-vanagro__link">Nosotros</a>
+                    <a href="{% url 'inicio' %}" class="navbar-vanagro__link">Nosotros</a>
                 </li>
                 <li class="navbar-vanagro__item">
                     <a href="" class="navbar-vanagro__link">Productos</a>
@@ -33,7 +33,7 @@
                     <a href="#" class="navbar-vanagro__link">Eventos</a>
                 </li> -->
                 <li class="navbar-vanagro__item">
-                    <a href="/frontend/public/views/contact-vanagro.html" class="navbar-vanagro__link">Contacto</a>
+                    <a href="{% url 'contactenos'%}" class="navbar-vanagro__link">Contacto</a>
                 </li>
                 <li class="navbar-vanagro__item navbar-vanagro__item--cart">
                     <a href="" class="navbar-vanagro__link">Carrito</a>

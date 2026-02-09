@@ -35,12 +35,12 @@ class Home(TemplateView):
             {
                 "title":"Nosotros",
                 "description":"<strong>VANAGRO</strong><br> es un proyecto del SENA creado para conectar a los campesinos colombianos con los consumidores, promoviendo la compra directa, el comercio justo y el reconocimiento al trabajo del campo.",
-                "img":"img/vanagro/recolector.jpg"
+                "img":"img/interfaz_vanagro/recolector.jpg"
             },
             {
                 "title":"Misión",
                 "description":"Ser la plataforma líder en Colombia en la conexión entre el campo y el consumidor, promoviendo un sistema agroalimentario más justo, sostenible y humano, en donde los productos campesinos sean valorados, visibles y preferidos por su calidad, origen y aporte al desarrollo rural.",
-                "img":"img/vanagro/vendefruta.jpg"
+                "img":"img/interfaz_vanagro/vendefruta.jpg"
             },
             {
                 "title":"Visión",
@@ -52,5 +52,20 @@ class Home(TemplateView):
         return context
     
     
+class Contactenos(CreateView):    
+    modelo = Mensaje
+    
+    template_name = 'home/contact-us.html'
+
+    fields = ['nombres', 'apellidos', 'telefono', 'email', 'mensaje']
+    # Redireccion despues de crear la nueva tarea
+    success_url = reverse_lazy('Nosotros')
+
+    # Funcion para determinar que el formulario es valido y se le asigna el usuario autenticado a la tarea creada
+    def form_valid(self, form):
+        # Asignacion del usuario autenticado a la tarea creada
+        #form = self.request.user
+        # Retorno del formulario valido
+        return super(Contactenos, self).form_valid(form)
     
 

@@ -5,6 +5,7 @@ from django.contrib.auth.views import LogoutView # Ruta para manejar el cierre d
 from .views import * 
 
 urlpatterns = [ 
-    path('', Home.as_view(), name= 'inicio')   
+    path('', Home.as_view(), name= 'inicio'),   
+    path('Contactar/', Contactenos.as_view(), name= 'contactenos'),   
     
 ]
