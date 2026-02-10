@@ -8,6 +8,6 @@ class Mensaje(models.Model):
 	telefono = models.PositiveBigIntegerField('Telefono', max_length=20)
 	email = models.EmailField('Correo Electronico')
 	mensaje = models.TextField('Su mensaje')
-        
-    # def __str__(self):
-    #     return f'{self.nombres} - {self.apellidos}'
+ 	
+	def __str__(self):
+		return f'{self.nombres} - {self.apellido}'

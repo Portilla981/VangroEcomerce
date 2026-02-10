@@ -5,4 +5,5 @@ from .models import *
 class Form_contacto(forms.ModelForm):
     class Meta:
         model = Mensaje
-        fields = ('Nombres', 'Apellidos', 'Telefono', 'Mesaje')
+        fields = ('nombres', 'apellido', 'telefono', 'email', 'mensaje')
+        

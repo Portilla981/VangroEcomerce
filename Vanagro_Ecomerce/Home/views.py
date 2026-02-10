@@ -19,6 +19,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 # Importacion del modelo Tarea creado
 from .models import *
+from .form_home import *
 
 
 # Create your views here.
@@ -53,19 +54,31 @@ class Home(TemplateView):
     
     
 class Contactenos(CreateView):    
+    
     modelo = Mensaje
     
+    form_class = Form_contacto
+    
     template_name = 'home/contact-us.html'
+    
+    success_url = reverse_lazy('inicio')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['titulo']= 'Contactenos'
+        
+        return context
 
-    fields = ['nombres', 'apellidos', 'telefono', 'email', 'mensaje']
+    #fields = ['nombres', 'apellidos', 'telefono', 'email', 'mensaje']
     # Redireccion despues de crear la nueva tarea
-    success_url = reverse_lazy('Nosotros')
+    #success_url = reverse_lazy('Nosotros')
 
     # Funcion para determinar que el formulario es valido y se le asigna el usuario autenticado a la tarea creada
-    def form_valid(self, form):
+    #def form_valid(self, form):
         # Asignacion del usuario autenticado a la tarea creada
         #form = self.request.user
         # Retorno del formulario valido
-        return super(Contactenos, self).form_valid(form)
+    #   return super(Contactenos, self).form_valid(form)
     
 
