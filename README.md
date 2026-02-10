@@ -4,15 +4,14 @@ Proyecto productivo del SENA.
 
 ## Instalación
 
--> Dentro de una carpeta la cual estará todo el proyecto se realiza las siguientes acciones:
-Escribe CMD dentro de la barra de la carpeta en explorador de archivos que se creo para abrir la consola de comandos y escribe
+-> Clonación del repositorio
+Ubíquese en el lugar donde va clonar la carpeta del proyecto, debes de tener a la mano la dirección del repositorio dado para trabajar en equipo con lo cual en la linea de código del cmd o bash colocaras 
+git clone --branch main --single-branch NOMBRE DEL REPOSITORIO COPIADO Ejm: https://github.com/flia81/VangroEcomerce.git
 
 -> Creación del entrono virtual
+Luego abra el proyecto en visual code o el IDE de su preferencia, estando en la raiz del proyecto debe aparecer el archivo README.MD, por oo cual debera crear un entorno virtual por los comandos de consola
 python -m venv Nombre del entrono virtual
 
--> Clonación del repositorio
-Debes de tener a la mano la dirección del repositorio dado para trabajar en equipo con lo cual en la linea de codigo del cmd o bash colocaras 
-git clone --branch main --single-branch NOMBRE DEL REPOSITORIO COPIADO Ejm: https://github.com/flia81/VangroEcomerce.git
 
 -> Activacion del entorno virtual
 Accede al entorno virtual con: 
