@@ -4,7 +4,7 @@
 
 {% block contenido %}
 
-<p><strong>CONTÁCTANOS</strong> Estamos para ayudarte con pedidos, soporte y preguntas.</p>
+<p><strong>CONTÁCTENOS</strong> Estamos para ayudarte con pedidos, soporte y preguntas.</p>
 <section class="contact-form">
 
     <form class="contact-form__form" method="POST">
@@ -14,22 +14,22 @@
             <label class="contact-form__label">
                 Nombres
                 
-                <input type="text" name="nombres" class="contact-form__input" placeholder="Pedro José" required>
+                <input type="text" name="nombres" class="contact-form__input" placeholder="Ingrese su nombre o nombres" required>
             </label>
             <label class="contact-form__label">
                 Apellidos
-                <input type="text" name="apellido" class="contact-form__input" placeholder="Pérez Gallego" required>
+                <input type="text" name="apellido" class="contact-form__input" placeholder="Ingrese su apellido o apellidos" required>
             </label>
         </div> 
 
         <div class="contact-form__row">
             <label class="contact-form__label">
                 Teléfono
-                <input type="tel" name="telefono" class="contact-form__input" placeholder="3125678765" required>
+                <input type="tel" name="telefono" class="contact-form__input" placeholder="Ingrese su teléfono" required>
             </label>
             <label class="contact-form__label">
                 Correo Electrónico
-                <input type="email"  name="email"  class="contact-form__input" placeholder="usuario@example.com" required>
+                <input type="email"  name="email"  class="contact-form__input" placeholder="Ingrese su correo electrónico" required>
             </label>
         </div>
 
@@ -38,7 +38,7 @@
             <label class="contact-form__label">
                 Mensaje
                 <textarea name="mensaje" class="contact-form__input contact-form__textarea"
-                    placeholder="Ingresa aquí tu mensaje..." required></textarea>
+                    placeholder="Ingresa aquí su mensaje..." required></textarea>
             </label>
         </div>
 
@@ -61,5 +61,13 @@
         </div>
     </div>
 </section>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {{ message.tags }}">
+        {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
 
 {% endblock contenido %}
