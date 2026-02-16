@@ -1,25 +1,27 @@
+# from pyexpat.errors import messages
 from django.shortcuts import render
 
 from django.shortcuts import render, redirect
 # from django.http import HttpResponse
-# Ruta para obtener las vistas genericas de django para el CRUD
+# Ruta para obtener las vistas genéricas de django para el CRUD
 
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-# Esta ruta importa las vistas genericas para crear, actualizar y eliminar elementos del modelo
+# Esta ruta importa las vistas genéricas para crear, actualizar y eliminar elementos del modelo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-# Ruta para manejar la autenticacion y redireccionamiento
+# Ruta para manejar la autenticación y redireccionamiento
 from django.urls import reverse_lazy
 # Ruta para manejar el modelo de usuarios y login
 from django.contrib.auth.views import LoginView
-# Ruta para manejar la mezcla de autenticacion en las vistas
+# Ruta para manejar la mezcla de autenticación en las vistas
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-# Importacion del modelo Tarea creado
+# Importación del modelo Tarea creado
 from .models import *
 from .form_home import *
+from django.contrib import messages
 
 
 # Create your views here.
@@ -69,16 +71,19 @@ class Contactenos(CreateView):
         context['titulo']= 'Contactenos'
         
         return context
+    
+    def form_valid(self, form):
+        # Aquí puedes realizar cualquier acción adicional antes de guardar el formulario
+        # Por ejemplo, enviar un correo electrónico o registrar la información en otro modelo
+        messages.error(self.request, '¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.')
+        # Guardar el formulario y redirigir al usuario a la página de éxito
+        return super().form_valid(form) 
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'Por favor, corrige los errores en el formulario.')
+        return super().form_invalid(form)
+    
 
-    #fields = ['nombres', 'apellidos', 'telefono', 'email', 'mensaje']
-    # Redireccion despues de crear la nueva tarea
-    #success_url = reverse_lazy('Nosotros')
-
-    # Funcion para determinar que el formulario es valido y se le asigna el usuario autenticado a la tarea creada
-    #def form_valid(self, form):
-        # Asignacion del usuario autenticado a la tarea creada
-        #form = self.request.user
-        # Retorno del formulario valido
-    #   return super(Contactenos, self).form_valid(form)
+    
     
 
