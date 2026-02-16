@@ -9,11 +9,11 @@ Ubíquese en el lugar donde va clonar la carpeta del proyecto, debes de tener a 
 git clone --branch main --single-branch NOMBRE DEL REPOSITORIO COPIADO Ejm: https://github.com/flia81/VangroEcomerce.git
 
 -> Creación del entrono virtual
-Luego abra el proyecto en visual code o el IDE de su preferencia, estando en la raiz del proyecto debe aparecer el archivo README.MD, por oo cual debera crear un entorno virtual por los comandos de consola
+Luego abra el proyecto en visual code o el IDE de su preferencia, estando en la raíz del proyecto debe aparecer el archivo README.MD, por oo cual deberá crear un entorno virtual por los comandos de consola
 python -m venv Nombre del entrono virtual
 
 
--> Activacion del entorno virtual
+-> Activación del entorno virtual
 Accede al entorno virtual con: 
 cd nombre del entorno virtual\Scripts\activate
 
