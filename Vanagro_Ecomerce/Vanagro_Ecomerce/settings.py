@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Home',
+    'Usuario',
+    'Producto',
 ]
 
 MIDDLEWARE = [
@@ -113,7 +115,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Redireccionamiento despues de no ser autenticado
-LOGIN_URL = 'login'
+LOGIN_URL = 'inicio'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -129,6 +131,8 @@ STATICFILES_DIRS = [
 # Ruta absoluta para cargar archivos por parte del usuario
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
 
 
 # Default primary key field type

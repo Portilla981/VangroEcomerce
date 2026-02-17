@@ -19,17 +19,18 @@
 
     <!-- Lado derecho: formulario -->
     <div class="session__form-container">            
-        <form class="beginner-form" action="#" method="">
+        <form class="beginner-form" method="POST">
             <h2 class="session__subtitle">Iniciar Sesión</h2>
+            {% csrf_token %}
             <div class="beginner-form__credential">
                 <div class="beginner-form__info">
                     <label class="beginner-form__label">E-mail</label>
-                    <input class="beginner-form__input" type="text" placeholder="usuario@example.com" required>
+                    <input name="username"  class="beginner-form__input" type="text" placeholder="Ingrese su correo electronico" required>
                 </div>
 
                 <div class="beginner-form__info">
                     <label class="beginner-form__label">Contraseña</label>
-                    <input class="beginner-form__input" type="password" placeholder="**************" required>
+                    <input name="password" class="beginner-form__input" type="password" placeholder="Ingrese su contraseña" required>
                 </div>
             </div>
 
@@ -48,7 +49,7 @@
                 <a href="/frontend/public/views/register-user.html">
                     <button type="button" class="buttons__action--secondary">Crear Cuenta</button>
                 </a>
-                <button class="buttons__action--primary session-alert" type="button">Iniciar Sesión</button>
+                <button class="buttons__action--primary session-alert" type="submit">Iniciar Sesión</button>
                 <div class="popup" id="popupMessage">
                     <div class="popup__header">
                         <i class="fa-solid fa-check popup__icon"></i>

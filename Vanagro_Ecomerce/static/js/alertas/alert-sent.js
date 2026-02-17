@@ -22,7 +22,7 @@ function confirmarEnvio() {
     popup.__hideTimeout = setTimeout(() => {
       popup.style.display = "none";
 
-      window.location.href = "{% url 'contactenos' %}";
+      window.location.href = ;
 
     }, POPUP_DURATION);
   }
