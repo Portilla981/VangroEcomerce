@@ -1,114 +1,154 @@
-{% extends 'index_vanagro.html' %}
-
-{% load static %}
-
-{% block script %}    
-    <script src="{% static 'js/alertas/confirmacion_envio.js' %}" defer></script>
-{% endblock script %}
-
-{% block contenido %}
+{% extends 'index_vanagro.html' %} {% load static %} {% block script %}
+<script src="{% static 'js/alertas/confirmacion_envio.js' %}" defer></script>
+{% endblock script %} {% block contenido %}
 
 <section class="contact-form">
-    <p class="contact-us__title"><strong>CONTÁCTENOS</strong><br>Estamos para ayudarte con pedidos, soporte y preguntas.</p>
+	<p class="contact-us__title">
+		<strong>CONTÁCTENOS</strong><br />Estamos para ayudarte con pedidos, soporte
+		y preguntas.
+	</p>
 
-    <form class="contact-form__form" method="POST" id="contactForm">
-        {% csrf_token %}
+	<form class="contact-form__form" method="POST" id="contactForm">
+		{% csrf_token %}
 
-        <div class="contact-form__row">
-            <label class="contact-form__label">
-                Nombres
-                
-                <input type="text" name="nombres" class="contact-form__input" placeholder="Ingrese su nombre o nombres" required>
-            </label>
-            <label class="contact-form__label">
-                Apellidos
-                <input type="text" name="apellido" class="contact-form__input" placeholder="Ingrese su apellido o apellidos" required>
-            </label>
-        </div> 
+		<div class="contact-form__row">
+			<label class="contact-form__label">
+				Nombres
 
-        <div class="contact-form__row">
-            <label class="contact-form__label">
-                Teléfono
-                <input type="tel" name="telefono" class="contact-form__input" placeholder="Ingrese su teléfono" required>
-            </label>
-            <label class="contact-form__label">
-                Correo Electrónico
-                <input type="email"  name="email"  class="contact-form__input" placeholder="Ingrese su correo electrónico" required>
-            </label>
-        </div>
+				<input
+					type="text"
+					name="nombres"
+					class="contact-form__input"
+					placeholder="Ingrese su nombre o nombres"
+					required
+				/>
+			</label>
+			<label class="contact-form__label">
+				Apellidos
+				<input
+					type="text"
+					name="apellido"
+					class="contact-form__input"
+					placeholder="Ingrese su apellido o apellidos"
+					required
+				/>
+			</label>
+		</div>
 
+		<div class="contact-form__row">
+			<label class="contact-form__label">
+				Teléfono
+				<input
+					type="tel"
+					name="telefono"
+					class="contact-form__input"
+					placeholder="Ingrese su teléfono"
+					required
+				/>
+			</label>
+			<label class="contact-form__label">
+				Correo Electrónico
+				<input
+					type="email"
+					name="email"
+					class="contact-form__input"
+					placeholder="Ingrese su correo electrónico"
+					required
+				/>
+			</label>
+		</div>
 
-        <div class="contact-form__row contact-form__row--full">
-            <label class="contact-form__label">
-                Mensaje
-                <textarea name="mensaje" class="contact-form__input contact-form__textarea"
-                    placeholder="Ingresa aquí su mensaje..." required></textarea>
-            </label>
-        </div>
+		<div class="contact-form__row contact-form__row--full">
+			<label class="contact-form__label">
+				Mensaje
+				<textarea
+					name="mensaje"
+					class="contact-form__input contact-form__textarea"
+					placeholder="Ingresa aquí su mensaje..."
+					required
+				></textarea>
+			</label>
+		</div>
 
+		<div class="buttons">
+			<button
+				type="reset"
+				class="buttons__action--secondary"
+				onclick="cancelarFormulario()"
+			>
+				Cancelar
+			</button>
+			<button
+				type="submit"
+				class="buttons__action--primary sent-alert"
+				data-url="{% url 'inicio' %}"
+			>
+				Enviar
+			</button>
+		</div>
+	</form>
 
-        <div class="buttons">
-            <button type="reset" class="buttons__action--secondary" onclick="cancelarFormulario()">Cancelar</button>
-            <button type="submit" class="buttons__action--primary sent-alert" data-url="{% url 'inicio' %}">Enviar</button>
-        </div>
-    </form>
+	{% if messages %} 
+    {% for message in messages %}
 
-    {% if messages %}
-  {% for message in messages %}
-    <div class="alert {{ message.tags }}">
-        {{ message }}
-    </div>
-  {% endfor %}
-{% endif %}
-
-
-{% comment %}     
-    <div class="popup" id="popupMessage">
-        <div class="popup__header">
-            <i class="fa-solid fa-check popup__icon"></i>
-        </div>
-        <div class="popup__body">
-            <h3 class="popup__title">¡MENSAJE ENVIADO!</h3>
-            <p class="popup__message">¡El mensaje ha sido enviado, gracias por contactarnos!</p>
-            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-        </div>
-    </div> {% endcomment %}
+	<div class="popup" id="popupMessage">
+		<div class="popup__header">
+			<i class="fa-solid fa-check popup__icon"></i>
+		</div>
+		<div class="popup__body">
+			<h3 class="popup__title">{{ message.tags }}</h3>
+			<p class="popup__message">{{ message }}</p>
+			<p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+		</div>
+	</div>
+	{% endfor %}
+    {% endif %}
+    
+    
+    {% comment %}
+	<div class="popup" id="popupMessage">
+		<div class="popup__header">
+			<i class="fa-solid fa-check popup__icon"></i>
+		</div>
+		<div class="popup__body">
+			<h3 class="popup__title">¡MENSAJE ENVIADO!</h3>
+			<p class="popup__message">
+				¡El mensaje ha sido enviado, gracias por contactarnos!
+			</p>
+			<p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+		</div>
+	</div>
+	{% endcomment %}
 </section>
-
-
-
 
 <!-- MODAL CONFIRMACIÓN -->
 <div id="confirmPopup" class="popup">
-  <div class="popup-box">
-    <h3>¿Seguro que deseas enviar el mensaje?</h3>
-    <button id="btnConfirm">Sí, enviar</button>
-    <button id="btnCancel">Cancelar</button>
-  </div>
+	<div class="popup-box">
+		<h3>¿Seguro que deseas enviar el mensaje?</h3>
+		<button id="btnConfirm">Sí, enviar</button>
+		<button id="btnCancel">Cancelar</button>
+	</div>
 </div>
-
 
 <!-- ENVIANDO -->
 <div id="sendingPopup" class="popup">
-  <div class="popup-box">
-    <h3>Enviando mensaje...</h3>
-  </div>
+	<div class="popup-box">
+		<h3>Enviando mensaje...</h3>
+	</div>
 </div>
-
 
 <!-- ÉXITO DE ENVIÓ -->
 <div id="successPopup" class="popup">
-  <div class="popup-box">
-    <h3>Mensaje enviado correctamente ✅</h3>
-  </div>
+	<div class="popup-box">
+		<h3>Mensaje enviado correctamente ✅</h3>
+	</div>
 </div>
-
 
 <!-- MENSAJE FINAL -->
 <div id="thanksPopup" class="popup">
-  <div class="popup-box">
-    <h3>¡Gracias por contactarnos!</h3>
-  </div>
+	<div class="popup-box">
+		<h3>¡Gracias por contactarnos!</h3>
+	</div>
 </div>
 
 {% endblock contenido %}

@@ -84,8 +84,21 @@ class Contactenos(CreateView):
         return super().form_invalid(form)
     
 
-class Inicio(TemplateView):
+class Inicio(LoginView):
     template_name = 'home/inicio.html'
+    modelo = User
+    # success_url = reverse_lazy('inicio_vista')
+    
+    
+    # Campos que se van a utilizar en el formulario de logueo
+    fields = '__all__'  
+    # Condicion para redireccionar si el usuario ya esta autenticado
+    redirect_authenticated_user = True
+    # Redireccion despues de iniciar sesion exitosamente
+    def get_success_url(self):
+        # Redireccion a la vista despues de iniciar sesion
+        return reverse_lazy('inicio')  
+    
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
