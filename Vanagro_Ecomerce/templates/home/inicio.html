@@ -1,0 +1,72 @@
+{% extends 'index_vanagro.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="session-container__beginer">
+
+<div class="session__login">        
+    <div class="session__left">
+        <div class="session__info">
+            <h2 class="session__info-title">Bienvenido a Vanagro</h2>
+            <p class="session__info-text">
+            Somos el Mercado Campesino que conecta a productores y consumidores de forma directa, 
+            garantizando productos frescos y apoyando al campo colombiano.
+            </p>
+        </div>
+    </div>
+
+    <!-- Lado derecho: formulario -->
+    <div class="session__form-container">            
+        <form class="beginner-form" action="#" method="">
+            <h2 class="session__subtitle">Iniciar Sesión</h2>
+            <div class="beginner-form__credential">
+                <div class="beginner-form__info">
+                    <label class="beginner-form__label">E-mail</label>
+                    <input class="beginner-form__input" type="text" placeholder="usuario@example.com" required>
+                </div>
+
+                <div class="beginner-form__info">
+                    <label class="beginner-form__label">Contraseña</label>
+                    <input class="beginner-form__input" type="password" placeholder="**************" required>
+                </div>
+            </div>
+
+            <a class="begin-lost_password recovery" href="#forget__block">¿Olvidaste la contraseña?</a>
+            <div class="popup" id="popupRecovery">
+                <div class="popup__header">
+                    <i class="fa-solid fa-check popup__icon"></i>
+                </div>
+                <div class="popup__body">
+                    <h3 class="popup__title">¡CONTRASEÑA RECUPERADA!</h3>
+                    <p class="popup__message">¡La contraseña se recuperó exitosamente!</p>
+                    <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+                </div>
+            </div>
+            <div class="buttons">
+                <a href="/frontend/public/views/register-user.html">
+                    <button type="button" class="buttons__action--secondary">Crear Cuenta</button>
+                </a>
+                <button class="buttons__action--primary session-alert" type="button">Iniciar Sesión</button>
+                <div class="popup" id="popupMessage">
+                    <div class="popup__header">
+                        <i class="fa-solid fa-check popup__icon"></i>
+                    </div>
+                    <div class="popup__body">
+                        <h3 class="popup__title">¡BIENVENIDO!</h3>
+                        <p class="popup__message">¡Has iniciado sesión correctamente!</p>
+                        <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+                    </div>
+                </div>
+        </form>
+        
+        </div>
+    </div>
+</div>
+
+</section>
+
+
+
+{% endblock %}
