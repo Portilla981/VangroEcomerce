@@ -126,7 +126,7 @@
 }
 
 /* Responsive */
-@media (width > 768px) {
+@media (width >= 768px) {
     
     .product-edit__row {
         flex-direction: row;

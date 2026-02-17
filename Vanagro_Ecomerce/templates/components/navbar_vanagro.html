@@ -18,7 +18,7 @@
 
             <ul class="navbar-vanagro__list">
                 <li class="navbar-vanagro__item navbar-vanagro__item--sesion2">
-                    <a href="" class="navbar-vanagro__link">Iniciar Sesión</a>
+                    <a href="{% url 'inicio_vista' %}" class="navbar-vanagro__link">Iniciar Sesión</a>
                 </li>
                 <li class="navbar-vanagro__item">
                     <a href="{% url 'inicio' %}" class="navbar-vanagro__link">Nosotros</a>
@@ -48,7 +48,7 @@
                 </a>
             </div>
             <div class="navbar-vanagro__icons--second">
-                <a href="">
+                <a href="{% url 'inicio_vista' %}">
                     <ion-icon class="navbar-vanagro__icons--login" name="home-outline"></ion-icon>
                 </a>
             </div>

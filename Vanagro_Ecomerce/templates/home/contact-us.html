@@ -2,12 +2,16 @@
 
 {% load static %}
 
+{% block script %}    
+    <script src="{% static 'js/alertas/confirmacion_envio.js' %}" defer></script>
+{% endblock script %}
+
 {% block contenido %}
 
-<p><strong>CONTÁCTENOS</strong> Estamos para ayudarte con pedidos, soporte y preguntas.</p>
 <section class="contact-form">
+    <p class="contact-us__title"><strong>CONTÁCTENOS</strong><br>Estamos para ayudarte con pedidos, soporte y preguntas.</p>
 
-    <form class="contact-form__form" method="POST">
+    <form class="contact-form__form" method="POST" id="contactForm">
         {% csrf_token %}
 
         <div class="contact-form__row">
@@ -45,11 +49,20 @@
 
         <div class="buttons">
             <button type="reset" class="buttons__action--secondary" onclick="cancelarFormulario()">Cancelar</button>
-            <button type="submit" class="buttons__action--primary sent-alert">Enviar</button>
+            <button type="submit" class="buttons__action--primary sent-alert" data-url="{% url 'inicio' %}">Enviar</button>
         </div>
     </form>
 
-    
+    {% if messages %}
+  {% for message in messages %}
+    <div class="alert {{ message.tags }}">
+        {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+
+{% comment %}     
     <div class="popup" id="popupMessage">
         <div class="popup__header">
             <i class="fa-solid fa-check popup__icon"></i>
@@ -59,15 +72,43 @@
             <p class="popup__message">¡El mensaje ha sido enviado, gracias por contactarnos!</p>
             <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
         </div>
-    </div>
+    </div> {% endcomment %}
 </section>
 
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert {{ message.tags }}">
-        {{ message }}
-    </div>
-  {% endfor %}
-{% endif %}
+
+
+
+<!-- MODAL CONFIRMACIÓN -->
+<div id="confirmPopup" class="popup">
+  <div class="popup-box">
+    <h3>¿Seguro que deseas enviar el mensaje?</h3>
+    <button id="btnConfirm">Sí, enviar</button>
+    <button id="btnCancel">Cancelar</button>
+  </div>
+</div>
+
+
+<!-- ENVIANDO -->
+<div id="sendingPopup" class="popup">
+  <div class="popup-box">
+    <h3>Enviando mensaje...</h3>
+  </div>
+</div>
+
+
+<!-- ÉXITO DE ENVIÓ -->
+<div id="successPopup" class="popup">
+  <div class="popup-box">
+    <h3>Mensaje enviado correctamente ✅</h3>
+  </div>
+</div>
+
+
+<!-- MENSAJE FINAL -->
+<div id="thanksPopup" class="popup">
+  <div class="popup-box">
+    <h3>¡Gracias por contactarnos!</h3>
+  </div>
+</div>
 
 {% endblock contenido %}

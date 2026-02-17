@@ -2,6 +2,11 @@
 
 /* Distribución general (fondo del body, display, flexbox, grid, alturas, anchos, etc.). */
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 html {
     margin: 0;
     box-sizing: border-box;
@@ -26,6 +31,36 @@ body {
     /* border: 2px solid var(--primary-400); */
     
 }
+
+
+
+
+
+/*
+html {
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+} */
+
+/* body { */
+    /* background-color: var(--gray-900); */
+    /* font-family: var(--main-font);
+    color: var(--black);
+    margin: 0;
+    padding: 0;
+    display: grid;
+    flex-direction: column; */
+    /* display: grid; */
+    /* min-height: 100vh;
+    grid-template-rows: auto 1fr auto ;
+    width: 100%;     */
+    /* border: 2px solid var(--primary-400); */
+    
+/* } */
 
 
 /* 1. Contenedor Principal */

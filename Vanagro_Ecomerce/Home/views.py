@@ -84,6 +84,16 @@ class Contactenos(CreateView):
         return super().form_invalid(form)
     
 
+class Inicio(TemplateView):
+    template_name = 'home/inicio.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['titulo']= 'Inicio'
+        
+        return context
+
     
     
 
