@@ -5,19 +5,17 @@
     font-family: var(--main-font, sans-serif);
 }
 
-
 .profile__hero {
     position: relative;
     width: 100%;
     height: auto;
     /* overflow: hidden; */
-    background: url(/frontend/public/assets/vanagro/cielo.jpg) no-repeat center center/cover;
+    background: url(../../img/interfaz_vanagro/cielo.jpg) no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px;
+    padding: 24px;
 }
-
 
 .profile__legend {
     text-align: center;
@@ -27,20 +25,17 @@
     max-width: 90%;
 }
 
-
 .profile__role {
     font-size: var(--fs-sm);
     font-weight: bold;
     margin: 1;
 }
 
-
 .profile__message {
     font-size: var(--fs-xs);
     font-weight: 600;
     margin: 0.5rem 0 0;
 }
-
 
 /* === CONTENIDO PRINCIPAL (dos columnas) === */
 .profile__content {
@@ -50,7 +45,6 @@
     gap: 2rem;
     padding: 24px;
 }
-
 
 .profile__info {
     flex: 1;
@@ -71,13 +65,11 @@
     /* margin-bottom: 1rem; */
 }
 
-
 .profile__name {
     font-size: var(--fs-sm);
     font-weight: bold;
     margin: 0.5rem 0;
 }
-
 
 .profile__joined {
     font-size: var(--fs-xs);
@@ -85,12 +77,10 @@
     margin-bottom: 1rem;
 }
 
-
 .profile__detail {
     font-size: var(--fs-xs);
     margin: 1.25rem 0;
 }
-
 
 .profile__actions {
     /* flex: 1; */
@@ -101,11 +91,9 @@
     align-items: center;
 }
 
-
 .profile__link {
     text-decoration: none;
 }
-
 
 .profile__action {
     box-shadow: 0 1px 4px var(--black);
@@ -206,8 +194,10 @@
 
 @media (min-width: 768px) {  
     .profile__content {
+        flex: 1;
         flex-direction: row;
-        align-items: stretch;
+        /* align-items: stretch; */
+        min-height: 60vh;
     }
 }
 

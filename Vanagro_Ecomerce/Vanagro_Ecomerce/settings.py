@@ -116,6 +116,8 @@ USE_TZ = True
 
 # Redireccionamiento despues de no ser autenticado
 LOGIN_URL = 'inicio'
+LOGOUT_REDIRECT_URL = 'inicio'
+LOGIN_REDIRECT_URL = 'inicio'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -139,3 +141,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Tiempo en segundos (ejemplo 10 minutos)
+SESSION_COOKIE_AGE = 300  
+
+# Cerrar sesión cuando el navegador se cierre
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Resetear tiempo si el usuario sigue activo
+SESSION_SAVE_EVERY_REQUEST = True

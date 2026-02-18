@@ -10,11 +10,11 @@
     width: 100%;
     height: auto;
     /* overflow: hidden; */
-    background: url(/frontend/public/assets/vanagro/vacas.jpg) no-repeat center center/cover;
+    background: url(../../img/interfaz_vanagro/vacas.jpg) no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 24px;
 }
 
 .profile_producter--legend {
@@ -44,7 +44,6 @@
     flex-direction: column;
     gap: 2rem;
     padding: 24px;
-
 }
 
 .profile_producter--info {
@@ -55,7 +54,6 @@
     box-shadow: 0 3px 3px var(--gray-500);
     position: relative;
 }
-
 
 .profile_producter--edit {
     position: absolute;
@@ -69,7 +67,6 @@
 .profile_producter--edit:hover {
     color: var(--primary-950);
 }
-
 
 .profile_producter--avatar {
     width: 100px;
@@ -207,21 +204,24 @@
 
 
 
-@media (min-width: 768px) {   
+@media (min-width:1024px) {   
     /* .profile__report--img {
     width: 50vw;   
 } */
 
     .profile_producter--content {
+        flex : 1;
         flex-direction: row;
-        align-items: stretch;
+        /* align-items: stretch; */
+        min-height: 60vh;
+
     }
 }
 
 @media (max-width: 768px) {
     
     .profile_producter--actions {
-        max-width: 320px;
+        max-width: 320px;    
         width: 100%;
         margin: 0 auto;
         margin-bottom: 2rem;

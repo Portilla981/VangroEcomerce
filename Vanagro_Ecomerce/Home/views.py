@@ -97,7 +97,7 @@ class Inicio(LoginView):
     # Redireccion despues de iniciar sesion exitosamente
     def get_success_url(self):
         # Redireccion a la vista despues de iniciar sesion
-        return reverse_lazy('inicio')  
+        return reverse_lazy('sesion_inicio')  
     
     
     def get_context_data(self, **kwargs):

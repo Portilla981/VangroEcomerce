@@ -21,8 +21,8 @@ function confirmarEnvio() {
     clearTimeout(popup.__hideTimeout);
     popup.__hideTimeout = setTimeout(() => {
       popup.style.display = "none";
-
-      window.location.href = ;
+      // Redirección a una página vacía para evitar resubmisión
+      window.location.href = URL.createObjectURL(new Blob([], { type: "text/html" }));
 
     }, POPUP_DURATION);
   }
