@@ -1,6 +1,19 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+
+
+{% block navbar %}
+
+{% include 'components/navbar-profile_2.html' %}
+
+{% endblock navbar %}
+
+{% block login %}
+
 <div class="profile_producter--container">
 
-  <!-- Portada con leyenda -->
+  {% comment %} <!-- Portada con leyenda --> {% endcomment %}
   <div class="profile_producter--hero">
     <div class="profile_producter--legend">
       <h2 class="profile_producter--role">TIENDA / PRODUCTOR</h2>
@@ -11,12 +24,12 @@
     </div>
   </div>
 
-  <!-- Contenido principal -->
+  {% comment %} <!-- Contenido principal --> {% endcomment %}
   <div class="profile_producter--content">
 
-    <!-- Columna izquierda: datos del productor -->
+    {% comment %} <!-- Columna izquierda: datos del productor --> {% endcomment %}
     <div class="profile_producter--info">
-      <img class="profile_producter--avatar" src="/frontend/public/assets/vanagro/campesino.jpg" alt="Foto del productor">
+      <img class="profile_producter--avatar" src="{% static 'img/interfaz_vanagro/campesino.jpg' %}" alt="Foto del productor">
       <h3 class="profile_producter--name">Julio Armando Cifuentes Correa</h3>
       <p class="profile_producter--joined">Se unió en 2025</p>
       <p class="profile_producter--detail"><strong>CC:</strong> 1088725309</p>
@@ -28,7 +41,7 @@
       <a href="/frontend/public/views/edit-shop-user.html">
         <ion-icon name="create-outline" class="profile_producter--edit"></ion-icon>
       </a>
-      <img class="profile_producter--avatar" src="/frontend/public/assets/farms/finca5.jpg" alt="Foto de la finca">
+      <img class="profile_producter--avatar" src="{% static 'img/farms/finca5.jpg' %}" alt="Foto de la finca">
       <h3 class="profile_producter--name">Finca las Bovinas</h3>
       <p class="profile_producter--joined">Desde 1997</p>
       <p class="profile_producter--detail"><strong>UBICACIÓN:</strong> Vereda las Palmas - Marsella, Risaralda</p>
@@ -70,7 +83,7 @@
     <div class="profile__report" id="report">
       <div class="profile__report--photo">
         <div class="profile__report--phpto-head">
-          <img class="profile__report--img" src="/frontend/public/assets/vanagro/reporte.jpg" alt="">
+          <img class="profile__report--img" src="{% static 'img/interfaz_vanagro/reporte.jpg' %}" alt="">
           <div class="profile__report--close">
             <ion-icon onclick="location.href='javascript:history.back()'"  name="close-outline"></ion-icon>
           </div>
@@ -88,3 +101,5 @@
     </div>
   </div>
 </div>
+
+{% endblock login %}

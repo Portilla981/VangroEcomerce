@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    {% block script %} {% endblock script %}
+
+    <title>{{ titulo }}</title>
+  </head>
+
+  <body>
+    {% block navbar %}
+    {% include 'components/navbar-profile.html' %} 
+    {% endblock navbar %} 
+    
+    
+    {% block login %}
+    <div class="profile__container">
+      {% comment %} <!-- Portada con leyenda --> {% endcomment %}
+      <div class="profile__hero">
+        <div class="profile__legend">
+          <h2 class="profile__role">CLIENTE</h2>
+          <p class="profile__message">
+            ¡Tu visita nos alegra el día! Gracias por apoyar a nuestros
+            campesinos y por ser parte de este mercado con alma rural.
+          </p>
+        </div>
+      </div>
+
+      {% comment %} <!-- Contenido principal --> {% endcomment %}
+      <div class="profile__content">
+        {% comment %} <!-- Columna izquierda: datos del productor --> {% endcomment %}
+        <div class="profile__info">
+          <img
+            class="profile__avatar"
+            src="{% static 'img/interfaz_vanagro/campesino.jpg' %}"
+            alt="Foto del productor"
+          />
+          <h3 class="profile__name">Johan David Portilla Zambrano</h3>
+          <p class="profile__joined">Se unió en 2025</p>
+          <p class="profile__detail">
+            <strong>IDENTIFICACIÓN:</strong> CC 145498145
+          </p>
+          <p class="profile__detail">
+            <strong>UBICACIÓN:</strong> Marsella, Risaralda
+          </p>
+          <p class="profile__detail">
+            <strong>DIRECCIÓN:</strong> calle 58 # 42-12
+          </p>
+          <p class="profile__detail">
+            <strong>CORREO:</strong> johandp@gmail.com
+          </p>
+          <p class="profile__detail">
+            <strong>TELÉFONO:</strong> 3054331178 // 3252152545
+          </p>
+        </div>
+
+        {% comment %} <!-- Columna derecha: opciones --> {% endcomment %}
+        <div class="profile__actions">
+          <button
+            class="profile__action"
+            onclick="
+              location.href = '/frontend/public/views/products-list.html'
+            "
+          >
+            <ion-icon name="eye-outline"></ion-icon>
+            <span>Ver Productos</span>
+          </button>
+          <button
+            class="profile__action"
+            onclick="location.href = '/frontend/public/views/list-buies.html'"
+          >
+            <ion-icon name="bag-add-outline"></ion-icon>
+            <span>Compras/Pedidos</span>
+          </button>
+          {% comment %} <!-- <button class="profile__action">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>Ver Eventos</span>
+      </button> --> {% endcomment %}
+          <button class="profile__action" onclick="location.href = '#report'">
+            <ion-icon name="document-text-outline"></ion-icon>
+            <span>Reportes</span>
+          </button>
+          <a class="profile__link" href="/frontend/public/views/edit-user.html">
+            <button type="button" class="profile__action">
+              <ion-icon name="settings-outline"></ion-icon>
+              <span>Editar Perfil</span>
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div class="profile__report" id="report">
+        <div class="profile__report--photo">
+          <div class="profile__report--phpto-head">
+            <img
+              class="profile__report--img"
+              src="{% static 'img/interfaz_vanagro/reporte.jpg' %}"
+              alt=""
+            />
+            <div class="profile__report--close">
+              <ion-icon
+                onclick="location.href = 'javascript:history.back()'"
+                name="close-outline"
+              ></ion-icon>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button
+              class="buttons__action--primary"
+              onclick="location.href = 'javascript:history.back()'"
+            >
+              Imprimir
+            </button>
+            <button
+              class="buttons__action--primary"
+              onclick="location.href = 'javascript:history.back()'"
+            >
+              Descargar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock login %}
+    
+    {% include 'components/footer_vanagro.html' %}
+  </body>
+
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    refer
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    refer
+  ></script>
+</html>
