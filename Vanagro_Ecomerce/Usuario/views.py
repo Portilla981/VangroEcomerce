@@ -24,7 +24,7 @@ from django.contrib import messages
 
 # Create your views here.
 
-class Login(TemplateView):
+class Login(TemplateView, LoginRequiredMixin):
     template_name = 'usuario/login.html'
 
     def get_context_data(self, **kwargs):
@@ -35,7 +35,7 @@ class Login(TemplateView):
         return context
 
 
-class Tienda(TemplateView):
+class Tienda(TemplateView, LoginRequiredMixin):
     template_name = 'usuario/producter-profile.html'
 
     def get_context_data(self, **kwargs):

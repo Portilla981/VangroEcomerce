@@ -16,17 +16,25 @@
         <li class="navbar-vanagro__item">
           <a href="{% url 'tienda_usuario' %}" class="navbar-vanagro__link">Quiero Vender</a>
         </li>
-        <!-- <li class="navbar-vanagro__item">
+        {% comment %} <!-- <li class="navbar-vanagro__item">
           <a href="/frontend/public/views/shopping-cart_user.html" class="navbar-vanagro__link">Carrito</a>
-        </li> -->
+        </li> --> {% endcomment %}
       </ul>
     </nav>
 
     <div class="navbar-vanagro__icons">
-      <!-- <a href="/frontend/public/views/shopping-cart.html">
+      {% comment %} <!-- <a href="/frontend/public/views/shopping-cart.html">
         <ion-icon class="navbar-vanagro__icons--cart" name="cart-outline"></ion-icon>
-      </a> -->
-      <ion-icon class="navbar-vanagro__icons--logout log-out" name="log-out-outline"></ion-icon>
+      </a> --> {% endcomment %}
+
+      <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+            <button type="submit" style="background: none; border: none;">
+      <ion-icon class="navbar-vanagro__icons--logout log-out" name="log-out-outline" href="{% url 'logout' %}"></ion-icon>
+      
+      </ion-icon>
+      </button>
+      </form>
       
       <div class="popup" id="popupMessage">
           <div class="popup__header">
@@ -38,10 +46,13 @@
               <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
           </div>
       </div>
-      
-      <a href="/frontend/public/views/account-user.html">
+      <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+            <button type="submit" style="background: none; border: none;">
         <img src="{% static 'img/interfaz_vanagro/campesino.jpg' %}" alt="Perfil" class="navbar-vanagro__profile-img">
-      </a>
+        </button>
+
+      </form>
     </div>
   </div>
 </header>

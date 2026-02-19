@@ -120,6 +120,8 @@ LOGOUT_REDIRECT_URL = 'inicio'
 LOGIN_REDIRECT_URL = 'inicio'
 
 
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
