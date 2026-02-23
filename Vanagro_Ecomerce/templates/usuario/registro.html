@@ -1,0 +1,123 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+
+
+{% block navbar %}
+
+{% include 'components/navbar-simple.html' %}
+
+{% endblock navbar %}
+
+{% block login %}
+
+<div class="form-register__head">
+    <p><strong>Registrar Usuario</strong></p>
+</div>
+
+<section class="form-register__block">
+    <div class="form-register__block--form">
+        
+        <form method="POST" class="form-register__form">
+            {% csrf_token %}
+            <div class="form-register__group">
+                <label class="form-register__label">Nombres
+                    <input class="form-register__input" type="text" placeholder="Ingrese su nombre(s)" required>{{form.first_name}}
+                </label>
+                <label class="form-register__label">Apellidos
+                    <input class="form-register__input" type="text" placeholder="Ingrese sus apellidos" required>{{form.last_name}}
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Tipo de documento
+                    <select class="form-register__input" required>
+                        <option value="">Seleccione un tipo de documento</option>
+                        {% for tipo in tipo_identificacion %}
+                            <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label class="form-register__label">Número de identificación
+                    <input class="form-register__input" type="number" placeholder="Ingrese el numero" required>{{form.numero_identificacion}}
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Departamento
+                    
+                    <select class="form-register__input" required>
+                        <option value="">Seleccione un departamento</option>
+                        {% for dpto in departamentos %}
+                            <option value="{{ dpto.id }}">{{ dpto.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label class="form-register__label">Municipio
+                    <select class="form-register__input" required>
+                        <option value="">Seleccione un municipio</option>
+                        {% for mcpio in municipios %}
+                            <option value="{{ mcpio.id }}">{{ mcpio.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Dirección
+                    <input class="form-register__input" type="text" placeholder="Ingrese su direccion de residencia" required>{{form.direccion}}
+                </label>
+                <label class="form-register__label">Correo Electrónico
+                    <input class="form-register__input" type="email" placeholder="Ingrese su correo electrónico" required>{{form.email}} 
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Teléfono
+                    <input class="form-register__input" type="tel" placeholder="Ingrese su número de teléfono" required>{{form.telefono_1}}</label>
+                </label>
+                <label class="form-register__label">Teléfono Alterno
+                    <input class="form-register__input" type="tel" placeholder="Ingrese su número de teléfono alterno" required>
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Contraseña
+                    <input class="form-register__input" type="password" placeholder="Ingrese una contraseña" required>{{form.password1}}
+                </label>
+                <label class="form-register__label">Confirmar contraseña
+                    <input class="form-register__input" type="password" placeholder="Confirme su contraseña" required>{{form.password2}}
+                </label>
+            </div>
+        </form>
+
+        <div class="form-register__images">
+            <img class="form-register__images--img" alt="Foto Usuario">
+            <label class="form-register__label">Cargar foto de perfil
+                <input class="form-register__file" type="file" required>
+            </label>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button type="submit" class="buttons__action--secondary btn-cancel"
+            onclick="location.href='javascript:history.back()'">Cancelar</button>
+        <button type="submit" class="buttons__action--primary btn-save create-user-alert">Crear Usuario</button>
+    </div>
+    
+    <div class="popup" id="popupMessage">
+        <div class="popup__header">
+            <i class="fa-solid fa-check popup__icon"></i>
+        </div>
+        <div class="popup__body">
+            <h3 class="popup__title">¡USUARIO CREADO!</h3>
+            <p class="popup__message">¡El usuario ha sido creado exitosamente!</p>
+            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+        </div>
+    </div>
+
+</section>
+
+
+
+{% endblock login %}

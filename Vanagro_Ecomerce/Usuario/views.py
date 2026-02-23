@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from django.shortcuts import render, redirect
@@ -44,3 +45,30 @@ class Tienda(TemplateView, LoginRequiredMixin):
         context['titulo']= 'Tienda de Productos'
         
         return context
+    
+class Registro(CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = 'usuario/registro.html'
+    success_url = reverse_lazy('sesion_inicio')
+
+    def cargar_municipios(request):
+        departamento_id = request.GET.get("departamento_id")
+        municipios = Municipio.objects.filter(departamento_id=departamento_id)
+        data = list(municipios.values("id", "nombre"))
+        return JsonResponse(data, safe=False)
+
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        username = form.cleaned_data.get('username')
+        messages.success(self.request, f'Usuario {username} creado exitosamente.')
+        return response
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['titulo']= 'Registro de Usuario'
+        
+        return context
+    
