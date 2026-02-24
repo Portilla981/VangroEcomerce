@@ -1,0 +1,162 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+
+
+{% block navbar %}
+
+{% include 'components/navbar-simple_inicio.html' %}
+
+{% endblock navbar %}
+
+{% block login %}
+
+<div class="form-register__head">
+    <p><strong>Registrar Usuario</strong></p>
+</div>
+
+<section class="form-register__block">
+    <div class="form-register__block--form">
+        
+        <form method="POST" class="form-register__form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-register__group">
+                <label class="form-register__label">Nombres
+                    <input class="form-register__input" type="text" name="first_name" placeholder="Ingrese su nombre(s)" required>
+                </label>
+                <label class="form-register__label">Apellidos
+                    <input class="form-register__input" type="text" name="last_name" placeholder="Ingrese sus apellidos"  required>
+                </label>
+
+                <div class="form-register__images">
+            {% comment %} <img class="form-register__images--img" alt="Foto Usuario"> {% endcomment %}
+            <label class="form-register__label">Cargar foto de perfil
+                <input class="form-register__file" type="file" name="fotografia">
+            </label>
+        </div>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Tipo de documento
+                    
+                    <select class="form-register__input" name="tipo_identificacion" required>
+                        <option value="">Seleccione un tipo de documento</option>
+                        {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
+                            <option value="{{ tipo.id }}">{{ tipo.tipo_identificacion }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label class="form-register__label">Número de identificación
+                    <input class="form-register__input" type="number" name="numero_identificacion" placeholder="Ingrese el numero" required>
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Departamento
+                    
+                    <select id="departamento" name="departamento" class="form-register__input" required>
+                        <option value="">Seleccione un departamento</option>
+                        {% for dpto in perfil_form.departamento.field.queryset %}
+                            <option value="{{ dpto.id }}">{{ dpto.nombre_Departamento }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                
+                <label class="form-register__label">Municipio
+                    <select id="municipio" class="form-register__input" name="municipio" required>
+                        <option value="">Seleccione un municipio</option>
+                        {% for mcpio in perfil_form.municipio.field.queryset %}
+                            <option value="{{ mcpio.id }}">{{ mcpio.nombre_Municipio }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Dirección
+                    <input class="form-register__input" type="text" name="direccion" placeholder="Ingrese su direccion de residencia" required>
+                </label>
+                <label class="form-register__label">Correo Electrónico
+                    <input class="form-register__input" type="email" name="email" placeholder="Ingrese su correo electrónico" required>
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Teléfono
+                    <input class="form-register__input" type="number" name="telefono_1" placeholder="Ingrese su número de teléfono" required>
+                </label>
+                <label class="form-register__label">Teléfono Alterno
+                    <input class="form-register__input" type="number" name="telefono_2" placeholder="Ingrese su número de teléfono alterno" required>
+                </label>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Nombre de Usuario
+                    <input class="form-register__input" type="text" name="username" placeholder="Ingrese nombre para su usuario" required>
+                </label>
+                <label class="form-register__label">Contraseña
+                    <input class="form-register__input" type="password" name="password1" placeholder="Ingrese una contraseña" required>
+                </label>
+                <label class="form-register__label">Confirmar contraseña
+                    <input class="form-register__input" type="password" name="password2" placeholder="Confirme su contraseña" required> 
+                </label>
+            </div>     
+
+        
+    </div>
+
+    <div class="buttons">
+        <button type="submit" class="buttons__action--secondary btn-cancel"
+            onclick="location.href='javascript:history.back()'">Cancelar</button>
+        <button type="submit" class="buttons__action--primary btn-save create-user-alert">Crear Usuario</button>
+    </div>
+    </form>
+
+    {% if user_form.errors %}
+<div style="color:red;">
+    {{ user_form.errors }}
+</div>
+{% endif %}
+
+{% if perfil_form.errors %}
+<div style="color:red;">
+    {{ perfil_form.errors }}
+</div>
+{% endif %}
+
+    
+    <div class="popup" id="popupMessage">
+        <div class="popup__header">
+            <i class="fa-solid fa-check popup__icon"></i>
+        </div>
+        <div class="popup__body">
+            <h3 class="popup__title">¡USUARIO CREADO!</h3>
+            <p class="popup__message">¡El usuario ha sido creado exitosamente!</p>
+            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+        </div>
+    </div>
+
+</section>
+
+
+<script>
+document.getElementById("departamento").addEventListener("change", function(){
+    let depId = this.value;
+    fetch(`/ajax/Municipios/?departamento_id=${depId}`)
+    .then(response => response.json())
+    .then(data => {
+        let municipioSelect = document.getElementById("municipio");
+        municipioSelect.innerHTML = "";
+        data.forEach(m => {
+            let option = document.createElement("option");
+            option.value = m.id;
+            option.textContent = m.nombre_Municipio;
+            municipioSelect.appendChild(option);
+        });
+    });
+});
+</script>
+
+
+
+{% endblock login %}

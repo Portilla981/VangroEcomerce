@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Home',
-    'Usuario',
-    'Producto',
+    'Home.apps.HomeConfig',
+    'Usuario.apps.UsuarioConfig',
+    'Producto.apps.ProductoConfig',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +118,8 @@ USE_TZ = True
 LOGIN_URL = 'inicio'
 LOGOUT_REDIRECT_URL = 'inicio'
 LOGIN_REDIRECT_URL = 'inicio'
+
+
 
 
 # Static files (CSS, JavaScript, Images)

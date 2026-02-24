@@ -1,0 +1,34 @@
+{% load static %}
+
+<div class="logo_gov">
+    <img class="image_gov"  src="{% static 'img/interfaz_vanagro/govco2.png '%}" alt="">    
+</div>
+
+
+<header class="header-vanagro">
+  <div class="navbar-vanagro__container">
+    <h1 class="navbar-vanagro__title">
+      VANAGRO
+      <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
+    </h1>
+
+    <nav class="navbar-vanagro"></nav>
+
+    <div class="navbar-vanagro__icons">
+      <div class="navbar-vanagro__icons--second">
+        <a href="javascript:history.back()">
+          <ion-icon
+            class="navbar-vanagro__icons--back"
+            name="arrow-back-outline"
+          ></ion-icon>
+        </a>
+      </div>
+    </div>
+    {% comment %}
+    <!--navbar-vanagro__icons-->
+    {% endcomment %}
+  </div>
+  {% comment %}
+  <!--navbar-vanagro__container-->
+  {% endcomment %}
+</header>
