@@ -28,5 +28,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Home.url_home')), 
     path('', include('Usuario.url_usuario')), 
-] # Se incluyen las rutas de las aplicaciones Home y Usuario para que estén disponibles en el proyecto, esto permite organizar las URLs de cada aplicación de manera modular y facilita la gestión de las rutas en el proyecto.
-+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Se incluyen las rutas de las aplicaciones Home y Usuario para que estén disponibles en el proyecto, esto permite organizar las URLs de cada aplicación de manera modular y facilita la gestión de las rutas en el proyecto.

@@ -1,10 +1,13 @@
 from django import forms
 # Se importan los modelos para poder crear formularios basados en estos modelos, esto permite crear formularios de manera rápida y sencilla utilizando la funcionalidad de ModelForm de Django, lo que facilita la validación y el manejo de datos relacionados con los modelos.
-from .models import CreacionUsuario
+from .models import CreacionUsuario, Municipio
 from django.contrib.auth.models import User
 
 
 class UserForm(forms.ModelForm):
+    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
+
     class Meta:
         model = User
         fields = ['username',
@@ -13,6 +16,14 @@ class UserForm(forms.ModelForm):
                    'first_name',
                    'last_name'
                    ]
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        p1 = cleaned_data.get("password1")
+        p2 = cleaned_data.get("password2")
+
+        if p1 and p2 and p1 != p2:
+            raise forms.ValidationError("Las contraseñas no coinciden")
         
 class Formulario_Usuario(forms.ModelForm):
     class Meta:
@@ -31,3 +42,17 @@ class Formulario_Usuario(forms.ModelForm):
         # widgets = {
         #     'password': forms.PasswordInput(),
         # }
+   
+   
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['municipio'].queryset = Municipio.objects.none()
+
+        # if 'departamento' in self.data:
+        #     try:
+        #         departamento_id = int(self.data.get('departamento'))
+        #         self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre_Municipio')
+        #     except (ValueError, TypeError):
+        #         pass  # Manejar el caso en que el departamento no sea un entero válido
+        # elif self.instance.pk:
+        #     self.fields['municipio'].queryset = self.instance.departamento.municipio_set.order_by('nombre_Municipio')

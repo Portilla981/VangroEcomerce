@@ -42,7 +42,7 @@ class CreacionUsuario(models.Model):
     telefono_2 = models.CharField('Teléfono Alterno', max_length=20, blank=True)
     direccion_residencia = models.CharField('Dirección', max_length=255, blank=True)
     fecha_nacimiento = models.DateField('Fecha de Nacimiento', null=True, blank=True)
-    fotografia = models.ImageField('Fotografía', upload_to='fotografias/', blank=True, null=True)
+    fotografia = models.ImageField('Fotografía', upload_to='usuarios/', default='usuarios/usuario_default.png', blank=True, null=True)
 
 
 

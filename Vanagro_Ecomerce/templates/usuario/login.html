@@ -6,10 +6,7 @@
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
     {% block script %} {% endblock script %}
 
@@ -17,14 +14,15 @@
   </head>
 
   <body>
-    {% block navbar %}
+    {% block navbar %} 
     {% include 'components/navbar-profile.html' %} 
     {% endblock navbar %} 
     
-    
     {% block login %}
     <div class="profile__container">
-      {% comment %} <!-- Portada con leyenda --> {% endcomment %}
+      {% comment %}
+      <!-- Portada con leyenda -->
+      {% endcomment %}
       <div class="profile__hero">
         <div class="profile__legend">
           <h2 class="profile__role">CLIENTE</h2>
@@ -35,9 +33,13 @@
         </div>
       </div>
 
-      {% comment %} <!-- Contenido principal --> {% endcomment %}
+      {% comment %}
+      <!-- Contenido principal -->
+      {% endcomment %}
       <div class="profile__content">
-        {% comment %} <!-- Columna izquierda: datos del productor --> {% endcomment %}
+        {% comment %}
+        <!-- Columna izquierda: datos del productor -->
+        {% endcomment %}
         <div class="profile__info">
           <img
             class="profile__avatar"
@@ -63,7 +65,9 @@
           </p>
         </div>
 
-        {% comment %} <!-- Columna derecha: opciones --> {% endcomment %}
+        {% comment %}
+        <!-- Columna derecha: opciones -->
+        {% endcomment %}
         <div class="profile__actions">
           <button
             class="profile__action"
@@ -81,10 +85,12 @@
             <ion-icon name="bag-add-outline"></ion-icon>
             <span>Compras/Pedidos</span>
           </button>
-          {% comment %} <!-- <button class="profile__action">
+          {% comment %}
+          <!-- <button class="profile__action">
         <ion-icon name="calendar-outline"></ion-icon>
         <span>Ver Eventos</span>
-      </button> --> {% endcomment %}
+      </button> -->
+          {% endcomment %}
           <button class="profile__action" onclick="location.href = '#report'">
             <ion-icon name="document-text-outline"></ion-icon>
             <span>Reportes</span>
@@ -132,9 +138,18 @@
       </div>
     </div>
 
-    {% endblock login %}
-    
-    {% include 'components/footer_vanagro.html' %}
+    {% if messages %}
+<div>
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+    {% endblock login %} {% include 'components/footer_vanagro.html' %}
   </body>
 
   <script
