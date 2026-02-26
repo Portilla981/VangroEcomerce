@@ -84,20 +84,17 @@ class RegistroUsuario(View):
     def post(self, request):
         user_form = UserForm(request.POST)
         perfil_form = Formulario_Usuario(request.POST)
+        perfil_form.fields['municipio'].queryset = Municipio.objects.all()
 
         if user_form.is_valid() and perfil_form.is_valid():
 
             # Crear usuario
             user = User.objects.create_user(
-                username=user_form.cleaned_data['username'],    
-                email=user_form.cleaned_data['email'],
-                password=user_form.cleaned_data['password1']
-                )
-            
-            # user = user_form.save(commit=False)
-            # user.set_password(user_form.cleaned_data['password'])
-            # user.save()
-
+                username = user_form.cleaned_data['username'],    
+                email = user_form.cleaned_data['email'],
+                password = user_form.cleaned_data['password1']
+               )
+                     
             perfil = perfil_form.save(commit=False)
             perfil.user = user
             perfil.save()

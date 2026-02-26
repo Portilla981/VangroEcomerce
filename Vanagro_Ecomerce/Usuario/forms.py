@@ -12,7 +12,6 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username',
                   'email',
-                   'password',
                    'first_name',
                    'last_name'
                    ]
@@ -42,11 +41,22 @@ class Formulario_Usuario(forms.ModelForm):
         # widgets = {
         #     'password': forms.PasswordInput(),
         # }
+    
+    def clean_numero_identificacion(self):
+        num = self.cleaned_data['numero_identificacion']
+        if CreacionUsuario.objects.filter(numero_identificacion = num).exists():
+            raise forms.ValidationError("Este número de identificación ya existe")
+        return num
    
    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['municipio'].queryset = Municipio.objects.none()
+        
+        if 'departamento' in self.data:
+            dep_id = self.data.get('departamento')
+            self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=dep_id)
+        else:
+            self.fields['municipio'].queryset = Municipio.objects.none()
 
         # if 'departamento' in self.data:
         #     try:
