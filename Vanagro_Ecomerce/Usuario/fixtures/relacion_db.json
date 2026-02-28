@@ -1,0 +1,68 @@
+[
+{
+   "model": "Usuario.departamento",
+   "pk": 1,
+   "fields": {
+      "nombre_Departamento": "Risaralda"
+   }
+},
+{
+   "model": "Usuario.departamento",
+   "pk": 2,
+   "fields": {
+      "nombre_Departamento": "Caldas"
+   }
+},
+{
+   "model": "Usuario.departamento",
+   "pk": 3,
+   "fields": {
+      "nombre_Departamento": "Quindio"
+   }
+},
+{
+   "model": "Usuario.municipio",
+   "pk": 1,
+   "fields": {
+      "nombre_Municipio": "Pereira",
+      "departamento": 1
+   }
+},
+{
+   "model": "Usuario.municipio",
+   "pk": 2,
+   "fields": {
+      "nombre_Municipio": "Dosquebradas",
+      "departamento": 1
+   }
+},
+{
+   "model": "Usuario.municipio",
+   "pk": 3,
+   "fields": {
+      "nombre_Municipio": "Santa Rosa de Cabal",
+      "departamento": 1
+   }
+},
+{
+   "model": "Usuario.identificacion",
+   "pk": 1,
+   "fields": {
+      "tipo_identificacion": "Cedula de Ciudadania"
+   }
+},
+{
+   "model": "Usuario.identificacion",
+   "pk": 2,
+   "fields": {
+      "tipo_identificacion": "Cedula de Extranjeria"
+   }
+},
+{
+   "model": "Usuario.identificacion",
+   "pk": 3,
+   "fields": {
+      "tipo_identificacion": "Nit"
+   }
+}
+]
