@@ -95,12 +95,27 @@ class RegistroUsuario(View):
                 password = user_form.cleaned_data['password1']
                )
                      
-            perfil = perfil_form.save(commit=False)
-            perfil.user = user
+            # perfil = perfil_form.save(commit=False)
+            # perfil.user = user
+            # perfil.save()
+
+            perfil = user.creacionusuario
+            perfil.departamento = perfil_form.cleaned_data['departamento']  
+            perfil.municipio = perfil_form.cleaned_data['municipio']
+            perfil.tipo_identificacion = perfil_form.cleaned_data['tipo_identificacion']
+            perfil.numero_identificacion = perfil_form.cleaned_data['numero_identificacion']
+            perfil.telefono_1 = perfil_form.cleaned_data['telefono_1']
+            perfil.telefono_2 = perfil_form.cleaned_data['telefono_2']
+            perfil.direccion_residencia = perfil_form.cleaned_data['direccion_residencia']
+            perfil.fecha_nacimiento = perfil_form.cleaned_data['fecha_nacimiento']
+            perfil.fotografia = perfil_form.cleaned_data['fotografia']
+            
             perfil.save()
 
+
+
             messages.success(request, f'Usuario {user.username} creado exitosamente.') 
-            return redirect("sesion_inicio")
+            return redirect("inicio_vista")
         
         messages.error(request, 'Error al crear el usuario. Por favor, revise los datos ingresados.') 
         

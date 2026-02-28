@@ -137,19 +137,11 @@
         </div>
       </div>
     </div>
-
-    {% if messages %}
-<div>
-    {% for message in messages %}
-        <div class="alert {{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-</div>
-{% endif %}
+  
 
 
-    {% endblock login %} {% include 'components/footer_vanagro.html' %}
+    {% endblock login %}
+    {% include 'components/footer_vanagro.html' %}
   </body>
 
   <script

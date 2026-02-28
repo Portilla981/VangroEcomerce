@@ -35,7 +35,7 @@ class CreacionUsuario(models.Model):
     # Relación para listas desplegables de tipo de identificación, departamento y municipio
     tipo_identificacion = models.ForeignKey(Identificacion, on_delete=models.SET_NULL, null=True, blank=True)
     # Este campo debe ser único para cada usuario, por lo que se establece unique=True para evitar duplicados en la base de datos, ademas se debe de validar que solo sean números.   
-    numero_identificacion = models.CharField('Número de Identificación', max_length=20, blank=True, unique=True)
+    numero_identificacion = models.CharField('Número de Identificación', max_length=20, unique=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True, blank=True)
     municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True, blank=True)
     telefono_1 = models.CharField('Teléfono', max_length=20, blank=True)
