@@ -1,4 +1,4 @@
-# Ejecutar algo despues de guardar un nuevo usuario.
+# Ejecutar algo después de guardar un nuevo usuario.
 from django.db.models.signals import post_save
 # Importar el modelo User para conectar la señal con el modelo de usuario.
 from django.contrib.auth.models import User
@@ -12,3 +12,4 @@ from .models import CreacionUsuario
 def crear_perfil_usuario(sender, instance, created, **kwargs):
     if created:
         CreacionUsuario.objects.create(user=instance)
+        # Función de creación de perfil de usuario, esta función se ejecutará cada vez que se guarde un nuevo usuario, y si el usuario es creado (created=True), se creará automáticamente un perfil de usuario asociado a ese nuevo usuario utilizando el modelo CreacionUsuario.

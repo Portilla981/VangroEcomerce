@@ -1,0 +1,129 @@
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'js/modal_mapa.js' %}" defer></script>
+    <script src="{% static 'js/render_mapa.js' %}" defer></script>
+
+{% endblock script %}
+
+<div class="profile_producter--container">
+  {% comment %}Portada con leyenda{% endcomment %}
+  <div class="profile_producter--hero">
+    <div class="profile_producter--legend">
+      <h2 class="profile_producter--role">TIENDA / PRODUCTOR</h2>
+      <p class="profile_producter--message">
+        Tu trabajo representa el alma del campo. Gracias por ser parte de esta comunidad
+      que cultiva con amor
+      </p>
+    </div>
+  </div>
+
+  {% comment %}Contenido principal{% endcomment %}
+  <div class="profile_producter--content">
+
+    {% comment %}Columna izquierda: datos del productor{% endcomment %}
+    <div class="profile__info">
+          <img class="profile__avatar" src="{{ perfil.fotografia.url }}" alt="Foto del productor"/>
+          <h3 class="profile__name">Esta es tu tienda {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+          <p class="profile__joined">Se unió el {{ request.user.date_joined|date:"j \d\e F \d\e Y" }}</p>
+          <p class="profile__detail">
+            <strong>IDENTIFICACIÓN:</strong> {{ perfil.tipo_identificacion }} {{ perfil.numero_identificacion }}
+          </p>
+          <p class="profile__detail">
+            <strong>UBICACIÓN:</strong> {{ perfil.departamento }} - {{ perfil.municipio }}
+          </p>
+          <p class="profile__detail">
+            <strong>DIRECCIÓN:</strong> {{ perfil.direccion_residencia }}
+          </p>
+          <p class="profile__detail">
+            <strong>CORREO:</strong> {{ request.user.email }}   
+          </p>
+          <p class="profile__detail">
+            <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2 }}
+          </p>
+
+          <p class="profile_producter--detail"><strong>DESCRIPCIÓN:</strong> {{ productor.descripcion }}</p>
+        </div>
+
+
+    <div class="profile_producter--info">
+        <a href="/frontend/public/views/edit-shop-user.html">
+        <ion-icon name="create-outline" class="profile_producter--edit"></ion-icon>
+        </a>
+
+        <img class="profile_producter--avatar" src="{{ productor.foto_finca.url }}" alt="Foto de la finca">
+        <h3 class="profile_producter--name">{{ productor.nombre_finca }}</h3>
+        <p class="profile_producter--joined">Desde {{ productor.fecha_creacion|date:"j \d\e F \d\e Y" }}</p>
+        <p class="profile_producter--detail"><strong>UBICACIÓN:</strong> {{ productor.municipio }} - {{ productor.departamento }}</p>
+        <p class="profile_producter--detail"><strong>VEREDA:</strong> {{ productor.vereda }}</p>
+
+        <div class="profile_producter--location">            
+        {% comment %} Con esta linea se cancela la ubicacion orbital para la precision en Colombia {% endcomment %}
+            {% load l10n %}
+            {% localize off %}
+            <div id="map" data-lat="{{ productor.latitud }}" data-lng="{{ productor.longitud }}" class="producter-register__map-render"></div>
+            {% endlocalize %}
+            <button id="expandMap" class="buttons__action--primary">Ampliar</button>
+        </div>
+
+        <!-- Modal -->
+        <div id="modalMapa" class="modal">
+            <div class="modal-overlay"></div>
+
+            <div class="modal-content">
+                <button id="closeModal">&times;</button>
+                <div id="modalMapContainer"></div>
+            </div>
+        </div>
+      
+    </div>
+
+    <div class="profile_producter--actions">
+        <button class="profile_producter--action" onclick="location.href='/frontend/public/views/create-product.html'">
+            <ion-icon name="add-circle-outline"></ion-icon>
+            <span>Agregar Producto</span>
+        </button>
+
+        <button class="profile_producter--action" onclick="location.href='/frontend/public/views/edit-product.html'">
+            <ion-icon name="create-outline"></ion-icon>
+            <span>Editar Producto</span>
+        </button>
+       
+        <button class="profile_producter--action" onclick="location.href='/frontend/public/views/list-products.html'">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Listar Productos</span>
+        </button>
+
+        <button class="profile_producter--action" onclick="location.href='#report'">
+            <ion-icon name="document-text-outline"></ion-icon>
+            <span>Reportes</span>
+        </button>
+
+        <button class="profile_producter--action" onclick="location.href='/frontend/public/views/producter-orders.html'">
+            <ion-icon name="bag-handle-outline"></ion-icon>
+            <span>Pedidos</span>
+        </button>
+
+    </div>
+    
+    <div class="profile__report" id="report">
+      <div class="profile__report--photo">
+        <div class="profile__report--phpto-head">
+          <img class="profile__report--img" src="{% static 'img/interfaz_vanagro/reporte.jpg' %}" alt="">
+          <div class="profile__report--close">
+            <ion-icon onclick="location.href='javascript:history.back()'"  name="close-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button class="buttons__action--primary" onclick="location.href='javascript:history.back()'">
+            Imprimir
+          </button>
+          <button class="buttons__action--primary" onclick="location.href='javascript:history.back()'"> 
+            Descargar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

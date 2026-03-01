@@ -20,6 +20,7 @@
         
         <form method="POST" class="form-register__form" enctype="multipart/form-data">
             {% csrf_token %}
+            
             <div class="form-register__group">
                 <label class="form-register__label">Nombres
                     <input class="form-register__input" type="text" name="first_name" placeholder="Ingrese su nombre(s)" required>
@@ -29,16 +30,15 @@
                 </label>
 
                 <div class="form-register__images">
-            {% comment %} <img class="form-register__images--img" alt="Foto Usuario"> {% endcomment %}
-            <label class="form-register__label">Cargar foto de perfil
-                <input class="form-register__file" type="file" name="fotografia">
-            </label>
-        </div>
+                {% comment %} <img class="form-register__images--img" alt="Foto Usuario"> {% endcomment %}
+                    <label class="form-register__label">Cargar foto de perfil
+                        <input class="form-register__file" type="file" name="fotografia">
+                    </label>
+                </div>            
             </div>
 
             <div class="form-register__group">
-                <label class="form-register__label">Tipo de documento
-                    
+                <label class="form-register__label">Tipo de documento                    
                     <select class="form-register__input" name="tipo_identificacion" required>
                         <option value="">Seleccione un tipo de documento</option>
                         {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
@@ -52,8 +52,7 @@
             </div>
 
             <div class="form-register__group">
-                <label class="form-register__label">Departamento
-                    
+                <label class="form-register__label">Departamento                    
                     <select id="departamento" name="departamento" class="form-register__input" required>
                         <option value="">Seleccione un departamento</option>
                         {% for dpto in perfil_form.departamento.field.queryset %}
@@ -74,7 +73,7 @@
 
             <div class="form-register__group">
                 <label class="form-register__label">Dirección
-                    <input class="form-register__input" type="text" name="direccion" placeholder="Ingrese su direccion de residencia" required>
+                    <input class="form-register__input" type="text" name="direccion_residencia" placeholder="Ingrese su direccion de residencia" required>
                 </label>
                 <label class="form-register__label">Correo Electrónico
                     <input class="form-register__input" type="email" name="email" placeholder="Ingrese su correo electrónico" required>

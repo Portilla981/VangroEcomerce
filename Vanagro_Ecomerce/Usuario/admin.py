@@ -8,4 +8,5 @@ admin.site.register(Departamento)
 admin.site.register(Municipio)  
 admin.site.register(Identificacion)
 admin.site.register(CreacionUsuario)
+admin.site.register(CreacionProductor)
 

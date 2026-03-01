@@ -17,7 +17,7 @@ from django.contrib.auth.views import LoginView
 # Ruta para manejar la mezcla de autenticación en las vistas
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 # Importación del modelo Tarea creado
 from .models import *
 from .form_home import *
@@ -92,11 +92,11 @@ class Inicio(LoginView):
     
     # Campos que se van a utilizar en el formulario de logueo
     fields = '__all__'  
-    # Condicion para redireccionar si el usuario ya esta autenticado
+    # Condición para redireccionar si el usuario ya esta autenticado
     redirect_authenticated_user = True
-    # Redireccion despues de iniciar sesion exitosamente
+    # Redireccion después de iniciar sesion exitosamente
     def get_success_url(self):
-        # Redireccion a la vista despues de iniciar sesion
+        # Redireccion a la vista después de iniciar sesion
         return reverse_lazy('sesion_inicio')  
     
     
@@ -108,5 +108,7 @@ class Inicio(LoginView):
         return context
 
     
-    
+def logout_view(request):
+    logout(request)
+    return redirect('inicio')
 
