@@ -45,6 +45,27 @@ class CreacionUsuario(models.Model):
     fotografia = models.ImageField('Fotografía', upload_to='usuarios/', default='usuarios/usuario_default.png', blank=True, null=True)
 
 
-
     def __str__(self):  
         return self.user.username
+
+
+class CreacionProductor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='productor')
+    # Campos adicionales para el perfil del productor
+    nombre_finca = models.CharField('Teléfono', max_length=20, blank=True)
+    departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True, blank=True)
+    municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True, blank=True)
+    vereda = models.CharField('Veredales', max_length=255, blank=True)    
+    direccion = models.CharField('Dirección', max_length=255, blank=True)    
+    foto_finca = models.ImageField('Fotografía', upload_to='productores/', default='productores/finca_default.png', blank=True, null=True)
+    # Ubicación geográfica de la finca, se pueden usar para mostrar la ubicación en un mapa o para realizar búsquedas por proximidad.
+    latitud = models.FloatField('Latitud', null=True, blank=True)
+    longitud = models.FloatField('Longitud', null=True, blank=True)
+    descripcion = models.TextField('Descripción de la finca', blank=True)
+    # Opción inicial luego en la edición del usuario puede desactivar
+    activo = models.BooleanField('Activo', default=True) 
+    fecha_creacion = models.DateField(auto_now_add=True)   
+
+
+    def __str__(self):
+        return f"{self.user.username} - {self.nombre_finca}"

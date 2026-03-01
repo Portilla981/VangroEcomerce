@@ -19,7 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
-from Usuario.forms import UserForm, Formulario_Usuario
+from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor
 # Importación del modelo Tarea creado
 from .models import *
 # from .form_home import *
@@ -27,14 +27,20 @@ from django.contrib import messages
 
 # Create your views here.
 
-class Login(TemplateView, LoginRequiredMixin):
+class Login(DeleteView, LoginRequiredMixin):
+    model = CreacionUsuario
     template_name = 'usuario/login.html'
+    context_object_name = 'perfil'
 
+    def get_object(self):
+        #return self.request.user.creacionusuario
+        perfil, created = CreacionUsuario.objects.get_or_create(user=self.request.user)
+        return perfil
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['titulo']= 'Sesion de Usuario'
-        
+        context['titulo']= 'Sesion de Usuario'        
         return context
 
 
@@ -48,24 +54,6 @@ class Tienda(TemplateView, LoginRequiredMixin):
         
         return context
     
-# class Registro(CreateView):
-#     model = User
-#     form_class = UserCreationForm
-#     template_name = 'usuario/registro.html'
-#     success_url = reverse_lazy('sesion_inicio')
-
-#     def form_valid(self, form):
-#         response = super().form_valid(form)
-#         username = form.cleaned_data.get('username')
-#         messages.success(self.request, f'Usuario {username} creado exitosamente.')
-#         return response
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-        
-#         context['titulo']= 'Registro de Usuario'
-        
-#         return context
 
 class RegistroUsuario(View):
     template_name = "usuario/registro.html"
@@ -90,15 +78,13 @@ class RegistroUsuario(View):
 
             # Crear usuario
             user = User.objects.create_user(
+                first_name = user_form.cleaned_data['first_name'],
+                last_name = user_form.cleaned_data['last_name'],
                 username = user_form.cleaned_data['username'],    
                 email = user_form.cleaned_data['email'],
                 password = user_form.cleaned_data['password1']
                )
                      
-            # perfil = perfil_form.save(commit=False)
-            # perfil.user = user
-            # perfil.save()
-
             perfil = user.creacionusuario
             perfil.departamento = perfil_form.cleaned_data['departamento']  
             perfil.municipio = perfil_form.cleaned_data['municipio']
@@ -135,3 +121,47 @@ def cargar_municipios(request):
         municipios = Municipio.objects.filter(departamento_id=departamento_id)
         data = list(municipios.values("id", "nombre_Municipio"))
         return JsonResponse(data, safe=False)
+
+
+class RegistroProductor(TemplateView, LoginRequiredMixin):
+    template_name = "usuario/tienda.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)        
+        
+
+        user = self.request.user
+
+        if hasattr(user, 'productor'):
+            context['titulo']= 'Tu tienda'
+            context['es_productor'] = True
+            context['productor'] = user.productor
+            context['perfil'] = CreacionUsuario.objects.get(user=user)
+
+        else:
+            context['titulo']= 'Registro de tienda'
+            context['es_productor'] = False
+            context['form'] = Formulario_Productor()
+            context['form'].fields['municipio'].queryset = Municipio.objects.all()
+        
+        return context
+    
+    # POST → Guardar datos
+    def post(self, request, *args, **kwargs):
+
+        # Validación principal
+        if hasattr(request.user, 'productor'):
+            return redirect('tienda_usuario')  # ya existe
+
+        form = Formulario_Productor(request.POST, request.FILES)
+
+        if form.is_valid():
+            productor = form.save(commit=False)
+            productor.user = request.user
+            productor.save()
+
+            messages.success(request, f'La finca {productor.nombre_finca} ha sido creada exitosamente.') 
+
+            return redirect('tienda_usuario')
+
+        return self.render_to_response({'form': form})

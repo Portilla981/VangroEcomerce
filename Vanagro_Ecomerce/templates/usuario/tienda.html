@@ -1,0 +1,23 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+
+{% block navbar %}
+
+{% include 'components/navbar-profile_2.html' %}
+
+{% endblock navbar %}
+
+{% block login %}
+
+{% if es_productor %}
+
+{% include 'components/perfil_productor.html' %}
+
+{% else %}
+
+{% include 'components/crear_tienda.html' %}      
+
+{% endif %}
+
+{% endblock login %}

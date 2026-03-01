@@ -1,6 +1,6 @@
 from django import forms
 # Se importan los modelos para poder crear formularios basados en estos modelos, esto permite crear formularios de manera rápida y sencilla utilizando la funcionalidad de ModelForm de Django, lo que facilita la validación y el manejo de datos relacionados con los modelos.
-from .models import CreacionUsuario, Municipio
+from .models import CreacionUsuario, Municipio, CreacionProductor
 from django.contrib.auth.models import User
 
 
@@ -38,10 +38,7 @@ class Formulario_Usuario(forms.ModelForm):
                    'fotografia',
                    ]
         
-        # widgets = {
-        #     'password': forms.PasswordInput(),
-        # }
-    
+          
     def clean_numero_identificacion(self):
         num = self.cleaned_data['numero_identificacion']
         if CreacionUsuario.objects.filter(numero_identificacion = num).exists():
@@ -58,11 +55,27 @@ class Formulario_Usuario(forms.ModelForm):
         else:
             self.fields['municipio'].queryset = Municipio.objects.none()
 
-        # if 'departamento' in self.data:
-        #     try:
-        #         departamento_id = int(self.data.get('departamento'))
-        #         self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre_Municipio')
-        #     except (ValueError, TypeError):
-        #         pass  # Manejar el caso en que el departamento no sea un entero válido
-        # elif self.instance.pk:
-        #     self.fields['municipio'].queryset = self.instance.departamento.municipio_set.order_by('nombre_Municipio')
+
+class Formulario_Productor(forms.ModelForm):
+    class Meta:
+        model = CreacionProductor
+        fields = [ 'nombre_finca',
+                   'departamento',
+                   'municipio', 
+                   'vereda',
+                   'direccion',
+                   'foto_finca',
+                   'latitud',
+                   'longitud',
+                   'descripcion',
+                   'activo'
+                   ]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        if 'departamento' in self.data:
+            dep_id = self.data.get('departamento')
+            self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=dep_id)
+        else:
+            self.fields['municipio'].queryset = Municipio.objects.none()

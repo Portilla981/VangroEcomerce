@@ -1,6 +1,13 @@
 .footer-vanagro {
-  background-color: var(--primary-900);  
+  background-color: var(--primary-900); 
+   
 }
+
+.footer-vanagro__gov{
+    height: 37px;
+    background-color: #0a43b6;
+}
+
 
 .footer-vanagro__content {  
   display: flex;

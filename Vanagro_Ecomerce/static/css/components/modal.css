@@ -1,0 +1,21 @@
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+
+}
+
+.modal-content {
+    width: 60%;
+    height: 80vh;
+    background: white;
+    position: absolute;
+}
+
+#modalMapContainer {
+    height: 100%;
+}
