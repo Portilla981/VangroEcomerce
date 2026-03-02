@@ -71,7 +71,7 @@ class RegistroUsuario(View):
 
     def post(self, request):
         user_form = UserForm(request.POST)
-        perfil_form = Formulario_Usuario(request.POST)
+        perfil_form = Formulario_Usuario(request.POST, request.FILES)
         perfil_form.fields['municipio'].queryset = Municipio.objects.all()
 
         if user_form.is_valid() and perfil_form.is_valid():

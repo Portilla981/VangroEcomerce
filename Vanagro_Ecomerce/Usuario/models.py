@@ -42,7 +42,7 @@ class CreacionUsuario(models.Model):
     telefono_2 = models.CharField('Teléfono Alterno', max_length=20, blank=True)
     direccion_residencia = models.CharField('Dirección', max_length=255, blank=True)
     fecha_nacimiento = models.DateField('Fecha de Nacimiento', null=True, blank=True)
-    fotografia = models.ImageField('Fotografía', upload_to='usuarios/', default='usuarios/usuario_default.png', blank=True, null=True)
+    fotografia = models.ImageField('Fotografía', upload_to='usuarios/', blank=True, null=True)
 
 
     def __str__(self):  
@@ -57,7 +57,7 @@ class CreacionProductor(models.Model):
     municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True, blank=True)
     vereda = models.CharField('Veredales', max_length=255, blank=True)    
     direccion = models.CharField('Dirección', max_length=255, blank=True)    
-    foto_finca = models.ImageField('Fotografía', upload_to='productores/', default='productores/finca_default.png', blank=True, null=True)
+    foto_finca = models.ImageField('Fotografía', upload_to='productores/', blank=True, null=True)
     # Ubicación geográfica de la finca, se pueden usar para mostrar la ubicación en un mapa o para realizar búsquedas por proximidad.
     latitud = models.FloatField('Latitud', null=True, blank=True)
     longitud = models.FloatField('Longitud', null=True, blank=True)

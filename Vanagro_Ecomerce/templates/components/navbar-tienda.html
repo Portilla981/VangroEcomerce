@@ -29,12 +29,27 @@
             </a> --> {% endcomment %}
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
-            <button type="submit" style="background: none; border: none;">
-            <ion-icon class="navbar-vanagro__icons--logout log-out-user" name="log-out-outline"></ion-icon>
-            </button>
+                <button type="submit" style="background: none; border: none;">
+                    <ion-icon class="navbar-vanagro__icons--logout log-out-user" name="log-out-outline"></ion-icon>
+                </button>
             </form>
 
-            <div class="popup" id="popupMessage">
+            
+            {% comment %} <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+            <button type="submit" style="background: none; border: none;"> {% endcomment %}
+                {% if perfil.fotografia %}
+                    <img class="navbar-vanagro__profile-img" src="{{ perfil.fotografia.url }}" alt="Foto del productor"/>
+                {% else %}
+                    <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}" alt="Foto del productor"/>
+                {% endif %}
+            {% comment %} </button>
+            </form> {% endcomment %}
+        </div>
+    </div>
+
+
+    <div class="popup" id="popupMessage">
                 <div class="popup__header">
                     <i class="fa-solid fa-check popup__icon"></i>
                 </div>
@@ -44,12 +59,4 @@
                     <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
                 </div>
             </div>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-            <button type="submit" style="background: none; border: none;">
-                <img src="{{ perfil.fotografia.url }}" alt="Perfil" class="navbar-vanagro__profile-img">
-            </button>
-            </form>
-        </div>
-    </div>
 </header>
