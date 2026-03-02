@@ -20,5 +20,19 @@ cd nombre del entorno virtual\Scripts\activate
 -> Copiar los requerimientos que se usaran con el proyecto 
 pip install -r dirección donde este el archivo Requirements.txt ejm: "D:\Proyecto_2026\Requerimientos.txt", las comillas son obligatorias si no las usa va tener errores.
 
+-> Preparar la base de datos
+Para cargar las bases de datos del proyecto con datos se debe verificar si en el proyecto dentro de cada app (que en sus modelos alojen datos) exista una carpeta llamada fixtures, si no existe hay que crearla con ese nombre, luego ejecutar el comando:
+
+python manage.py loaddata "nombre del archivo".json 
+o si esta dentro de app 
+python manage.py loaddata "Nombre del archivo"
+
+cuando dentro de una app se creen modelos y se almacene datos para que el proyecto sea igual o que el equipo tenga la misma base de datos se realiza ejecutando el siguiente código:
+
+python manage.py dumpdata usuarios.Departamento usuarios.Municipio --indent 2 > usuarios/fixtures/ubicaciones.json
+
+después de dumpdata  se coloca el nombre de la app en minúsculas donde esta el modelo que se quiere copiar sus datos para el equipo, luego el nombre del modelo o de la tabla, si son varias tablas se separa con un espacio, luego el --indent coloca la cantidad de tablas a copiar, luego después del signo > se coloca la ubicacion donde se va a crear el archivo tipo fixture es decir su ubicacion ejm de ruta usuarios/fixtures/ y luego el nombre que desee con extension .json, esto creara los datos para ser migrados y poder luego extraerlos para acomodar las tablas de la app.
+
+
 
 python manage.py runserver

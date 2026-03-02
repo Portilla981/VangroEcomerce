@@ -9,6 +9,10 @@
 
 {% endblock navbar %}
 
+{% block script %}
+    <script src="{% static 'js/campo_identificacion.js' %}" defer></script>
+{% endblock script %}
+
 {% block login %}
 
 <div class="form-register__head">
@@ -39,7 +43,7 @@
 
             <div class="form-register__group">
                 <label class="form-register__label">Tipo de documento                    
-                    <select class="form-register__input" name="tipo_identificacion" required>
+                    <select class="form-register__input" name="tipo_identificacion" id="tipo_id" required>
                         <option value="">Seleccione un tipo de documento</option>
                         {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
                             <option value="{{ tipo.id }}">{{ tipo.tipo_identificacion }}</option>
@@ -47,7 +51,7 @@
                     </select>
                 </label>
                 <label class="form-register__label">Número de identificación
-                    <input class="form-register__input" type="number" name="numero_identificacion" placeholder="Ingrese el numero" required>
+                    <input class="form-register__input" type="text" id="number_id" name="numero_identificacion" placeholder="Ingrese el numero" required>
                 </label>
             </div>
 
@@ -82,10 +86,10 @@
 
             <div class="form-register__group">
                 <label class="form-register__label">Teléfono
-                    <input class="form-register__input" type="number" name="telefono_1" placeholder="Ingrese su número de teléfono" required>
+                    <input class="form-register__input" type="tel" name="telefono_1" placeholder="Ingrese su número de teléfono" required>
                 </label>
                 <label class="form-register__label">Teléfono Alterno
-                    <input class="form-register__input" type="number" name="telefono_2" placeholder="Ingrese su número de teléfono alterno" required>
+                    <input class="form-register__input" type="tel" name="telefono_2" placeholder="Ingrese su número de teléfono alterno" required>
                 </label>
             </div>
 

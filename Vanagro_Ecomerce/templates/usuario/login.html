@@ -38,7 +38,11 @@
       <div class="profile__content">
         {% comment %}Columna izquierda: datos del productor{% endcomment %}
         <div class="profile__info">
+          {% if perfil.fotografia %}
           <img class="profile__avatar" src="{{ perfil.fotografia.url }}" alt="Foto del productor"/>
+          {% else %}
+          <img class="profile__avatar" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}" alt="Foto del productor"/>
+          {% endif %}
           <h3 class="profile__name">Bienvenido {{ request.user.first_name }} {{ request.user.last_name }}</h3>
           <p class="profile__joined">Se unió el {{ request.user.date_joined|date:"j \d\e F \d\e Y" }}</p>
           <p class="profile__detail">
