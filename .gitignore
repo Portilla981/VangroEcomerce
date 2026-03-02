@@ -8,9 +8,9 @@ __pycache__/
 # ===============================
 # Entorno virtual
 # ===============================
-venv/
-env/
-.venv/
+venv*/
+env*/
+.venv*/
 
 # ===============================
 # Variables de entorno
