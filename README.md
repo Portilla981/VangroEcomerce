@@ -21,6 +21,12 @@ cd nombre del entorno virtual\Scripts\activate
 pip install -r dirección donde este el archivo Requirements.txt ejm: "D:\Proyecto_2026\Requerimientos.txt", las comillas son obligatorias si no las usa va tener errores.
 
 -> Preparar la base de datos
+
+Ingresa al proyecto con cd nombre del proyecto, luego realiza migraciones para actualizar tablas.
+
+manage.py makemigrations
+manage.py migrate
+
 Para cargar las bases de datos del proyecto con datos se debe verificar si en el proyecto dentro de cada app (que en sus modelos alojen datos) exista una carpeta llamada fixtures, si no existe hay que crearla con ese nombre, luego ejecutar el comando:
 
 python manage.py loaddata "nombre del archivo".json 
