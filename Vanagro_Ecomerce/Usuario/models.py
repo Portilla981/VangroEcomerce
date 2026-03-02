@@ -30,7 +30,7 @@ class Identificacion(models.Model):
 
 class CreacionUsuario(models.Model):
     # Relación uno a uno con el modelo de usuario de Django
-    user = models.OneToOneField(User, on_delete=models.CASCADE)    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usuario')    
     # Campos adicionales para el perfil del usuario
     # Relación para listas desplegables de tipo de identificación, departamento y municipio
     tipo_identificacion = models.ForeignKey(Identificacion, on_delete=models.SET_NULL, null=True, blank=True)

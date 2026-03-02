@@ -23,7 +23,15 @@
 
     {% comment %}Columna izquierda: datos del productor{% endcomment %}
     <div class="profile__info">
+
+      {% if perfil.fotografia %}
           <img class="profile__avatar" src="{{ perfil.fotografia.url }}" alt="Foto del productor"/>
+          {% else %}
+          <img class="profile__avatar" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}" alt="Foto del productor"/>
+          {% endif %}
+
+
+          
           <h3 class="profile__name">Esta es tu tienda {{ request.user.first_name }} {{ request.user.last_name }}</h3>
           <p class="profile__joined">Se unió el {{ request.user.date_joined|date:"j \d\e F \d\e Y" }}</p>
           <p class="profile__detail">
@@ -44,14 +52,18 @@
 
           <p class="profile_producter--detail"><strong>DESCRIPCIÓN:</strong> {{ productor.descripcion }}</p>
         </div>
-
-
+        
     <div class="profile_producter--info">
         <a href="/frontend/public/views/edit-shop-user.html">
         <ion-icon name="create-outline" class="profile_producter--edit"></ion-icon>
         </a>
 
-        <img class="profile_producter--avatar" src="{{ productor.foto_finca.url }}" alt="Foto de la finca">
+        {% if perfil.fotografia %}
+          <img class="profile_producter--avatar" src="{{ productor.foto_finca.url }}" alt="Foto de fica"/>
+        {% else %}
+          <img class="profile_producter--avatar" src="{% static 'img/interfaz_vanagro/finca_default.png' %}" alt="Foto de finca"/>
+        {% endif %}
+                
         <h3 class="profile_producter--name">{{ productor.nombre_finca }}</h3>
         <p class="profile_producter--joined">Desde {{ productor.fecha_creacion|date:"j \d\e F \d\e Y" }}</p>
         <p class="profile_producter--detail"><strong>UBICACIÓN:</strong> {{ productor.municipio }} - {{ productor.departamento }}</p>
