@@ -1,0 +1,20 @@
+{% load static %}
+
+<div class="card-product">
+
+    {% if producto.imagen_producto %}
+        <img class="card-product__image" src="{{ producto.imagen_producto.url }}" alt="Foto de fica"/>
+    {% else %}
+        <img class="card-product__image" src="{% static 'img/products/sin_foto_2.png' %}" alt="Foto de finca"/>
+    {% endif %}
+    
+    <div class="card-product__info">
+        <h3 class="card-product__title">{{ producto.nombre_producto }}</h3>
+        <p class="card-product__description">{{ producto.unidad_medida }}</p>
+        <p class="card-product__description">{{ producto.descripcion }}</p>
+        <p class="card-product__description">{{ producto.stock }}</p>
+        <strong class="card-product__price">{{ producto.precio }}</strong>
+        
+    </div>        
+</div>
+

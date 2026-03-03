@@ -25,7 +25,7 @@ class Producto(models.Model):
     #decimal con 10 dígitos y 2 decimales
     precio = models.DecimalField('Precio Producto',max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     #almacenar la imagen. Se almacena en la carpeta media
-    imagen = models.ImageField('Foto Producto',upload_to='productos/', blank=True, null=True)
+    imagen_producto = models.ImageField('Foto Producto',upload_to='productos/', blank=True, null=True)
     #restricción de que solo sean números positivos
     stock = models.PositiveIntegerField('Cantidad',default=0)
     # Estado para realizar vista previa 

@@ -15,19 +15,44 @@
 {% block producto %}
 <h2>Vista previa</h2>
 
-<div class="card">
-    <img src="{{ producto.imagen.url }}">
-    <h3>{{ producto.nombre }}</h3>
-    <p>{{ producto.descripcion }}</p>
-    <p>$ {{ producto.precio }}</p>
+<div style="display: flex;">
+<div>
+{% include 'components/card-producto.html' %}
+</div>
+<div>
+{% include 'components/detalle-producto.html' %}
+</div>
 </div>
 
-<form method="POST" action="{% url 'confirmar_producto' producto.id %}">
+
+
+
+<div class="buttons">
+<form method="POST" action="{% url 'cancelar_producto' producto.id %}">
     {% csrf_token %}
-    <button type="submit">Confirmar y Publicar</button>
+    <button type="submit" class="buttons__action--secondary">Cancelar</button>
 </form>
 
-<a href="{% url 'editar_producto' producto.id %}">
-    Volver a editar</a>
+<button type="button" class="buttons__action--terciary" onclick="window.location.href='{% url 'volver_crear' producto.id %}'">Volver a editar
+</button>
+
+
+<form method="POST" action="{% url 'guardar_producto' producto.id %}">
+    {% csrf_token %}
+    <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
+</form>
+</div>
+
+
+<div class="popup" id="popupMessage">
+    <div class="popup__header">
+        <i class="fa-solid fa-check popup__icon"></i>
+    </div>
+    <div class="popup__body">
+        <h3 class="popup__title">¡PRODUCTO AÑADIDO!</h3>
+        <p class="popup__message">¡El producto se añadió al carrito exitosamente!</p>
+        <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+    </div>
+</div>
 
 {% endblock producto %}
