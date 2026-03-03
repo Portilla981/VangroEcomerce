@@ -1,0 +1,33 @@
+{% extends "productos/productos.html" %}
+
+{% load static %}
+
+{% block navbar %}
+
+{% include 'components/navbar-simple_inicio.html' %}
+
+{% endblock navbar %}
+
+{% block script %}
+    
+{% endblock script %}
+
+{% block producto %}
+<h2>Vista previa</h2>
+
+<div class="card">
+    <img src="{{ producto.imagen.url }}">
+    <h3>{{ producto.nombre }}</h3>
+    <p>{{ producto.descripcion }}</p>
+    <p>$ {{ producto.precio }}</p>
+</div>
+
+<form method="POST" action="{% url 'confirmar_producto' producto.id %}">
+    {% csrf_token %}
+    <button type="submit">Confirmar y Publicar</button>
+</form>
+
+<a href="{% url 'editar_producto' producto.id %}">
+    Volver a editar</a>
+
+{% endblock producto %}

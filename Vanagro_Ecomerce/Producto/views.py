@@ -13,12 +13,25 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 
+from django.utils import timezone
+from datetime import timedelta
+
 # Create your views here.
 
 #el usuario debe estar autenticado para crear el producto
 @login_required
 # Vista para crear el producto
 def crear_producto(request):
+
+     # Eliminar borradores viejos del usuario
+    tiempo_limite = timezone.now() - timedelta(minutes=15)
+
+    Producto.objects.filter(
+        user=request.user,
+        estado='borrador',
+        fecha_creacion__lt=tiempo_limite
+    ).delete()
+
 
     #procesar el formulario (Si se envía)
     if request.method == 'POST':

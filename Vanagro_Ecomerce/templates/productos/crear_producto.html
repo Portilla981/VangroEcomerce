@@ -105,9 +105,9 @@
 
 		<!-- Botones -->
 		<div class="buttons">
-            <button type="reset" class="buttons__action--secondary" onclick="location.href='javascript:history.back()'">Cancelar</button>
-            <button type="button" class="buttons__action--terciary" onclick="location.href='" >Vista previa</button>
-			<button type="submit" class="buttons__action--primary create-product">Guardar Producto</button>
+            <button type="button" class="buttons__action--secondary" onclick="window.location.href='{% url 'tienda_usuario' %}'">Cancelar</button>
+            <button type="submit" class="buttons__action--terciary" name='accion' value='vista_previa'>Vista previa</button>
+			{% comment %} <button type="submit" class="buttons__action--primary create-product">Guardar Producto</button> {% endcomment %}
 		</div>
     </form>
     
