@@ -1,6 +1,9 @@
+# from pyexpat.errors import messages
+from django.contrib import messages
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .forms import ProductoForm
+from .forms import Form_producto
 from .models import Producto
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, UpdateView
@@ -20,18 +23,38 @@ def crear_producto(request):
     #procesar el formulario (Si se envía)
     if request.method == 'POST':
         #Se capturan los datos del producto y la imagen
-        form = ProductoForm(request.POST, request.FILES)
+        form = Form_producto(request.POST, request.FILES)
 
         #se valida si el formulario es valido
         if form.is_valid():
+            producto = form.save(commit=False)
+            producto.user = request.user
+            producto.save()
             #si cumple, se guarda en l bd con el método save de Django
-            form.save()
+            # form.save()
             #redirige a la lista de productos
-            return redirect('Usuario/tienda_usuario')
+            success_message = 'Producto creado exitosamente.'
+            messages.success(request, success_message)                 
 
-    #si el metodo es GET muestra el formulario vacío
+            return redirect('tienda_usuario')
+        
+        else:
+
+             print("ERRORES:", form.errors)# Imprime los errores del formulario en la consola para depuración
+            # error_message = 'Error al crear el producto. Por favor, revise los datos ingresados.'
+            # messages.error(request, error_message)
+
+            
+
+           
+        
+
+
+    #si el método es GET muestra el formulario vacío
     else:
-        form = ProductoForm()
+        form = Form_producto()
 
     #se carga el formulario para crear el producto
-    return render(request,'productos/crear_producto.html',{'form':form})
+    return render(request,'productos/crear_producto.html',{
+        'form':form,
+        'titulo':'Crear Producto'})
