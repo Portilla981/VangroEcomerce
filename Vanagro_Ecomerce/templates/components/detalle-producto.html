@@ -1,3 +1,4 @@
+{% load humanize %}
 {% load static %}
 
     <h2>Detalle del producto</h2>
@@ -5,9 +6,9 @@
         
         <div class="details__image">
             {% if producto.imagen_producto %}
-                <img class="card-product__image_1" src="{{ producto.imagen_producto.url }}" alt="Foto de finca"/>
+                <img class="card-product__image_1" src="{{ producto.imagen_producto.url }}" alt="Foto de producto"/>
             {% else %}
-                <img class="card-product__image_1" src="{% static 'img/products/sin_foto_2.png' %}" alt="Foto de finca"/>
+                <img class="card-product__image_1" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Foto de producto"/>
             {% endif %}
         </div>
 
