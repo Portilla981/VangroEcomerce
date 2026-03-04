@@ -1,3 +1,4 @@
+{% load humanize %}
 {% load static %}
 
 <div class="card-product">
@@ -10,10 +11,9 @@
     
     <div class="card-product__info">
         <h3 class="card-product__title">{{ producto.nombre_producto }}</h3>
-        <p class="card-product__description">{{ producto.unidad_medida }}</p>
         <p class="card-product__description">{{ producto.descripcion }}</p>
-        <p class="card-product__description">{{ producto.stock }}</p>
-        <strong class="card-product__price">{{ producto.precio }}</strong>
+        {% comment %} <p class="card-product__description">{{ producto.stock }}</p> {% endcomment %}
+        <strong class="card-product__price">Precio $ {{ producto.precio|floatformat:0|intcomma }} X {{ producto.unidad_medida }}</strong>
         
     </div>        
 </div>

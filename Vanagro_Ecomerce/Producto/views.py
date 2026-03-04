@@ -19,6 +19,36 @@ from datetime import timedelta
 
 # Create your views here.
 
+def lista_productos(request):
+    productos = Producto.objects.filter(
+        estado_producto='publicado',
+        activo=True,
+        stock__gt=0
+        ).select_related('productor', 'productor__user')
+    
+    print("Productos encontrados:", productos.count())
+
+    return render(request, 'productos/lista_productos.html', {
+        'productos': productos
+    })
+
+
+def detalle_producto(request, pk):
+    producto = get_object_or_404(
+        Producto,
+        pk=pk,
+        estado_producto='publicado',
+        activo=True,
+        stock__gt=0
+    )
+
+    return render(request, 'productos/producto_detallado.html', {
+        'producto': producto
+    })
+
+
+
+
 #el usuario debe estar autenticado para crear el producto
 @login_required
 # Vista para crear el producto
@@ -28,7 +58,7 @@ def crear_producto(request):
     tiempo_limite = timezone.now() - timedelta(minutes=15)
 
     Producto.objects.filter(
-        user=request.user,
+        productor =request.user.productor,
         estado_producto='borrador',
         fecha_creacion__lt=tiempo_limite
     ).delete()
@@ -43,7 +73,7 @@ def crear_producto(request):
         if form.is_valid():
             accion = request.POST.get('accion')
             producto = form.save(commit=False)
-            producto.user = request.user
+            producto.productor = request.user.productor  # Asignar el productor desde el usuario
             
             # Si quiere vista previa
             if accion == 'vista_previa':
@@ -55,22 +85,23 @@ def crear_producto(request):
                 
                 return redirect('vista_previa', producto.id)
             
-            elif accion == 'cancelar':
-                return redirect('tienda_usuario')
-
             # Si quiere guardar directo
             elif accion == 'guardar':
                 producto.estado_producto = 'publicado'
                 producto.save()
                 #si cumple, se guarda en l bd con el método save de Django
-                # form.save()
                 #redirige a la lista de productos
                 success_message = 'Producto creado exitosamente.'
                 messages.success(request, success_message)                 
 
-                return redirect('tienda_usuario')   
+                return redirect('tienda_usuario')  
+
+            elif accion == 'cancelar':
+                return redirect('tienda_usuario') 
+            
         else:
-            print("ERRORES:", form.errors)# Imprime los errores del formulario en la consola para depuración
+            print("ERRORES:", form.errors)
+            # Imprime los errores del formulario en la consola para depuración
             # error_message = 'Error al crear el producto. Por favor, revise los datos ingresados.'
             # messages.error(request, error_message)
 
@@ -85,13 +116,14 @@ def crear_producto(request):
     
 @login_required
 def funcion_vista_previa(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, user=request.user)
+    producto = get_object_or_404(Producto, pk=pk, productor =request.user.productor)
     return render(request, 'productos/vista_previa.html', {'producto': producto})
 
 @login_required
 def confirmar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, user=request.user)
+    producto = get_object_or_404(Producto, pk=pk, productor=request.user.productor)
     producto.estado_producto = 'publicado'
+    producto.activo = True
     producto.save()
 
     messages.success(request, "Producto publicado correctamente.")
@@ -99,7 +131,7 @@ def confirmar_producto(request, pk):
 
 @login_required
 def cancelar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, user=request.user)
+    producto = get_object_or_404(Producto, pk=pk, productor=request.user.productor)
     # Solo permitir eliminar si es borrador
     if producto.estado_producto == 'borrador':
         producto.delete()
@@ -110,7 +142,7 @@ def cancelar_producto(request, pk):
 
 @login_required
 def editar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, user=request.user)
+    producto = get_object_or_404(Producto, pk=pk, productor=request.user.productor)
     print(request.POST)
     print(request.POST.get('accion'))
 
@@ -119,16 +151,24 @@ def editar_producto(request, pk):
         if form.is_valid():
             print("FORMULARIO VALIDO")
             accion = request.POST.get('accion')
-            producto = form.save()
+            producto = form.save(commit=False)
+            producto.productor = request.user.productor  # Asignar el productor desde el usuario
             
             if accion == 'vista_previa':
+                producto.estado_producto = 'borrador'
+                producto.save()
                 return redirect('vista_previa', producto.id)
             
-            elif accion == 'cancelar':
-                producto.delete()
-                return redirect('tienda_usuario')
-            
             elif accion == 'guardar':
+                producto.estado_producto = 'publicado'
+                producto.save()
+                messages.success(request, "Producto actualizado correctamente.")
+                return redirect('tienda_usuario')
+
+            elif accion == 'cancelar':
+                # 🔥 NO borrar si ya estaba publicado
+                if producto.estado_producto == 'borrador':
+                    producto.delete()
                 return redirect('tienda_usuario')
         else:
             print("FORMULARIO NO VALIDO")

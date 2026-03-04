@@ -18,7 +18,7 @@ class Form_producto(forms.ModelForm):
     
     class Meta:
         model = Producto
-        exclude = ['user', 'estado_producto'] # Excluir el campo 'user' para que no se muestre en el formulario
+        exclude = ['productor', 'estado_producto'] # Excluir el campo 'user' para que no se muestre en el formulario
         
     def clean_nombre_producto(self):
         nombre = self.cleaned_data.get('nombre_producto')

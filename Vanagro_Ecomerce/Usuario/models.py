@@ -1,10 +1,8 @@
 from django.db import models
-
 # Importación del modelo de usuario de Django para extenderlo o relacionarlo con otros modelos
 from django.contrib.auth.models import User
 
 # Register your models here.
-
 # se crean los modelos para el departamento y municipio, para luego relacionarlos con el modelo de usuario y así tener una mejor organización de la información de los usuarios en la base de datos.
 class Departamento(models.Model):
     nombre_Departamento = models.CharField('Departamento', max_length=100)

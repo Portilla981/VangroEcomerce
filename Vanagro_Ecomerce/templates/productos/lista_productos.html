@@ -1,0 +1,45 @@
+{% extends "productos/productos.html" %}
+
+{% load static %}
+
+{% block navbar %}
+
+{% if user.is_authenticated %}
+    {% include 'components/navbar-profile.html' %}    
+{% else %}
+     {% include 'components/navbar_vanagro.html' %}
+{% endif %}
+
+{% endblock navbar %}
+
+{% block script %}    
+{% endblock script %}
+
+{% block producto %}
+
+<div class="product-list">
+    
+    <div class="product-list__grid">
+        {% for producto in productos %}
+            {% include 'components/card-producto.html' %}
+            <div class="buttons_cards">
+                <a href="{% url 'detalle_producto' producto.id %}">
+                    <button class="buttons__action--secondary">Ver detalles</button>
+                </a>
+                <!-- Botón carrito -->
+                {% if user.is_authenticated %}
+                    <button type="button" class="buttons__action--primary">Añadir al carrito</button>
+                {% else %}
+                    <a href="{% url 'inicio_vista' %}?next={{ request.path }}">
+                        <button type="button" class="buttons__action--primary">Añadir al carrito</button>                        
+                    </a>
+                {% endif %}
+            </div>
+
+        {% empty %}
+            <p>No hay productos disponibles.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock producto %}

@@ -1,6 +1,6 @@
 from django.db import models
-
 from django.contrib.auth.models import User
+from Usuario.models import CreacionProductor
 # Importación de elementos para validar el precio del producto
 from django.core.validators import MinValueValidator
 from decimal import Decimal
@@ -13,8 +13,8 @@ class Producto(models.Model):
     UNIDAD_MEDIDA = [('Kg', 'Kilogramos'), ('Lt', 'Litros'), ('Lb', 'Libras'),('N/A', 'Sin medida'),('Und', 'Unidad'),]
     CATEGORIA = [('Frutas', 'Frutas'), ('Verduras', 'Verduras'), ('Granos', 'Granos'), ('Lácteos', 'Lácteos'), ('Carnes', 'Carnes'), ('Otros', 'Otros')]
     ESTADOS = [('borrador', 'Borrador'), ('publicado', 'Publicado')]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='producto')        
+    
+    productor = models.ForeignKey(CreacionProductor, on_delete=models.CASCADE, related_name='productor')        
     nombre_producto = models.CharField('Nombre Producto',max_length=200)
     unidad_medida = models.CharField('Unidad de medida', max_length=50, choices=UNIDAD_MEDIDA, default='N/A')
     categoria = models.CharField('Categoría', max_length=20, choices=CATEGORIA, default='Otros') 
@@ -27,11 +27,11 @@ class Producto(models.Model):
     #almacenar la imagen. Se almacena en la carpeta media
     imagen_producto = models.ImageField('Foto Producto',upload_to='productos/', blank=True, null=True)
     #restricción de que solo sean números positivos
-    stock = models.PositiveIntegerField('Cantidad',default=0)
+    stock = models.PositiveIntegerField('Cantidad', default=0)
     # Estado para realizar vista previa 
     estado_producto = models.CharField('Estado del producto', max_length=20, choices=ESTADOS, default='borrador')   
     #estado del producto
-    activo = models.BooleanField('Habilitado',default=True)
+    activo = models.BooleanField('Habilitado', default=True)
     # Fecha de creación del producto, se asigna automáticamente al crear el producto
     fecha_creacion = models.DateTimeField('Fecha de creación', auto_now_add=True)
 
@@ -50,4 +50,4 @@ class Producto(models.Model):
     
 
     def __str__(self):
-        return f'Producto: {self.nombre} - Cantidad:{self.stock} '
+        return f'Producto: {self.nombre_producto} - Cantidad:{self.stock} '

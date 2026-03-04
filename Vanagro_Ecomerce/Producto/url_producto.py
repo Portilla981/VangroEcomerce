@@ -9,12 +9,9 @@ urlpatterns = [
     # path('Productos/', .as_view(), name= 'inicio'),   
     path('Crear/Producto/', crear_producto, name= 'crear_producto'),  
     path('Vista_previa/<int:pk>/', funcion_vista_previa, name='vista_previa'),
-
     path('Confirmar/<int:pk>/', confirmar_producto, name='guardar_producto'),
-
     path('editar/<int:pk>/', editar_producto, name='volver_crear'),
-
     path('cancelar/<int:pk>/', cancelar_producto, name='cancelar_producto'), 
-       
-    
+    path('Productos', lista_productos, name='lista_productos'), 
+    path('Producto/<int:pk>/', detalle_producto, name='detalle_producto'),
 ]
