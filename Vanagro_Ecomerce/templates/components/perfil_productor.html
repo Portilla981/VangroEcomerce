@@ -91,7 +91,7 @@
     </div>
 
     <div class="profile_producter--actions">
-        <button class="profile_producter--action" onclick="window.location.href='{% url 'crear_producto' %}'">
+        <button class="profile_producter--action" href="{% url 'crear_producto' %}?next={{ request.path }}">
             <ion-icon name="add-circle-outline"></ion-icon>
             <span>Agregar Producto</span>
         </button>
@@ -100,9 +100,10 @@
             <ion-icon name="create-outline"></ion-icon>
             <span>Editar Producto</span>
         </button>
-        <button class="profile_producter--action" onclick="location.href='/frontend/public/views/list-products.html'">
-            <ion-icon name="calendar-outline"></ion-icon>
-            <span>Listar Productos</span>
+        <button class="profile_producter--action"> 
+          <ion-icon name="eye-outline"></ion-icon>
+          <a href="{% url 'mis_productos' %}?next={{ request.path }}">
+            <span>Listar Productos</span></a>
         </button>
 
         <button class="profile_producter--action" onclick="location.href='#report'">

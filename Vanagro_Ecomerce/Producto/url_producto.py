@@ -1,4 +1,4 @@
-from django import views
+
 from django.urls import path
 
 from django.contrib.auth.views import LogoutView # Ruta para manejar el cierre de sesion
@@ -12,6 +12,8 @@ urlpatterns = [
     path('Confirmar/<int:pk>/', confirmar_producto, name='guardar_producto'),
     path('editar/<int:pk>/', editar_producto, name='volver_crear'),
     path('cancelar/<int:pk>/', cancelar_producto, name='cancelar_producto'), 
-    path('Productos', lista_productos, name='lista_productos'), 
+    path('Productos', ver_productos, name='ver_productos'), 
     path('Producto/<int:pk>/', detalle_producto, name='detalle_producto'),
+    path('Mis_Productos/', Listado_producto.as_view(), name='mis_productos'),
+    path('Producto_Activo/<int:pk>/', toggle_producto, name='accion_producto'),
 ]

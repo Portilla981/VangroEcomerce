@@ -24,6 +24,7 @@ from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor
 from .models import *
 # from .form_home import *
 from django.contrib import messages
+from django.db import transaction
 
 # Create your views here.
 
@@ -74,36 +75,51 @@ class RegistroUsuario(View):
         perfil_form = Formulario_Usuario(request.POST, request.FILES)
         perfil_form.fields['municipio'].queryset = Municipio.objects.all()
 
+        if user_form.data and perfil_form.data:
+            print("Datos del formulario de usuario:", user_form.data.username)
+            print("Datos del formulario de perfil:", perfil_form.data.numero_identificacion)
+        else:
+            print("Formulario de usuario no es válido:", user_form.errors)
+            print("Formulario de perfil no es válido:", perfil_form.errors)
+
         if user_form.is_valid() and perfil_form.is_valid():
 
-            # Crear usuario
-            user = User.objects.create_user(
-                first_name = user_form.cleaned_data['first_name'],
-                last_name = user_form.cleaned_data['last_name'],
-                username = user_form.cleaned_data['username'],    
-                email = user_form.cleaned_data['email'],
-                password = user_form.cleaned_data['password1']
-               )
-                     
-            perfil = user.creacionusuario
-            perfil.departamento = perfil_form.cleaned_data['departamento']  
-            perfil.municipio = perfil_form.cleaned_data['municipio']
-            perfil.tipo_identificacion = perfil_form.cleaned_data['tipo_identificacion']
-            perfil.numero_identificacion = perfil_form.cleaned_data['numero_identificacion']
-            perfil.telefono_1 = perfil_form.cleaned_data['telefono_1']
-            perfil.telefono_2 = perfil_form.cleaned_data['telefono_2']
-            perfil.direccion_residencia = perfil_form.cleaned_data['direccion_residencia']
-            perfil.fecha_nacimiento = perfil_form.cleaned_data['fecha_nacimiento']
-            perfil.fotografia = perfil_form.cleaned_data['fotografia']
-            
-            perfil.save()
+            try:
+                with transaction.atomic():
+                    print("Formularios válidos. Procediendo a crear el usuario y perfil.")
 
+                    # Crear usuario
+                    usuario = User.objects.create_user(
+                        first_name = user_form.cleaned_data['first_name'],
+                        last_name = user_form.cleaned_data['last_name'],
+                        username = user_form.cleaned_data['username'],    
+                        email = user_form.cleaned_data['email'],
+                        password = user_form.cleaned_data['password1']
+                    )
 
+                    CreacionUsuario.objects.create(
+                        user=usuario,
+                        departamento=perfil_form.cleaned_data['departamento'],  
+                        municipio=perfil_form.cleaned_data['municipio'],
+                        tipo_identificacion=perfil_form.cleaned_data['tipo_identificacion'],
+                        numero_identificacion=perfil_form.cleaned_data['numero_identificacion'],
+                        telefono_1=perfil_form.cleaned_data['telefono_1'],
+                        telefono_2=perfil_form.cleaned_data['telefono_2'],
+                        direccion_residencia=perfil_form.cleaned_data['direccion_residencia'],
+                        fecha_nacimiento=perfil_form.cleaned_data['fecha_nacimiento'],
+                        fotografia=perfil_form.cleaned_data['fotografia']
+                    )
+                    
+                    print(f"Usuario {usuario.username} y perfil creado exitosamente.")
 
-            messages.success(request, f'Usuario {user.username} creado exitosamente.') 
-            return redirect("inicio_vista")
+                    messages.success(request, f'Usuario {usuario.username} creado exitosamente.') 
+                    return redirect("inicio_vista")
+                
+            except Exception as e:
+                print("Error al crear el usuario o perfil:", e)
+                messages.error(request, 'Ocurrió un error al crear el usuario. Por favor, inténtalo de nuevo.')
+                return redirect("registro_usuario")
         
-        messages.error(request, 'Error al crear el usuario. Por favor, revise los datos ingresados.') 
         
         print(user_form.errors)
         print(perfil_form.errors)

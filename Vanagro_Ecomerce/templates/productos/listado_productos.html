@@ -1,0 +1,91 @@
+{% extends "productos/productos.html" %}
+
+{% load static %}
+
+{% block navbar %}
+
+{% include 'components/navbar-simple_inicio.html' %}
+
+{% endblock navbar %}
+
+{% block script %}
+    
+{% endblock script %}
+
+{% block producto %}
+
+<div class="user-list">
+  <h2 class="user-list__title">Lista de mis productos</h2>
+
+  <table class="user-list__table">
+    <thead>
+      <tr class="user-list__row user-list__row--head">
+        <th class="user-list__cell">ID</th>
+        <th class="user-list__cell">Imagen</th>
+        <th class="user-list__cell">Nombre</th>
+        <th class="user-list__cell">U. medida</th>
+        <th class="user-list__cell">precio</th>
+        <th class="user-list__cell">stock</th>
+        <th colspan="2" class="user-list__cell">Acciones</th>
+        {% comment %} <th class="user-list__cell">Editar</th> {% endcomment %}
+      </tr>
+    </thead>
+    <tbody id="user-table-body">
+     {% for producto in productos %}
+     <tr class="user-list__row">
+        <td class="user-list__cell" data-label="ID">PDV-{{ producto.id }}</td>
+    <td class="user-list__cell" data-label="Imagen">
+      {% if producto.imagen_producto %}
+        <img src="{{ producto.imagen_producto.url }}" alt="{{ producto.nombre }}" class="user-list__image">
+      {% else %}
+        <img src="{% static 'img/products/sin_foto_2.jpg' %}" alt="{{ producto.nombre }}" class="user-list__image">
+      {% endif %}
+    </td>
+    <td class="user-list__cell" >{{ producto.nombre_producto }}</td>
+    <td class="user-list__cell" >{{ producto.unidad_medida }}</td>
+    <td class="user-list__cell" >${{ producto.precio|floatformat:2 }}</td>
+    <td class="user-list__cell" >{{ producto.stock }}</td>
+      <td class="user-list__cell" >
+
+      <form method="post" action="{% url 'accion_producto' producto.id %}">
+          {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+              <button type="submit">
+                {% if producto.activo %}
+                  Deshabilitar
+                {% else %}
+                  Habilitar
+                {% endif %}
+          </button>
+      </form>
+
+
+        
+        {% comment %} {% if producto.activo == True %}
+          <button class="user-list__action-btn user-list__action-btn--active" onclick="location.href='{% url 'accion_producto' producto.id %}'">Deshabilitar</button>
+        {% else %}  
+        <button class="user-list__action-btn user-list__action-btn--disable" onclick="location.href='{% url 'accion_producto' producto.id %}'">Habilitar</button>
+        {% endif %}
+        <td class="user-list__cell" data-label="Editar">
+          <a href="">
+            <ion-icon class="user-list__icon" name="create-outline"></ion-icon>
+          </a> {% endcomment %}
+        </td>
+      </tr>
+        {% empty %}
+
+          <tr>
+            <td colspan="7" class="user-list__cell">No hay productos disponibles.</td>
+          </tr>
+
+        {% endfor %}
+        </tbody>
+
+
+  </table>
+</div>
+
+
+
+
+{% endblock producto %}

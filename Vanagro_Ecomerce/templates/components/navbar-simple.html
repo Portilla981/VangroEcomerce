@@ -6,7 +6,7 @@
             </h1>
         </div>
         <div class="navbar-vanagro__icons">
-            <a href="javascript:history.back()">
+            <a href="{{ request.GET.next|default:'/' }}">
                 <ion-icon name="person-circle-outline" class="navbar-vanagro__icons--simple"></ion-icon>
                 {% comment %} <!-- <img class="navbar-vanagro__login" src="/frontend/public/assets/vanagro/campesino.jpg" alt=""> --> {% endcomment %}
             </a>

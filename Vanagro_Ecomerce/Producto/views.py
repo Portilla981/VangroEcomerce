@@ -6,12 +6,13 @@ from django.http import JsonResponse
 from .forms import Form_producto
 from .models import Producto
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, ListView, UpdateView
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 from django.db import transaction
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.utils import timezone
 from datetime import timedelta
@@ -19,7 +20,7 @@ from datetime import timedelta
 
 # Create your views here.
 
-def lista_productos(request):
+def ver_productos(request):
     productos = Producto.objects.filter(
         estado_producto='publicado',
         activo=True,
@@ -28,7 +29,7 @@ def lista_productos(request):
     
     print("Productos encontrados:", productos.count())
 
-    return render(request, 'productos/lista_productos.html', {
+    return render(request, 'productos/vista_productos.html', {
         'productos': productos
     })
 
@@ -46,6 +47,39 @@ def detalle_producto(request, pk):
         'producto': producto
     })
 
+
+
+
+class Listado_producto(LoginRequiredMixin, ListView):
+    model = Producto
+    template_name = "productos/listado_productos.html"
+    context_object_name = "productos"
+
+    def get_queryset(self):        
+        return Producto.objects.filter(productor__user=self.request.user)
+
+def get_success_url(self):
+    return self.request.POST.get('next', reverse_lazy('mis_productos'))
+
+
+@login_required
+#vista para actualizar el estado del producto de forma automatica (sin actualizar la pagina)
+def toggle_producto(request, pk):
+
+    if request.method == 'POST':
+        '''get_object_or_404 busca en la bd el producto que llega como ID por la URL. Si el producto 
+        no existe muestra error 404'''
+        #Producto es el producto al que se le desea cambiar el estado
+        producto = get_object_or_404(Producto, pk=pk, productor__user=request.user)
+        #cambia el estado actual del producto  
+        producto.activo = not producto.activo
+        #utilizamos el método save de Django para actualizar el estado del producto
+        producto.save()
+
+        #indica si el cambio de estado fue realizado e indica el nuevo estado del producto
+        return redirect(request.POST.get('next', 'mis_productos'))
+    
+    return redirect('mis_productos')
 
 
 
@@ -178,3 +212,4 @@ def editar_producto(request, pk):
         form = Form_producto(instance=producto)
 
     return render(request, 'productos/crear_producto.html', {'form': form})
+
