@@ -51,9 +51,19 @@ def detalle_producto(request, pk):
 
 
 class Listado_producto(LoginRequiredMixin, ListView):
+
     model = Producto
     template_name = "productos/listado_productos.html"
     context_object_name = "productos"
+
+    def dispatch(self, request, *args, **kwargs):
+
+        next_url = request.GET.get('next')
+        if next_url:
+            request.session['next'] = next_url
+
+        return super().dispatch(request, *args, **kwargs)
+
 
     def get_queryset(self):        
         return Producto.objects.filter(productor__user=self.request.user)
@@ -212,4 +222,19 @@ def editar_producto(request, pk):
         form = Form_producto(instance=producto)
 
     return render(request, 'productos/crear_producto.html', {'form': form})
+
+@login_required
+def toggle_producto(request, pk):
+    if request.method == "POST":
+        producto = get_object_or_404(
+            Producto,
+            pk=pk,
+            productor__user=request.user
+        )
+        producto.activo = not producto.activo
+        producto.save()
+
+        return redirect(request.POST.get('next', 'tienda_usuario'))
+
+    return redirect('tienda_usuario')
 

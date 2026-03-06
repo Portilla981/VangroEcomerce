@@ -41,51 +41,32 @@
         <img src="{% static 'img/products/sin_foto_2.jpg' %}" alt="{{ producto.nombre }}" class="user-list__image">
       {% endif %}
     </td>
-    <td class="user-list__cell" >{{ producto.nombre_producto }}</td>
-    <td class="user-list__cell" >{{ producto.unidad_medida }}</td>
-    <td class="user-list__cell" >${{ producto.precio|floatformat:2 }}</td>
-    <td class="user-list__cell" >{{ producto.stock }}</td>
-      <td class="user-list__cell" >
-
+    <td class="user-list__cell">{{ producto.nombre_producto }}</td>
+    <td class="user-list__cell">{{ producto.unidad_medida }}</td>
+    <td class="user-list__cell">${{ producto.precio|floatformat:2 }}</td>
+    <td class="user-list__cell">{{ producto.stock }}</td>
+    <td class="user-list__cell">
       <form method="post" action="{% url 'accion_producto' producto.id %}">
-          {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.path }}">
-              <button type="submit">
-                {% if producto.activo %}
-                  Deshabilitar
-                {% else %}
-                  Habilitar
-                {% endif %}
-          </button>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        {% if producto.activo %}
+          <button type="submit" class="user-list__action-btn user-list__action-btn--disable">Deshabilitar</button>
+        {% else %}
+          <button type="submit" class="user-list__action-btn user-list__action-btn--enable">Habilitar</button>
+        {% endif %}          
       </form>
-
-
-        
-        {% comment %} {% if producto.activo == True %}
-          <button class="user-list__action-btn user-list__action-btn--active" onclick="location.href='{% url 'accion_producto' producto.id %}'">Deshabilitar</button>
-        {% else %}  
-        <button class="user-list__action-btn user-list__action-btn--disable" onclick="location.href='{% url 'accion_producto' producto.id %}'">Habilitar</button>
-        {% endif %}
-        <td class="user-list__cell" data-label="Editar">
-          <a href="">
-            <ion-icon class="user-list__icon" name="create-outline"></ion-icon>
-          </a> {% endcomment %}
-        </td>
-      </tr>
-        {% empty %}
-
+      </td>
+      <td class="user-list__cell" >
+        {% comment %} <a href="{% url 'vista_tienda' producto.id %}?next={{ request.path }}"> {% endcomment %}
+          <button type="button" class="user-list__action-btn user-list__action-btn--edit">Editar</button>
+        {% comment %} </a> {% endcomment %}
+    </tr>
+      {% empty %}
           <tr>
             <td colspan="7" class="user-list__cell">No hay productos disponibles.</td>
           </tr>
-
-        {% endfor %}
-        </tbody>
-
-
+      {% endfor %}
+    </tbody>
   </table>
 </div>
-
-
-
-
 {% endblock producto %}

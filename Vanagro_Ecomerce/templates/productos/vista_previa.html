@@ -16,31 +16,26 @@
 <h2>Vista previa</h2>
 
 <div class="product-preview">
-<div class="card-section__product">
-{% include 'components/card-producto.html' %}
+    <div class="card-section__product">
+        {% include 'components/card-producto.html' %}
+    </div>
+    <div class="details">
+        {% include 'components/detalle-producto.html' %}
+    </div>
 </div>
-<div class="details">
-{% include 'components/detalle-producto.html' %}
-</div>
-</div>
-
-
-
 
 <div class="buttons">
-<form method="POST" action="{% url 'cancelar_producto' producto.id %}">
-    {% csrf_token %}
-    <button type="submit" class="buttons__action--secondary">Cancelar</button>
-</form>
+    <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
+        {% csrf_token %}
+            <button type="submit" class="buttons__action--secondary">Cancelar</button>
+    </form>
 
-<button type="button" class="buttons__action--terciary" onclick="window.location.href='{% url 'volver_crear' producto.id %}'">Volver a editar
-</button>
+    <button type="button" class="buttons__action--terciary" onclick="window.location.href='{% url 'volver_crear' producto.id %}'">Volver a editar</button>
 
-
-<form method="POST" action="{% url 'guardar_producto' producto.id %}">
-    {% csrf_token %}
-    <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
-</form>
+    <form method="POST" action="{% url 'guardar_producto' producto.id %}">
+        {% csrf_token %}
+            <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
+    </form>
 </div>
 
 
