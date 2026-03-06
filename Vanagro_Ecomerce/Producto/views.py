@@ -33,7 +33,6 @@ def ver_productos(request):
         'productos': productos
     })
 
-
 def detalle_producto(request, pk):
     producto = get_object_or_404(
         Producto,
@@ -46,9 +45,6 @@ def detalle_producto(request, pk):
     return render(request, 'productos/producto_detallado.html', {
         'producto': producto
     })
-
-
-
 
 class Listado_producto(LoginRequiredMixin, ListView):
 
@@ -71,9 +67,8 @@ class Listado_producto(LoginRequiredMixin, ListView):
 def get_success_url(self):
     return self.request.POST.get('next', reverse_lazy('mis_productos'))
 
-
 @login_required
-#vista para actualizar el estado del producto de forma automatica (sin actualizar la pagina)
+#vista para actualizar el estado del producto de forma automática (sin actualizar la pagina)
 def toggle_producto(request, pk):
 
     if request.method == 'POST':
@@ -91,13 +86,10 @@ def toggle_producto(request, pk):
     
     return redirect('mis_productos')
 
-
-
 #el usuario debe estar autenticado para crear el producto
 @login_required
 # Vista para crear el producto
 def crear_producto(request):
-
     # Eliminar borradores viejos del usuario
     tiempo_limite = timezone.now() - timedelta(minutes=15)
 
@@ -106,7 +98,6 @@ def crear_producto(request):
         estado_producto='borrador',
         fecha_creacion__lt=tiempo_limite
     ).delete()
-
 
     #procesar el formulario (Si se envía)
     if request.method == 'POST':
@@ -120,26 +111,12 @@ def crear_producto(request):
             producto.productor = request.user.productor  # Asignar el productor desde el usuario
             
             # Si quiere vista previa
-            if accion == 'vista_previa':
-                
+            if accion == 'vista_previa':                
                 producto.estado_producto = 'borrador'
-                producto.save()
-                
-                print(producto.imagen_producto)
-                
+                producto.save()                
+                print(producto.imagen_producto)                
                 return redirect('vista_previa', producto.id)
             
-            # Si quiere guardar directo
-            elif accion == 'guardar':
-                producto.estado_producto = 'publicado'
-                producto.save()
-                #si cumple, se guarda en l bd con el método save de Django
-                #redirige a la lista de productos
-                success_message = 'Producto creado exitosamente.'
-                messages.success(request, success_message)                 
-
-                return redirect('tienda_usuario')  
-
             elif accion == 'cancelar':
                 return redirect('tienda_usuario') 
             
