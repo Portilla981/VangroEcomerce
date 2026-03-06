@@ -1,0 +1,53 @@
+{% extends "productos/productos.html" %}
+
+{% load static %}
+
+{% block navbar %}
+
+{% include 'components/navbar-simple_inicio.html' %}
+
+{% endblock navbar %}
+
+{% block script %}
+    
+{% endblock script %}
+
+{% block producto %}
+<h2>Vista previa</h2>
+
+<div class="product-preview">
+    <div class="card-section__product">
+        {% include 'components/card-producto.html' %}
+    </div>
+    <div class="details">
+        {% include 'components/detalle-producto.html' %}
+    </div>
+</div>
+
+<div class="buttons">
+    <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
+        {% csrf_token %}
+            <button type="submit" class="buttons__action--secondary">Cancelar</button>
+    </form>
+
+    <button type="button" class="buttons__action--terciary" onclick="window.location.href='{% url 'volver_crear' producto.id %}'">Volver a editar</button>
+
+    <form method="POST" action="{% url 'guardar_producto' producto.id %}">
+        {% csrf_token %}
+            <button type="submit" class="buttons__action--primary create-product">Guardar cambios</button>
+    </form>
+</div>
+
+
+<div class="popup" id="popupMessage">
+    <div class="popup__header">
+        <i class="fa-solid fa-check popup__icon"></i>
+    </div>
+    <div class="popup__body">
+        <h3 class="popup__title">¡PRODUCTO AÑADIDO!</h3>
+        <p class="popup__message">¡El producto se añadió al carrito exitosamente!</p>
+        <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
+    </div>
+</div>
+
+{% endblock producto %}

@@ -11,7 +11,7 @@
 {% block producto %}
 
 <div class="product-form">
-	<h2 class="product-form__title">Crear Producto</h2>
+	<h2 class="product-form__title">Editar Producto</h2>
 
 	<form action="" method="post" class="product-form__container" enctype="multipart/form-data">
 		{% csrf_token %}
@@ -32,10 +32,11 @@
 			</label>
 
 			<label class="product-form__label">Precio X unidad
-				<input class="product-form__input" name="precio" placeholder="Ingrese el precio" value="{{ form.precio.value|floatformat:0|default:'' }}" required/>
+				<input class="product-form__input" name="precio" placeholder="Ingrese el precio" value="{{ producto.precio|floatformat:0 }}" required/>
 			</label>
 
-			<label class="product-form__label">{{ form.stock.label }}
+			<label class="product-form__label"
+				>{{ form.stock.label }}
 				<input type="number" class="product-form__input" name="stock" placeholder="Ingrese el stock" value="{{ form.stock.value }}" required/>
 			</label>
 			

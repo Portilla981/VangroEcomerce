@@ -238,3 +238,13 @@ def toggle_producto(request, pk):
 
     return redirect('tienda_usuario')
 
+#Vista para actualizar un producto, con la vista UpdateView que tiene Django
+class Actualizar_producto(LoginRequiredMixin, UpdateView):
+     #se trabaja con el model Producto para acceder a los campos
+    model = Producto
+    #utiliza el formulario ProductoForm que tiene forms
+    form_class = Form_producto
+    #archivo HTML que se usa para actualizar el producto
+    template_name = 'productos/editar_producto.html'
+    #después de guardar (lo hace la vista UpdateView) redirige a la vista lista de productos
+    success_url = reverse_lazy('mis_productos')
