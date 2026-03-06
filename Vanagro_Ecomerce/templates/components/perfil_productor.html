@@ -91,10 +91,12 @@
     </div>
 
     <div class="profile_producter--actions">
-        <button class="profile_producter--action" href="{% url 'crear_producto' %}?next={{ request.path }}">
+      <a href="{% url 'crear_producto' %}?next={{ request.path }}">   
+      <button class="profile_producter--action" >
             <ion-icon name="add-circle-outline"></ion-icon>
             <span>Agregar Producto</span>
         </button>
+        </a>
 
         <button class="profile_producter--action" onclick="location.href='/frontend/public/views/edit-product.html'">
             <ion-icon name="create-outline"></ion-icon>
