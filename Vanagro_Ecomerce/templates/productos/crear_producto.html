@@ -18,40 +18,40 @@
 
 		<!-- Nombre, unidad, precio, pago, método -->
 		<div class="product-form__row">
-			<label class="product-form__label"
-				>Nombre del producto
-				<input class="product-form__input" name="nombre_producto" placeholder="Ingrese nombre del producto" value="{{ form.nombre_producto.value|default:'' }}" required/>
+			<label class="product-form__label">Nombre del producto
+				<input class="product-form__input" name="nombre_producto" placeholder="Ingrese nombre del producto" value="{{ form.instance.nombre_producto }}" required/>
 			</label>
 
 			<label class="product-form__label">Unidad de medida
-				<select class="product-form__select product-form__select--unit" name="unidad_medida" value="{{ form.unidad_medida.value|default:'' }}" required>
+				<select class="product-form__select product-form__select--unit" name="unidad_medida" value="{{ form.instance.unidad_medida }}" required>
 					{% for unidad, label in form.unidad_medida.field.choices %}
-						<option value="{{ unidad }}">{{ label }}</option>
+						<option value="{{ unidad }}" {% if unidad == form.instance.unidad_medida %}selected{% endif %}>{{ label }}</option>
 					{% endfor %}
 				</select>
 			</label>
 
 			<label class="product-form__label">Precio X unidad
-				<input class="product-form__input" name="precio" placeholder="Ingrese el precio" value="{{ form.precio.value|floatformat:0|default:'' }}" required/>
+				<input class="product-form__input" name="precio" placeholder="Ingrese el precio" value="{{ form.instance.precio|floatformat:0 }}" required/>
 			</label>
 
-			<label class="product-form__label">{{ form.stock.label }}
-				<input type="number" class="product-form__input" name="stock" placeholder="Ingrese el stock" value="{{ form.stock.value }}" required/>
+			<label class="product-form__label"
+				>{{ form.stock.label }}
+				<input type="number" class="product-form__input" name="stock" placeholder="Ingrese el stock" value="{{ form.instance.stock }}" required/>
 			</label>
 			
 		</div>
 
 		<!-- Descripción -->
 		<label class="product-form__label" >Descripción del Producto
-			<textarea class="product-form__textarea" name="descripcion" placeholder="Ingrese la descripción" required>
-				{{ form.descripcion.value|default:'' }}</textarea>
+			<textarea class="product-form__textarea" name="descripcion" placeholder="Ingrese la descripción" value="{{ form.instance.descripcion }}"  required>
+				</textarea>
 		</label>
 
 		<div class="product-form__row product-form__row--checkbox">
 			<span class="product-form__label"><strong>Tipo de Producto:</strong></span>
 				{% for categoria, label in form.categoria.field.choices %}
 				<label>									
-					<input type="radio"	name="categoria" value="{{ categoria }}" required/>{{ label }}
+					<input type="radio"	name="categoria" value="{{ categoria }}" {% if categoria == form.instance.categoria %}checked{% endif %}required/>{{ label }}
 				</label>
 				{% endfor %}
 		</div>
@@ -60,17 +60,17 @@
 			<h3 class="product-form__dates-title">Caducidad</h3>
 
 			<label class="product-form__label--checkbox">{{ form.caducidad.label }}
-				<input type="checkbox" name="caducidad" id="caducidad-checkbox" {% if form.activo.value	%} checked {% endif %}/>
+				<input type="checkbox" name="caducidad" id="caducidad-checkbox" {% if form.instance.caducidad %} checked {% endif %}/>
 			</label>
 
 			<div>
 				<p class="product-form__label">Fecha de Elaboración</p>
-				<input type="date" class="product-form__dates-input" name="fecha_elaboracion" value="{{ form.fecha_elaboracion.value|date:'Y-m-d' }}"/>
+				<input type="date" class="product-form__dates-input" name="fecha_elaboracion" value="{{ form.instance.fecha_elaboracion|date:'Y-m-d' }}"/>
 			</div>
 
 			<div>
 				<p class="product-form__label">Fecha de Vencimiento</p>
-				<input type="date" class="product-form__dates-input" name="fecha_vencimiento" value="{{ form.fecha_vencimineto.value|date:'Y-m-d' }}"/>
+				<input type="date" class="product-form__dates-input" name="fecha_vencimiento" value="{{ form.instance.fecha_vencimiento|date:'Y-m-d' }}"/>
 			</div>
 		</div>
 
@@ -78,14 +78,19 @@
 			<label class="product-form__image-upload">
 				<span>Imagen del producto</span>
 				<div class="product-form__image-preview">
+					{% if form.instance.imagen_producto %}
+    					<img src="{{ form.instance.imagen_producto.url }}" width="120">
+					{% endif %}
 					<input type="file" name="imagen_producto"/>
 				</div>
 			</label>
 		</div>
 
 		<!-- Botones -->
-		<div class="buttons">			
-			<button type="submit" class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>		
+		<div class="buttons">
+			<a href="{% url 'tienda_usuario' %}">			
+				<button class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>		
+			</a>
 			<button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista previa</button>
 		</div>
 	</form>

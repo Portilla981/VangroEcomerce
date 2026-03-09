@@ -17,26 +17,45 @@
 
 <div class="product-preview">
     <div class="card-section__product">
-        {% include 'components/card-producto.html' %}
+        {% include 'components/card-producto.html' with producto=producto %}
     </div>
     <div class="details">
-        {% include 'components/detalle-producto.html' %}
+        {% include 'components/detalle-producto.html' with producto=producto %}
     </div>
 </div>
 
-<div class="buttons">
-    <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
-        {% csrf_token %}
-            <button type="submit" class="buttons__action--secondary">Cancelar</button>
-    </form>
+{% if modo == 'crear' %}
+    <div class="buttons">
+        <form method="POST" enctype="multipart/form-data" >
+            {% csrf_token %}
+            
+            <a href="{% url 'mis_productos' %}">
+                <button type="button" class="buttons__action--secondary">Cancelar</button>
+            </a>
 
-    <button type="button" class="buttons__action--terciary" onclick="window.location.href='{% url 'volver_crear' producto.id %}'">Volver a editar</button>
+            <a href="javascript:history.back()">
+                <button type="submit" class="buttons__action--terciary">Volver Editar</button>
+            </a>
+           
+            <button type="submit" name="accion" value="guardar" class="buttons__action--primary create-product">Guardar y publicar producto</button>
 
-    <form method="POST" action="{% url 'guardar_producto' producto.id %}">
-        {% csrf_token %}
-            <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
-    </form>
-</div>
+        </form>
+    </div>
+
+{% elif modo == 'editar' %}
+    
+    <div class="buttons">
+
+        <a href="{% url 'mis_productos' %}">
+            <button class="buttons__action--secondary">Cancelar</button>
+        </a>
+
+        <a href="javascript:history.back()">
+            <button type="submit" class="buttons__action--terciary">Volver Editar</button>
+        </a>
+
+    </div>
+{% endif %}
 
 
 <div class="popup" id="popupMessage">

@@ -6,8 +6,9 @@ from django.http import JsonResponse
 from .forms import Form_producto
 from .models import Producto
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, ListView, UpdateView
-from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, UpdateView, FormView
+from django.views import View
+from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
@@ -19,7 +20,6 @@ from datetime import timedelta
 
 
 # Create your views here.
-
 def ver_productos(request):
     productos = Producto.objects.filter(
         estado_producto='publicado',
@@ -46,26 +46,72 @@ def detalle_producto(request, pk):
         'producto': producto
     })
 
-class Listado_producto(LoginRequiredMixin, ListView):
 
+
+
+# Listar producto
+
+class ListaProductos(LoginRequiredMixin, ListView):
     model = Producto
     template_name = "productos/listado_productos.html"
     context_object_name = "productos"
 
-    def dispatch(self, request, *args, **kwargs):
+    def get_queryset(self):
+        return Producto.objects.filter(
+            productor=self.request.user.productor
+        )
 
-        next_url = request.GET.get('next')
-        if next_url:
-            request.session['next'] = next_url
+# Crear producto
+class CrearProducto(LoginRequiredMixin, FormView):
 
-        return super().dispatch(request, *args, **kwargs)
+    template_name = "productos/crear_producto.html"
+    # Método 1
+    # form_class = Form_producto
+    
+    #def get_queryset(self):
+    #	return Producto.objects.filter(productor=self.request.user.productor)
 
+    # def form_valid(self, form):
 
-    def get_queryset(self):        
-        return Producto.objects.filter(productor__user=self.request.user)
+    #     self.request.session["producto_data"] = self.request.POST
+    #     self.request.session["producto_files"] = self.request.FILES
 
-def get_success_url(self):
-    return self.request.POST.get('next', reverse_lazy('mis_productos'))
+    #     return redirect("preview_producto")
+
+    # Método 2
+    def get(self, request):
+        form = Form_producto()
+        return render(request, self.template_name, {
+            "form": form
+        })
+
+    def post(self, request):
+        form = Form_producto(request.POST, request.FILES)
+        accion = request.POST.get("accion")
+
+        if form.is_valid():
+            if accion == "vista_previa":
+                producto = form.save(commit=False)
+
+                return render(request, "productos/vista_previa.html", {
+                    "producto": producto,
+                    "form": form,
+                    "modo": "crear"
+                })
+
+            elif accion == "guardar":
+                producto = form.save(commit=False)
+                producto.productor = request.user.productor
+                producto.estado_producto = "publicado"
+                producto.activo = True
+                producto.save()
+
+                return redirect("tienda_usuario")
+        else:
+            return redirect("tienda_usuario")
+
+        return render(request, self.template_name, {"form": form})
+
 
 @login_required
 #vista para actualizar el estado del producto de forma automática (sin actualizar la pagina)
@@ -86,142 +132,177 @@ def toggle_producto(request, pk):
     
     return redirect('mis_productos')
 
-#el usuario debe estar autenticado para crear el producto
-@login_required
-# Vista para crear el producto
-def crear_producto(request):
-    # Eliminar borradores viejos del usuario
-    tiempo_limite = timezone.now() - timedelta(minutes=15)
 
-    Producto.objects.filter(
-        productor =request.user.productor,
-        estado_producto='borrador',
-        fecha_creacion__lt=tiempo_limite
-    ).delete()
+# vista previa 
+class PreviewProducto(LoginRequiredMixin, View):
 
-    #procesar el formulario (Si se envía)
-    if request.method == 'POST':
-        #Se capturan los datos del producto y la imagen
-        form = Form_producto(request.POST, request.FILES)
-
-        #se valida si el formulario es valido
-        if form.is_valid():
-            accion = request.POST.get('accion')
-            producto = form.save(commit=False)
-            producto.productor = request.user.productor  # Asignar el productor desde el usuario
-            
-            # Si quiere vista previa
-            if accion == 'vista_previa':                
-                producto.estado_producto = 'borrador'
-                producto.save()                
-                print(producto.imagen_producto)                
-                return redirect('vista_previa', producto.id)
-            
-            elif accion == 'cancelar':
-                return redirect('tienda_usuario') 
-            
-        else:
-            print("ERRORES:", form.errors)
-            # Imprime los errores del formulario en la consola para depuración
-            # error_message = 'Error al crear el producto. Por favor, revise los datos ingresados.'
-            # messages.error(request, error_message)
-
-    #si el método es GET muestra el formulario vacío
-    else:
-        form = Form_producto()
-
-    #se carga el formulario para crear el producto
-    return render(request,'productos/crear_producto.html',{
-        'form':form,
-        'titulo':'Crear Producto'})
+    template_name = "productos/vista_previa.html"
     
-@login_required
-def funcion_vista_previa(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, productor =request.user.productor)
-    return render(request, 'productos/vista_previa.html', {'producto': producto})
+    # def get_queryset(self):
+	#     return Producto.objects.filter(productor=self.request.user.productor)
+    
+    def get(self, request):
+        data = request.session.get("producto_data")
 
-@login_required
-def confirmar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, productor=request.user.productor)
-    producto.estado_producto = 'publicado'
-    producto.activo = True
-    producto.save()
+        form = Form_producto(data)
 
-    messages.success(request, "Producto publicado correctamente.")
-    return redirect('tienda_usuario')
+        producto = form.save(commit=False)
 
-@login_required
-def cancelar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, productor=request.user.productor)
-    # Solo permitir eliminar si es borrador
-    if producto.estado_producto == 'borrador':
-        producto.delete()
+        return render(
+            request,
+            self.template_name,
+            {
+                "producto": producto,
+                "form": form
+            }
+        )
 
-    messages.info(request, "Creación del producto cancelada.")
+# Guardar producto
+class GuardarProducto(LoginRequiredMixin, View):
 
-    return redirect('tienda_usuario')
+    # def get_queryset(self):
+    # 	return Producto.objects.filter(productor=self.request.user.productor)
 
-@login_required
-def editar_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk, productor=request.user.productor)
-    print(request.POST)
-    print(request.POST.get('accion'))
+    def post(self, request):
 
-    if request.method == 'POST':
-        form = Form_producto(request.POST, request.FILES, instance=producto)
+        data = request.session.get("producto_data")
+
+        files = request.session.get("producto_files")
+
+        form = Form_producto(data, files)
+
         if form.is_valid():
-            print("FORMULARIO VALIDO")
-            accion = request.POST.get('accion')
+
             producto = form.save(commit=False)
-            producto.productor = request.user.productor  # Asignar el productor desde el usuario
-            
-            if accion == 'vista_previa':
-                producto.estado_producto = 'borrador'
-                producto.save()
-                return redirect('vista_previa', producto.id)
-            
-            elif accion == 'guardar':
-                producto.estado_producto = 'publicado'
-                producto.save()
-                messages.success(request, "Producto actualizado correctamente.")
-                return redirect('tienda_usuario')
 
-            elif accion == 'cancelar':
-                # 🔥 NO borrar si ya estaba publicado
-                if producto.estado_producto == 'borrador':
-                    producto.delete()
-                return redirect('tienda_usuario')
-        else:
-            print("FORMULARIO NO VALIDO")
-            print(form.errors)
-            # return redirect('vista_previa', producto.id)
-    else:
-        form = Form_producto(instance=producto)
+            producto.productor = request.user.productor
 
-    return render(request, 'productos/crear_producto.html', {'form': form})
+            producto.save()
 
-@login_required
-def toggle_producto(request, pk):
-    if request.method == "POST":
+        request.session.pop("producto_data", None)
+        request.session.pop("producto_files", None)
+
+        return redirect("mis_productos")
+
+# Editar producto
+class EditarProducto(LoginRequiredMixin, View):
+
+    template_name = "productos/editar_producto.html"
+    
+    # Método 1
+    # model = Producto
+    # form_class = Form_producto
+       
+    # def get_queryset(self):
+    #     return Producto.objects.filter(
+    #         productor=self.request.user.productor
+    #     )
+
+    # def form_valid(self, form):
+
+    #     self.request.session["producto_data"] = self.request.POST
+    #     self.request.session["producto_files"] = self.request.FILES
+    #     self.request.session["producto_id"] = self.object.id
+
+    #     return redirect("preview_producto")
+
+    # Método 2
+    def get(self, request, pk):
+
         producto = get_object_or_404(
             Producto,
             pk=pk,
-            productor__user=request.user
+            productor=request.user.productor
         )
-        producto.activo = not producto.activo
-        producto.save()
 
-        return redirect(request.POST.get('next', 'tienda_usuario'))
+        form = Form_producto(instance=producto)
 
-    return redirect('tienda_usuario')
+        return render(request, self.template_name, {
+            "form": form,
+            "producto": producto,
+            "modo": "editar"
+        })
 
-#Vista para actualizar un producto, con la vista UpdateView que tiene Django
-class Actualizar_producto(LoginRequiredMixin, UpdateView):
-     #se trabaja con el model Producto para acceder a los campos
-    model = Producto
-    #utiliza el formulario ProductoForm que tiene forms
-    form_class = Form_producto
-    #archivo HTML que se usa para actualizar el producto
-    template_name = 'productos/editar_producto.html'
-    #después de guardar (lo hace la vista UpdateView) redirige a la vista lista de productos
-    success_url = reverse_lazy('mis_productos')
+    def post(self, request, pk):
+
+        producto = get_object_or_404(
+            Producto,
+            pk=pk,
+            productor=request.user.productor
+        )
+
+        form = Form_producto(
+            request.POST,
+            request.FILES,
+            instance=producto
+        )
+
+        accion = request.POST.get("accion")
+
+        if form.is_valid():
+
+            if accion == "vista_previa":
+
+                producto_preview = form.save(commit=False)
+
+                return render(
+                    request,
+                    "productos/vista_previa.html",
+                    {
+                        "producto": producto_preview,
+                        "form": form,
+                        "modo": "editar",
+                        "pk": pk
+                    }
+                )
+
+            if accion == "guardar":
+
+                producto = form.save(commit=False)
+                producto.productor = request.user.productor
+                producto.estado_producto = "publicado"
+                producto.activo = True
+                producto.save()
+
+                # form.save()
+
+                return redirect("mis_productos")
+
+        return render(request, self.template_name, {"form": form})
+
+
+
+# Guardar edición
+class GuardarProducto(LoginRequiredMixin, View):
+
+    # def get_queryset(self):
+	#     return Producto.objects.filter(productor=self.request.user.productor)
+
+    def post(self, request):
+
+        data = request.session.get("producto_data")
+        files = request.session.get("producto_files")
+
+        producto_id = request.session.get("producto_id")
+
+        if producto_id:
+
+            producto = Producto.objects.get(pk=producto_id)
+
+            form = Form_producto(data, files, instance=producto)
+
+        else:
+
+            form = Form_producto(data, files)
+
+        if form.is_valid():
+
+            producto = form.save(commit=False)
+
+            producto.productor = request.user.productor
+
+            producto.save()
+
+        request.session.flush()
+
+        return redirect("mis_productos")

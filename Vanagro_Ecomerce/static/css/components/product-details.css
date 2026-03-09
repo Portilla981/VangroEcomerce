@@ -111,9 +111,11 @@
 }
 
 .buttons_cards{
+  margin: 8px;
   display: flex;
-  gap: 1rem;
-  width: 320px;
+  gap: 48px;
+  width: 340px;
+  justify-content: center;
 }
 
 .product-detail_container{
