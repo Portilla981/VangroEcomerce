@@ -25,6 +25,26 @@
 </div>
 
 {% if modo == 'crear' %}
+
+    <div class="buttons">
+        <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
+            {% csrf_token %}
+            <button type="submit" class="buttons__action--secondary">Cancelar</button>
+        </form>
+
+        <a href="{% url 'volver_crear' producto.id %}">
+            <button type="button" class="buttons__action--terciary">Volver a editar</button>
+        </a>
+
+
+<form method="POST" action="{% url 'guardar_producto' producto.id %}">
+    {% csrf_token %}
+    <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
+</form>
+</div>
+
+
+    {% comment %}
     <div class="buttons">
         <form method="POST" enctype="multipart/form-data" >
             {% csrf_token %}
@@ -41,6 +61,7 @@
 
         </form>
     </div>
+    {% endcomment %}
 
 {% elif modo == 'editar' %}
     

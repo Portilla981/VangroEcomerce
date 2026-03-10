@@ -22,6 +22,9 @@ pip install -r dirección donde este el archivo Requirements.txt ejm: "D:\Proyec
 
 -> Preparar la base de datos
 
+cada vez que se realice una clonacion es resomendable crear un superusuario por cada mienbro del equipo asi cada quien tendra su propia base de datos, el por q se realiza esto es por seguridad de las contraseñas y demas campos que tiene django.
+
+para las demas tablas y datos seguir lo siguiente
 Ingresa al proyecto con cd nombre del proyecto, luego realiza migraciones para actualizar tablas.
 
 manage.py makemigrations
@@ -37,7 +40,9 @@ cuando dentro de una app se creen modelos y se almacene datos para que el proyec
 
 python manage.py dumpdata usuarios.Departamento usuarios.Municipio --indent 2 > usuarios/fixtures/ubicaciones.json
 
-después de dumpdata  se coloca el nombre de la app en minúsculas donde esta el modelo que se quiere copiar sus datos para el equipo, luego el nombre del modelo o de la tabla, si son varias tablas se separa con un espacio, luego el --indent coloca la cantidad de tablas a copiar, luego después del signo > se coloca la ubicacion donde se va a crear el archivo tipo fixture es decir su ubicacion ejm de ruta usuarios/fixtures/ y luego el nombre que desee con extension .json, esto creara los datos para ser migrados y poder luego extraerlos para acomodar las tablas de la app.
+nota: --indent 2, signifca el formato para json sea mas explicito para manejar, si hay actualizaciones de estas tablas realizar el comando para refrescar el script y actualizar los datos
+
+después de dumpdata  se coloca el nombre de la app en minúsculas donde esta el modelo que se quiere copiar sus datos para el equipo, luego el nombre del modelo o de la tabla, si son varias tablas se separa con un espacio, luego el --indent 2 que ya se explico anteriormente, luego después del signo > se coloca la ubicacion donde se va a crear el archivo tipo fixture es decir su ubicacion ejm de ruta usuarios/fixtures/ y luego el nombre que desee con extension .json, esto creara los datos para ser migrados y poder luego extraerlos para acomodar las tablas de la app.
 
 
 

@@ -75,12 +75,12 @@ class RegistroUsuario(View):
         perfil_form = Formulario_Usuario(request.POST, request.FILES)
         perfil_form.fields['municipio'].queryset = Municipio.objects.all()
 
-        if user_form.data and perfil_form.data:
-            print("Datos del formulario de usuario:", user_form.data.username)
-            print("Datos del formulario de perfil:", perfil_form.data.numero_identificacion)
-        else:
-            print("Formulario de usuario no es válido:", user_form.errors)
-            print("Formulario de perfil no es válido:", perfil_form.errors)
+        #if user_form.data and perfil_form.data:
+            #print("Datos del formulario de usuario:", user_form.data.username)
+            #print("Datos del formulario de perfil:", perfil_form.data.numero_identificacion)
+        #else:
+         #   print("Formulario de usuario no es válido:", user_form.errors)
+          #  print("Formulario de perfil no es válido:", perfil_form.errors)
 
         if user_form.is_valid() and perfil_form.is_valid():
 
