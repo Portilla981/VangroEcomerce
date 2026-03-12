@@ -100,6 +100,12 @@ class Formulario_Usuario(forms.ModelForm):
         # Colocar el número de identificación en mayúsculas y sin espacios
         if num:
             num = num.strip().upper()
+            
+        qs = CreacionUsuario.objects.filter(numero_identificacion= num)
+
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
         
         if CreacionUsuario.objects.filter(numero_identificacion = num).exists():
             raise forms.ValidationError("Este número de identificación ya existe")

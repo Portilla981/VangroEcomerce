@@ -9,5 +9,6 @@ urlpatterns = [
     path('tienda/', RegistroProductor.as_view(), name= 'tienda_usuario'),  
     path('salir/', LogoutView.as_view(next_page = 'inicio'), name='logout'),   
     path('registro/', RegistroUsuario.as_view(), name='registro_usuario'),
+    path('editar/', editar_usuario, name='editar_usuario'),
     path('ajax/Municipios/', cargar_municipios, name='lista_municipios'),
 ]

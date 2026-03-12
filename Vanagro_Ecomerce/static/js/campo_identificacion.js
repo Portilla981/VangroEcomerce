@@ -8,9 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tipo = document.getElementById("tipo_id");
     const numero = document.getElementById("number_id");
+
+    console.log(tipo.value);
     
-    numero.value = "";
+    // numero.value = "";
     numero.addEventListener("input", function(e) {
+
+        
 
     if (tipo.value === "1") {
         // e.target.value = e.target.value.replace(/[^1-9]/g, '');
@@ -19,7 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (tipo.value === "2" || tipo.value === "3") {
         // e.target.value = e.target.value.replace(/[^A-Za-z0-9]/g, '');
         letrasYNumeros(e);
-    }
+    }   
+
     });
 
 

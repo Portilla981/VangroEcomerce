@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 # from django.http import HttpResponse
 # Ruta para obtener las vistas genéricas de django para el CRUD
 
@@ -18,6 +19,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.shortcuts import get_object_or_404
 
 from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor
 # Importación del modelo Tarea creado
@@ -73,14 +75,7 @@ class RegistroUsuario(View):
     def post(self, request):
         user_form = UserForm(request.POST)
         perfil_form = Formulario_Usuario(request.POST, request.FILES)
-        perfil_form.fields['municipio'].queryset = Municipio.objects.all()
-
-        #if user_form.data and perfil_form.data:
-            #print("Datos del formulario de usuario:", user_form.data.username)
-            #print("Datos del formulario de perfil:", perfil_form.data.numero_identificacion)
-        #else:
-         #   print("Formulario de usuario no es válido:", user_form.errors)
-          #  print("Formulario de perfil no es válido:", perfil_form.errors)
+        perfil_form.fields['municipio'].queryset = Municipio.objects.all()        
 
         if user_form.is_valid() and perfil_form.is_valid():
 
@@ -144,7 +139,6 @@ class RegistroProductor(TemplateView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)        
-        
 
         user = self.request.user
 
@@ -181,3 +175,40 @@ class RegistroProductor(TemplateView, LoginRequiredMixin):
             return redirect('tienda_usuario')
 
         return self.render_to_response({'form': form})
+    
+    
+    
+@login_required
+def editar_usuario(request):
+    
+    user = request.user
+    perfil = request.user.usuario
+    
+    if request.method == 'POST':
+        
+        user_form = UserForm(request.POST, instance = user)
+        perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil)
+        
+        if user_form.is_valid() and perfil_form.is_valid():
+            
+            user_form.save()
+            perfil_form.save()           
+            
+            return redirect('sesion_inicio')
+        
+        else:
+            print('Hay errores')       
+        
+    else:
+        
+        user_form = UserForm(instance= user)
+        perfil_form = Formulario_Usuario(instance= perfil)
+        
+    context = {
+        'user_form': user_form,
+        'perfil_form': perfil_form,
+        'titulo': 'Editar Usuario' 
+        }
+        
+        
+    return render(request, 'usuario/editar_usuario.html', context)

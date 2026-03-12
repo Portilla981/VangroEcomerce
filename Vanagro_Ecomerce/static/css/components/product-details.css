@@ -19,13 +19,14 @@
 
 
 .details__block {
+  background-color: var(--gray-100);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   /* background-color: var(--gray-50); */
   padding: 16px;
-  /* gap: 2rem; */
+  gap: 8px;
 }
 
 .details__image--img{
@@ -106,8 +107,8 @@
 .product-list__grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding: 1.5rem;
+  gap: 16px 0 ;
+  padding: 16px 0;
 }
 
 .buttons_cards{

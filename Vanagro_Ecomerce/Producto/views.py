@@ -28,6 +28,13 @@ def ver_productos(request):
         stock__gt=0
         ).select_related('productor', 'productor__user')
     
+    # Accion para volver a la pagina de donde se llamo
+    # def dispatch(self, request, *args, **kwargs):
+    next_url = request.GET.get('next')
+
+    if next_url:
+        request.session['volver_a'] = next_url
+    
     print("Productos encontrados:", productos.count())
 
     return render(request, 'productos/vista_productos.html', {
@@ -478,3 +485,5 @@ class GuardarProducto(LoginRequiredMixin, View):
         request.session.flush()
 
         return redirect("mis_productos")
+
+

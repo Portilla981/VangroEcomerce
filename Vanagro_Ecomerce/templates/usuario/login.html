@@ -64,30 +64,39 @@
 
         {% comment %}Columna derecha: opciones{% endcomment %}
         <div class="profile__actions">
-          <button class="profile__action" onclick="window.location.href = '{% url 'ver_productos' %}'">
+          <a href="{% url 'ver_productos' %}?next={{ request.path }}">
+          <button class="profile__action">
             <ion-icon name="eye-outline"></ion-icon>
             <span>Ver Productos</span>
           </button>
-          <button class="profile__action" onclick="location.href = '#'">
+          </a>
+
+          <a href="">
+          <button class="profile__action">
             <ion-icon name="bag-add-outline"></ion-icon>
             <span>Compras/Pedidos</span>
           </button>
+          </a>
           
+          <a href="">
           <button class="profile__action">
             <ion-icon name="calendar-outline"></ion-icon>
             <span>Ver Eventos</span>
           </button>
-         
+          </a>
+
           <button class="profile__action" onclick="location.href = '#report'">
             <ion-icon name="document-text-outline"></ion-icon>
             <span>Reportes</span>
           </button>
-          <a class="profile__link" href="/frontend/public/views/edit-user.html">
+
+          <a class="profile__link" href="{% url 'editar_usuario' %}?next={{ request.path }}">
             <button type="button" class="profile__action">
               <ion-icon name="settings-outline"></ion-icon>
               <span>Editar Perfil</span>
             </button>
           </a>
+
         </div>
       </div>
 
