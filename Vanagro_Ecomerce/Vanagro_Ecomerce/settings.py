@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'Home.apps.HomeConfig',
     'Usuario.apps.UsuarioConfig',
     'Producto.apps.ProductoConfig',
+    'Carrito.apps.CarritoConfig',
+    'Pedido.apps.PedidoConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +68,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #conexión con la carpeta media
+                'django.template.context_processors.media',
+                'carrito.context_processors.carrito_total',
             ],
         },
     },
@@ -152,3 +157,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configuracion para la recuperacion del correo por medio de consola virtual
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# PASSWORD_RESET_COMPLETE_URL = 'login'
+#Expiración del enlace para recuperar contraseña
+PASSWORD_RESET_TIMEOUT = 300
+
+#manejo del correo electrónico para recuperar la contraseña
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+#cuenta desde donde se envían los correos
+#EMAIL_HOST_USER = 'yuly.saenz.formacion@gmail.com'
+#contraseña para aplicaciones que se configura con gmail
+#EMAIL_HOST_PASSWORD = 'eccss i t i a c i t a y s p'
+#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+

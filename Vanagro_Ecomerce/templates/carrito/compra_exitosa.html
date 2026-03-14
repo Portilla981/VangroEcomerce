@@ -1,0 +1,26 @@
+<!-- Permite crear o editar el producto -->
+
+<!-- Herencia de la plantilla base -->
+{% extends "core/base.html" %}
+
+<!-- Inicio del bloque de contenido -->
+{% block content %}
+<!-- contenedor -->
+<div class="container mt-5 text-center">
+
+	<!-- card -->
+    <div class="card p-5 shadow-sm">
+    	<!-- mensaje del pago realizado -->
+        <h2 class="text-success mb-3">¡Pago realizado con éxito!</h2>
+        <!-- mensaje -->
+        <p>Tu pedido ha sido procesado correctamente.</p>
+        <!-- Crea el botón para volver a la lista de productos -->
+        <a href="{% url 'lista_productos' %}" class="btn btn-primary mt-3">
+            Volver a la tienda
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

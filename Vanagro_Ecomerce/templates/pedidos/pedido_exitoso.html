@@ -1,0 +1,54 @@
+<!-- Herencia de la plantilla base -->
+{% extends 'core/base.html' %}
+
+<!-- Inicio del bloque de contenido -->
+{% block content %}
+
+<div class="container mt-5">
+    <!-- Card Principal -->
+    <div class="card shadow p-4 text-center">
+
+        <h2 class="text-success mb-3">
+            ✅ ¡Compra realizada con éxito!
+        </h2>
+
+        <!-- datos del pedido: número, fecha y total pagado -->
+        <!-- pedido (es una variable) viene de la vista -->
+        <p><strong>Número de pedido:</strong> {{ pedido.id }}</p>
+        <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+        <p><strong>Total pagado:</strong> ${{ pedido.total }}</p>
+
+        <hr>
+
+        <h5 class="mt-4">Productos comprados</h5>
+
+        <ul class="list-group mt-3">
+             <!-- se recorre los productos que hacen parte del pedido -->
+            {% for detalle in pedido.detalles.all %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>
+                        {{ detalle.producto.nombre }} x {{ detalle.cantidad }}
+                    </span>
+                    <span>
+                         <!-- se llama al metodo subtotal que esta en el modelo -->
+                        ${{ detalle.subtotal }}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="mt-4">
+            <a href="{% url 'lista_productos' %}" class="btn btn-primary">
+                Seguir comprando
+            </a>
+
+            <a href="{% url 'mis_pedidos' %}" class="btn btn-outline-dark">
+                Ver mis pedidos
+            </a>
+        </div>
+
+    </div>
+
+</div>
+<!-- Fin del bloque de contenido -->
+{% endblock %}

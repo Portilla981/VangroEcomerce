@@ -29,6 +29,8 @@ urlpatterns = [
     path('', include('Home.url_home')), 
     path('', include('Usuario.url_usuario')),
     path('', include('Producto.url_producto')),
+    path('', include('Carrito.url_carrito')),
+    path('', include('Pedido.url_pedido')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Se incluyen las rutas de las aplicaciones Home y Usuario para que estén disponibles en el proyecto, esto permite organizar las URLs de cada aplicación de manera modular y facilita la gestión de las rutas en el proyecto.

@@ -1,0 +1,129 @@
+<!-- pago del pedido -->
+
+<!-- Herencia de la plantilla base -->
+{% extends "core/base.html" %}
+<!-- Inicio del bloque de contenido -->
+{% block content %}
+<!-- contenedor -->
+<div class="container mt-5">
+    <!-- titulo de la pagina -->
+    <h2 class="mb-4">Finalizar Compra</h2>
+    <!-- metodo post para enviar a la vista de procesa_pago -->
+    <form method="POST" action="{% url 'procesar_pago' %}">
+        <!-- Token de seguridad -->
+        {% csrf_token %}
+        <!-- genera las columnas -->
+        <div class="row">
+
+            <!-- configuración de la columna izquierda -->
+            <div class="col-md-6">
+                <!-- card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <!-- información del cliente -->
+                        <strong>Información del Cliente</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- request.user carga la informacion del usuario logueado -->
+                        <p><strong>Nombre:</strong> {{ request.user.first_name }}</p>
+                        <p><strong>Apellido:</strong> {{ request.user.last_name }}</p>
+                        <p><strong>Correo:</strong> {{ request.user.email }}</p>
+                        <!-- si el usuario tiene direccion registrada la muestra sino muestra el texto no registrada -->
+                        <p><strong>Dirección:</strong> 
+                            {% if request.user.perfil.direccion %}
+                                {{ request.user.perfil.direccion }}
+                            {% else %}
+                                No registrada
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- car del metodo de pago -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <strong>Método de Pago</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-check mb-2">
+                            <!-- opciones de los metodos de pago. solo se puede elegir uno -->
+                            <input class="form-check-input" type="radio" name="metodo_pago" value="tarjeta" checked>
+                            <label class="form-check-label">
+                                Tarjeta de Crédito
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="metodo_pago" value="transferencia">
+                            <label class="form-check-label">
+                                Transferencia Bancaria
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="metodo_pago" value="contraentrega">
+                            <label class="form-check-label">
+                                Pago Contra Entrega
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- columna derecha -->
+            <div class="col-md-6">
+                <!-- card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <strong>Resumen del Pedido</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- ciclo para mostrar por cada producto el nombre, cantidad y subtotal -->
+                        {% for item in items %}
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    {{ item.producto.nombre }} <br>
+                                    <small class="text-muted">
+                                        Cantidad: {{ item.cantidad }}
+                                    </small>
+                                </div>
+                                <div>
+                                    ${{ item.subtotal }}
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+
+                        <!-- total del carrito -->
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Total:</strong>
+                            <strong class="fs-5">${{ total }}</strong>
+                        </div>
+
+                        <!-- boton finalizar y pagar -->
+                        <!-- Una vez se da clic va a la vista procesar_pago -->
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                                Finalizar y Pagar
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
