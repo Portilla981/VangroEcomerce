@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.contrib import messages
 from django.shortcuts import render
 
 from django.shortcuts import render, redirect
@@ -21,7 +22,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
 
-from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor
+from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor, Form_Actualizar_User
 # Importación del modelo Tarea creado
 from .models import *
 # from .form_home import *
@@ -49,8 +50,15 @@ class Login(DeleteView, LoginRequiredMixin):
 
 class Tienda(TemplateView, LoginRequiredMixin):
     template_name = 'usuario/producter-profile.html'
+    
+    # success_message = 'Producto creado exitosamente.'
+    # messages.success(request, success_message)   
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, 'Ingresando al módulo de tienda')
+        return super().dispatch(request, *args, **kwargs)  
 
     def get_context_data(self, **kwargs):
+        
         context = super().get_context_data(**kwargs)
         
         context['titulo']= 'Tienda de Productos'
@@ -62,9 +70,14 @@ class RegistroUsuario(View):
     template_name = "usuario/registro.html"
     titulo = 'Registro de Usuario'
 
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, 'Ingresando al módulo de registro')
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         user_form = UserForm()
         perfil_form = Formulario_Usuario()
+        
         
         return render(request, self.template_name, {
             "user_form": user_form,
@@ -115,7 +128,8 @@ class RegistroUsuario(View):
                 messages.error(request, 'Ocurrió un error al crear el usuario. Por favor, inténtalo de nuevo.')
                 return redirect("registro_usuario")
         
-        
+        messages.error(request, user_form.errors)
+        messages.error(request, perfil_form.errors)
         print(user_form.errors)
         print(perfil_form.errors)
 
@@ -137,11 +151,17 @@ def cargar_municipios(request):
 class RegistroProductor(TemplateView, LoginRequiredMixin):
     template_name = "usuario/tienda.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, 'Ingresando al módulo de creación de tienda')
+        return super().dispatch(request, *args, **kwargs)
+    
+
     def get_context_data(self, **kwargs):
+        
         context = super().get_context_data(**kwargs)        
 
         user = self.request.user
-
+        
         if hasattr(user, 'productor'):
             context['titulo']= 'Tu tienda'
             context['es_productor'] = True
@@ -184,24 +204,29 @@ def editar_usuario(request):
     user = request.user
     perfil = request.user.usuario
     
-    if request.method == 'POST':
-        
-        user_form = UserForm(request.POST, instance = user)
+    if request.method == 'POST':        
+        user_form = Form_Actualizar_User(request.POST, instance = user)
         perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil)
         
-        if user_form.is_valid() and perfil_form.is_valid():
-            
+        if user_form.is_valid() and perfil_form.is_valid():            
             user_form.save()
-            perfil_form.save()           
+            perfil_form.save()
+
+            messages.success(request, f'El usuario {user.username} ha sido editado exitosamente.')            
             
             return redirect('sesion_inicio')
         
-        else:
-            print('Hay errores')       
+        if not user_form.is_valid():
+            messages.success(request, user_form.errors) 
+            print(user_form.errors)
+
+        if not perfil_form.is_valid():
+            messages.success(request, perfil_form.errors) 
+            print(perfil_form.errors)   
         
     else:
-        
-        user_form = UserForm(instance= user)
+        messages.success(request, 'Ingresando al modulo de edición de usuario') 
+        user_form = Form_Actualizar_User(instance= user)
         perfil_form = Formulario_Usuario(instance= perfil)
         
     context = {

@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="logo_gov">
-    <img class="image_gov"  src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">    
+  <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
 </div>
 
 
@@ -17,10 +17,7 @@
     <div class="navbar-vanagro__icons">
       <div class="navbar-vanagro__icons--second">
         <a href="{{ request.session.volver_a|default:'/' }}">
-          <ion-icon
-            class="navbar-vanagro__icons--back"
-            name="arrow-back-outline"
-          ></ion-icon>
+          <ion-icon class="navbar-vanagro__icons--back" name="arrow-back-outline"></ion-icon>
         </a>
       </div>
     </div>

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from django.contrib.auth.views import LogoutView # Ruta para manejar el cierre de sesion
-# from . import views
+
 from .views import * 
 
 urlpatterns = [ 
@@ -11,4 +11,8 @@ urlpatterns = [
     path('registro/', RegistroUsuario.as_view(), name='registro_usuario'),
     path('editar/', editar_usuario, name='editar_usuario'),
     path('ajax/Municipios/', cargar_municipios, name='lista_municipios'),
+    
+
 ]
+
+

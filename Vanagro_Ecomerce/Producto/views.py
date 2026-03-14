@@ -90,7 +90,7 @@ def cancelar_producto(request, pk):
     if producto.estado_producto == 'borrador':
         producto.delete()
 
-    messages.info(request, "Creación del producto cancelada.")
+        messages.info(request, "Creación del producto cancelada.")
 
     return redirect('tienda_usuario')
 
@@ -129,13 +129,16 @@ def editar_producto(request, pk):
                 # NO borrar si ya estaba publicado
                 if producto.estado_producto == 'borrador':
                     producto.delete()
+                    messages.info('Saliendo del modulo de edición')
                 return redirect('tienda_usuario')
         else:
             print("FORMULARIO NO VALIDO")
+            messages.error(request, form.errors)
             print(form.errors)
             # return redirect('vista_previa', producto.id)
     else:
         form = Form_producto(instance=producto)
+        messages.info('Ingresando a editar producto')
 
     return render(request, 'productos/crear_producto.html', {'form': form})
 
@@ -196,7 +199,7 @@ def crear_producto(request):
                 producto.estado_producto = 'borrador'
                 producto.save()
                 
-                print(producto.imagen_producto)
+                print(producto.estado)
                 
                 url = reverse('vista_previa', args=[producto.id])
                 
@@ -214,10 +217,14 @@ def crear_producto(request):
                 return redirect('tienda_usuario')  
 
             elif accion == 'cancelar':
+                messages.info('Saliendo del modulo, espere por favor')
                 return redirect('tienda_usuario') 
             
         else:
-            print("ERRORES:", form.errors)
+            print("FORMULARIO NO VALIDO")
+            messages.error(request, form.errors)
+            print(form.errors)
+            
             # Imprime los errores del formulario en la consola para depuración
             # error_message = 'Error al crear el producto. Por favor, revise los datos ingresados.'
             # messages.error(request, error_message)
@@ -225,6 +232,7 @@ def crear_producto(request):
     #si el método es GET muestra el formulario vacío
     else:
         form = Form_producto()
+        messages.info(request, 'Ingresando a modulo de creacion de producto, \nEspere un momento...')
 
     #se carga el formulario para crear el producto
     return render(request,'productos/crear_producto.html',{
@@ -311,83 +319,60 @@ def funcion_vista_previa(request, pk):
 
     return render(request, 'productos/vista_previa.html', {'producto': producto, 'modo': modo})
 
-'''
-# vista previa 
-class PreviewProducto(LoginRequiredMixin, View):
-
-    template_name = "productos/vista_previa.html"
-    
-    # def get_queryset(self):
-	#     return Producto.objects.filter(productor=self.request.user.productor)
-    
-    def get(self, request):
-        data = request.session.get("producto_data")
-
-        form = Form_producto(data)
-
-        producto = form.save(commit=False)
-
-        return render(
-            request,
-            self.template_name,
-            {
-                "producto": producto,
-                "form": form
-            }
-        )'''
 
 # Guardar producto
 class GuardarProducto(LoginRequiredMixin, View):
 
-    # def get_queryset(self):
-    # 	return Producto.objects.filter(productor=self.request.user.productor)
-
     def post(self, request):
-
         data = request.session.get("producto_data")
-
         files = request.session.get("producto_files")
 
         form = Form_producto(data, files)
 
         if form.is_valid():
-
             producto = form.save(commit=False)
-
             producto.productor = request.user.productor
-
             producto.save()
+            messages.success('El producto se guardo satisfactoriamente.')
 
         request.session.pop("producto_data", None)
         request.session.pop("producto_files", None)
 
         return redirect("mis_productos")
+    
+# Guardar edición
+class GuardarProductoEditado(LoginRequiredMixin, View):
+   
+    def post(self, request):
+
+        data = request.session.get("producto_data")
+        files = request.session.get("producto_files")
+
+        producto_id = request.session.get("producto_id")
+
+        if producto_id:
+            producto = Producto.objects.get(pk=producto_id)
+            form = Form_producto(data, files, instance=producto)
+
+        else:
+            form = Form_producto(data, files)
+
+        if form.is_valid():
+            producto = form.save(commit=False)
+            producto.productor = request.user.productor
+            producto.save()
+
+        request.session.flush()
+
+        return redirect("mis_productos")
+
 
 # Editar producto
 class EditarProducto(LoginRequiredMixin, View):
 
     template_name = "productos/editar_producto.html"
-    
-    # Método 1
-    # model = Producto
-    # form_class = Form_producto
-       
-    # def get_queryset(self):
-    #     return Producto.objects.filter(
-    #         productor=self.request.user.productor
-    #     )
-
-    # def form_valid(self, form):
-
-    #     self.request.session["producto_data"] = self.request.POST
-    #     self.request.session["producto_files"] = self.request.FILES
-    #     self.request.session["producto_id"] = self.object.id
-
-    #     return redirect("preview_producto")
-
-    # Método 2
+     
     def get(self, request, pk):
-
         producto = get_object_or_404(
             Producto,
             pk=pk,
@@ -421,7 +406,6 @@ class EditarProducto(LoginRequiredMixin, View):
         if form.is_valid():
 
             if accion == "vista_previa":
-
                 producto_preview = form.save(commit=False)
 
                 return render(
@@ -436,54 +420,37 @@ class EditarProducto(LoginRequiredMixin, View):
                 )
 
             if accion == "guardar":
-
                 producto = form.save(commit=False)
                 producto.productor = request.user.productor
                 producto.estado_producto = "publicado"
                 producto.activo = True
                 producto.save()
 
-                # form.save()
+                messages.success(request, 'El producto fue actualizado exitosamente')              
 
+                return redirect("mis_productos")
+            
+            if accion == 'cancelar':
+                messages.info(request, 'Saliendo del modulo, espere un momento')
                 return redirect("mis_productos")
 
         return render(request, self.template_name, {"form": form})
 
 
 
-# Guardar edición
-class GuardarProducto(LoginRequiredMixin, View):
 
-    # def get_queryset(self):
-	#     return Producto.objects.filter(productor=self.request.user.productor)
+@login_required
+def cambiar_imagen_producto(request):
 
-    def post(self, request):
+    if request.method == 'POST':
+        producto_id = request.POST.get("producto_id")
+        imagen = request.FILES.get("imagen")
 
-        data = request.session.get("producto_data")
-        files = request.session.get("producto_files")
+        producto = Producto.objects.get(id = producto_id)
 
-        producto_id = request.session.get("producto_id")
-
-        if producto_id:
-
-            producto = Producto.objects.get(pk=producto_id)
-
-            form = Form_producto(data, files, instance=producto)
-
-        else:
-
-            form = Form_producto(data, files)
-
-        if form.is_valid():
-
-            producto = form.save(commit=False)
-
-            producto.productor = request.user.productor
-
+        if imagen:
+            producto.imagen_producto = imagen
             producto.save()
 
-        request.session.flush()
-
-        return redirect("mis_productos")
-
+    return redirect("mis_productos")
 

@@ -112,6 +112,7 @@
 .profile_producter--action {
     box-shadow: 0 1px 4px var(--black);
     display: flex;
+    /* text-decoration: none; */
     /* justify-content: center; */
     align-items: center;
     gap: 16px;
@@ -127,9 +128,14 @@
     transition: background 0.3s ease;
 }
 
+.profile_producter--action a{
+    text-decoration: none;
+    color: var(--black);
+}
+
 .profile_producter--action:hover {
     background: var(--primary-500);
-    color: var(--black);
+    color: var(--white);
 }
 
 .profile_producter--action ion-icon {

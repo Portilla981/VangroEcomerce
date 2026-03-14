@@ -28,6 +28,13 @@
     object-fit: contain; /* Evita que la imagen se deforme */
 }
 
+.navbar-vanagro__container-reset{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .navbar-vanagro__icons--cart,
 .navbar-vanagro__icons--login,
 .navbar-vanagro__icons--back {
@@ -134,6 +141,7 @@
         /* justify-content: space-between;*/
         /* align-items: end; */
     }
+
     
     .navbar-vanagro__icons--cart,
     .navbar-vanagro__icons--login,

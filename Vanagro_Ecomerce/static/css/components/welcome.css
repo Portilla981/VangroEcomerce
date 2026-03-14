@@ -1,3 +1,9 @@
+/* .layout{
+    min-width: 100vh;
+    display: flex;
+    flex-direction: column;
+} */
+
 .welcome__msj {
     visibility: visible;
     position: fixed;

@@ -7,13 +7,16 @@ from .views import *
 
 urlpatterns = [
 
-    path("productos/", ListaProductos.as_view(), name="mis_productos"),
+    path("mis_productos/", ListaProductos.as_view(), name="mis_productos"),
+    path("editar/imagen-producto/", cambiar_imagen_producto, name="actualizar_img"),
+    
     # path('Mis_Productos/', Listado_producto.as_view(), name='mis_productos'),
     #path("productos/crear/", CrearProducto.as_view(), name="crear_producto"),
     path('crear/producto/', crear_producto, name= 'crear_producto'),  
     # path("productos/preview/", PreviewProducto.as_view(), name="preview_producto"),
     path('Vista_previa/<int:pk>/', funcion_vista_previa, name='vista_previa'),
     path("productos/guardar/", GuardarProducto.as_view(), name="guardar_producto"),
+    path("productos/editado/", GuardarProductoEditado.as_view(), name="guardar_editado"),
     path('Confirmar/<int:pk>/', confirmar_producto, name='guardar_producto'),
     path("productos/<int:pk>/editar/", EditarProducto.as_view(), name="editar_producto"),
     path('editar/<int:pk>/', editar_producto, name='volver_crear'),

@@ -1,15 +1,15 @@
+{% load static %}
+
+<div class="logo_gov">
+  <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
+</div>
+
+
 <header class="header-vanagro">
-    <div class="navbar-vanagro__container--simple">        
-        <div class="navbar-vanagro__container--title">
-            <h1 class="navbar-vanagro__title">VANAGRO
-                <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
-            </h1>
-        </div>
-        <div class="navbar-vanagro__icons">
-            <a href="{{ request.GET.next|default:'/' }}">
-                <ion-icon name="person-circle-outline" class="navbar-vanagro__icons--simple"></ion-icon>
-                {% comment %} <!-- <img class="navbar-vanagro__login" src="/frontend/public/assets/vanagro/campesino.jpg" alt=""> --> {% endcomment %}
-            </a>
-        </div>
-    </div>    
+  <div class="navbar-vanagro__container-reset">
+    <h1 class="navbar-vanagro__title">
+      VANAGRO
+      <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
+    </h1>      
+  </div>  
 </header>

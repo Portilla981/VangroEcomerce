@@ -9,7 +9,7 @@
 {% endblock navbar %}
 
 {% block script %}
-    
+
 {% endblock script %}
 
 {% block producto %}
@@ -27,14 +27,14 @@
 <div class="buttons">
     <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
         {% csrf_token %}
-            <button type="submit" class="buttons__action--secondary">Cancelar</button>
+        <button type="submit" class="buttons__action--secondary">Cancelar</button>
     </form>
-
-    <button type="button" class="buttons__action--terciary" onclick="window.location.href='{% url 'volver_crear' producto.id %}'">Volver a editar</button>
+    <a href="'{% url 'volver_crear' producto.id %}'"></a>
+    <button type="button" class="buttons__action--terciary">Volver a editar</button>
 
     <form method="POST" action="{% url 'guardar_producto' producto.id %}">
         {% csrf_token %}
-            <button type="submit" class="buttons__action--primary create-product">Guardar cambios</button>
+        <button type="submit" class="buttons__action--primary create-product">Guardar cambios</button>
     </form>
 </div>
 

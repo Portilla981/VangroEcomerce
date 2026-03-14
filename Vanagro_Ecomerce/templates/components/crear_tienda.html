@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block script %}
-    <script src="{% static 'js/ubicacion.js' %}" defer></script>
+<script src="{% static 'js/ubicacion.js' %}" defer></script>
 {% endblock script %}
 
 <div class="producter-register">
@@ -10,56 +10,62 @@
     <form class="producter-register__form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <div class="producter-register__identification">             
-             <div class="form-register__images">
+        <div class="producter-register__identification">
+            <div class="form-register__images">
                 <label class="form-register__label">Cargar foto de finca
                     <input class="form-register__file" type="file" name="foto_finca">
                 </label>
-            </div>              
+            </div>
         </div>
 
         <div class="producter-register__container">
             <div class="producter-register__farm-location">
                 <div class="producter-register__fields-farm">
                     <label class="form-register__label">Nombre Finca
-                        <input class="form-register__input" type="text" name="nombre_finca" placeholder="Ingrese el nombre de la finca" required>
+                        <input class="form-register__input" type="text" name="nombre_finca"
+                            placeholder="Ingrese el nombre de la finca" required>
                     </label>
                     <label class="form-register__label">Direccion o Ubicacion exacta
-                        <input class="form-register__input" type="text" name="direccion_finca" placeholder="Ingrese la direccion exacta de la finca" required>
+                        <input class="form-register__input" type="text" name="direccion_finca"
+                            placeholder="Ingrese la direccion exacta de la finca" required>
                     </label>
 
                     {% comment %} <div class="form-register__group"> {% endcomment %}
-                        <label class="form-register__label">Departamento                    
+                        <label class="form-register__label">Departamento
                             <select id="departamento" name="departamento" class="form-register__input" required>
                                 <option value="">Seleccione un departamento</option>
                                 {% for dpto in form.departamento.field.queryset %}
-                                    <option value="{{ dpto.id }}">{{ dpto.nombre_Departamento }}</option>
+                                <option value="{{ dpto.id }}">{{ dpto.nombre_Departamento }}</option>
                                 {% endfor %}
                             </select>
                         </label>
-                        
+
                         <label class="form-register__label">Municipio
                             <select id="municipio" class="form-register__input" name="municipio" required>
                                 <option value="">Seleccione un municipio</option>
                                 {% for mcpio in form.municipio.field.queryset %}
-                                    <option value="{{ mcpio.id }}">{{ mcpio.nombre_Municipio }}</option>
+                                <option value="{{ mcpio.id }}">{{ mcpio.nombre_Municipio }}</option>
                                 {% endfor %}
                             </select>
                         </label>
-                    {% comment %} </div> {% endcomment %}
+                        {% comment %}
+                    </div> {% endcomment %}
                     <label class="form-register__label">Vereda
-                        <input class="form-register__input" type="text" name="vereda" placeholder="Ingrese el nombre de la vereda" required>
+                        <input class="form-register__input" type="text" name="vereda"
+                            placeholder="Ingrese el nombre de la vereda" required>
                     </label>
                     <label class="form-register__label">Descripcion de tu tienda
-                        <textarea class="form-register__input" name="descripcion" placeholder="Describe brevemente que productos produces" required>
-                        </textarea> 
+                        <textarea class="form-register__input" name="descripcion"
+                            placeholder="Describe brevemente que productos produces" required>
+                        </textarea>
                     </label>
                 </div>
 
                 <div class="producter-register__location">
                     <p class="producter-register__label-farm">Ubicación en el mapa</p>
-                    <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu finca</h3>
-                    <div class="producter-register__map" id="map">                        
+                    <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu
+                        finca</h3>
+                    <div class="producter-register__map" id="map">
                         <input type="hidden" name="latitud" id="latitud">
                         <input type="hidden" name="longitud" id="longitud">
                     </div>
@@ -69,25 +75,25 @@
 
         <div class="producter-register__actions">
             <button type="submit" class="buttons__action--secondary btn-cancel"
-            onclick="location.href='javascript:history.back()'">Cancelar</button>
+                onclick="location.href='javascript:history.back()'">Cancelar</button>
             <button type="submit" class="buttons__action--primary create-producter-alert">Crear Tienda</button>
         </div>
     </form>
 
     {% if form.errors %}
-        <div style="color:red;">
-            <p>Por favor corrige los siguientes errores:</p>
-            <ul>
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+    <div style="color:red;">
+        <p>Por favor corrige los siguientes errores:</p>
+        <ul>
+            {% for field in form %}
+            {% for error in field.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     {% endif %}
 
 

@@ -9,7 +9,7 @@
 {% endblock navbar %}
 
 {% block script %}
-    
+
 {% endblock script %}
 
 {% block producto %}
@@ -26,56 +26,57 @@
 
 {% if modo == 'crear' %}
 
-    <div class="buttons">
-        <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
-            {% csrf_token %}
-            <button type="submit" class="buttons__action--secondary">Cancelar</button>
-        </form>
+<div class="buttons">
+    <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
+        {% csrf_token %}
+        <button type="submit" class="buttons__action--secondary">Cancelar</button>
+    </form>
 
-        <a href="{% url 'volver_crear' producto.id %}">
-            <button type="button" class="buttons__action--terciary">Volver a editar</button>
-        </a>
+    <a href="{% url 'volver_crear' producto.id %}">
+        <button type="button" class="buttons__action--terciary">Volver a editar</button>
+    </a>
 
 
-<form method="POST" action="{% url 'guardar_producto' producto.id %}">
-    {% csrf_token %}
-    <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
-</form>
+    <form method="POST" action="{% url 'guardar_producto' producto.id %}">
+        {% csrf_token %}
+        <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
+    </form>
 </div>
 
 
-    {% comment %}
-    <div class="buttons">
-        <form method="POST" enctype="multipart/form-data" >
-            {% csrf_token %}
-            
-            <a href="{% url 'mis_productos' %}">
-                <button type="button" class="buttons__action--secondary">Cancelar</button>
-            </a>
-
-            <a href="javascript:history.back()">
-                <button type="submit" class="buttons__action--terciary">Volver Editar</button>
-            </a>
-           
-            <button type="submit" name="accion" value="guardar" class="buttons__action--primary create-product">Guardar y publicar producto</button>
-
-        </form>
-    </div>
-    {% endcomment %}
-
-{% elif modo == 'editar' %}
-    
-    <div class="buttons">
+{% comment %}
+<div class="buttons">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
 
         <a href="{% url 'mis_productos' %}">
-            <button class="buttons__action--secondary">Cancelar</button>
+            <button type="button" class="buttons__action--secondary">Cancelar</button>
         </a>
 
         <a href="javascript:history.back()">
             <button type="submit" class="buttons__action--terciary">Volver Editar</button>
         </a>
 
-    </div>
+        <button type="submit" name="accion" value="guardar" class="buttons__action--primary create-product">Guardar y
+            publicar producto</button>
+
+    </form>
+</div>
+{% endcomment %}
+
+{% elif modo == 'editar' %}
+
+<div class="buttons">
+
+    <a href="{% url 'mis_productos' %}">
+        <button class="buttons__action--secondary">Cancelar</button>
+    </a>
+
+    <a href="javascript:history.back()">
+        <button type="submit" class="buttons__action--terciary">Volver Editar</button>
+    </a>
+
+</div>
 {% endif %}
 
 

@@ -5,45 +5,58 @@
 {% block navbar %}
 
 {% if user.is_authenticated %}
-    {% include 'components/navbar-profile_acciones.html' %}    
+{% include 'components/navbar-profile_acciones.html' %}
 {% else %}
-     {% include 'components/navbar_vanagro.html' %}
+{% include 'components/navbar_vanagro.html' %}
 {% endif %}
 
 {% endblock navbar %}
 
-{% block script %}    
+{% block script %}
 {% endblock script %}
 
 {% block producto %}
 
-<section class="card-section__product">
-    
-    {% for producto in productos %}
-        <div class="product-list__grid_item"> 
-            <div class="product-list__grid">
-                {% include 'components/card-producto.html' %}
-            </div>
-            <div class="buttons_cards">
-                <a href="{% url 'detalle_producto' producto.id %}">
-                    <button class="buttons__action--secondary">Ver detalles</button>
-                </a>
-                {% comment %} <!-- Botón carrito --> {% endcomment %}
-                {% if user.is_authenticated %}
-                    <button type="button" class="buttons__action--primary">Añadir al carrito</button>
-                {% else %}
-                    <a href="{% url 'inicio_vista' %}?next={{ request.path }}">
-                        <button type="button" class="buttons__action--primary">Añadir al carrito</button>                        
-                    </a>
-                {% endif %}
-            </div>
-        </div>
 
-    {% empty %}
-        <div class="no-products">
-            <p>No hay productos disponibles.</p>
-        </div>
-    {% endfor %}
+<section class="card-section__product">
+
+{% for producto in productos %}
+
+<div class="product-item">
+
+    {% include 'components/card-producto.html' %}
+
+    <div class="buttons_cards">
+
+        <a href="{% url 'detalle_producto' producto.id %}">
+            <button class="buttons__action--secondary">
+                Ver detalles
+            </button>
+        </a>
+
+        {% if user.is_authenticated %}
+
+        <button class="buttons__action--primary">
+            Añadir al carrito
+        </button>
+
+        {% else %}
+
+        <a href="{% url 'inicio_vista' %}?next={{ request.path }}">
+            <button class="buttons__action--primary">
+                Añadir al carrito
+            </button>
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endfor %}
+
 </section>
+
 
 {% endblock producto %}

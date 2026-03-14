@@ -50,6 +50,18 @@ class UserForm(forms.ModelForm):
         if p1 and p2 and p1 != p2:
             raise forms.ValidationError("Las contraseñas no coinciden")
         
+
+class Form_Actualizar_User(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields =[
+            'first_name',
+            'last_name',
+            'email'
+        ]
+
+#========================================================        
 class Formulario_Usuario(forms.ModelForm):
     class Meta:
         model = CreacionUsuario
@@ -73,10 +85,7 @@ class Formulario_Usuario(forms.ModelForm):
             return num 
                  
         # Eliminar espacios al inicio y final
-        num = num.strip()
-
-        # Eliminar espacios internos
-        num = num.replace(" ", "")
+        num = num.strip().replace(" ", "").upper()         
         
         # Validar el formato del número de identificación según el tipo seleccionado
         if tipo and tipo.id == 1:
@@ -101,13 +110,13 @@ class Formulario_Usuario(forms.ModelForm):
         if num:
             num = num.strip().upper()
             
-        qs = CreacionUsuario.objects.filter(numero_identificacion= num)
+        buscare = CreacionUsuario.objects.filter(numero_identificacion= num)
 
         if self.instance.pk:
-            qs = qs.exclude(pk=self.instance.pk)
+            buscare = buscare.exclude(pk=self.instance.pk)
 
         
-        if CreacionUsuario.objects.filter(numero_identificacion = num).exists():
+        if buscare.exists():
             raise forms.ValidationError("Este número de identificación ya existe")
         
         return num

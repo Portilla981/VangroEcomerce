@@ -69,3 +69,55 @@
     align-items: center;
     flex-direction: column
 }
+
+/*========= Resetear de contraseña ===============*/
+
+.section-password{
+    display: flex;
+    height: 75vh;
+}
+
+.contenedor-reset{
+    max-width:400px;
+    margin:80px auto;
+    padding:30px;
+    background:var(--white);
+    border-radius:8px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    text-align:center;
+    height: 300px;
+}
+
+.reset-campo{
+    margin-bottom:20px;
+    text-align:left;
+}
+
+.reset-campo input{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:4px;
+
+}
+
+.btn-reset{
+    background:var(--primary-900);
+    color:var(--white);
+    padding:10px 20px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn-volver{
+    display:inline-block;
+    margin-top:20px;
+    color: var(--primary-900);
+    text-decoration:none;
+}
+
+.btn-volver:hover{
+    color: var(--black);
+    scale: 1.2;
+}

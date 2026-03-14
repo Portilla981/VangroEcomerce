@@ -1,48 +1,51 @@
 {% load humanize %}
 {% load static %}
 
-    <h2>Detalle del producto</h2>
-    <div class="details__block">
-        
-        <div class="details__image">
-            {% if producto.imagen_producto %}
-                <img class="card-product__image_1" src="{{ producto.imagen_producto.url }}" alt="Foto de producto"/>
-            {% else %}
-                <img class="card-product__image_1" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Foto de producto"/>
-            {% endif %}
-        </div>
+<h2>Detalle del producto</h2>
+<div class="details__block">
 
-        <div class="details__info">
-            <h2 class="details__title">{{ producto.nombre_producto}}</h2>
-            <div class="details__rating">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-regular fa-star"></i>
-                <span class="details__rating-text">(4.0)</span>
-            </div>
-            <p class="details__price">Precio: ${{ producto.precio|floatformat:0|intcomma }} X {{ producto.unidad_medida }}</p>
-
-            <p class="details__description">
-                <strong>Stock: </strong>{{ producto.stock }}
-                <br>
-                <strong>Vendido por: </strong>{{ producto.productor.user.first_name }} {{ producto.productor.user.last_name }} 
-                <br>
-                <strong>Ubicación: </strong>{{ producto.productor.departamento }}, {{ producto.productor.municipio }}
-                <br>
-                <strong>Nombre de la finca: </strong>{{ producto.productor.nombre_finca }}
-                <br>
-                <strong>Tienda creada desde: </strong>{{ producto.productor.fecha_creacion|date:"j \d\e F \d\e Y" }}
-                <br>
-                {% comment %} <strong>Método de envío:</strong> Entrega a domicilio en 24-48 horas dentro del área metropolitana o
-                retiro en punto de venta.
-                <br>
-                <strong>Métodos de pago:</strong> Aceptamos pagos en efectivo, transferencia bancaria y tarjetas de
-                crédito/débito.
-                <br><br> {% endcomment %}
-            </p>
-
-            
-        </div>
+    <div class="details__image">
+        {% if producto.imagen_producto %}
+        <img class="card-product__image_1" src="{{ producto.imagen_producto.url }}" alt="Foto de producto" />
+        {% else %}
+        <img class="card-product__image_1" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Foto de producto" />
+        {% endif %}
     </div>
+
+    <div class="details__info">
+        <h2 class="details__title">{{ producto.nombre_producto}}</h2>
+        <div class="details__rating">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <span class="details__rating-text">(4.0)</span>
+        </div>
+        <p class="details__price">Precio: ${{ producto.precio|floatformat:0|intcomma }} X {{ producto.unidad_medida }}
+        </p>
+
+        <p class="details__description">
+            <strong>Stock: </strong>{{ producto.stock }}
+            <br>
+            <strong>Vendido por: </strong>{{ producto.productor.user.first_name }} {{ producto.productor.user.last_name
+            }}
+            <br>
+            <strong>Ubicación: </strong>{{ producto.productor.departamento }}, {{ producto.productor.municipio }}
+            <br>
+            <strong>Nombre de la finca: </strong>{{ producto.productor.nombre_finca }}
+            <br>
+            <strong>Tienda creada desde: </strong>{{ producto.productor.fecha_creacion|date:"j \d\e F \d\e Y" }}
+            <br>
+            {% comment %} <strong>Método de envío:</strong> Entrega a domicilio en 24-48 horas dentro del área
+            metropolitana o
+            retiro en punto de venta.
+            <br>
+            <strong>Métodos de pago:</strong> Aceptamos pagos en efectivo, transferencia bancaria y tarjetas de
+            crédito/débito.
+            <br><br> {% endcomment %}
+        </p>
+
+
+    </div>
+</div>

@@ -113,6 +113,10 @@
     transition: background 0.3s ease;
 }
 
+.profile__action a{
+    text-decoration: none;
+    color: var(--black);
+}
 
 .profile__action:hover {
     background: var(--primary-500);
