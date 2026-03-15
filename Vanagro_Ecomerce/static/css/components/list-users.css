@@ -97,10 +97,16 @@
   color: var(--white);
 }
 
+.buttons a{
+  text-decoration: none;
+  font-size: var(--fs-xxs);
+  color: var(--black);
+}
 
 .user-list__icon {
   font-size: 22px;
   color: var(--black);
+
 }
 
 .user-list__icon:hover {
@@ -112,7 +118,7 @@
   height: 50px;
   object-fit: cover;
   border-radius: 4px;       
-    border: 1px solid var(--gray-300);
+  border: 1px solid var(--gray-300);
 }
 
 
@@ -147,11 +153,13 @@
 
   .user-list__cell {
     border: none;
-    text-align: left;
+    text-align: center;
     padding: 8px 0;
     font-size: var(--fs-xxs);
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
   }
 
   .user-list__hr{

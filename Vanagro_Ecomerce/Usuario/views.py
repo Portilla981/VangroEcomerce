@@ -54,7 +54,7 @@ class Tienda(TemplateView, LoginRequiredMixin):
     # success_message = 'Producto creado exitosamente.'
     # messages.success(request, success_message)   
     def dispatch(self, request, *args, **kwargs):
-        messages.info(request, 'Ingresando al módulo de tienda')
+        # messages.info(request, 'Ingresando al módulo de tienda')
         return super().dispatch(request, *args, **kwargs)  
 
     def get_context_data(self, **kwargs):
@@ -71,7 +71,7 @@ class RegistroUsuario(View):
     titulo = 'Registro de Usuario'
 
     def dispatch(self, request, *args, **kwargs):
-        messages.info(request, 'Ingresando al módulo de registro')
+        # messages.info(request, 'Ingresando al módulo de registro')
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -152,7 +152,7 @@ class RegistroProductor(TemplateView, LoginRequiredMixin):
     template_name = "usuario/tienda.html"
 
     def dispatch(self, request, *args, **kwargs):
-        messages.info(request, 'Ingresando al módulo de creación de tienda')
+        # messages.info(request, 'Ingresando al módulo de creación de tienda')
         return super().dispatch(request, *args, **kwargs)
     
 
@@ -225,7 +225,7 @@ def editar_usuario(request):
             print(perfil_form.errors)   
         
     else:
-        messages.success(request, 'Ingresando al modulo de edición de usuario') 
+        # messages.success(request, 'Ingresando al modulo de edición de usuario') 
         user_form = Form_Actualizar_User(instance= user)
         perfil_form = Formulario_Usuario(instance= perfil)
         

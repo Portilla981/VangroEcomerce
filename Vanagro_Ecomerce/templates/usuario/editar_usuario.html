@@ -53,8 +53,7 @@
                     <select class="form-register__input" name="tipo_identificacion" id="tipo_id" required>
                         <option value="">Seleccione un tipo de documento</option>
                         {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
-                        <option value="{{ tipo.id }}" {% if tipo.id==perfil_form.tipo_identificacion.value %} selected{%
-                            endif %}>{{ tipo.tipo_identificacion }}</option>
+                        <option value="{{ tipo.id }}" {% if tipo.id == perfil_form.tipo_identificacion.value %} selected {% endif %} >{{ tipo.tipo_identificacion }}</option>
                         {% endfor %}
                     </select>
                 </label>
@@ -74,8 +73,8 @@
                     <select id="departamento" name="departamento" class="form-register__input" required>
                         <option value="">Seleccione un departamento</option>
                         {% for dpto in perfil_form.departamento.field.queryset %}
-                        <option value="{{ dpto.id }}" {% if dpto.id==perfil_form.departamento.value %} selected{% endif
-                            %}>{{ dpto.nombre_Departamento }}</option>
+                        <option value="{{ dpto.id }}" {% if dpto.id == perfil_form.departamento.value %} selected 
+                        {% endif %} >{{ dpto.nombre_Departamento }}</option>
                         {% endfor %}
                     </select>
                 </label>
@@ -85,8 +84,8 @@
                         data-selected="{{ perfil_form.municipio.value }}" required>
                         <option value="">Seleccione un municipio</option>
                         {% for mcpio in perfil_form.municipio.field.queryset %}
-                        <option value="{{ mcpio.id }}" {% if mcpio.id==perfil_form.municipio.value %} selected{% endif
-                            %}>{{ mcpio.nombre_Municipio }}</option>
+                        <option value="{{ mcpio.id }}" {% if mcpio.id == perfil_form.municipio.value %} selected
+                        {% endif %} >{{ mcpio.nombre_Municipio }}</option>
                         {% endfor %}
                     </select>
                 </label>

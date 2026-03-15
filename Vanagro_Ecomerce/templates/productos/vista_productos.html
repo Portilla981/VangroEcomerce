@@ -37,7 +37,8 @@
         {% if user.is_authenticated %}
 
         <button class="buttons__action--primary">
-            Añadir al carrito
+            <a href="{% url 'agregar_carrito' producto.id %}">
+            Añadir al carrito</a>
         </button>
 
         {% else %}

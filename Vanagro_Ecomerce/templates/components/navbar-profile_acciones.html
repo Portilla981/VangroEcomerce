@@ -1,10 +1,11 @@
 {% load static %}
 
-<div class="logo_gov">
-  <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
-</div>
 
 <header class="header-vanagro">
+  <div class="logo_gov">
+    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
+  </div>
+
   <div class="navbar-vanagro__container">
 
     <h1 class="navbar-vanagro__title">VANAGRO
@@ -29,7 +30,7 @@
     <div class="navbar-vanagro__icons">
 
       <div class="navbar-vanagro__icons--first">
-        <a href="">
+        <a href="{% url 'ver_carrito' %}">
           <ion-icon class="navbar-vanagro__icons--cart" name="cart-outline"></ion-icon>
         </a>
       </div>

@@ -6,8 +6,9 @@
     width: 100%;
     z-index: 10;
     background-color: var(--primary-900);
-    padding: 8px;
-    /* height: 80px; */
+    /* padding: 8px; */
+    height: auto;
+    
 }
 
 .logo_gov{
@@ -44,8 +45,8 @@
 
 .navbar-vanagro__title {
     margin: 0;
-    /* padding: 1rem; */
-    font-size: var(--fs-lg);
+    padding: 8px;
+    font-size: var(--fs-md);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -53,7 +54,7 @@
 }
 
 .navbar-vanagro__subtitle {
-    font-size: var(--fs-xs);
+    font-size: var(--fs-xxs);
     color: var(--gray-600);
 }
 
@@ -165,7 +166,7 @@
 
     .navbar-vanagro__icons {
         display: flex;
-        height: 56px;
+        /* height: 56px; */
         justify-content: space-around;
         align-items: center;        
         /* gap: 32px; */

@@ -129,7 +129,7 @@ def editar_producto(request, pk):
                 # NO borrar si ya estaba publicado
                 if producto.estado_producto == 'borrador':
                     producto.delete()
-                    messages.info('Saliendo del modulo de edición')
+                    # messages.info('Saliendo del modulo de edición')
                 return redirect('tienda_usuario')
         else:
             print("FORMULARIO NO VALIDO")
@@ -138,7 +138,7 @@ def editar_producto(request, pk):
             # return redirect('vista_previa', producto.id)
     else:
         form = Form_producto(instance=producto)
-        messages.info('Ingresando a editar producto')
+        # messages.info('Ingresando a editar producto')
 
     return render(request, 'productos/crear_producto.html', {'form': form})
 
@@ -181,6 +181,11 @@ def crear_producto(request):
         fecha_creacion__lt=tiempo_limite
     ).delete()
 
+    next_url = request.GET.get('next')
+    
+    if next_url:
+        request.session['volver_a'] = next_url
+
 
     #procesar el formulario (Si se envía)
     if request.method == 'POST':
@@ -217,7 +222,7 @@ def crear_producto(request):
                 return redirect('tienda_usuario')  
 
             elif accion == 'cancelar':
-                messages.info('Saliendo del modulo, espere por favor')
+                # messages.info('Saliendo del modulo, espere por favor')
                 return redirect('tienda_usuario') 
             
         else:
@@ -232,7 +237,7 @@ def crear_producto(request):
     #si el método es GET muestra el formulario vacío
     else:
         form = Form_producto()
-        messages.info(request, 'Ingresando a modulo de creacion de producto, \nEspere un momento...')
+        # messages.info(request, 'Ingresando a modulo de creacion de producto, \nEspere un momento...')
 
     #se carga el formulario para crear el producto
     return render(request,'productos/crear_producto.html',{
@@ -431,7 +436,7 @@ class EditarProducto(LoginRequiredMixin, View):
                 return redirect("mis_productos")
             
             if accion == 'cancelar':
-                messages.info(request, 'Saliendo del modulo, espere un momento')
+                # messages.info(request, 'Saliendo del modulo, espere un momento')
                 return redirect("mis_productos")
 
         return render(request, self.template_name, {"form": form})

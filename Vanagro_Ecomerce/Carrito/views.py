@@ -32,11 +32,9 @@ from django.db import transaction
 from .models import ItemCarrito
 from Pedido.models import Pedido, DetallePedido
 
-
-
 # Create your views here.
 
-# el usuario debe estar autenticado para ver el carrito
+# El usuario debe estar autenticado para ver el carrito
 @login_required
 #vista para ver el carrito
 def ver_carrito(request):
@@ -48,14 +46,12 @@ def ver_carrito(request):
     total = sum(item.subtotal() for item in items)
 
     #se envía a la vista ver_carrito los productos y el total
-    return render(request, 'carrito/ver_carrito.html', {'items': items, 'total': total})
-
+    return render(request, 'carrito/ver_carrito.html', {'items': items, 'total': total, 'titulo': 'Mis compras'})
 
 #------------------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------------------
-# el usuario debe estar autenticado para ver el carrito
+# El usuario debe estar autenticado para ver el carrito
 @login_required
-#vista para agregar al carrito
+# vista para agregar al carrito
 def agregar_al_carrito(request, producto_id):
     '''get_object_or_404 busca en la bd el producto que llega como ID por la URL. Si el producto 
     no existe muestra error 404'''
@@ -83,16 +79,15 @@ def agregar_al_carrito(request, producto_id):
     else:
         item.cantidad = 1
 
-    #guarda en la bd
+    # guarda en la bd
     item.save()
 
-    #suma la cantidad de productos (solo los registros sin tener en cuenta el valor)
+    # suma la cantidad de productos (solo los registros sin tener en cuenta el valor)
     total_items = ItemCarrito.objects.filter(usuario=request.user).count()
 
-    #el JS muestra que se agregó correctamente e indica el total de items (productos)
+    # el JS muestra que se agregó correctamente e indica el total de items (productos)
     return JsonResponse({"success": True, "total_items": total_items})
 
-#------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------
 
 # el usuario debe estar autenticado para ver el carrito

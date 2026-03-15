@@ -70,7 +70,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 #conexión con la carpeta media
                 'django.template.context_processors.media',
-                'carrito.context_processors.carrito_total',
+                'Carrito.context_processors.carrito_total',
             ],
         },
     },
