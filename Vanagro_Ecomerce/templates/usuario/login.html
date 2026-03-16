@@ -20,9 +20,10 @@
 
 <body>
   {% block navbar %}
-  {% include 'components/navbar-profile.html' %}
+    {% include 'components/navbar-profile.html' %}
   {% endblock navbar %}
 
+  <div class="contenido_general">
   {% block login %}
   <div class="profile__container">
     {% comment %}Portada con leyenda{% endcomment %}
@@ -135,6 +136,7 @@
   </div>
 
   {% endblock login %}
+  </div>  
 
   {% include 'components/footer_vanagro.html' %}
 </body>

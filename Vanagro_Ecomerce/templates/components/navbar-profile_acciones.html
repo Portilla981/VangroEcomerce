@@ -29,10 +29,11 @@
 
     <div class="navbar-vanagro__icons">
 
-      <div class="navbar-vanagro__icons--first">
+      <div class="navbar-vanagro__icons--first">        
         <a href="{% url 'ver_carrito' %}">
-          <ion-icon class="navbar-vanagro__icons--cart" name="cart-outline"></ion-icon>
+          <ion-icon class="navbar-vanagro__icons--cart" name="cart-outline"></ion-icon>          
         </a>
+        <span id="carrito-contador" class="carrito-badge" {% if carrito_total_items == 0 %} style= "display:none;" {% endif %}>{{ carrito_total_items }}</span>
       </div>
 
       <div class="navbar-vanagro__icons--second">

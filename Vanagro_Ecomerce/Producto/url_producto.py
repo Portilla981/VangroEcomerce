@@ -28,9 +28,10 @@ urlpatterns = [
     # path('Producto_Activo/<int:pk>/', toggle_producto, name='accion_producto'),
 
     path('cancelar/<int:pk>/', cancelar_producto, name='cancelar_producto'), 
-    
+    #path('buscar_ajax/', buscar_productos_ajax, name='buscar_productos_ajax'),
     #path("productos/<int:pk>/eliminar/", EliminarProducto.as_view(), name="eliminar_producto"),
-    
+    path("buscar-productos/", buscar_productos, name="buscar_productos",
+)
     
     
     

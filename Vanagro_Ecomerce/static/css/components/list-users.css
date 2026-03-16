@@ -6,7 +6,7 @@
   border-radius: 4px;
   /* padding: 24px; */
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  max-height: 90vh;
+  /* max-height: 90vh; */
   /* overflow-x: hidden; */
   overflow-y: auto; 
   /* border-collapse: collapse; */
@@ -17,10 +17,8 @@
   font-size:var(--fs-md);
   margin:0;
   padding:12px 0;
-
   position:sticky;
   top:0;
-
   background:var(--white);
   z-index:20;
 }
@@ -56,7 +54,7 @@
 .user-list__cell:first-child{
   position: sticky;
   left: 0;
-  background: var(--white);
+  /* background: var(--white); */
   z-index: 1;
 }
 

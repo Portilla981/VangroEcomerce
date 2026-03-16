@@ -25,20 +25,37 @@
 
 <body>
 
-    <div class="layout">    {% block navbar %}
+    <!-- <div class="layout"> -->
+    {% block navbar %}
 
     {% include 'components/navbar_vanagro.html' %}
 
     {% endblock navbar %}
-
+    
+    <div class="contenido_general">
     {% block contenido %}
     
     {% endblock contenido %}
+    </div>
+
+    <div id="popup" class="popup-overlay">
+
+    <div class="popup-box">
+
+        <h3 id="popup-titulo"></h3>
+
+        <p id="popup-mensaje"></p>
+
+        <button onclick="cerrarPopup()">Cerrar</button>
+
+    </div>
+</div>
 
 
     {% include 'components/footer_vanagro.html' %}
 
-    </div>
+    <!-- </div> -->
+
 
 </body>
 

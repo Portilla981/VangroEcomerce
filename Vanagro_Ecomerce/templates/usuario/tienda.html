@@ -4,20 +4,25 @@
 
 {% block navbar %}
 
-{% include 'components/navbar-tienda.html' %}
+    {% include 'components/navbar-tienda.html' %}
 
 {% endblock navbar %}
 
+{% block script %}
+  <script src="{% static 'js/modal_mapa.js' %}" defer></script>
+  <script src="{% static 'js/render_mapa.js' %}" defer></script>
+{% endblock script %}
+
 {% block login %}
 
-{% if es_productor %}
+    {% if es_productor %}
 
-{% include 'components/perfil_productor.html' %}
+        {% include 'components/perfil_productor.html' %}
 
-{% else %}
+    {% else %}
 
-{% include 'components/crear_tienda.html' %}      
+        {% include 'components/crear_tienda.html' %}      
 
-{% endif %}
+    {% endif %}
 
 {% endblock login %}

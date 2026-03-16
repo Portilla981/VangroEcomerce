@@ -53,3 +53,33 @@ function confirmarEnvio() {
     if (popup) popup.style.display = "none";
   });
 })();
+
+let popupTimer;
+
+function mostrarPopup(titulo, mensaje, tipo){
+
+    const popup = document.getElementById("popup");
+    const box = popup.querySelector(".popup-box");
+
+    document.getElementById("popup-titulo").textContent = titulo;
+    document.getElementById("popup-mensaje").textContent = mensaje;
+
+    box.classList.remove("popup-error","popup-ok");
+
+    if(tipo === "error"){
+        box.classList.add("popup-error");
+    }else{
+        box.classList.add("popup-ok");
+    }
+
+    popup.style.display = "flex";
+
+    clearTimeout(popupTimer);
+
+    popupTimer = setTimeout(()=>{
+        popup.style.display = "none";
+    },2000);
+}
+function cerrarPopup(){
+    document.getElementById("popup").style.display = "none";
+}

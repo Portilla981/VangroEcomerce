@@ -1,9 +1,3 @@
-.cards-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--terciary-50);
-}
 
 .card {
     border: 2px solid var(--primary-900);
@@ -41,13 +35,12 @@
     gap: 48px;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 @media (width > 640px) {
     .cards-container {
-        flex: 1;
         flex-direction: row;
-        min-height: 75vh;
-        margin: 24px;
+         /* margin: 24px; */
     }
 }

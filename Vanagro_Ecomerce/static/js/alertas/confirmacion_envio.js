@@ -44,7 +44,7 @@
         hideAll();
         thanksPopup.style.display = "flex";
 
-        // Redirección
+        // Redireccion
         setTimeout(() => {
           if (redirectUrl) window.location.href = redirectUrl;
         }, 4000);

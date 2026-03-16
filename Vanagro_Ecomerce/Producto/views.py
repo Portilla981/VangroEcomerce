@@ -28,6 +28,7 @@ def ver_productos(request):
         stock__gt=0
         ).select_related('productor', 'productor__user')
     
+    categorias = Producto.CATEGORIA
     # Accion para volver a la pagina de donde se llamo
     # def dispatch(self, request, *args, **kwargs):
     next_url = request.GET.get('next')
@@ -38,7 +39,8 @@ def ver_productos(request):
     print("Productos encontrados:", productos.count())
 
     return render(request, 'productos/vista_productos.html', {
-        'productos': productos
+        'productos': productos,
+        'categorias': categorias,
     })
 
 def detalle_producto(request, pk):
@@ -50,8 +52,11 @@ def detalle_producto(request, pk):
         stock__gt=0
     )
 
+    
+
     return render(request, 'productos/producto_detallado.html', {
-        'producto': producto
+        'producto': producto,
+        
     })
 
     
@@ -182,7 +187,7 @@ def crear_producto(request):
     ).delete()
 
     next_url = request.GET.get('next')
-    
+
     if next_url:
         request.session['volver_a'] = next_url
 
@@ -458,4 +463,33 @@ def cambiar_imagen_producto(request):
             producto.save()
 
     return redirect("mis_productos")
+
+# @login_required
+#Vista para buscar los productos
+def buscar_productos(request):
+    #q recibe el producto que se desea buscar (lo que el usuario va escribiendo)
+    # '' si no se selecciona esta vacío
+    q = request.GET.get('q', '')
+    #verifica si tiene filtro (todos, activo, inactivo) si no tiene filtro por defecto es activo
+    categoria = request.GET.get("categoria", "")
+    '''nombre__icontains (busca el nombre que se va ingresando sin importar mayúsculas o 
+    minúsculas)'''
+    
+    # Busca lo que se va ingresando dentro de los productos que tengan el estado habilitados
+        
+    productos = Producto.objects.filter(activo=True, estado_producto = 'publicado' )
+
+    if categoria:
+        productos = Producto.objects.filter(activo=True, categoria = categoria)
+
+    if q:
+        productos = Producto.objects.filter(activo=True, nombre_producto__icontains=q)
+
+    #se carga como tipo texto la información de cada producto 
+    html = render_to_string('components/card-producto_buscar.html', {'productos': productos})
+
+    #se utiliza el AJAX para que solo procese datos pequeños para ir actualizando la pagina. Devuelve el producto que cumple
+    #con la información que se va digitado y va actualizando la sección de la página. Es decir permite realizar el proceso
+    #actualizando la pagina de forma automática (no hay que actualizar con F5 la pagina para ver los resultados)
+    return JsonResponse({'html': html})
 

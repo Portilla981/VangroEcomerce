@@ -13,6 +13,9 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
   <script src="{% static 'js/alertas/notificaciones.js' %}" defer></script>
+  <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
+  <script src="{% static 'js/carrito/barra_buscar.js' %}" defer></script>
+  <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
 
   {% block script %} {% endblock script %}
 
@@ -21,12 +24,27 @@
 
 <body>
   {% block navbar %}
-  {% include 'components/navbar-simple_inicio.html' %}
+    {% include 'components/navbar-simple_inicio.html' %}
   {% endblock navbar %}
 
+  <div class="contenido_general">
   {% block producto %}
 
   {% endblock producto %}
+  </div>
+
+  <div id="popup" class="popup-overlay">
+
+    <div class="popup-box">
+
+        <h3 id="popup-titulo"></h3>
+
+        <p id="popup-mensaje"></p>
+
+        <button onclick="cerrarPopup()">Cerrar</button>
+
+    </div>
+</div>
 
   {% include 'components/footer_vanagro.html' %}
 </body>

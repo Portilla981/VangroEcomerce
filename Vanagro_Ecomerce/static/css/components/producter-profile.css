@@ -1,6 +1,7 @@
 .profile_producter--container {
+    flex: 1;
     width: 100%;
-    height: auto;
+    /* height: auto; */
     background: var(--gray-50);
     font-family: var(--main-font, sans-serif);
 }
@@ -8,7 +9,7 @@
 .profile_producter--hero {
     position: relative;
     width: 100%;
-    height: auto;
+    /* height: auto; */
     /* overflow: hidden; */
     background: url(../../img/interfaz_vanagro/vacas.jpg) no-repeat center center/cover;
     display: flex;

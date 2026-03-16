@@ -1,7 +1,80 @@
-/* carga del html */
-document.addEventListener("DOMContentLoaded", function(){
-    /* evento de escucha-> clic */
-    document.addEventListener("click", function(e){
+
+    /* ejecuta la página cuando tiene todo listo */
+    document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("SCRIPT CARGADO");
+        
+    /* Evento del click  */
+    document.addEventListener("click", function (e) {
+
+        /* detecta el botón */
+        /* agregar al carrito */
+
+        const carritoBtn = e.target.closest(".agregar-carrito-btn");
+
+        if (carritoBtn) {
+             e.preventDefault();   // ← FALTA ESTO
+
+            const productoId = carritoBtn.dataset.id;
+            const activo = carritoBtn.dataset.activo === "true";
+            const stock = parseInt(carritoBtn.dataset.stock);
+            /* Validación. Si no se encuentra activo no permite agregarlo al carrito  */
+            if (!activo) {
+                mostrarPopup(
+                    "Producto inactivo",
+                    "No se puede agregar porque el producto está deshabilitado",
+                    "error"
+                    );
+                return;
+            }
+            /* Validación. Si no hay stock no permite agregarlo al carrito  */
+            if (stock <= 0) {
+                mostrarPopup(
+                    "Sin stock",
+                    "No hay stock disponible.",
+                    "error"
+                    );
+         
+                return;
+            }
+
+            /* Se envía la petición al carrito (se agrega el producto al carrito)  */
+            fetch(`/agregar/${productoId}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.success) {
+
+                    mostrarPopup(
+                        "Producto agregado",
+                        "El producto fue añadido al carrito",
+                        "ok"
+                        );
+                
+
+                    const contador = document.getElementById("carrito-contador");
+                    /* Actualiza el número de elementos en el carrito de forma automática  */
+                    contador.textContent = data.total_items;
+                    contador.style.display = "inline-block";
+
+                } else {
+
+                    mostrarPopup(
+                        "No se agrego",
+                        "El producto no pudo añadirse al carrito",
+                        "error"
+                        );
+                }
+            });
+
+            return;
+        }
 
         /* busca donde fue el evento (busca la fila) */
         const fila = e.target.closest("tr");
@@ -34,7 +107,18 @@ document.addEventListener("DOMContentLoaded", function(){
                 /* se actualiza la cantidad del producto */
 		        actualizar(itemId, cantidad);
 
+                 // Mostrar mensaje cuando llega al límite
+                if (cantidad === max) {
+
+                    stockMsg.classList.remove("d-none");
+
+                    setTimeout(() => {
+                        stockMsg.classList.add("d-none");
+                         }, 2500);
+                    }
+
 		    } 
+
 
             else {
 
@@ -63,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function(){
         /* botón eliminar del carrito, elimina la fila, actualiza el total y el contador */
         if (e.target.classList.contains("btn-eliminar")) {
             /* petición del servidor a través del método POST */
-            fetch(`/carrito/eliminar/${itemId}/`, {
+            fetch(`/eliminar/${itemId}/`, {
                 method: "POST",
                 headers: { 
                     /* Token de seguridad */
@@ -91,8 +175,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 }
             });
         }
-
     });
+
 
     /* si el usuario escribe la cantidad de forma manual */
     document.addEventListener("change", function(e){
@@ -124,6 +208,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		    setTimeout(() => {
 		        stockMsg.classList.add("d-none");
 		    }, 2500);
+
+            
 		}
 
         e.target.value = cantidad;
@@ -132,10 +218,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
     });
 
-    /* funciona actualiza la cantidad */
+
+       /* funciona actualiza la cantidad */
     function actualizar(id, cantidad){
     /* se llama a la vista de actualizar d Django enviando el id del producto */
-    fetch(`/carrito/actualizar/${id}/`, {
+    fetch(`/actualizar/${id}/`, {
         method: "POST",
         headers: {
             "X-CSRFToken": getCookie("csrftoken"),
@@ -155,9 +242,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
             input.value = cantidad;
             /* se actualiza el subtotal */
-            fila.querySelector(".subtotal").textContent = "$" + data.subtotal;
+            fila.querySelector(".subtotal").textContent = "$" + formatoNumero( data.subtotal);
             /* se actualiza el total */
-            document.getElementById("total-general").textContent = data.total;
+            document.getElementById("total-general").textContent = formatoNumero(data.total);
 
             // Oculta mensaje si estaba visible
             stockMsg.classList.add("d-none");
@@ -172,6 +259,36 @@ document.addEventListener("DOMContentLoaded", function(){
         }
     });
 }
+
+
+    function formatoNumero(valor){
+        return Number(valor).toLocaleString("es-CO");
+    }
+
+    /* Función CSRF -> obtiene el token de seguridad de Django (Django lo exige para el metodo POST) */
+
+    function getCookie(name) {
+
+        let cookieValue = null;
+
+        if (document.cookie && document.cookie !== "") {
+
+            const cookies = document.cookie.split(";");
+
+            for (let i = 0; i < cookies.length; i++) {
+
+                const cookie = cookies[i].trim();
+
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+
+        return cookieValue;
+    }
 
     /* funcion para obtener el token de seguridad de Django */
     function getCookie(name) {

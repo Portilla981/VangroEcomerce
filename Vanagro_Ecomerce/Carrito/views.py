@@ -97,7 +97,7 @@ def actualizar_cantidad(request, item_id):
 
     #verifica que el usuario tenga el carrito con los productos de la bd. 
     #usuario=request.user -> evita que un usuario modifique el carrito de otro
-    item = get_object_or_404(ItemCarrito, id=item_id, usuario=request.user)
+    item = get_object_or_404(ItemCarrito, id = item_id, usuario=request.user)
 
     #cantidad del producto
     cantidad = int(request.POST.get("cantidad"))

@@ -1,12 +1,5 @@
 {% load static %}
 
-{% block script %}
-<script src="{% static 'js/modal_mapa.js' %}" defer></script>
-<script src="{% static 'js/render_mapa.js' %}" defer></script>
-
-
-{% endblock script %}
-
 <div class="profile_producter--container">
   {% comment %}Portada con leyenda{% endcomment %}
   <div class="profile_producter--hero">
@@ -69,8 +62,7 @@
 
       <h3 class="profile_producter--name">{{ productor.nombre_finca }}</h3>
       <p class="profile_producter--joined">Desde {{ productor.fecha_creacion|date:"j \d\e F \d\e Y" }}</p>
-      <p class="profile_producter--detail"><strong>UBICACIÓN:</strong> {{ productor.municipio }} - {{
-        productor.departamento }}</p>
+      <p class="profile_producter--detail"><strong>UBICACIÓN:</strong> {{ productor.municipio }} - {{ productor.departamento }}</p>
       <p class="profile_producter--detail"><strong>VEREDA:</strong> {{ productor.vereda }}</p>
 
       <div class="profile_producter--location">

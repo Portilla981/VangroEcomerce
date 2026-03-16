@@ -22,12 +22,18 @@
     {% include 'components/detalle-producto.html' %}
 
     <div class="buttons_cards">
-        <a href="{% url 'ver_productos' %}">
+        <a href="{% url 'ver_productos' %}?next={{ request.path }}">
             <button class="buttons__action--secondary">Volver</button>
         </a>
         <!-- Botón carrito -->
         {% if user.is_authenticated %}
-        <button type="button" class="buttons__action--primary">Añadir al carrito</button>
+
+
+        <button class="buttons__action--primary agregar-carrito-btn" data-id="{{ producto.id }}"
+                    data-activo="{{ producto.activo|yesno:'true,false' }}" data-stock="{{ producto.stock }}">
+                    Añadir al carrito
+                </button>
+                
         {% else %}
         <a href="{% url 'inicio_vista' %}?next={{ request.path }}">
             <button type="button" class="buttons__action--primary">Añadir al carrito</button>

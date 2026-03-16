@@ -17,7 +17,7 @@
           <a href="{% url 'tienda_usuario' %}" class="navbar-vanagro__link">Quiero Vender</a>
         </li>
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
-          <a href="{% url 'ver_carrito' %}" class="navbar-vanagro__link">Carrito</a>
+          <a href="{% url 'ver_carrito' %}" class="navbar-vanagro__link">Carrito</a>          
         </li>
       </ul>
     </nav>
@@ -25,9 +25,11 @@
     <div class="navbar-vanagro__icons">
 
       <div class="navbar-vanagro__icons--first">
+        
         <a href="{% url 'ver_carrito' %}"> 
           <ion-icon class="navbar-vanagro__icons--cart" name="cart-outline"></ion-icon>
         </a>
+        <span id="carrito-contador" class="carrito-badge" {% if carrito_total_items == 0 %} style= "display:none;" {% endif %}>{{ carrito_total_items }}</span>
       </div>
 
       <form method="post" action="{% url 'logout' %}">

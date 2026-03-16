@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     {% load static %}
+    {% load humanize %}
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
-    <script src="{% static 'js/carrito/ver_carrito.js' %}" defer></script>
+    <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
     {% block script %}
     {% endblock script %}
 
@@ -24,6 +25,7 @@
     {% include 'components/navbar-profile_acciones.html' %}
     {% endblock navbar %}
 
+    <div class="contenido_general">
     {% block carrito %}
 
     <div class="container mt-4">
@@ -61,31 +63,30 @@
                     <td class="user-list__cell">
                         <div class="input-group">
                             <!-- botón para disminuir la cantidad del producto -->
-                            <button class="btn btn-outline-secondary btn-sm btn-restar">-</button>
+                            <button class="btn-restar">-</button>
                             <!-- muestra la cantidad actual. con el limite menor que es 1 y el limite mayor que es la cantidad del stock -->
-                            <input type="number" class="form-control text-center cantidad-input"
+                            <input type="number" class="cantidad-input"
                                 value="{{ item.cantidad }}" min="1" max="{{ item.producto.stock }}" step="1">
                             <!-- botón para aumentar la cantidad del producto -->
-                            <button class="btn btn-outline-secondary btn-sm btn-sumar">+</button>
+                            <button class="btn-sumar">+</button>
 
                         </div>
-
+                        <div class="mensaje-stock">
                         <!-- Mensaje de stock -->
                         <!-- se muestra cuando el usuario sobrepasa el stock -->
-                        <small class="text-danger stock-msg d-none">
+                        <small class="stock-msg d-none">
                             Stock disponible: {{ item.producto.stock }}
                         </small>
+                        </div>
                     </td>
                     <!-- se carga el precio del producto -->
-                    <td class="user-list__cell">${{ item.producto.precio }}</td>
+                    <td class="user-list__cell">$ {{ item.producto.precio|floatformat:0|intcomma }}</td>
                     <!-- se calcular el subtotal del producto (que esta en el modelo) -->
-                    <td class="user-list__cell subtotal">${{ item.subtotal }}</td>
+                    <td class="user-list__cell subtotal">$ {{ item.subtotal|floatformat:0|intcomma }}</td>
 
                     <td class="user-list__cell">
                         <!-- botón eliminar -->
-                        <button class="btn btn-danger btn-sm btn-eliminar">
-                            🗑
-                        </button>
+                        <button class="btn-eliminar"> 🗑 </button>
                     </td>
 
                 </tr>
@@ -107,7 +108,7 @@
             <!-- <div class="text-end"> -->
                 
                 <h4 class="mb-3">
-                    Total: $<span id="total-general">{{ total }}</span>
+                    Total: $ <span id="total-general">{{ total|floatformat:0|intcomma }}</span>
                 </h4>
 
                 <!-- Botón Finalizar Compra -->
@@ -131,6 +132,7 @@
 
 
     {% endblock carrito %}
+    </div>
 
     {% include 'components/footer_vanagro.html' %}
 

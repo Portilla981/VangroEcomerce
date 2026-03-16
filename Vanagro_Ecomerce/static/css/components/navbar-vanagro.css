@@ -127,9 +127,35 @@
   border-color: var(--white);
 }
 
+.carrito-badge{
+    position:relative;
+    top:0;
+    right: 20px;
+
+    background:red;
+    color:white;
+
+    font-size:12px;
+    font-weight:bold;
+
+    padding:3px 6px;
+    border-radius:50%;
+
+    min-width:18px;
+    text-align:center;
+    
+}
+
+.navbar-vanagro__icons--first{
+    display: contents;
+}
+
 
 /* Determinar el estilo responsive de la lista de la barra */
 @media (width > 768px) {
+    
+
+
     .navbar-vanagro{
         /* display: flex; */
         justify-content: center;
