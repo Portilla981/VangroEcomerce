@@ -27,7 +27,7 @@ def pedido_exitoso(request, pedido_id):
 @login_required
 def mis_pedidos(request):
     #trae los pedidos que son del usuario logueado y los ordena por fecha
-    pedidos = Pedido.objects.filter(usuario=request.user).order_by('-fecha')
+    pedidos = Pedido.objects.filter(usuario=request.user).order_by('fecha')
     #carga el HTML de mis_pedidos
     return render(request, 'pedidos/mis_pedidos.html', {'pedidos': pedidos})
 

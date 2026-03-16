@@ -1,21 +1,21 @@
 <!-- Permite crear o editar el producto -->
 
 <!-- Herencia de la plantilla base -->
-{% extends "core/base.html" %}
+{% extends "carrito/ver_carrito" %}
 
 <!-- Inicio del bloque de contenido -->
-{% block content %}
+{% block carrito %}
 <!-- contenedor -->
-<div class="container mt-5 text-center">
+<div class="container-pago">
 
 	<!-- card -->
-    <div class="card p-5 shadow-sm">
+    <div class="card-pago">
     	<!-- mensaje del pago realizado -->
-        <h2 class="text-success mb-3">¡Pago realizado con éxito!</h2>
+        <h2 class="texto-pago">¡Pago realizado con éxito!</h2>
         <!-- mensaje -->
         <p>Tu pedido ha sido procesado correctamente.</p>
         <!-- Crea el botón para volver a la lista de productos -->
-        <a href="{% url 'lista_productos' %}" class="btn btn-primary mt-3">
+        <a href="{% url 'ver_productos' %}" class="btn-volver">
             Volver a la tienda
         </a>
 
@@ -23,4 +23,4 @@
 
 </div>
 
-{% endblock %}
+{% endblock carrito %}

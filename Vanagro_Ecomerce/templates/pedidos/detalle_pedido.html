@@ -1,63 +1,66 @@
 <!-- detalle del pedido del usuario -->
 
 <!-- Herencia de la plantilla base -->
-{% extends 'core/base.html' %}
+{% extends 'carrito/ver_carrito.html' %}
+{% load humanize %}
+{% load static %}
 <!-- inicio del bloque de contenido -->
-{% block content %}
+{% block carrito %}
 <!-- contenedor -->
-<div class="container mt-5">
+<div class="container-pedidos">
     <!-- card -->
-    <div class="card shadow p-4">
+    <div class="card-compra detalle-card">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="pedido-titulo_tabla">
             <!-- Muestra el numero del pedido -->
             <h3>Detalle del Pedido #{{ pedido.id }}</h3>
 
-            <span class="badge bg-success">
+            <span class="">
                 <!-- se muestra el estado del pedido -->
                 {{ pedido.estado }}
             </span>
         </div>
         <!-- muestra la fecha del pedido. en formato dia/mes/año con hora y minuto -->
         <p><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
-        <!-- muestra el total del pedido -->
-        <p><strong>Total:</strong> ${{ pedido.total }}</p>
+        
 
-        <hr>
-
-        <h5 class="mt-4">Productos</h5>
-
-        <table class="table table-striped mt-3">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio unitario</th>
-                    <th>Subtotal</th>
+        <h5 class="pedido-subtitulo">Productos</h5>
+        <div class="pedidos-tabla">
+        <table class="user-list__table">
+            <thead class="tabla-pedidos_head">
+                <tr class="user-list__row">
+                    <th class="user-list__cell">Producto</th>
+                    <th class="user-list__cell">Cantidad</th>
+                    <th class="user-list__cell">Precio unitario</th>
+                    <th class="user-list__cell">Subtotal</th>
                 </tr>
             </thead>
 
-            <tbody>
-                <!-- ciclo para reccorrer los productos del pedido -->
+            <tbody class="user-list__table-body">
+                <!-- ciclo para recorrer los productos del pedido -->
                 {% for detalle in pedido.detalles.all %}
-                    <tr>
+                    <tr class="user-list__row">
                         <!-- se muestra el detalle de cada producto: nombre, cantidad, precio, total -->
-                        <td>{{ detalle.producto.nombre }}</td>
-                        <td>{{ detalle.cantidad }}</td>
-                        <td>${{ detalle.precio }}</td>
+                        <td class="user-list__cell">{{ detalle.producto.nombre_producto }}</td>
+                        <td class="user-list__cell">{{ detalle.cantidad }}</td>
+                        <td class="user-list__cell">${{ detalle.precio|floatformat:0|intcomma }}</td>
                         <!-- subtotal -> llama al metodo del modelo -->
-                        <td>${{ detalle.subtotal }}</td>
+                        <td class="user-list__cell">${{ detalle.subtotal|floatformat:0|intcomma }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-
-        <div class="text-end mt-3">
-            <a href="{% url 'mis_pedidos' %}" class="btn btn-outline-secondary"> ← Volver a mis pedidos </a>
         </div>
+
+        <!-- muestra el total del pedido -->
+        <p class="pedido-total"><strong>Total:</strong> ${{ pedido.total|floatformat:0|intcomma }}</p>
+
+        <button class="buttons__action--secondary">
+            <a href="{% url 'mis_pedidos' %}" class="btn btn-outline-secondary"> ← Volver a mis pedidos </a>
+        </button>
 
     </div>
 
 </div>
 
-{% endblock %}
+{% endblock carrito %}

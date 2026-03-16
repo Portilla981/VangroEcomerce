@@ -1,14 +1,17 @@
 <!-- Herencia de la plantilla base -->
-{% extends 'core/base.html' %}
+{% extends 'carrito/ver_carrito.html' %}
+
+{% load humanize %}
+{% load static %}
 
 <!-- Inicio del bloque de contenido -->
-{% block content %}
+{% block carrito %}
 
-<div class="container mt-5">
+<div class="pedido-container">
     <!-- Card Principal -->
-    <div class="card shadow p-4 text-center">
+    <div class="card-compra">
 
-        <h2 class="text-success mb-3">
+        <h2 class="pedido-titulo">
             ✅ ¡Compra realizada con éxito!
         </h2>
 
@@ -16,39 +19,41 @@
         <!-- pedido (es una variable) viene de la vista -->
         <p><strong>Número de pedido:</strong> {{ pedido.id }}</p>
         <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
-        <p><strong>Total pagado:</strong> ${{ pedido.total }}</p>
+        
+        <h5 class="pedido-subtitulo">Productos comprados</h5>
 
-        <hr>
-
-        <h5 class="mt-4">Productos comprados</h5>
-
-        <ul class="list-group mt-3">
+        <ul class="pedido-lista">
              <!-- se recorre los productos que hacen parte del pedido -->
             {% for detalle in pedido.detalles.all %}
-                <li class="list-group-item d-flex justify-content-between">
+                <li class="pedido-lista_item">
                     <span>
-                        {{ detalle.producto.nombre }} x {{ detalle.cantidad }}
+                        {{ detalle.producto.nombre_producto }} x {{ detalle.cantidad }}
                     </span>
                     <span>
                          <!-- se llama al metodo subtotal que esta en el modelo -->
-                        ${{ detalle.subtotal }}
+                        $ {{ detalle.subtotal|floatformat:0|intcomma }}
                     </span>
                 </li>
             {% endfor %}
         </ul>
 
-        <div class="mt-4">
-            <a href="{% url 'lista_productos' %}" class="btn btn-primary">
+        <p class="pedido-total"><strong>Total pagado:</strong> $ {{ pedido.total|floatformat:0|intcomma }}</p>
+
+        <div class="buttons">
+            <button class="buttons__action--secondary">
+            <a href="{% url 'ver_productos' %}" >
                 Seguir comprando
             </a>
-
-            <a href="{% url 'mis_pedidos' %}" class="btn btn-outline-dark">
+            </button>
+            <button class="buttons__action--primary">
+            <a href="{% url 'mis_pedidos' %}" >
                 Ver mis pedidos
             </a>
+            </button>
         </div>
 
     </div>
 
 </div>
 <!-- Fin del bloque de contenido -->
-{% endblock %}
+{% endblock carrito %}

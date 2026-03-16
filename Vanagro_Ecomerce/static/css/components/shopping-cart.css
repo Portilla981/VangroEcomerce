@@ -1,162 +1,238 @@
-/* body {
-  background-color: var(--gray-50);
-  font-family: var(--main-font);
-  text-align: center;
-} */
+/* Item para carrito*/
 
-.cart button {
-  cursor: pointer;
+.btn-eliminar{
+    background-color:red;
+    color:white;
+    font-family: var(--main-font);
+    scale: 1.4;
+    margin-bottom: 10px;
+    width: 50px;
 }
 
-.cart__actions{
+.input-group{
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+    justify-content: center;
+    gap: 24px;
+}
+
+.cantidad-input{
+    height: auto;
+    width: auto;
+    text-align: center;
+    font-size: medium;
+}
+
+.btn-restar,
+.btn-sumar{
+    scale: 1.5;
+    color: var(--white);
+    border: none;
+}
+
+.btn-restar{
+    background-color: brown;
+}
+
+.btn-sumar{
+    background-color: var(--primary-900);
+}
+
+.stock-msg{
+    
+    
+    color: #d9534f;
+    font-size: var(--fs-xs);
+    font-weight: 500;
+}
+
+.d-none{
+    display: none;
+    
+}
+
+.mensaje-stock{
+    margin: 8px;
+    /* padding: 8px; */
+    text-align: center;
+}
+
+/* elementos de compra finalizada */
+
+.compra_titulo{
+  text-align: center;
+  font-size: var(--fs-md);
+  margin: 0;
+  padding: 16px 0;
+}
+
+.container-compra{
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;  
 }
 
-/* .cart {
-  padding: 24px;
-} */
+.card-compra{
+    width: 500px;
+    margin: 0 16px ;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    padding: 16px 0;
+    box-shadow: 0 2px 6px var(--primary-500);
+    cursor: pointer;
+    height: auto;
+    transition:transform 0.3s ease;
+    /* align-content: center; */
 
-.cart__header {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); 
-  padding: 12px;
-  font-weight: bold;
-  background: var(--primary-300);
-  border-radius: 8px;
-  margin-bottom: 10px;
-  text-align: center;
 }
 
-
-.cart__title {
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: var(--fs-sm);
+.card-recibo{
+  height: 500px;
+ overflow: auto;
+ overflow-x: hidden;
+ margin: 8px;
 }
 
-.cart__products {
+.compra-form{
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   gap: 24px;
 }
 
-.cart__summary {
-  margin-top: 20px;
-  padding: 15px;
-  background: var(--primary-300);
-  border-radius: 4px;
+.card-compra_union{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
 }
 
-.cart__total {
+.card-compra_header{
+ 
+  text-align: center;
+  font-size: var(--fs-sm);
+  
+}
+
+.card-compra_body{
+  display: flex;
+    margin: 16px;
+    text-align: justify;
+    flex-direction: column;
+    padding: 8px;
+    font-size: var(--fs-sm);
+}
+
+.card-compra_body p{
+  margin: 8px;
+}
+
+.form-compra_check{
+  text-align: justify;
+  margin: 16px;
+}
+
+.compra-button{
+      /* align-items: center; */
+    display: flex;
+    justify-content: end;
+    height: 24px;
+    width: auto;
+}
+
+.card-compra_item-valor{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.card-compra_item{
   display: flex;
   justify-content: space-between;
-  font-size: var(--fs-sm);
-  font-weight: bold;
-  /* margin-bottom: 15px; */
+  margin: 8px 0;
 }
 
-/* ====== PRODUCT CARD ====== */
-.product-card {
-  display: grid;
-  /* grid-template-columns: 0fr 0.5fr 1fr 0.5fr 1fr 0fr; */
-  grid-template-columns: repeat(7, 1fr);
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  border: 1px solid var(--white);
-  border-radius: 4px;
-  background: var(--white);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 1);
+.compra-subtotal{
+  align-content: center;
 }
 
-.product-card__image {
-  width: 80px;
-  height: 80px;
-  /* object-fit: cover; */
-  border-radius: 4px;
-  grid-column: 1 / 2;
-  
+.compra-card_image {
+    width: 48px; 
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
 }
 
-.product-card__info {
-  margin: 0;
-}
+/* elementos de pedido */
 
-.product-card__title {
-  margin: 0;
-  font-size: var(--fs-xs);
-  font-weight: bold;
-}
-
-.product-card__measure,
-.product-card__price,
-.product-card__store {
-  font-size: var(--fs-xs);
-  margin: 3px 0;
-}
-
-.product-card__quantity {
+.pedido-container{
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
+  margin: 16px 0;
+  text-align: center;
 }
 
-.product-card__btn {
-  padding: 5px 10px;
-  border: 1px solid var(--gray-50);
-  background: var(--gray-50);
+.pedido-lista{
+  text-align: justify;
+  margin: 0 16px;
+  padding: 16px;
 }
 
-.product-card__remove {
-  border: none;
-  background: transparent;
-  font-size: var(--fs-md);
+.pedido-lista_item{
+  display: flex;
+  justify-content: space-between;
+  /* text-align: justify; */
+  /* margin: 0; */
+}
+
+.pedido-subtitulo{
+  margin: 0 ;
+  text-align: center;
+}
+
+.pedido-total{
+  padding: 0 16px;
+  margin: 8px 16px;
+  text-align: end;
+}
+
+.lista{
+  width: 900px;
+  display: flex;
+  justify-content: center;
+}
+
+.pedidos-tabla{
+  text-align: center;
+  padding: 16px;
+}
+
+.pedido-titulo_tabla{
+  text-align: center;
+}
+
+.container-pedidos{
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+
+}
+
+.buttons__action--secondary a{
+  text-decoration: none;
   color: var(--black);
+  font-size: var(--fs-xs);
 }
 
-@media screen and (max-width: 767px) {
-  
-  .cart__header {
-    display: none; /* Ocultamos el header con columnas en móviles */
-  }
+.tabla-pedidos_head{
+  background-color: var(--primary-500);
+}
 
-  .product-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 320px;
-    width: 100%;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-
-  .product-card__image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-
-  .product-card__quantity {
-    justify-content: flex-start;
-  }
-
-  .cart__total {
-    flex-direction: column;
-  }
-
-  .cart__button {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+.detalle-card{
+  width: 800px;
+  margin: 16px;
+  padding: 16px;
 }
