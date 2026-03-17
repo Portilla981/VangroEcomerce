@@ -33,18 +33,13 @@
             </form>
 
 
-            {% comment %} <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" style="background: none; border: none;"> {% endcomment %}
-                    {% if perfil.fotografia %}
-                    <img class="navbar-vanagro__profile-img" src="{{ perfil.fotografia.url }}"
-                        alt="Foto del productor" />
-                    {% else %}
-                    <img class="navbar-vanagro__profile-img"
-                        src="{% static 'img/interfaz_vanagro/usuario_default.png' %}" alt="Foto del productor" />
-                    {% endif %}
-                    {% comment %} </button>
-            </form> {% endcomment %}
+            
+            {% if perfil.fotografia %}
+            <img class="navbar-vanagro__profile-img" src="{{ perfil.fotografia.url }}" alt="Foto del productor"/>
+            {% else %}
+            <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}" alt="Foto del productor" />
+            {% endif %}
+                    
         </div>
     </div>
 

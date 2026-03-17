@@ -154,9 +154,18 @@ def editar_producto(request, pk):
 # Listar producto
 
 class ListaProductos(LoginRequiredMixin, ListView):
+    
     model = Producto
-    template_name = "productos/listado_productos.html"
+    # template_name = "productos/listado_productos.html"
     context_object_name = "productos"
+    
+    def get_template_names(self):
+        # Verificamos si el usuario es superusuario
+        if self.request.user.is_superuser:
+            return ["productos/listado_productos_admin.html"]
+        
+        # Plantilla por defecto para usuarios normales
+        return ["productos/listado_productos.html"]
     
     # Accion para volvel a la pagina de donde se llamo
     def dispatch(self, request, *args, **kwargs):
@@ -168,9 +177,17 @@ class ListaProductos(LoginRequiredMixin, ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Producto.objects.filter(
-            productor=self.request.user.productor
-        )
+        
+        if self.request.user.is_superuser:
+            return Producto.objects.all()
+        else:
+            return Producto.objects.filter(productor=self.request.user.productor)
+        
+
+
+
+
+
         
 #el usuario debe estar autenticado para crear el producto
 @login_required
@@ -209,7 +226,7 @@ def crear_producto(request):
                 producto.estado_producto = 'borrador'
                 producto.save()
                 
-                print(producto.estado)
+                # print(producto.estado)
                 
                 url = reverse('vista_previa', args=[producto.id])
                 
@@ -309,12 +326,16 @@ def toggle_producto(request, pk):
     if request.method == 'POST':
         #get_object_or_404 busca en la bd el producto que llega como ID por la URL. Si el producto no existe muestra error 404'''
         #Producto es el producto al que se le desea cambiar el estado
-        producto = get_object_or_404(Producto, pk=pk, productor__user=request.user)
+        
+        if request.user.is_superuser:
+            producto = get_object_or_404(Producto, pk=pk)
+        else:    
+            producto = get_object_or_404(Producto, pk=pk, productor__user=request.user)
         #cambia el estado actual del producto  
         producto.activo = not producto.activo
         #utilizamos el método save de Django para actualizar el estado del producto
         producto.save()
-
+        
         #indica si el cambio de estado fue realizado e indica el nuevo estado del producto
         return redirect(request.POST.get('next', 'mis_productos'))
     

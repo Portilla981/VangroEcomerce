@@ -24,8 +24,9 @@
 }
 
 .card__img {
-    width: 200px;
-    height: auto;
+    width: 250px;
+    height: 150px;
+    object-fit: cover;
 }
 
 .cards-container {

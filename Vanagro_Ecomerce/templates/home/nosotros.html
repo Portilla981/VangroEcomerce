@@ -14,7 +14,7 @@
             {% comment %}Este bloque se rellena directamente con datos de las cards{% endcomment %}
             <h2 class="card__title-about">{{ card.title }}</h2>
             <p class="card__description">{{ card.description|safe }}</p>
-            <div>
+            <div class="card-img__nosotros">
                 <img src="{% static card.img %}" alt="[Imagen]" class="card__img">
             </div>
         </div>

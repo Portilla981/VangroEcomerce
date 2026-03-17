@@ -38,17 +38,17 @@ class Home(TemplateView):
             {
                 "title":"Nosotros",
                 "description":"<strong>VANAGRO</strong><br> es un proyecto del SENA creado para conectar a los campesinos colombianos con los consumidores, promoviendo la compra directa, el comercio justo y el reconocimiento al trabajo del campo.",
-                "img":"img/interfaz_vanagro/recolector.jpg"
+                "img":"img/interfaz_vanagro/vanagro4.jpg"
             },
             {
                 "title":"Misión",
                 "description":"Ser la plataforma líder en Colombia en la conexión entre el campo y el consumidor, promoviendo un sistema agroalimentario más justo, sostenible y humano, en donde los productos campesinos sean valorados, visibles y preferidos por su calidad, origen y aporte al desarrollo rural.",
-                "img":"img/interfaz_vanagro/vendefruta.jpg"
+                "img":"img/interfaz_vanagro/vanagro1a.jpg"
             },
             {
                 "title":"Visión",
                 "description":"Impulsar la comercialización directa de productos campesinos a través de una plataforma digital accesible, transparente y solidaria, que fomente el consumo consciente, fortalezca la economía rural y reconozca el esfuerzo de las comunidades colombianas.",
-                "img":"img/products/caña.jpg"
+                "img":"img/interfaz_vanagro/vanagro3.jpg"
             }
             ]        
         

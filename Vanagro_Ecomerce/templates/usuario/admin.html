@@ -1,0 +1,40 @@
+<div class="profile__actions">
+        <button class="profile__action">
+        <a href="{% url 'ver_productos' %}?next={{ request.path }}">
+            <ion-icon name="eye-outline"></ion-icon>
+            <span>Ver Productos catalogo</span>
+        </a>
+        </button>
+
+        <button class="profile__action">
+        <a href="{% url 'mis_pedidos' %}?next={{ request.path }}">
+            <ion-icon name="bag-add-outline"></ion-icon>
+            <span>Compras/Pedidos</span>
+        </a>
+        </button>
+
+        <button class="profile__action">
+        <a href="{% url 'lista_usuarios' %}?next={{ request.path }}">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Listar usuarios</span>
+        </a>
+        </button>
+
+        <button class="profile__action">
+        <a href="{% url 'mis_productos' %}?next={{ request.path }}">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Listar produtos</span>
+        </a>
+        </button>
+
+
+        <button type="button" class="profile__action">
+        <a
+            class="profile__link"
+            href="{% url 'editar_usuario' %}?next={{ request.path }}">
+            <ion-icon name="settings-outline"></ion-icon>
+            <span>Editar Perfil</span>
+        </a>
+        </button>
+    </div>
+    

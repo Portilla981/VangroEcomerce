@@ -237,3 +237,48 @@ def editar_usuario(request):
         
         
     return render(request, 'usuario/editar_usuario.html', context)
+
+class ListaUsuarios(LoginRequiredMixin, ListView):
+    
+    model = CreacionUsuario
+    template_name = "usuario/listado_usuarios.html"
+    context_object_name = "usuarios"
+        
+        
+    # Accion para volvel a la pagina de donde se llamo
+    def dispatch(self, request, *args, **kwargs):
+        next_url = request.GET.get('next')
+
+        if next_url:
+            request.session['volver_a'] = next_url
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):        
+        return CreacionUsuario.objects.exclude(user__is_superuser = True)
+
+
+@login_required
+#vista para actualizar el estado del producto de forma automática (sin actualizar la pagina)
+def toggle_usuario(request, pk):
+
+    if request.method == 'POST'and request.user.is_superuser:
+        #get_object_or_404 busca en la bd el producto que llega como ID por la URL. Si el producto no existe muestra error 404'''
+        #Producto es el producto al que se le desea cambiar el estado
+        
+        usuario = get_object_or_404(User, pk=pk)
+        
+        if usuario == request.user:
+            return redirect('lista_usuarios')        
+        
+        # perfil = usuario.user    
+        #cambia el estado actual del producto  
+        usuario.is_active = not usuario.is_active
+        #utilizamos el método save de Django para actualizar el estado del producto
+        usuario.save()
+    
+        #indica si el cambio de estado fue realizado e indica el nuevo estado del producto
+        return redirect(request.POST.get('next', 'lista_usuarios'))
+    
+    return redirect('lista_usuarios')
+

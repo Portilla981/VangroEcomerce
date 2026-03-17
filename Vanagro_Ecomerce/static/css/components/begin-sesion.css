@@ -10,7 +10,7 @@
 .session__left {
     flex: 1;
     position: relative;
-    background: url(../../img/interfaz_vanagro/fondo.jpg) no-repeat center center/cover;    
+    background: url(../../img/interfaz_vanagro/vanagro5.jpg) no-repeat center/cover ;    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,6 +18,8 @@
     width: auto;
     color: var(--white);
     text-align: center;
+    /* object-fit: contain; */
+    /* scale: 1.3; */
 }
 
 .session__form-container {
