@@ -236,3 +236,7 @@
   margin: 16px;
   padding: 16px;
 }
+
+.detalle-card p{
+  text-align: center;
+}

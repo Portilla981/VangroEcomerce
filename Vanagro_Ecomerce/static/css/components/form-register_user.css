@@ -33,6 +33,13 @@
 .form-register__title {
   font-size: var(--fs-sm);
   font-weight: bold;
+  /* text-align: center; */
+}
+
+.form-register__head{
+  font-size: var(--fs-sm);
+  font-weight: bold;
+  text-align: center;
 }
 
 .form-register__block {
@@ -193,9 +200,9 @@
   }
 
   .form-register__group {
-    grid-column: span 2;
+    /* grid-column: span 2; */
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 

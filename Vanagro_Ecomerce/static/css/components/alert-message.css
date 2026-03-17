@@ -30,13 +30,22 @@
     min-width:250px;
 }
 
-.popup-error{
-    border-top:5px solid red;
+.popup-ok{
+    border-top:4px solid #28a745;
 }
 
-.popup-ok{
-    border-top:5px solid green;
+.popup-error{
+    border-top:4px solid #dc3545;
 }
+
+.popup-warning{
+    border-top:4px solid #ffc107;
+}
+
+.popup-info{
+    border-top:4px solid #17a2b8;
+}
+
 
 
 /* Popud normales */

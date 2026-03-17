@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -163,15 +164,30 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #Expiración del enlace para recuperar contraseña
 PASSWORD_RESET_TIMEOUT = 300
 
+# Esto es importación de os, sirve para cambiar el modo de enviar correos ficticios o reales según lo determinado en consola
+DEBUG_EMAIL = os.getenv("DEBUG_EMAIL", "smtp")
+# Para mostrar en consola se debe de colocar en la terminal 
+# set DEBUG_EMAIL=console y luego python manage.py runserver
+if DEBUG_EMAIL == "console":
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    # Para que sea envio real coloca solo python manege.py runserver
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
 #manejo del correo electrónico para recuperar la contraseña
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
-#cuenta desde donde se envían los correos
-#EMAIL_HOST_USER = 'yuly.saenz.formacion@gmail.com'
-#contraseña para aplicaciones que se configura con gmail
-#EMAIL_HOST_PASSWORD = 'eccss i t i a c i t a y s p'
-#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# Cuenta desde donde se envían los correos, esto según el superusuario creado
+# En la terminal convocar las variables ya sea set o export
+# set EMAIL_USER=tucorreo@gmail.com
+# set EMAIL_PASSWORD=tu_clave
+EMAIL_HOST_USER = os.getenv("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
+# EMAIL_HOST_USER = 'tucorreo@gmail.com'
+# Contraseña para aplicaciones que se configura con gmail
+# EMAIL_HOST_PASSWORD = 'laclave'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
     <script src="{% static 'js/alertas/notificacion.js' %}" defer></script>
-    <script src="{% static 'js/alertas/espera_interfaz.js' %}" defer></script>
+    <!-- <script src="{% static 'js/alertas/espera_interfaz.js' %}" defer></script> -->
     <script src="{% static 'js/recuperacion_password.js' %}" defer></script>
+    <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
+    <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
 
 
     {% block script %}
@@ -38,18 +40,21 @@
     {% endblock contenido %}
     </div>
 
-    <div id="popup" class="popup-overlay">
+    <div id="popup" class="popup-overlay">     
 
-    <div class="popup-box">
+        <div class="popup-box popup__body">
+            <div class="popup__header">
+                <i class="fa-solid fa-check popup__icon"></i>
+            </div>
+            <h3 class="popup__title" id="popup-titulo"></h3>
 
-        <h3 id="popup-titulo"></h3>
+            <p class="popup__message" id="popup-mensaje"></p>
 
-        <p id="popup-mensaje"></p>
+            <button onclick="cerrarPopup()">Cerrar</button>
+            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
 
-        <button onclick="cerrarPopup()">Cerrar</button>
-
+        </div>
     </div>
-</div>
 
 
     {% include 'components/footer_vanagro.html' %}
@@ -59,7 +64,7 @@
 
 </body>
 
-<div class="contenedor-notificaciones">
+<!-- <div class="contenedor-notificaciones">
 
     {% if messages %}
 
@@ -73,7 +78,7 @@
 
     {% endif %}
 
-</div>
+</div> -->
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" refer></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" refer></script>

@@ -35,21 +35,39 @@
 
   <div id="popup" class="popup-overlay">
 
-    <div class="popup-box">
+    <div class="popup-box popup__body">
+      <div class="popup__header">
+          <i class="fa-solid fa-check popup__icon"></i>
+      </div>
+      <h3 class="popup__title" id="popup-titulo"></h3>
 
-        <h3 id="popup-titulo"></h3>
+      <p class="popup__message" id="popup-mensaje"></p>
 
-        <p id="popup-mensaje"></p>
+      <!-- <button onclick="cerrarPopup()">Cerrar</button> -->
+      <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
 
-        <button onclick="cerrarPopup()">Cerrar</button>
+      </div>
+  </div>
 
-    </div>
-</div>
+
+  {% if messages %}
+    {% for message in messages %}
+        <div class="django-message"
+            data-titulo="{{ message.tags|title }}"
+            data-mensaje="{{ message }}"
+            data-tipo="{{ message.tags }}"
+            style="display:none;">
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
 
   {% include 'components/footer_vanagro.html' %}
 </body>
 
-<div class="contenedor-notificaciones">
+<!-- <div class="contenedor-notificaciones">
 
   {% if messages %}
 
@@ -63,7 +81,7 @@
 
   {% endif %}
 
-</div>
+</div> -->
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" refer></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" refer></script>
 
