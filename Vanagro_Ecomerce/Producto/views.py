@@ -41,6 +41,7 @@ def ver_productos(request):
     return render(request, 'productos/vista_productos.html', {
         'productos': productos,
         'categorias': categorias,
+        'titulo': 'Lista de productos'
     })
 
 def detalle_producto(request, pk):

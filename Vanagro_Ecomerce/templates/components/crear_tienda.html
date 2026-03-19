@@ -2,6 +2,7 @@
 
 {% block script %}
 <script src="{% static 'js/ubicacion.js' %}" defer></script>
+
 {% endblock script %}
 
 <div class="producter-register">
@@ -78,18 +79,5 @@
             <button type="submit" class="buttons__action--primary create-producter-alert">Crear Tienda</button>
         </div>
     </form>
-
-    
-
-
-    <div class="popup" id="popupMessage">
-        <div class="popup__header">
-            <i class="fa-solid fa-check popup__icon"></i>
-        </div>
-        <div class="popup__body">
-            <h3 class="popup__title">¡PRODUCTOR CREADO!</h3>
-            <p class="popup__message">¡El productor ha sido creado exitosamente!</p>
-            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-        </div>
-    </div>
+        
 </div>

@@ -1,4 +1,7 @@
-<div class="profile__actions">
+{% load static %}
+
+<div class="profile__actions-admin">
+    <div class="profile__actions-admin_1">
         <button class="profile__action">
         <a href="{% url 'ver_productos' %}?next={{ request.path }}">
             <ion-icon name="eye-outline"></ion-icon>
@@ -25,16 +28,10 @@
             <ion-icon name="calendar-outline"></ion-icon>
             <span>Listar produtos</span>
         </a>
-        </button>
-
-
-        <button type="button" class="profile__action">
-        <a
-            class="profile__link"
-            href="{% url 'editar_usuario' %}?next={{ request.path }}">
-            <ion-icon name="settings-outline"></ion-icon>
-            <span>Editar Perfil</span>
-        </a>
-        </button>
+        </button>        
     </div>
-    
+
+    <div class="profile__actions-img">
+        <img src="{% static 'img/interfaz_vanagro/vanagro2.jpg' %}" alt="">
+    </div>
+    </div>

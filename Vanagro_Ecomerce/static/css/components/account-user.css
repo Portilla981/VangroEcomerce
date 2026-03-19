@@ -91,6 +91,40 @@
     align-items: center;
 }
 
+
+
+.profile__actions-admin{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    height: 100%;
+    justify-content: space-around;
+
+}
+
+.profile__actions-admin_1 {
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    /* align-items: center; */
+    height: 100%;
+}
+
+.profile__actions-img{
+    height: 100%;
+    
+    /* width: 300px; */
+    /* background-size: contain; */
+    /* size: inherit; */
+}
+
+.profile__actions-img img{
+    width: 400px;
+    /* background-size: */
+}
+
 .profile__link {
     text-decoration: none;
 }

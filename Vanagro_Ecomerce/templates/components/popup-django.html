@@ -1,0 +1,10 @@
+{% if messages %}
+    {% for message in messages %}
+        <div class="django-message" 
+             style="display: none;"
+             data-titulo="{% if message.tags == 'success' %}¡Éxito!{% else %}Aviso{% endif %}"
+             data-mensaje="{{ message }}" 
+             data-tipo="{% if message.tags == 'success' %}ok{% else %}{{ message.tags }}{% endif %}">
+        </div>
+    {% endfor %}
+{% endif %}

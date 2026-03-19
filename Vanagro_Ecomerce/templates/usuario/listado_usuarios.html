@@ -60,15 +60,16 @@
         </td>
 
         <td class="user-list__cell">
-          <a href="{% url 'editar_producto' usuario.id %}?next={{ request.path }}">
+          <a href="{% url 'editar_usuario' usuario.id %}?next={{ request.path }}">
             <button type="button" class="user-list__action-btn user-list__action-btn--edit">Editar</button>
           </a>
         </td>
-
+        {% comment %}
         <td class="user-list__cell">
           <button type="button" class="user-list__action-btn user-list__action-btn--img" data-id="{{ usuario.id }}"
             data-imagen="{{ usuario.user.fotografia.url }}">Cambiar Imagen</button>
         </td>
+        {% endcomment %}
       </tr>
 
       {% empty %}
@@ -80,6 +81,11 @@
   </table>
 </div>
 
+
+
+
+
+
 <div id="modalImagen" class="modal-actualizar">
 
   <div class="modal-actualizar__card">
@@ -89,7 +95,7 @@
 
       {% csrf_token %}
 
-      <input class="modal-actualizar__input" type="hidden" name="producto_id" id="producto_id">
+      <input class="modal-actualizar__input" type="hidden" name="usuario_id" id="producto_id">
 
       <h3>Cambiar imagen</h3>
 

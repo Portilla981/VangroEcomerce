@@ -199,11 +199,12 @@ class RegistroProductor(TemplateView, LoginRequiredMixin):
     
     
 @login_required
-def editar_usuario(request):
+def editar_usuario(request, pk):
     
-    user = request.user
-    perfil = request.user.usuario
-    
+    # Buscamos el usuario por su ID
+    perfil = get_object_or_404(CreacionUsuario, pk=pk)
+    user = perfil.user # Accedemos al User de Django relacionado
+        
     if request.method == 'POST':        
         user_form = Form_Actualizar_User(request.POST, instance = user)
         perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil)
@@ -282,3 +283,17 @@ def toggle_usuario(request, pk):
     
     return redirect('lista_usuarios')
 
+# @login_required
+# def cambiar_imagen_usuario(request):
+
+#     if request.method == 'POST':
+#         usuario_id = request.POST.get("usuario_id")
+#         imagen = request.FILES.get("imagen")
+
+#         usuario = CreacionUsuario.objects.get(id = usuario_id)
+
+#         if imagen:
+#             usuario.fotografia = imagen
+#             usuario.save()
+
+#     return redirect("mis_productos")

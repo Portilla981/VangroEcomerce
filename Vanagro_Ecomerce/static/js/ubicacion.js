@@ -2,9 +2,14 @@
 // Ubicación en el mapa al crear tienda
 var map = L.map('map').setView([4.8087, -75.6906], 13);
 
+// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; OpenStreetMap contributors'
+// }).addTo(map);
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org">OpenStreetMap</a> contributors'
 }).addTo(map);
+
 
 var marker;
 
