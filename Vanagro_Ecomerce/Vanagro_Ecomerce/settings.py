@@ -184,10 +184,10 @@ EMAIL_USE_TLS = True
 # En la terminal convocar las variables ya sea set o export
 # set EMAIL_USER=tucorreo@gmail.com
 # set EMAIL_PASSWORD=tu_clave
-EMAIL_HOST_USER = os.getenv("EMAIL_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
-# EMAIL_HOST_USER = 'tucorreo@gmail.com'
+# EMAIL_HOST_USER = os.getenv("EMAIL_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
+EMAIL_HOST_USER = 'vanagromercadocampesino@gmail.com'
 # Contraseña para aplicaciones que se configura con gmail
-# EMAIL_HOST_PASSWORD = 'laclave'
+EMAIL_HOST_PASSWORD = 'exddyjxkevcaievm'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

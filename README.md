@@ -49,3 +49,14 @@ después de dumpdata  se coloca el nombre de la app en minúsculas donde esta el
 python manage.py runserver
 
 para la accion antes de runserver hay q enviar las variables de entorno tanto GMail como password 'j9dhqvmuwizpifubebm' que son 16 caracteres, debe verse settings para mayor información
+
+Prueba de envio de correo desde shell
+from django.core.mail import send_mail
+
+send_mail(
+    "Prueba Django",
+    "Este es un correo de prueba",
+    "tucorreo@gmail.com",
+    ["destinatario@gmail.com"],
+    fail_silently=False,
+)
