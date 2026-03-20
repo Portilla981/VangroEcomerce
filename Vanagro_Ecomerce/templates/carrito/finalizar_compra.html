@@ -33,8 +33,8 @@
                         <p><strong>Correo:</strong> {{ request.user.email }}</p>
                         <!-- si el usuario tiene direccion registrada la muestra sino muestra el texto no registrada -->
                         <p><strong>Dirección:</strong> 
-                            {% if request.user.perfil.direccion %}
-                                {{ request.user.perfil.direccion }}
+                            {% if perfil.direccion_residencia %}
+                                {{ perfil.direccion_residencia }}
                             {% else %}
                                 No registrada
                             {% endif %}

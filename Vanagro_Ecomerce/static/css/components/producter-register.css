@@ -141,6 +141,13 @@
   align-items: center;
 }
 
+.profile_producter__location{
+  margin: 0 16px;
+  width: 500px;  
+}
+
+
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .producter-register__identification,
@@ -167,8 +174,8 @@
 /* --- Responsivo para tablets --- */
 @media (min-width: 767px) and (max-width: 1025px) {
   .producter-register__farm-location {
-    flex-direction: row;
-    align-items: flex-start;
+    /* flex-direction: row; */
+    align-items: center;
     gap: 16px;
   }
 
@@ -188,5 +195,11 @@
     width: 400px;
     
   }
+
+  .profile_producter__location{
+    margin: 0 16px;
+    width: 400px;  
+  }
+
 
 }

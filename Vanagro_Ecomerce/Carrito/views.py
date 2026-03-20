@@ -163,11 +163,26 @@ def finalizar_compra(request):
         return redirect('ver_carrito')
     #si el carrito esta vacío no puede continuar
 
+    # BUSCAR EL MODELO QUE AMPLÍA (Asumiendo que se llama 'Perfil')
+    # Usamos .get() porque es una relación OneToOne
+    try:
+        datos_perfil = request.user.usuario # O Perfil.objects.get(user=request.user)
+    except:
+        datos_perfil = None # Por si el usuario no ha llenado su perfil aún
+
     #Recorre todos los productos toma el subtotal y calcula el total
     total = sum(item.subtotal() for item in items)
 
+    context = {
+        'titulo': 'Finalizar compra',
+        'items': items, 
+        'total': total, 
+        'usuario': request.user,
+        'perfil': datos_perfil # Enviamos los datos extendidos al context
+    }
+
     #carga finalizar_compra.html con los producto, el total y el usuario
-    return render(request, 'carrito/finalizar_compra.html', {'items': items, 'total': total, 'usuario': request.user})
+    return render(request, 'carrito/finalizar_compra.html', context)
 
 #------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------

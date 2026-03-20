@@ -1,0 +1,107 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+
+{% block navbar %}
+
+    {% include 'components/navbar-tienda.html' %}
+
+{% endblock navbar %}
+
+{% block script %}
+
+<script src="{% static 'js/departamento_municipio.js' %}" defer></script>
+<script src="{% static 'js/render_mapa.js' %}" defer></script>
+
+{% endblock script %}
+
+{% block login %}
+<div class="producter-register">
+    <p class="producter-register__title"><strong>Editar Tienda</strong></p>
+
+    <form class="producter-register__form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="producter-register__identification">
+            <div class="form-register__images">
+
+                {% if form.instance.foto_finca %}
+                        <img src="{{ form.instance.foto_finca.url }}" width="120">
+                    {% endif %}
+                <label class="form-register__label">Cargar foto de finca
+                    <input class="form-register__file" type="file" name="foto_finca">
+                </label>
+            </div>
+        </div>
+
+        <div class="producter-register__container">
+            <div class="producter-register__farm-location">
+                <div class="producter-register__fields-farm">
+                    <label class="form-register__label">Nombre Finca
+                        <input class="form-register__input" type="text" name="nombre_finca"
+                            value="{{ form.instance.nombre_finca }}" required>
+                    </label>
+                    <label class="form-register__label">Direccion o Ubicacion exacta
+                        <input class="form-register__input" type="text" name="direccion"
+                            value="{{ form.instance.direccion }}" required>
+                    </label>
+
+                    {% comment %} <div class="form-register__group"> {% endcomment %}
+                        <label class="form-register__label">Departamento
+                            <select id="departamento" name="departamento" class="form-register__input" required>
+                                <option value="">Seleccione un departamento</option>
+                                {% for dpto in form.departamento.field.queryset %}
+                                <option value="{{ dpto.id }}" {% if dpto.id == form.departamento.value %} selected 
+                        {% endif %}>{{ dpto.nombre_Departamento }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label class="form-register__label">Municipio
+                            <select id="municipio" data-guardado="{{ form.instance.municipio.id }}" class="form-register__input" name="municipio" required>
+                                <option value="">Seleccione un municipio</option>
+                                {% for mcpio in form.municipio.field.queryset %}
+                                <option value="{{ mcpio.id }}" {% if mcpio.id == form.municipio.value %} selected {% endif %} >{{ mcpio.nombre_Municipio }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        {% comment %}
+                    </div> {% endcomment %}
+                    <label class="form-register__label">Vereda
+                        <input class="form-register__input" type="text" name="vereda"
+                            value="{{ form.instance.vereda }}" required>
+                    </label>
+                    <label class="form-register__label">Descripcion de tu tienda
+                        <textarea class="form-register__input" name="descripcion"
+                            value="{{ form.instance.descripcion }}" required>{{ form.instance.descripcion }}
+                        </textarea>
+                    </label>
+                </div>
+
+                {% load l10n %}
+                {% localize off %}
+
+                <div class="producter-register__location">
+                    <p class="producter-register__label-farm">Ubicación en el mapa</p>
+                    <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu finca</h3>
+                    <div class="producter-register__map" id="map">
+                        <div id="map" style="height: 400px;"></div>
+                            <input type="hidden" name="latitud" id="id_latitud" value="{{ form.instance.latitud }}">
+                            <input type="hidden" name="longitud" id="id_longitud" value="{{ form.instance.longitud }}">
+                    
+                    </div>
+                </div>
+                {% endlocalize %}
+            </div>
+        </div>
+
+        <div class="producter-register__actions">
+            <button type="submit" class="buttons__action--secondary btn-cancel"
+                onclick="window.location.href='javascript:history.back()'">Cancelar</button>
+            <button type="submit" class="buttons__action--primary create-producter-alert">Guardar Cambios</button>
+        </div>
+    </form>
+        
+</div>    
+
+{% endblock login %}

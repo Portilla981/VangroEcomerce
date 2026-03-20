@@ -239,14 +239,33 @@ def editar_usuario(request, pk):
         
     return render(request, 'usuario/editar_usuario.html', context)
 
+
+
+class EditarProductor(LoginRequiredMixin, UpdateView):
+    model = CreacionProductor 
+    form_class = Formulario_Productor
+    template_name = "usuario/editar_tienda.html"
+    success_url = reverse_lazy('tienda_usuario')
+
+    def get_object(self, queryset=None):
+        # Esto asegura que el usuario SOLO edite su propio perfil de productor
+        # y no el de otros, incluso si conoce el ID.
+        return self.request.user.productor
+
+    def form_valid(self, form):
+        messages.success(self.request, "Los datos de tu tienda han sido actualizados.")
+        return super().form_valid(form)
+
+
+
+
 class ListaUsuarios(LoginRequiredMixin, ListView):
     
     model = CreacionUsuario
     template_name = "usuario/listado_usuarios.html"
-    context_object_name = "usuarios"
+    context_object_name = "usuarios"     
         
-        
-    # Accion para volvel a la pagina de donde se llamo
+    # Accion para volver a la pagina de donde se llamo
     def dispatch(self, request, *args, **kwargs):
         next_url = request.GET.get('next')
 

@@ -37,9 +37,9 @@
                 </label>
 
                 <div class="form-register__images">
-                    {% comment %} <img class="form-register__images--img" alt="Foto Usuario"> {% endcomment %}
+                    
                     {% if perfil_form.instance.fotografia %}
-                    <img src="{{ perfil_form.instance.fotografia.url }}" width="120">
+                        <img src="{{ perfil_form.instance.fotografia.url }}" width="120">
                     {% endif %}
 
                     <label class="form-register__label">Cargar foto de perfil
@@ -74,21 +74,20 @@
                         <option value="">Seleccione un departamento</option>
                         {% for dpto in perfil_form.departamento.field.queryset %}
                         <option value="{{ dpto.id }}" {% if dpto.id == perfil_form.departamento.value %} selected 
-                        {% endif %} >{{ dpto.nombre_Departamento }}</option>
+                {% endif %}>{{ dpto.nombre_Departamento }}</option>
                         {% endfor %}
                     </select>
                 </label>
 
                 <label class="form-register__label">Municipio
-                    <select id="municipio" class="form-register__input" name="municipio"
-                        data-selected="{{ perfil_form.municipio.value }}" required>
+                    <select id="municipio" data-guardado="{{ perfil_form.instance.municipio.id }}" class="form-register__input" name="municipio" required>
                         <option value="">Seleccione un municipio</option>
                         {% for mcpio in perfil_form.municipio.field.queryset %}
-                        <option value="{{ mcpio.id }}" {% if mcpio.id == perfil_form.municipio.value %} selected
-                        {% endif %} >{{ mcpio.nombre_Municipio }}</option>
+                        <option value="{{ mcpio.id }}" {% if mcpio.id == perfil_form.municipio.value %} selected {% endif %} >{{ mcpio.nombre_Municipio }}</option>
                         {% endfor %}
                     </select>
                 </label>
+                
             </div>
 
             <div class="form-register__group">
