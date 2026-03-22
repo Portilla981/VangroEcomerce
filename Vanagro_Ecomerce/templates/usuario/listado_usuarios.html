@@ -9,7 +9,7 @@
 
 
 {% block navbar %}
-{% include 'components/navbar-profile_admin.html' %} 
+{% include 'components/navbar-simple_inicio.html' %} 
 
 {% endblock navbar %}
 
@@ -24,13 +24,14 @@
         <th class="user-list__cell">ID</th>
         <th class="user-list__cell">Usuario</th>
         <th class="user-list__cell">Imagen</th>
-        <th class="user-list__cell">Nombre</th>
-        <th class="user-list__cell">Apellido</th>
-        <th class="user-list__cell">Telefono</th>
-        <th class="user-list__cell">Direccion</th>
-        <th colspan="3" class="user-list__cell">Acciones</th>
+        <th class="user-list__cell">Nombre Completo</th>
+        <th colspan="2" class="user-list__cell">Acciones usuario</th>
+        <th class="user-list__cell">¿Es productor?</th>
+         <th class="user-list__cell">Nombre Tienda</th>
+        <th class="user-list__cell" colspan="2">Acciones tienda</th>
       </tr>
     </thead>
+
     <tbody class="user-list__table-body" id="user-table-body">
       {% for usuario in usuarios %}
       <tr class="user-list__row"> 
@@ -38,38 +39,81 @@
         <td class="user-list__cell" data-label="ID">{{ usuario.user.username }}</td>
         <td class="user-list__cell" data-label="Imagen">
           {% if usuario.fotografia %}
-          <img src="{{ usuario.fotografia.url }}" alt="{{ usuario.name }}" class="user-list__image">
+            <img src="{{ usuario.fotografia.url }}" alt="{{ usuario.name }}" class="user-list__image">
           {% else %}
-          <img src="{% static 'img/products/sin_foto_2.jpg' %}" alt="{{ usuario.name }}" class="user-list__image">
+            <img src="{% static 'img/products/sin_foto_2.jpg' %}" alt="{{ usuario.name }}" class="user-list__image">
           {% endif %}
         </td>
-        <td class="user-list__cell">{{ usuario.user.first_name }}</td>
-        <td class="user-list__cell">{{ usuario.user.last_name }}</td>
-        <td class="user-list__cell">{{ usuario.telefono_1 }}</td>
-        <td class="user-list__cell">{{ usuario.direccion_residencia }}</td>
+
+        <td class="user-list__cell">{{ usuario.user.first_name }} {{ usuario.user.last_name }}</td>
+        <!-- <td class="user-list__cell">{{ usuario.user.last_name }}</td> -->    
+       
         <td class="user-list__cell">
-          <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">
+          <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">            
             {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.path }}">
+              <input type="hidden" name="tipo" value="usuario">
+              <input type="hidden" name="next" value="{{ request.path }}">
             {% if usuario.user.is_active %}
-            <button type="submit" class="user-list__action-btn user-list__action-btn--disable">Deshabilitar</button>
+              <button type="submit" class="user-list__action-btn user-list__action-btn--disable">Deshabilitar</button>
             {% else %}
-            <button type="submit" class="user-list__action-btn user-list__action-btn--enable">Habilitar</button>
+              <button type="submit" class="user-list__action-btn user-list__action-btn--enable">Habilitar</button>
             {% endif %}
           </form>
         </td>
 
         <td class="user-list__cell">
-          <a href="{% url 'editar_usuario' usuario.id %}?next={{ request.path }}">
+          <a href="{% url 'editar_tienda' usuario.id %}?next={{ request.path }}">
             <button type="button" class="user-list__action-btn user-list__action-btn--edit">Editar</button>
           </a>
         </td>
-        {% comment %}
-        <td class="user-list__cell">
-          <button type="button" class="user-list__action-btn user-list__action-btn--img" data-id="{{ usuario.id }}"
-            data-imagen="{{ usuario.user.fotografia.url }}">Cambiar Imagen</button>
+
+        <td class="user-list__cell" >
+          {% if usuario.es_productor %}
+            <span style="color: green;">✔ Sí</span>
+          {% else %}
+            <span style="color: red;">✖ No</span>
+          {% endif %}
         </td>
-        {% endcomment %}
+
+        <td class="user-list__cell">{{ usuario.user.productor.nombre_finca }}</td>
+        
+        {% if usuario.es_productor %}
+        <td class="user-list__cell">          
+            <a href="{% url 'editar_tienda' usuario.user.productor.id %}?next={{ request.path }}" class="user-list__action-btn user-list__action-btn--edit">
+              Editar tienda         
+            </a>            
+        </td>
+
+        <td class="user-list__cell">
+            <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">              
+                {% csrf_token %}
+                <input type="hidden" name="tipo" value="productor">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                       
+                {% if usuario.user.productor.activo %}
+                    <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
+                        Deshabilitar Tienda
+                    </button>
+                {% else %}
+                    <button type="submit" class="user-list__action-btn user-list__action-btn--enable">
+                        Habilitar Tienda
+                    </button>
+                {% endif %}
+            </form>           
+        </td>
+        {% else %}
+        <td class="user-list__cell">
+            <button class="btn btn-primary" disabled>
+                Editar
+            </button>
+        </td>
+
+        <td class="user-list__cell">
+            <button class="btn btn-success" disabled>
+                Habilitar
+            </button>
+        </td>
+        {% endif %}
       </tr>
 
       {% empty %}

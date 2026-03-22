@@ -1,15 +1,10 @@
 
     /* ejecuta la página cuando tiene todo listo */
     document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("SCRIPT CARGADO");
-        
+    console.log("SCRIPT CARGADO");        
     /* Evento del click  */
     document.addEventListener("click", function (e) {
-
-        /* detecta el botón */
-        /* agregar al carrito */
-
+        /* detecta el botón, agregar al carrito */
         const carritoBtn = e.target.closest(".agregar-carrito-btn");
 
         if (carritoBtn) {
@@ -23,7 +18,9 @@
                 mostrarPopup(
                     "Producto inactivo",
                     "No se puede agregar porque el producto está deshabilitado",
-                    "error"
+                    "error",
+                    false,
+                    true
                     );
                 return;
             }
@@ -32,7 +29,9 @@
                 mostrarPopup(
                     "Sin stock",
                     "No hay stock disponible.",
-                    "error"
+                    "error",
+                    false,
+                    true
                     );
          
                 return;
@@ -50,26 +49,25 @@
             .then(data => {
 
                 if (data.success) {
-
                     mostrarPopup(
                         "Producto agregado",
                         "El producto fue añadido al carrito",
-                        "ok"
+                        "ok",                        
                         );
-                
-
+         
                     const contador = document.getElementById("carrito-contador");
                     /* Actualiza el número de elementos en el carrito de forma automática  */
                     contador.textContent = data.total_items;
                     contador.style.display = "inline-block";
 
                 } else {
-
                     mostrarPopup(
                         "No se agrego",
                         "El producto no pudo añadirse al carrito",
-                        "error"
-                        );
+                        "error",
+                        false,
+                        true
+                        );                                   
                 }
             });
 
@@ -266,30 +264,6 @@
     }
 
     /* Función CSRF -> obtiene el token de seguridad de Django (Django lo exige para el metodo POST) */
-
-    function getCookie(name) {
-
-        let cookieValue = null;
-
-        if (document.cookie && document.cookie !== "") {
-
-            const cookies = document.cookie.split(";");
-
-            for (let i = 0; i < cookies.length; i++) {
-
-                const cookie = cookies[i].trim();
-
-                if (cookie.substring(0, name.length + 1) === (name + "=")) {
-
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-
-        return cookieValue;
-    }
-
     /* funcion para obtener el token de seguridad de Django */
     function getCookie(name) {
         /* se crea la variable cookievalue */

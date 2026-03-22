@@ -16,7 +16,7 @@ def pedido_exitoso(request, pedido_id):
     #pedido del usuario logueado
     pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
     #carga el HTML pedido_exitoso
-    return render(request, 'pedidos/pedido_exitoso.html', {'pedido': pedido})
+    return render(request, 'pedidos/pedido_exitoso.html', {'pedido': pedido, 'titulo': 'Exito en Pedido'})
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ def mis_pedidos(request):
     #trae los pedidos que son del usuario logueado y los ordena por fecha
     pedidos = Pedido.objects.filter(usuario=request.user).order_by('fecha')
     #carga el HTML de mis_pedidos
-    return render(request, 'pedidos/mis_pedidos.html', {'pedidos': pedidos})
+    return render(request, 'pedidos/mis_pedidos.html', {'pedidos': pedidos, 'titulo': 'Mis Pedidos'})
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
@@ -44,4 +44,4 @@ def detalle_pedido(request, pedido_id):
     #pedido del usuario logueado
     pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
     #carga el HTML de detalle_pedido
-    return render(request, 'pedidos/detalle_pedido.html', {'pedido': pedido})
+    return render(request, 'pedidos/detalle_pedido.html', {'pedido': pedido, 'titulo': 'Pedido detallado'})

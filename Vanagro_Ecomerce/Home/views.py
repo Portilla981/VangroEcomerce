@@ -1,13 +1,7 @@
 # from pyexpat.errors import messages
-from django.shortcuts import render
-
 from django.shortcuts import render, redirect
-# from django.http import HttpResponse
 # Ruta para obtener las vistas genéricas de django para el CRUD
-
 from django.views.generic import TemplateView
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
 # Esta ruta importa las vistas genéricas para crear, actualizar y eliminar elementos del modelo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 # Ruta para manejar la autenticación y redireccionamiento
@@ -15,8 +9,6 @@ from django.urls import reverse_lazy
 # Ruta para manejar el modelo de usuarios y login
 from django.contrib.auth.views import LoginView
 # Ruta para manejar la mezcla de autenticación en las vistas
-from django.contrib.auth.mixins import LoginRequiredMixin 
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
 # Importación del modelo Tarea creado
 from .models import *
@@ -86,25 +78,32 @@ class Contactenos(CreateView):
 
 class Inicio(LoginView):
     template_name = 'home/inicio.html'
-    modelo = User
-    # success_url = reverse_lazy('inicio_vista')
-    
-    
-    # Campos que se van a utilizar en el formulario de logueo
-    fields = '__all__'  
+    # modelo = User
+      
     # Condición para redireccionar si el usuario ya esta autenticado
     redirect_authenticated_user = True
     # Redireccion después de iniciar sesion exitosamente
     def get_success_url(self):
+        user = self.request.user
+        if user.is_superuser:
+            return reverse_lazy('sesion_inicio')
+
         # Redireccion a la vista después de iniciar sesion
         return reverse_lazy('sesion_inicio')  
-    
-    
+       
+    # si el usuario es valido 
+    def form_valid(self, form):
+        messages.success(self.request, "Bienvenido al sistema")
+        return super().form_valid(form)
+
+    # Si el usuario no es
+    def form_invalid(self, form):
+        messages.error(self.request, "Usuario o contraseña incorrectos")
+        return super().form_invalid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        context['titulo']= 'Inicio'
-        
+        context['titulo'] = 'Inicio'
         return context
 
     

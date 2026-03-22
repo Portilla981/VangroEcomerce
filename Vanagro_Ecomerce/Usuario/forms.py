@@ -4,6 +4,8 @@ from .models import CreacionUsuario, Municipio, CreacionProductor
 from django.contrib.auth.models import User
 # Esto es para validar el campo de identificacion que acepte solo números o letras
 import re
+from datetime import date
+from django.core.exceptions import ValidationError
 
 # Funcion global para formatear textos cuando se necesite que la primera letra sea en mayúscula
 def fomato_texto(texto):
@@ -125,14 +127,43 @@ class Formulario_Usuario(forms.ModelForm):
         telefono = self.cleaned_data.get('telefono_1')
         if not telefono.isdigit():
             raise forms.ValidationError("El número de teléfono debe contener solo números")
+        
+        # Validar longitud si es necesario
+        if len(telefono) != 10:
+            raise forms.ValidationError("El teléfono debe tener 10 dígitos.")
+        
         return telefono
 
     def clean_telefono_2(self):
         telefono = self.cleaned_data.get('telefono_2')
+        
+        # 1. Si el teléfono es None o está vacío, simplemente lo retornamos (no es obligatorio)
+        if not telefono:
+            return telefono
+        
         if not telefono.isdigit():
             raise forms.ValidationError("El número de teléfono alterno debe contener solo números")
+        
+        # Validar longitud si es necesario
+        if len(telefono) != 10:
+            raise forms.ValidationError("El teléfono debe tener 10 dígitos.")
+                       
         return telefono
+    
+
    
+    def clean_fecha_nacimiento(self):
+        fecha = self.cleaned_data.get('fecha_nacimiento')
+        hoy = date.today()
+        
+        # Cálculo exacto de edad
+        edad = hoy.year - fecha.year - ((hoy.month, hoy.day) < (fecha.month, fecha.day))
+        
+        if edad < 18:
+            raise ValidationError("Debes tener al menos 18 años para registrarte.")
+        
+        return fecha
+    
    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

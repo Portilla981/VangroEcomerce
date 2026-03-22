@@ -25,12 +25,6 @@
 
     <div class="navbar-vanagro__icons">
      
-      <div class="navbar-vanagro__icons--second">
-        <a href="{{ request.session.volver_a|default:'/' }}">
-          <ion-icon class="navbar-vanagro__icons--back" name="arrow-back-outline"></ion-icon>
-        </a>
-      </div>
-
       <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"
         alt="Foto del productor" />
   
@@ -46,14 +40,5 @@
     </div>
   </div>
 
-  <div class="popup" id="popupMessage">
-    <div class="popup__header">
-      <i class="fa-solid fa-check popup__icon"></i>
-    </div>
-    <div class="popup__body">
-      <h3 class="popup__title">¡NOS VEMOS PRONTO!</h3>
-      <p class="popup__message">¡Se ha cerrado la sesión exitosamente!</p>
-      <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-    </div>
-  </div>
+  
 </header>

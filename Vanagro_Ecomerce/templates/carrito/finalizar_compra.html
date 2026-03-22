@@ -13,7 +13,7 @@
     <!-- titulo de la pagina -->
     <h2 class="compra_titulo">Finalizar Compra</h2>
     <!-- metodo post para enviar a la vista de procesa_pago -->
-    <form method="POST" action="{% url 'procesar_pago' %}" class="compra-form">
+    <form method="POST" action="{% url 'procesar_pago' %}" id="form-carrito__pagar" class="compra-form">
         <!-- Token de seguridad -->
         {% csrf_token %}
         <!-- genera las columnas -->
@@ -114,9 +114,12 @@
                         <!-- botón finalizar y pagar -->
                         <!-- Una vez se da clic va a la vista procesar_pago -->
                         <div class="compra-button">
-                            <button type="submit" class="buttons__action--primary">
-                                Finalizar y Pagar
+                            <button type="button" class="buttons__action--primary btn-cancel btn-confirmar"
+                                data-form="form-carrito__pagar" 
+                                data-titulo="Realizar pago" 
+                                data-mensaje="¿Desea finalizar la compra?"> Finalizar y Pagar
                             </button>
+                          
                         </div>
 
                     </div>

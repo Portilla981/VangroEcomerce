@@ -31,24 +31,41 @@ from django.db import transaction
 
 # Create your views here.
 
-class Login(DeleteView, LoginRequiredMixin):
+class PerfilUsuario(LoginRequiredMixin, DeleteView):
     model = CreacionUsuario
     template_name = 'usuario/login.html'
     context_object_name = 'perfil'
 
+    def dispatch(self, request, *args, **kwargs):
+        # Si es superusuario, lo dejamos entrar pero SIN perfil
+        if request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+
+        # Si NO tiene perfil, mostramos mensaje y redirigimos
+        if not hasattr(request.user, 'usuario'):
+            messages.error(request, "No tienes perfil creado.")
+            return redirect('inicio')  # ajusta esta ruta
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get_object(self):
+        # Verifica si es superuser
+        if self.request.user.is_superuser:
+            return None
+
         #return self.request.user.creacionusuario
-        perfil, created = CreacionUsuario.objects.get_or_create(user=self.request.user)
-        return perfil
+        return get_object_or_404(CreacionUsuario, user=self.request.user)
+        # perfil, created = CreacionUsuario.objects.get_or_create(user=self.request.user)
+        # return perfil
     
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        context['titulo']= 'Sesion de Usuario'        
+        context = super().get_context_data(**kwargs)        
+        context['titulo']= 'Sesion de Usuario'  
+        context['es_superuser'] = self.request.user.is_superuser      
         return context
 
 
-class Tienda(TemplateView, LoginRequiredMixin):
+class Tienda(LoginRequiredMixin, TemplateView):
     template_name = 'usuario/producter-profile.html'
     
     # success_message = 'Producto creado exitosamente.'
@@ -76,8 +93,7 @@ class RegistroUsuario(View):
 
     def get(self, request):
         user_form = UserForm()
-        perfil_form = Formulario_Usuario()
-        
+        perfil_form = Formulario_Usuario()        
         
         return render(request, self.template_name, {
             "user_form": user_form,
@@ -85,7 +101,13 @@ class RegistroUsuario(View):
             "titulo": self.titulo
         })
 
+    
     def post(self, request):
+
+        if 'cancelar-registro' in request.POST:
+            messages.info(request, 'Saliendo sin guardar cambios')
+            return redirect("inicio_vista")
+
         user_form = UserForm(request.POST)
         perfil_form = Formulario_Usuario(request.POST, request.FILES)
         perfil_form.fields['municipio'].queryset = Municipio.objects.all()        
@@ -126,19 +148,46 @@ class RegistroUsuario(View):
             except Exception as e:
                 print("Error al crear el usuario o perfil:", e)
                 messages.error(request, 'Ocurrió un error al crear el usuario. Por favor, inténtalo de nuevo.')
-                return redirect("registro_usuario")
+                return render(request, self.template_name, {
+                    "user_form": user_form,
+                    "perfil_form": perfil_form,
+                    "titulo": self.titulo
+                    })
         
-        messages.error(request, user_form.errors)
-        messages.error(request, perfil_form.errors)
-        print(user_form.errors)
-        print(perfil_form.errors)
+        else:
+
+            # 1. Creamos una cadena de texto vacía
+            error_msg = "Por favor corrige lo siguiente: "
+    
+            # 2. Recorremos ambos formularios
+            for f in [user_form, perfil_form]:
+                for field, errors in f.errors.items():
+                    # Limpiamos el nombre del campo (ej: 'fecha_nacimiento' -> 'Fecha nacimiento')
+                    nombre_limpio = field.replace('_', ' ').capitalize()
+                    # Concatenamos: "Campo: error1, error2. "
+                    error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}. "
+
+            # 3. Enviamos un ÚNICO mensaje de error al popup
+            messages.error(request, error_msg)
+     
+
+            print(user_form.errors)
+            print(perfil_form.errors)
+
+            # for formulario in [form_user, form_perfil]:
+            #     for field, errors in formulario.errors.items():
+            #         for error in errors:
+            #             # Enviamos cada error al sistema de mensajes
+            #             nombre_campo = field.replace('_', ' ').capitalize()
+            #             messages.error(request, f"{nombre_campo}: {error}")
 
 
-        return render(request, self.template_name, {
-            "user_form": user_form,
-            "perfil_form": perfil_form,
-            "titulo": self.titulo
-        })
+            return render(request, self.template_name, {
+                "user_form": user_form,
+                "perfil_form": perfil_form,
+                "titulo": self.titulo
+            })
+            
     
 
 def cargar_municipios(request):
@@ -148,7 +197,7 @@ def cargar_municipios(request):
         return JsonResponse(data, safe=False)
 
 
-class RegistroProductor(TemplateView, LoginRequiredMixin):
+class RegistroProductor(LoginRequiredMixin, TemplateView):
     template_name = "usuario/tienda.html"
 
     def dispatch(self, request, *args, **kwargs):
@@ -161,14 +210,19 @@ class RegistroProductor(TemplateView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)        
 
         user = self.request.user
-        
+
+        # verifica si el usuario tiene productor
         if hasattr(user, 'productor'):
             context['titulo']= 'Tu tienda'
             context['es_productor'] = True
             context['productor'] = user.productor
-            context['perfil'] = CreacionUsuario.objects.get(user=user)
+            # context['perfil'] = CreacionUsuario.objects.get(user=user)
+            context['perfil'], _ = CreacionUsuario.objects.get_or_create(user=user)
 
         else:
+            form = Formulario_Productor()
+            form.fields['municipio'].queryset = Municipio.objects.all()
+
             context['titulo']= 'Registro de tienda'
             context['es_productor'] = False
             context['form'] = Formulario_Productor()
@@ -178,7 +232,7 @@ class RegistroProductor(TemplateView, LoginRequiredMixin):
     
     # POST → Guardar datos
     def post(self, request, *args, **kwargs):
-
+        
         # Validación principal
         if hasattr(request.user, 'productor'):
             return redirect('tienda_usuario')  # ya existe
@@ -189,13 +243,26 @@ class RegistroProductor(TemplateView, LoginRequiredMixin):
             productor = form.save(commit=False)
             productor.user = request.user
             productor.save()
-
             messages.success(request, f'La finca {productor.nombre_finca} ha sido creada exitosamente.') 
-
             return redirect('tienda_usuario')
+        
+        
+        # 1. Creamos una cadena de texto vacía
+        error_msg = "Por favor corrige lo siguiente: "
 
-        return self.render_to_response({'form': form})
-    
+        # 2. Recorremos formularios
+        for field, errors in form.errors.items():
+            nombre_limpio = field.replace('_', ' ').capitalize()
+            error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}."
+
+        # 3. Enviamos un ÚNICO mensaje de error al popup
+        messages.error(request, error_msg)
+
+        return render(request, self.template_name, {
+            "form": form,
+            "titulo": 'Registro de tienda',
+            "es_productor": False
+        })
     
     
 @login_required
@@ -204,6 +271,10 @@ def editar_usuario(request, pk):
     # Buscamos el usuario por su ID
     perfil = get_object_or_404(CreacionUsuario, pk=pk)
     user = perfil.user # Accedemos al User de Django relacionado
+
+    # Seguridad
+    if perfil.user != request.user:
+        return redirect('sesion_inicio')
         
     if request.method == 'POST':        
         user_form = Form_Actualizar_User(request.POST, instance = user)
@@ -217,13 +288,22 @@ def editar_usuario(request, pk):
             
             return redirect('sesion_inicio')
         
-        if not user_form.is_valid():
-            messages.success(request, user_form.errors) 
-            print(user_form.errors)
+    
+        # 1. Creamos una cadena de texto vacía
+        error_msg = "Por favor corrige lo siguiente: "
+        print(user_form.errors)
+        print(perfil_form.errors) 
 
-        if not perfil_form.is_valid():
-            messages.success(request, perfil_form.errors) 
-            print(perfil_form.errors)   
+        # 2. Recorremos ambos formularios
+        for f in [user_form, perfil_form]:
+            for field, errors in f.errors.items():
+                # Limpiamos el nombre del campo (ej: 'fecha_nacimiento' -> 'Fecha nacimiento')
+                nombre_limpio = field.replace('_', ' ').capitalize()
+                # Concatenamos: "Campo: error1, error2. "
+                error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}. "
+
+        # 3. Enviamos un ÚNICO mensaje de error al popup
+        messages.error(request, error_msg)    
         
     else:
         # messages.success(request, 'Ingresando al modulo de edición de usuario') 
@@ -245,16 +325,37 @@ class EditarProductor(LoginRequiredMixin, UpdateView):
     model = CreacionProductor 
     form_class = Formulario_Productor
     template_name = "usuario/editar_tienda.html"
-    success_url = reverse_lazy('tienda_usuario')
-
+    
     def get_object(self, queryset=None):
+        # Si es superusuario → puede editar cualquiera
+        if self.request.user.is_superuser:
+            return get_object_or_404(CreacionProductor, pk=self.kwargs.get('pk'))
+
         # Esto asegura que el usuario SOLO edite su propio perfil de productor
         # y no el de otros, incluso si conoce el ID.
         return self.request.user.productor
+    
+    def get_success_url(self):
+        # Lógica dinámica de redirección
+        if self.request.user.is_superuser:
+            return reverse_lazy('lista_usuarios') # Nombre de tu URL de la tabla
+        return reverse_lazy('sesion_inicio') # URL para el productor normal
 
     def form_valid(self, form):
         messages.success(self.request, "Los datos de tu tienda han sido actualizados.")
         return super().form_valid(form)
+
+
+    def form_invalid(self, form):
+        error_msg = "Por favor corrige lo siguiente: "
+
+        for field, errors in form.errors.items():
+            nombre_limpio = field.replace('_', ' ').capitalize()
+            error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}. "
+
+        messages.error(self.request, error_msg)
+
+        return super().form_invalid(form)
 
 
 
@@ -274,45 +375,54 @@ class ListaUsuarios(LoginRequiredMixin, ListView):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get_queryset(self):        
-        return CreacionUsuario.objects.exclude(user__is_superuser = True)
+    def get_queryset(self): 
+
+        usuarios = CreacionUsuario.objects.exclude(user__is_superuser=True).select_related('user__productor')
+
+        for u in usuarios:
+            u.es_productor = hasattr(u.user, 'productor')  # CLAVE
+
+        return usuarios
+
+
 
 
 @login_required
 #vista para actualizar el estado del producto de forma automática (sin actualizar la pagina)
 def toggle_usuario(request, pk):
 
+    next_url = request.GET.get('next')
+
+    if next_url:
+        request.session['volver_a'] = next_url
+
     if request.method == 'POST'and request.user.is_superuser:
         #get_object_or_404 busca en la bd el producto que llega como ID por la URL. Si el producto no existe muestra error 404'''
         #Producto es el producto al que se le desea cambiar el estado
-        
+        tipo = request.POST.get('tipo') # verifica que tipo de dato esta recibiendo o a quien se debe modificar
+
         usuario = get_object_or_404(User, pk=pk)
+
+
         
         if usuario == request.user:
             return redirect('lista_usuarios')        
         
-        # perfil = usuario.user    
-        #cambia el estado actual del producto  
-        usuario.is_active = not usuario.is_active
-        #utilizamos el método save de Django para actualizar el estado del producto
-        usuario.save()
-    
+        # Accion para usuario
+        if tipo == 'usuario':
+            # perfil = usuario.user    
+            #cambia el estado actual del producto  
+            usuario.is_active = not usuario.is_active
+            #utilizamos el método save de Django para actualizar el estado del producto
+            usuario.save()
+
+        elif tipo == 'productor':
+            if hasattr(usuario, 'productor'):
+                productor = usuario.productor
+                productor.activo = not productor.activo
+                productor.save()
+
         #indica si el cambio de estado fue realizado e indica el nuevo estado del producto
         return redirect(request.POST.get('next', 'lista_usuarios'))
     
     return redirect('lista_usuarios')
-
-# @login_required
-# def cambiar_imagen_usuario(request):
-
-#     if request.method == 'POST':
-#         usuario_id = request.POST.get("usuario_id")
-#         imagen = request.FILES.get("imagen")
-
-#         usuario = CreacionUsuario.objects.get(id = usuario_id)
-
-#         if imagen:
-#             usuario.fotografia = imagen
-#             usuario.save()
-
-#     return redirect("mis_productos")

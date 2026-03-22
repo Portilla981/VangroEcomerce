@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <header class="header-vanagro">
   <div class="logo_gov">
     <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
@@ -16,19 +15,26 @@
       <ul class="navbar-vanagro__list">
 
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
-          <a href="" class="navbar-vanagro__link">Carrito</a>
-        </li>
+          <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="navbar-vanagro__link">Regresar</a>
+        </li>        
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
-          <a href="" class="navbar-vanagro__link">Regresar</a>
+          <a href="{% url 'ver_carrito' %}" class="navbar-vanagro__link">Carrito</a>
         </li>
+        
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
-          <a href="" class="navbar-vanagro__link">Cerrar sesion</a>
+          <form method="post" action="{% url 'logout' %}" id="logout-form" style="display: none;">
+            {% csrf_token %}            
+          </form>
+              <a href="#" class="navbar-vanagro__link-logout" onclick="document.getElementById('logout-form').submit(); return false;">
+                <span class="logout-text">Cerrar Sesión</span>
+              </a>  
         </li>
       </ul>
     </nav>
 
-    <div class="navbar-vanagro__icons">
 
+
+    <div class="navbar-vanagro__icons">
       <div class="navbar-vanagro__icons--first">        
         <a href="{% url 'ver_carrito' %}">
           <ion-icon class="navbar-vanagro__icons--cart" name="cart-outline"></ion-icon>          
@@ -37,18 +43,20 @@
       </div>
 
       <div class="navbar-vanagro__icons--second">
-        <a href="{{ request.session.volver_a|default:'/' }}">
+        <a href="{{ request.META.HTTP_REFERER|default:'/' }}">
           <ion-icon class="navbar-vanagro__icons--back" name="arrow-back-outline"></ion-icon>
         </a>
       </div>
 
-      {% if user.usuario.fotografia %}
-      <img class="navbar-vanagro__profile-img" src="{{ user.usuario.fotografia.url }}" alt="Foto del productor" />
-      {% else %}
+      <a href="{% url 'sesion_inicio' %}"> 
+        {% if request.user.usuario.fotografia %}
+      <img class="navbar-vanagro__profile-img" src="{{ request.user.usuario.fotografia.url }}" alt="Foto del productor" />
+        {% else %}
       <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}"
         alt="Foto del productor" />
-      {% endif %}
-
+        {% endif %}
+      </a>  
+      
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit" style="background: none; border: none;">
@@ -59,15 +67,5 @@
 
     </div>
   </div>
-
-  <div class="popup" id="popupMessage">
-    <div class="popup__header">
-      <i class="fa-solid fa-check popup__icon"></i>
-    </div>
-    <div class="popup__body">
-      <h3 class="popup__title">¡NOS VEMOS PRONTO!</h3>
-      <p class="popup__message">¡Se ha cerrado la sesión exitosamente!</p>
-      <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-    </div>
-  </div>
+ 
 </header>

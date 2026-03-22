@@ -19,7 +19,6 @@ from django.utils import timezone
 from datetime import timedelta
 
 
-
 # Create your views here.
 def ver_productos(request):
     productos = Producto.objects.filter(
@@ -31,10 +30,10 @@ def ver_productos(request):
     categorias = Producto.CATEGORIA
     # Accion para volver a la pagina de donde se llamo
     # def dispatch(self, request, *args, **kwargs):
-    next_url = request.GET.get('next')
+    # next_url = request.GET.get('next')
 
-    if next_url:
-        request.session['volver_a'] = next_url
+    # if next_url:
+    #     request.session['volver_a'] = next_url
     
     print("Productos encontrados:", productos.count())
 
@@ -53,29 +52,19 @@ def detalle_producto(request, pk):
         stock__gt=0
     )
 
-    
+    # next_url = request.GET.get('next')
 
+    # if next_url:
+    #     request.session['volver_a'] = next_url
+    
     return render(request, 'productos/producto_detallado.html', {
         'producto': producto,
-        
+        'titulo': 'Detalle producto'        
     })
 
-    
-'''    
-class Listado_producto(LoginRequiredMixin, ListView):
-    model = Producto
-    template_name = "productos/listado_productos.html"
-    context_object_name = "productos"
-
-    def get_queryset(self):        
-        return Producto.objects.filter(productor__user=self.request.user)'''
 
 def get_success_url(self):
     return self.request.POST.get('next', reverse_lazy('mis_productos'))
-
-
-
-
 
 
 @login_required
@@ -168,7 +157,7 @@ class ListaProductos(LoginRequiredMixin, ListView):
         # Plantilla por defecto para usuarios normales
         return ["productos/listado_productos.html"]
     
-    # Accion para volvel a la pagina de donde se llamo
+    # Accion para volver a la pagina de donde se llamo
     def dispatch(self, request, *args, **kwargs):
         next_url = request.GET.get('next')
 
@@ -266,58 +255,6 @@ def crear_producto(request):
     return render(request,'productos/crear_producto.html',{
         'form':form,
         'titulo':'Crear Producto'})
-
-'''
-# Crear producto
-class CrearProducto(LoginRequiredMixin, FormView):
-
-    template_name = "productos/crear_producto.html"
-    # Método 1
-    # form_class = Form_producto
-    
-    # def get_queryset(self):
-    #	return Producto.objects.filter(productor=self.request.user.productor)
-
-    # def form_valid(self, form):
-
-    #     self.request.session["producto_data"] = self.request.POST
-    #     self.request.session["producto_files"] = self.request.FILES
-
-    #     return redirect("preview_producto")
-
-    # Método 2
-    def get(self, request):
-        form = Form_producto()
-        return render(request, self.template_name, {
-            "form": form
-        })
-
-    def post(self, request):
-        form = Form_producto(request.POST, request.FILES)
-        accion = request.POST.get("accion")
-
-        if form.is_valid():
-            if accion == "vista_previa":
-                producto = form.save(commit=False)
-
-                return render(request, "productos/vista_previa.html", {
-                    "producto": producto,
-                    "form": form,
-                    "modo": "crear"
-                })
-
-            elif accion == "guardar":
-                producto = form.save(commit=False)
-                producto.productor = request.user.productor
-                producto.estado_producto = "publicado"
-                producto.activo = True
-                producto.save()
-
-                return redirect("tienda_usuario")
-        else:
-            return redirect("tienda_usuario")
-
-        return render(request, self.template_name, {"form": form})'''
 
 
 @login_required

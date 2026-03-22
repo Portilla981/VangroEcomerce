@@ -4,7 +4,7 @@
 
 {% block navbar %}
 
-    {% include 'components/navbar-tienda.html' %}
+    {% include 'components/navbar-simple.html' %}
 
 {% endblock navbar %}
 
@@ -19,7 +19,7 @@
 <div class="producter-register">
     <p class="producter-register__title"><strong>Editar Tienda</strong></p>
 
-    <form class="producter-register__form" method="POST" enctype="multipart/form-data">
+    <form class="producter-register__form" method="POST" id="form-edit__tienda" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="producter-register__identification">
@@ -96,9 +96,29 @@
         </div>
 
         <div class="producter-register__actions">
-            <button type="submit" class="buttons__action--secondary btn-cancel"
-                onclick="window.location.href='javascript:history.back()'">Cancelar</button>
-            <button type="submit" class="buttons__action--primary create-producter-alert">Guardar Cambios</button>
+            <!-- <button type="submit" class="buttons__action--secondary btn-cancel" onclick="window.location.href='javascript:history.back()'">Cancelar</button> -->
+            
+            <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+                data-url="{% url 'lista_usuarios' %}" 
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancelar
+            </button>
+
+            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-edit__tienda" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
+            </button>
+
+
+            
+            
+            
+            <!-- <button type="submit" class="buttons__action--primary create-producter-alert">Guardar Cambios</button> -->
+
+
+
+
         </div>
     </form>
         

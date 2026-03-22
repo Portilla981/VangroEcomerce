@@ -10,8 +10,6 @@
 {% endblock navbar %}
 
 {% block script %}
-
-    <script src="{% static 'js/alertas/espera_interfaz.js' %}" defer></script>
     <script src="{% static 'js/campo_identificacion.js' %}" defer></script>
     <script src="{% static 'js/departamento_municipio.js' %}" defer></script>
 {% endblock script %}
@@ -26,16 +24,16 @@
 <section class="form-register__block">
     <div class="form-register__block--form">
 
-        <form method="POST" class="form-register__form" enctype="multipart/form-data">
+        <form method="POST" class="form-register__form" id="form-register__user"  enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="form-register__group">
                 <label class="form-register__label">Nombres
-                    <input class="form-register__input" type="text" name="first_name" placeholder="Ingrese su nombre(s)"
+                    <input class="form-register__input" type="text" name="first_name"  value="{{ user_form.first_name.value|default_if_none:'' }}" placeholder="Ingrese su nombre(s)"
                         required>
                 </label>
                 <label class="form-register__label">Apellidos
-                    <input class="form-register__input" type="text" name="last_name" placeholder="Ingrese sus apellidos"
+                    <input class="form-register__input" type="text" name="last_name"  value="{{ user_form.last_name.value|default_if_none:'' }}"  placeholder="Ingrese sus apellidos"
                         required>
                 </label>
 
@@ -52,24 +50,19 @@
                     <select class="form-register__input" name="tipo_identificacion" id="tipo_id" required>
                         <option value="">Seleccione un tipo de documento</option>
                         {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
-                        <option value="{{ tipo.id }}">{{ tipo.tipo_identificacion }}</option>
+                        <option value="{{ tipo.id }}" {% if tipo.id == perfil_form.tipo_identificacion.value %} selected {% endif %} >{{ tipo.tipo_identificacion }}</option>
                         {% endfor %}
                     </select>
                 </label>
 
                 <label class="form-register__label">Número de identificación
-                    <input class="form-register__input" type="text" id="number_id" name="numero_identificacion"
+                    <input class="form-register__input" type="text" id="number_id" name="numero_identificacion"  value="{{ perfil_form.numero_identificacion.value|default_if_none:'' }}" 
                         placeholder="Ingrese el numero" required>
-                    {% if perfil_form.numero_identificacion.errors %}
-                    <div class="error" style="color:red;">
-                        {{ perfil_form.numero_identificacion.errors }}
-                    </div>
-                    {% endif %}
-
+                    
                 </label>
 
                 <label class="form-register__label">Fecha de nacimiento
-                    <input class="form-register__input" type="date" name="fecha_nacimiento" required>
+                    <input class="form-register__input" type="date" name="fecha_nacimiento"  value="{{ perfil_form.instance.fecha_nacimiento|date:'Y-m-d' }}" id="fecha_nacimiento" required>
                 </label>
             </div>
 
@@ -78,21 +71,23 @@
                     <select id="departamento" name="departamento" class="form-register__input" required>
                         <option value="">Seleccione un departamento</option>
                         {% for dpto in perfil_form.departamento.field.queryset %}
-                        <option value="{{ dpto.id }}">{{ dpto.nombre_Departamento }}</option>
+                        <option value="{{ dpto.id }}" {% if dpto.id == perfil_form.departamento.value %} selected 
+                {% endif %}>{{ dpto.nombre_Departamento }}</option>
                         {% endfor %}
                     </select>
                 </label>
 
                 <label class="form-register__label">Municipio
-                    <select id="municipio" class="form-register__input" name="municipio" required>
+                    <select id="municipio" data-guardado="{{ perfil_form.instance.municipio.id }}" class="form-register__input" name="municipio" required>
                         <option value="">Seleccione un municipio</option>
                         {% for mcpio in perfil_form.municipio.field.queryset %}
-                        <option value="{{ mcpio.id }}">{{ mcpio.nombre_Municipio }}</option>
+                        <option value="{{ mcpio.id }}" {% if mcpio.id == perfil_form.municipio.value %} selected {% endif %} >{{ mcpio.nombre_Municipio }}</option>
                         {% endfor %}
                     </select>
                 </label>
+
                 <label class="form-register__label">Dirección
-                    <input class="form-register__input" type="text" name="direccion_residencia"
+                    <input class="form-register__input" type="text" name="direccion_residencia" value="{{ perfil_form.direccion_residencia.value|default_if_none:'' }}"
                         placeholder="Ingrese su direccion de residencia" required>
                 </label>
             </div>
@@ -100,22 +95,18 @@
             <div class="form-register__group">
                 
                 <label class="form-register__label">Correo Electrónico
-                    <input class="form-register__input" type="email" name="email"
+                    <input class="form-register__input" type="email" name="email" value="{{ user_form.email.value|default_if_none:'' }}"
                         placeholder="Ingrese su correo electrónico" required>
-                    {% if user_form.email.errors %}
-                    <div class="error" style="color:red;">
-                        {{ user_form.email.errors }}
-                    </div>
-                    {% endif %}
+                    
                 </label>
             
                 <label class="form-register__label">Teléfono
-                    <input class="form-register__input" type="tel" name="telefono_1"
+                    <input class="form-register__input" type="tel" name="telefono_1" value="{{ perfil_form.telefono_1.value|default_if_none:'' }}"
                         placeholder="Ingrese su número de teléfono" required>
                 </label>
                 <label class="form-register__label">Teléfono Alterno
-                    <input class="form-register__input" type="tel" name="telefono_2"
-                        placeholder="Ingrese su número de teléfono alterno" required>
+                    <input class="form-register__input" type="tel" name="telefono_2" value="{{ perfil_form.telefono_2.value|default_if_none:'' }}"
+                        placeholder="Ingrese su número de teléfono alterno" >
                 </label>
             </div>
 
@@ -123,39 +114,35 @@
                 <label class="form-register__label">Nombre de Usuario
                     <input class="form-register__input" type="text" name="username"
                         placeholder="Ingrese nombre para su usuario" required>
-                    {% if user_form.username.errors %}
-                    <div class="error" style="color:red;">
-                        {{ user_form.username.errors }}
-                    </div>
-                    {% endif %}
                 </label>
+                
                 <label class="form-register__label">Contraseña
                     <input class="form-register__input" type="password" name="password1"
                         placeholder="Ingrese una contraseña" required>
-                    {% if user_form.password.errors %}
-                    <div class="error" style="color:red;">
-                        {{ user_form.password.errors }}
-                    </div>
-                    {% endif %}
                 </label>
+
                 <label class="form-register__label">Confirmar contraseña
                     <input class="form-register__input" type="password" name="password2"
                         placeholder="Confirme su contraseña" required>
-
-                </label>
-                {% if user_form.password.errors %}
-                <div class="error" style="color:red;">
-                    {{ user_form.password.errors }}
-                </div>
-                {% endif %}
+                </label>              
             </div>
 
     </div>
 
-    <div class="buttons">
-        <button type="submit" class="buttons__action--secondary btn-cancel"
-            onclick="location.href='javascript:history.back()'">Cancelar</button>
-        <button type="submit" class="buttons__action--primary btn-save create-user-alert">Crear Usuario</button>
+    <div class="buttons popup-buttons"> 
+        <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+            data-url="{% url 'inicio_vista' %}" 
+            data-titulo="¿Salir?" 
+            data-mensaje="Se perderán los cambios.">Cancelar
+        </button>
+
+        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+            data-form="form-register__user" 
+            data-titulo="💾 Guardar" 
+            data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
+        </button>       
+
+        
     </div>
     </form>
     

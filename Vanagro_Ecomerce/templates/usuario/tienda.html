@@ -3,8 +3,16 @@
 {% load static %}
 
 {% block navbar %}
+    {% if es_productor %}
 
-    {% include 'components/navbar-tienda.html' %}
+        {% include 'components/navbar-tienda.html' %}
+
+    {% else %}
+
+        {% include 'components/navbar-simple_inicio.html' %} 
+
+    {% endif %}
+    
 
 {% endblock navbar %}
 

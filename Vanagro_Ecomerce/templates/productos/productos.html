@@ -7,20 +7,21 @@
 
   {% load static %}
   <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-96x96.png' %}" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon/favicon.svg' %}" />
-    <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}" />
-    <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon/favicon.svg' %}" />
+  <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}" />
+  <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />
 
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
-  <script src="{% static 'js/alertas/notificaciones.js' %}" defer></script>
+  
   <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
   <script src="{% static 'js/carrito/barra_buscar.js' %}" defer></script>
   <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
+
 
   {% block script %} {% endblock script %}
 
@@ -36,56 +37,13 @@
   {% block producto %}
 
   {% endblock producto %}
-  </div>
-
-  <div id="popup" class="popup-overlay">
-
-    <div class="popup-box popup__body">
-      <div class="popup__header">
-          <i class="fa-solid fa-check popup__icon"></i>
-      </div>
-      <h3 class="popup__title" id="popup-titulo"></h3>
-
-      <p class="popup__message" id="popup-mensaje"></p>
-
-      <!-- <button onclick="cerrarPopup()">Cerrar</button> -->
-      <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-
-      </div>
-  </div>
-
-
-  {% if messages %}
-    {% for message in messages %}
-        <div class="django-message"
-            data-titulo="{{ message.tags|title }}"
-            data-mensaje="{{ message }}"
-            data-tipo="{{ message.tags }}"
-            style="display:none;">
-        </div>
-    {% endfor %}
-{% endif %}
-
+  </div>   
   {% include 'components/footer_vanagro.html' %}
   {% include 'components/popup-acciones.html' %}
   {% include 'components/popup-django.html' %}  
 </body>
 
-<!-- <div class="contenedor-notificaciones">
 
-  {% if messages %}
-
-  {% for message in messages %}
-
-  <div class="notificacion {{ message.tags }}">
-    {{ message }}
-  </div>
-
-  {% endfor %}
-
-  {% endif %}
-
-</div> -->
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" refer></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" refer></script>
 

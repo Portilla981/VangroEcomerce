@@ -58,9 +58,10 @@
 
                 {% if user.is_authenticated %}
 
-                <button class="buttons__action--primary agregar-carrito-btn" data-id="{{ producto.id }}"
-                    data-activo="{{ producto.activo|yesno:'true,false' }}" data-stock="{{ producto.stock }}">
-                    Añadir al carrito
+                <button class="buttons__action--primary agregar-carrito-btn"
+                    data-id="{{ producto.id }}"
+                    data-activo="{{ producto.activo|yesno:'true,false' }}" 
+                    data-stock="{{ producto.stock }}">Añadir al carrito
                 </button>
 
                 {% else %}

@@ -1,10 +1,11 @@
 {% if messages %}
     {% for message in messages %}
         <div class="django-message" 
-             style="display: none;"
-             data-titulo="{% if message.tags == 'success' %}¡Éxito!{% else %}Aviso{% endif %}"
-             data-mensaje="{{ message }}" 
-             data-tipo="{% if message.tags == 'success' %}ok{% else %}{{ message.tags }}{% endif %}">
+            style="display: none;"
+            data-titulo="{% if message.tags == 'success' %}¡Éxito!{% else %}Aviso{% endif %}"
+            data-mensaje="{{ message }}" 
+            data-tipo="{% if message.tags == 'success' %}ok{% else %}{{ message.tags }}{% endif %}"
+            data-auto="{% if message.tags == 'error' %}false{% else %}true{% endif %}">
         </div>
     {% endfor %}
 {% endif %}

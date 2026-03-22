@@ -31,15 +31,15 @@ class CreacionUsuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usuario')    
     # Campos adicionales para el perfil del usuario
     # Relación para listas desplegables de tipo de identificación, departamento y municipio
-    tipo_identificacion = models.ForeignKey(Identificacion, on_delete=models.SET_NULL, null=True, blank=True)
+    tipo_identificacion = models.ForeignKey(Identificacion, on_delete=models.SET_NULL, null=True)
     # Este campo debe ser único para cada usuario, por lo que se establece unique=True para evitar duplicados en la base de datos, ademas se debe de validar que solo sean números.   
     numero_identificacion = models.CharField('Número de Identificación', max_length=20, unique=True)
-    departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True, blank=True)
-    municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True, blank=True)
-    telefono_1 = models.CharField('Teléfono', max_length=20, blank=True)
-    telefono_2 = models.CharField('Teléfono Alterno', max_length=20, blank=True)
-    direccion_residencia = models.CharField('Dirección', max_length=255, blank=True)
-    fecha_nacimiento = models.DateField('Fecha de Nacimiento', null=True, blank=True)
+    departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True)
+    municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True)
+    telefono_1 = models.CharField('Teléfono', max_length=20)
+    telefono_2 = models.CharField('Teléfono Alterno', max_length=20, null=True, blank=True)
+    direccion_residencia = models.CharField('Dirección', max_length=255)
+    fecha_nacimiento = models.DateField('Fecha de Nacimiento')
     fotografia = models.ImageField('Fotografía', upload_to='usuarios/', blank=True, null=True)
 
 
@@ -51,15 +51,15 @@ class CreacionProductor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='productor')
     # Campos adicionales para el perfil del productor
     nombre_finca = models.CharField('Teléfono', max_length=20, blank=True)
-    departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True, blank=True)
-    municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True, blank=True)
-    vereda = models.CharField('Veredales', max_length=255, blank=True)    
+    departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True)
+    municipio = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True)
+    vereda = models.CharField('Vereda', max_length=255, blank=True)    
     direccion = models.CharField('Dirección', max_length=255, blank=True)    
     foto_finca = models.ImageField('Fotografía', upload_to='productores/', blank=True, null=True)
     # Ubicación geográfica de la finca, se pueden usar para mostrar la ubicación en un mapa o para realizar búsquedas por proximidad.
-    latitud = models.FloatField('Latitud', null=True, blank=True)
-    longitud = models.FloatField('Longitud', null=True, blank=True)
-    descripcion = models.TextField('Descripción de la finca', blank=True)
+    latitud = models.FloatField('Latitud', null=True)
+    longitud = models.FloatField('Longitud', null=True)
+    descripcion = models.TextField('Descripción de la finca')
     # Opción inicial luego en la edición del usuario puede desactivar
     activo = models.BooleanField('Activo', default=True) 
     fecha_creacion = models.DateField(auto_now_add=True)   

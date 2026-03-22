@@ -23,17 +23,17 @@
 <section class="form-register__block">
     <div class="form-register__block--form">
 
-        <form method="POST" class="form-register__form" enctype="multipart/form-data">
+        <form method="POST" class="form-register__form" enctype="multipart/form-data" id="form-edit__user" >
             {% csrf_token %}
 
             <div class="form-register__group">
                 <label class="form-register__label">Nombres
                     <input class="form-register__input" type="text" name="first_name"
-                        value="{{ user_form.instance.first_name }}" required>
+                        value="{{ user_form.instance.first_name|default_if_none:'' }}" required>
                 </label>
                 <label class="form-register__label">Apellidos
                     <input class="form-register__input" type="text" name="last_name"
-                        value="{{ user_form.instance.last_name }}" required>
+                        value="{{ user_form.instance.last_name|default_if_none:'' }}" required>
                 </label>
 
                 <div class="form-register__images">
@@ -60,11 +60,11 @@
 
                 <label class="form-register__label">Número de identificación
                     <input class="form-register__input" type="text" name="numero_identificacion"
-                        value="{{ perfil_form.instance.numero_identificacion }}" id="number_id" required>
+                        value="{{ perfil_form.instance.numero_identificacion|default_if_none:'' }}" id="number_id" required>
                 </label>
                 <label class="form-register__label">Fecha de nacimiento
                     <input class="form-register__input" type="date" name="fecha_nacimiento"
-                        value="{{ perfil_form.instance.fecha_nacimiento|date:'Y-m-d' }}" required>
+                        value="{{ perfil_form.instance.fecha_nacimiento|date:'Y-m-d' }}" id="fecha_nacimiento" required>
                 </label>
             </div>
 
@@ -93,10 +93,10 @@
             <div class="form-register__group">
                 <label class="form-register__label">Dirección
                     <input class="form-register__input" type="text" name="direccion_residencia"
-                        value="{{ perfil_form.instance.direccion_residencia }}" required>
+                        value="{{ perfil_form.instance.direccion_residencia|default_if_none:'' }}" required>
                 </label>
                 <label class="form-register__label">Correo Electrónico
-                    <input class="form-register__input" type="email" name="email" value="{{ user_form.instance.email }}"
+                    <input class="form-register__input" type="email" name="email" value="{{ user_form.instance.email|default_if_none:'' }}"
                         required>
                 </label>
             </div>
@@ -104,20 +104,21 @@
             <div class="form-register__group">
                 <label class="form-register__label">Teléfono
                     <input class="form-register__input" type="tel" name="telefono_1"
-                        value="{{ perfil_form.instance.telefono_1 }}" required>
+                        value="{{ perfil_form.instance.telefono_1|default_if_none:'' }}" required>
                 </label>
                 <label class="form-register__label">Teléfono Alterno
                     <input class="form-register__input" type="tel" name="telefono_2"
-                        value="{{ perfil_form.instance.telefono_2 }}" required>
+                        value="{{ perfil_form.instance.telefono_2|default_if_none:'' }}">
+                </label>
+
+                <label class="form-register__label">Nombre de Usuario
+                    <input class="form-register__input" type="text" name="username"
+                        value="{{ user_form.instance.username|default_if_none:'' }}" required>
                 </label>
             </div>
 
-            {% comment %}
-            <div class="form-register__group">
-                <label class="form-register__label">Nombre de Usuario
-                    <input class="form-register__input" type="text" name="username"
-                        placeholder="Ingrese nombre para su usuario" required>
-                </label>
+
+                {% comment %}
                 <label class="form-register__label">Contraseña
                     <input class="form-register__input" type="password" name="password1"
                         placeholder="Ingrese una contraseña" required>
@@ -132,36 +133,21 @@
 
     </div>
 
-    <div class="buttons">
-        <button type="submit" class="buttons__action--secondary btn-cancel"
-            onclick="location.href='javascript:history.back()'">Cancelar</button>
-        <button type="submit" class="buttons__action--primary btn-save create-user-alert">Guardar Cambios</button>
+    <div class="buttons popup-buttons"> 
+        <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+            data-url="{% url 'sesion_inicio' %}" 
+            data-titulo="¿Salir?" 
+            data-mensaje="Se perderán los cambios.">Cancelar
+        </button>
+
+        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+            data-form="form-edit__user" 
+            data-titulo="💾 Guardar" 
+            data-mensaje="¿Desea guardar los cambios realizados?">Guardar Usuario
+        </button>   
+        
     </div>
     </form>
-
-    {% if user_form.errors %}
-    <div style="color:red;">
-        {{ user_form.errors }}
-    </div>
-    {% endif %}
-
-    {% if perfil_form.errors %}
-    <div style="color:red;">
-        {{ perfil_form.errors }}
-    </div>
-    {% endif %}
-
-
-    <div class="popup" id="popupMessage">
-        <div class="popup__header">
-            <i class="fa-solid fa-check popup__icon"></i>
-        </div>
-        <div class="popup__body">
-            <h3 class="popup__title">¡USUARIO CREADO!</h3>
-            <p class="popup__message">¡El usuario ha sido creado exitosamente!</p>
-            <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-        </div>
-    </div>
 
 </section>
 
