@@ -13,10 +13,8 @@
 <div class="product-form">
 	<h2 class="product-form__title">Editar Producto</h2>
 
-	<form method="post" class="product-form__container" enctype="multipart/form-data">
+	<form method="post" id="form-edit__product" class="product-form__container" enctype="multipart/form-data">
 		{% csrf_token %}
-
-
 		<div class="product-form__row">
 			<label class="product-form__label">Nombre del producto
 				<input class="product-form__input" name="nombre_producto" placeholder="Ingrese nombre del producto"
@@ -95,17 +93,27 @@
 
 		<!-- Botones -->
 		<div class="buttons">
-			<a href="{% url 'mis_productos' %}">
-				<button class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>
-			</a>
+			<button type="button" name="accion" value="cancelar" class="buttons__action--secondary btn-cancel btn-confirmar"
+                data-url="{% url 'mis_productos' %}" 
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancelar
+            </button>
+
 			<button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
 				previa</button>
-			<button type="submit" class="buttons__action--primary" name="accion" value="guardar">Guardar
-				Cambios</button>
+
+            <button type="button" name="accion" value="guardar" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-edit__product" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Desea guardar los cambios realizados?">Guardar Cambios
+            </button>
+			<!-- <a href="{% url 'mis_productos' %}">
+				<button class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>
+			</a> -->			
+			<!-- <button type="submit" class="buttons__action--primary" name="accion" value="guardar">Guardar
+				Cambios</button> -->
 		</div>
 	</form>
-
-	<!-- Botones -->
 </div>
 
 {% endblock producto %}

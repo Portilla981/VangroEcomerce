@@ -129,7 +129,7 @@
       
 
       <button type="button" class="profile__action">
-        <a class="profile__link" href="{% url 'editar_tienda' %}?next={{ request.path }}">
+        <a class="profile__link" href="{% url 'editar_tienda' request.user.id %}?next={{ request.path }}">
           <ion-icon name="settings-outline"></ion-icon>
           <span>Editar Perfil</span>
         </a>

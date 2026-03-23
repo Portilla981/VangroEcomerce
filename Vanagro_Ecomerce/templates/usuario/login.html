@@ -23,8 +23,8 @@
 		<script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
 		<script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
 		<script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
-    <!-- <script src="{% static 'js/campo_identificacion.js' %}" defer></script>
-    <script src="{% static 'js/departamento_municipio.js' %}" defer></script> -->
+    <script src="{% static 'js/alertas/modal_respuesta_msj.js' %}" defer></script>
+    <!-- <script src="{% static 'js/departamento_municipio.js' %}" defer></script> -->
 
 		{% block script %} {% endblock script %}
 
@@ -96,7 +96,7 @@
                     <strong>CORREO:</strong> {{ request.user.email }}
                   </p>
                   <p class="profile__detail">
-                    <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2 }}
+                    <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2|default_if_none:'' }}
                   </p>
                 </div>
 
@@ -117,9 +117,10 @@
                   </button>
 
                   <button class="profile__action">
-                    <a href="">
-                      <ion-icon name="calendar-outline"></ion-icon>
-                      <span>Ver Eventos</span>
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <a href="{% url 'contactenos' %}?next={{ request.path }}">
+                      <ion-icon name="megaphone-outline"></ion-icon>
+                      <span>Contactar Administrador</span>
                     </a>
                   </button>
 
@@ -131,6 +132,7 @@
                   </button>
 
                   <button type="button" class="profile__action">
+                    <input type="hidden" name="next" value="{{ request.path }}">
                     <a
                       class="profile__link"
                       href="{% url 'editar_usuario' perfil.id %}?next={{ request.path }}">

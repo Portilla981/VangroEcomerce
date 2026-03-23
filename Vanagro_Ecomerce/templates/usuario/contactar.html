@@ -1,0 +1,20 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+
+{% block navbar %}  
+    {% include 'components/navbar-simple_inicio.html' %} 
+{% endblock navbar %}
+
+{% block script %}
+<!-- <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
+<script src="{% static 'js/alertas/modal_respuesta.js' %}" defer></script> -->
+
+  
+{% endblock script %}
+
+{% block login %}  
+
+{% include 'components/lista_msj.html' %}        
+
+{% endblock login %}

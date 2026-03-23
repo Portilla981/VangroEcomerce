@@ -5,7 +5,7 @@
 
 {% block navbar %}
 
-{% include 'components/navbar-simple_inicio.html' %}
+    {% include 'components/navbar-simple_inicio.html' %}
 
 {% endblock navbar %}
 
@@ -117,36 +117,26 @@
                 </label>
             </div>
 
+        </div>
 
-                {% comment %}
-                <label class="form-register__label">Contraseña
-                    <input class="form-register__input" type="password" name="password1"
-                        placeholder="Ingrese una contraseña" required>
-                </label>
-                <label class="form-register__label">Confirmar contraseña
-                    <input class="form-register__input" type="password" name="password2"
-                        placeholder="Confirme su contraseña" required>
-                </label>
-            </div>
-            {% endcomment %}
+        <div class="buttons popup-buttons"> 
+            <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+                {% if user.is_superuser %}            
+                data-url="{% url 'lista_usuarios' %}" 
+                {% else %}
+                data-url="{% url 'sesion_inicio' %}" 
+                {% endif %}
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancelar
+            </button>
 
-
-    </div>
-
-    <div class="buttons popup-buttons"> 
-        <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
-            data-url="{% url 'sesion_inicio' %}" 
-            data-titulo="¿Salir?" 
-            data-mensaje="Se perderán los cambios.">Cancelar
-        </button>
-
-        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-            data-form="form-edit__user" 
-            data-titulo="💾 Guardar" 
-            data-mensaje="¿Desea guardar los cambios realizados?">Guardar Usuario
-        </button>   
-        
-    </div>
+            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-edit__user" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Desea guardar los cambios realizados?">Guardar Usuario
+            </button>   
+            
+        </div>
     </form>
 
 </section>

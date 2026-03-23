@@ -14,6 +14,8 @@ from django.contrib.auth import login, logout
 from .models import *
 from .form_home import *
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -47,39 +49,119 @@ class Home(TemplateView):
         return context
     
     
-class Contactenos(CreateView):    
+class Contactenos(CreateView):   
     
-    modelo = Mensaje
+    model = Mensaje    
+    form_class = Form_contacto    
+    template_name = 'home/contact-us.html'    
     
-    form_class = Form_contacto
+    def get_success_url(self):
+        if self.request.user.is_authenticated:
+            return reverse_lazy('sesion_inicio')
+        return reverse_lazy('inicio')
     
-    template_name = 'home/contact-us.html'
+    # def get_success_url(self):
+    #     return self.request.POST.get('next') or reverse_lazy('inicio')
+
+    # Autocompletar USUARIO
+    def get_initial(self):
+        initial = super().get_initial()
+
+        if self.request.user.is_authenticated:
+            user = self.request.user
+      
+            initial['nombres'] = user.first_name
+            initial['apellidos']= user.last_name
+            initial['email']= user.email
+            
+            if hasattr(user, 'usuario'):
+                initial['telefono'] = user.usuario.telefono_1
+
+        return initial
     
-    success_url = reverse_lazy('inicio')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        context['titulo']= 'Contactenos'
-        
-        return context
-    
+
     def form_valid(self, form):
-        # Aquí puedes realizar cualquier acción adicional antes de guardar el formulario
-        # Por ejemplo, enviar un correo electrónico o registrar la información en otro modelo
-        messages.error(self.request, '¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.')
-        # Guardar el formulario y redirigir al usuario a la página de éxito
-        return super().form_valid(form) 
-    
+        # Guardamos SIN confirmar aún
+        mensaje = form.save(commit=False)
+        user = self.request.user
+
+        # Diferenciar tipo de mensaje
+        if user.is_authenticated:
+            mensaje.usuario = user
+            mensaje.tipo = 'usuario'
+        else:
+            mensaje.tipo = 'publico'
+
+        mensaje.save()
+
+
+        # DATOS PARA EL CORREO
+        asunto_msg = form.cleaned_data.get('asunto')
+        nombre_completo = f"{form.cleaned_data.get('nombres')} {form.cleaned_data.get('apellidos')}"
+        email_remitente = form.cleaned_data.get('email')
+        telefono_remitente = form.cleaned_data.get('telefono')
+        texto_mensaje = form.cleaned_data.get('mensaje')
+
+        # ENVÍO DE CORREO
+        try:                        
+            asunto = f"Nuevo mensaje de contacto: {asunto_msg}"
+
+            contenido = (
+                f"Tipo: {mensaje.tipo}\n"
+                f"Nombre: {nombre_completo}\n"
+                f"Correo: {email_remitente}\n"
+                f"Teléfono: {telefono_remitente}\n\n"
+                f"Mensaje:\n{texto_mensaje}"
+            )
+            
+            send_mail(
+                asunto,
+                contenido,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+
+            messages.success(
+                self.request,
+                '¡Gracias por tu mensaje!, Nos pondremos en contacto contigo pronto.'
+            )
+
+        except Exception:
+            messages.warning(
+                self.request,
+                'El mensaje se guardó pero hubo un problema al enviar el correo.'
+            )
+
+        return super().form_valid(form)       
+
+
+    # MANEJO DE ERRORES
     def form_invalid(self, form):
-        messages.error(self.request, 'Por favor, corrige los errores en el formulario.')
+        error_msg = "Por favor corrige lo siguiente: "
+
+        for field, errors in form.errors.items():
+            nombre_limpio = field.replace('_', ' ').capitalize()
+            error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}"
+
+        messages.error(self.request, error_msg)
+
         return super().form_invalid(form)
     
 
+    # CONTEXTO
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)        
+        context['titulo'] = 'Contáctenos'        
+        return context
+    
+
+    
+ 
+
 class Inicio(LoginView):
     template_name = 'home/inicio.html'
-    # modelo = User
-      
+        
     # Condición para redireccionar si el usuario ya esta autenticado
     redirect_authenticated_user = True
     # Redireccion después de iniciar sesion exitosamente

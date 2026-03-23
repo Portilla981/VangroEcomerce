@@ -154,10 +154,7 @@
 /* Determinar el estilo responsive de la lista de la barra */
 @media (width > 768px) {
     
-
-
-    .navbar-vanagro{
-        /* display: flex; */
+    .navbar-vanagro{        
         justify-content: center;
         align-items: center;
     }

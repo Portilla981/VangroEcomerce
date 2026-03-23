@@ -83,7 +83,7 @@
 
   <div class="modal-actualizar__card">
 
-    <form class="modal-actualizar__form" method="POST" enctype="multipart/form-data" id="formImagen"
+    <form id="form-product__img" class="modal-actualizar__form" method="POST" enctype="multipart/form-data" id="formImagen"
       action="{% url 'actualizar_img' %}">
 
       {% csrf_token %}
@@ -99,9 +99,13 @@
       <h3>¿Desea cambiar la imagen?</h3>
 
       <div class="modal-actualizar__button-box">
-        <button class="modal-actualizar__button modal-button-guardar" type="submit">Guardar</button>
-
+      <!-- <button class="modal-actualizar__button modal-button-guardar" type="submit">Guardar</button> -->
         <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">Cancelar</button>
+        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-product__img" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Confirmas cambiar la imagen?">Guardar Imagen
+        </button>       
       </div>
     </form>
   </div>

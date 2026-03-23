@@ -16,28 +16,55 @@
 {% endblock script %}
 
 {% block login %}
+
+
 <div class="producter-register">
+    <form method="post" action="{% url 'accion_tienda' %}" id="form-estado_tienda">               
+        {% csrf_token %}
+        <!-- <input type="hidden" name="tipo" value="productor"> -->
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    </form>
+
     <p class="producter-register__title"><strong>Editar Tienda</strong></p>
 
-    <form class="producter-register__form" method="POST" id="form-edit__tienda" enctype="multipart/form-data">
+    
+    <form class="producter-register__form" method="POST" id="form-edit_tienda" enctype="multipart/form-data">
         {% csrf_token %}
+        {% if not form.instance.activo %}
+        <fieldset disabled>
+        {% endif %}
 
         <div class="producter-register__identification">
             <div class="form-register__images">
-
                 {% if form.instance.foto_finca %}
-                        <img src="{{ form.instance.foto_finca.url }}" width="120">
-                    {% endif %}
+                    <img src="{{ form.instance.foto_finca.url }}" width="120">
+                {% endif %}
                 <label class="form-register__label">Cargar foto de finca
                     <input class="form-register__file" type="file" name="foto_finca">
                 </label>
             </div>
+
+            <div class="status-tienda">
+                {% if form.instance.activo %}
+                    <button type="button" form="form-estado_tienda" class="user-list__action-btn user-list__action-btn--disable btn-confirmar"
+                        data-form="form-estado_tienda"
+                        data-titulo="¿Deshabilitar Tienda?" 
+                        data-mensaje="Tu tienda dejará de ser visible y no podrás vender productos.">Deshabilitar Tienda
+                    </button>
+                {% else %}
+                    <button type="button" form="form-estado_tienda" class="user-list__action-btn user-list__action-btn--enable btn-confirmar"
+                    data-form="form-estado_tienda"
+                    data-titulo="¿Habilitar Tienda?" 
+                    data-mensaje="Tu tienda será visible nuevamente.">Habilitar Tienda
+                    </button>
+                {% endif %}
+            </div>  
         </div>
 
         <div class="producter-register__container">
             <div class="producter-register__farm-location">
                 <div class="producter-register__fields-farm">
-                    <label class="form-register__label">Nombre Finca
+                    <label class="form-register__label">Nombre Finca/Tienda
                         <input class="form-register__input" type="text" name="nombre_finca"
                             value="{{ form.instance.nombre_finca }}" required>
                     </label>
@@ -45,36 +72,42 @@
                         <input class="form-register__input" type="text" name="direccion"
                             value="{{ form.instance.direccion }}" required>
                     </label>
-
-                    {% comment %} <div class="form-register__group"> {% endcomment %}
                         <label class="form-register__label">Departamento
-                            <select id="departamento" name="departamento" class="form-register__input" required>
+                            <select id="departamento"
+                                name="departamento" 
+                                class="form-register__input" 
+                                required 
+                                data-guardado="{{ form.municipio.value|default:form.instance.municipio.id|default:'' }}">
                                 <option value="">Seleccione un departamento</option>
                                 {% for dpto in form.departamento.field.queryset %}
-                                <option value="{{ dpto.id }}" {% if dpto.id == form.departamento.value %} selected 
-                        {% endif %}>{{ dpto.nombre_Departamento }}</option>
+                                <option value="{{ dpto.id }}"
+                                {% if dpto.id|stringformat:"s" == form.departamento.value|stringformat:"s" %} selected {% endif %}>
+                                {{ dpto.nombre_Departamento }}</option>
                                 {% endfor %}
                             </select>
                         </label>
 
                         <label class="form-register__label">Municipio
-                            <select id="municipio" data-guardado="{{ form.instance.municipio.id }}" class="form-register__input" name="municipio" required>
+                            <select id="municipio" 
+                                data-guardado="{{ form.instance.municipio.id }}" 
+                                class="form-register__input" 
+                                name="municipio" 
+                                required
+                                data-guardado="{{ form.municipio.value|default:form.instance.municipio.id|default:'' }}">
                                 <option value="">Seleccione un municipio</option>
                                 {% for mcpio in form.municipio.field.queryset %}
-                                <option value="{{ mcpio.id }}" {% if mcpio.id == form.municipio.value %} selected {% endif %} >{{ mcpio.nombre_Municipio }}</option>
+                                <option value="{{ mcpio.id }}" 
+                                {% if mcpio.id|stringformat:"s" == form.municipio.value|stringformat:"s" %} selected {% endif %}>
+                                {{ mcpio.nombre_Municipio }}
                                 {% endfor %}
                             </select>
-                        </label>
-                        {% comment %}
-                    </div> {% endcomment %}
+                        </label>                
                     <label class="form-register__label">Vereda
                         <input class="form-register__input" type="text" name="vereda"
                             value="{{ form.instance.vereda }}" required>
                     </label>
                     <label class="form-register__label">Descripcion de tu tienda
-                        <textarea class="form-register__input" name="descripcion"
-                            value="{{ form.instance.descripcion }}" required>{{ form.instance.descripcion }}
-                        </textarea>
+                        <textarea class="form-register__input" name="descripcion" required>{{ form.instance.descripcion }}</textarea>
                     </label>
                 </div>
 
@@ -84,22 +117,27 @@
                 <div class="producter-register__location">
                     <p class="producter-register__label-farm">Ubicación en el mapa</p>
                     <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu finca</h3>
-                    <div class="producter-register__map" id="map">
+                    <div class="producter-register__map" >
                         <div id="map" style="height: 400px;"></div>
                             <input type="hidden" name="latitud" id="id_latitud" value="{{ form.instance.latitud }}">
                             <input type="hidden" name="longitud" id="id_longitud" value="{{ form.instance.longitud }}">
-                    
                     </div>
                 </div>
                 {% endlocalize %}
             </div>
         </div>
+        {% if not form.instance.activo %}
+            </fieldset>
+        {% endif %}
 
         <div class="producter-register__actions">
-            <!-- <button type="submit" class="buttons__action--secondary btn-cancel" onclick="window.location.href='javascript:history.back()'">Cancelar</button> -->
-            
+
             <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+                 {% if user.is_superuser %}            
                 data-url="{% url 'lista_usuarios' %}" 
+                {% else %}
+                data-url="{% url 'tienda_usuario' %}" 
+                {% endif %} 
                 data-titulo="¿Salir?" 
                 data-mensaje="Se perderán los cambios.">Cancelar
             </button>
@@ -110,17 +148,9 @@
                 data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
             </button>
 
-
-            
-            
-            
-            <!-- <button type="submit" class="buttons__action--primary create-producter-alert">Guardar Cambios</button> -->
-
-
-
-
         </div>
     </form>
+    
         
 </div>    
 

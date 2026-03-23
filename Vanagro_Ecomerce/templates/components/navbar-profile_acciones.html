@@ -13,14 +13,12 @@
 
     <nav class="navbar-vanagro">
       <ul class="navbar-vanagro__list">
-
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
           <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="navbar-vanagro__link">Regresar</a>
         </li>        
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
           <a href="{% url 'ver_carrito' %}" class="navbar-vanagro__link">Carrito</a>
-        </li>
-        
+        </li>        
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
           <form method="post" action="{% url 'logout' %}" id="logout-form" style="display: none;">
             {% csrf_token %}            
@@ -31,8 +29,6 @@
         </li>
       </ul>
     </nav>
-
-
 
     <div class="navbar-vanagro__icons">
       <div class="navbar-vanagro__icons--first">        
@@ -47,13 +43,16 @@
           <ion-icon class="navbar-vanagro__icons--back" name="arrow-back-outline"></ion-icon>
         </a>
       </div>
-
       <a href="{% url 'sesion_inicio' %}"> 
-        {% if request.user.usuario.fotografia %}
-      <img class="navbar-vanagro__profile-img" src="{{ request.user.usuario.fotografia.url }}" alt="Foto del productor" />
-        {% else %}
-      <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}"
-        alt="Foto del productor" />
+        {% if request.user.is_superuser %}
+          <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />
+        {% else %}      
+          {% if request.user.usuario.fotografia %}
+            <img class="navbar-vanagro__profile-img" src="{{ request.user.usuario.fotografia.url }}" alt="Foto del productor" />
+          {% else %}
+            <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}"
+          alt="Foto del productor" />
+          {% endif %}
         {% endif %}
       </a>  
       

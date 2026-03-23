@@ -12,7 +12,10 @@ urlpatterns = [
     path('editar/<int:pk>/', editar_usuario, name='editar_usuario'),
     path('editar/tienda/<int:pk>/', EditarProductor.as_view() , name='editar_tienda'),
     path('lista/usuarios', ListaUsuarios.as_view(), name='lista_usuarios'),
+    path('mensajes', ListaMensajes.as_view(), name='mensajes_admin'),
+    path('mensajes/respuesta', responder_mensaje, name='respuesta_msj'),
     path('usuario/activo/<int:pk>/', toggle_usuario, name='accion_usuario'),
+    path('tienda/activo/', toggle_productor, name='accion_tienda'),
     path('ajax/Municipios/', cargar_municipios, name='lista_municipios'),
     # path("editar/imagen/", cambiar_imagen_usuario, name="actualizar_img"),   
 ]

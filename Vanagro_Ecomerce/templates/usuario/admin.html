@@ -18,7 +18,7 @@
 
         <button class="profile__action">
         <a href="{% url 'lista_usuarios' %}?next={{ request.path }}">
-            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-icon name="people-outline"></ion-icon>
             <span>Listar usuarios</span>
         </a>
         </button>
@@ -26,9 +26,16 @@
         <button class="profile__action">
         <a href="{% url 'mis_productos' %}?next={{ request.path }}">
             <ion-icon name="calendar-outline"></ion-icon>
-            <span>Listar produtos</span>
+            <span>Listar productos</span>
         </a>
-        </button>        
+        </button> 
+
+        <button class="profile__action">
+        <a href="{% url 'mensajes_admin' %}?next={{ request.path }}">
+            <ion-icon name="list-outline"></ion-icon>
+            <span>Lista mensajes</span>
+        </a>
+        </button>     
     </div>
 
     <div class="profile__actions-img">

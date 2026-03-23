@@ -8,7 +8,7 @@
 <div class="producter-register">
     <p class="producter-register__title"><strong>Registrar Tienda</strong></p>
 
-    <form class="producter-register__form" method="POST" enctype="multipart/form-data">
+    <form id="form-register__tienda" class="producter-register__form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="producter-register__identification">
@@ -73,11 +73,28 @@
             </div>
         </div>
 
-        <div class="producter-register__actions">
+        <div class="buttons popup-buttons"> 
+            <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+                data-url="{% url 'sesion_inicio' %}" 
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancelar
+            </button>
+
+            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-register__tienda" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Confirmas el registro de los datos?">Crear Tienda
+            </button> 
+        </div>
+
+        <!-- <div class="producter-register__actions">
             <button type="submit" class="buttons__action--secondary btn-cancel"
                 onclick="location.href='javascript:history.back()'">Cancelar</button>
             <button type="submit" class="buttons__action--primary create-producter-alert">Crear Tienda</button>
-        </div>
+        </div> -->
+
+
+
     </form>
         
 </div>

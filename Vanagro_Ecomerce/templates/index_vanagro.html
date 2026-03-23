@@ -30,7 +30,11 @@
 <body>
   
     {% block navbar %}
-        {% include 'components/navbar_vanagro.html' %}
+        {% if user.is_authenticated %}
+            {% include 'components/navbar-simple_inicio.html' %} 
+        {% else %}
+            {% include 'components/navbar_vanagro.html' %}
+        {% endif %}
     {% endblock navbar %}
     
     <div class="contenido_general">
@@ -43,7 +47,7 @@
     {% include 'components/popup-django.html' %}  
 
 </body>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" refer></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" refer></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </html>

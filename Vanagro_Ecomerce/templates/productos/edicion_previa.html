@@ -29,25 +29,22 @@
         {% csrf_token %}
         <button type="submit" class="buttons__action--secondary">Cancelar</button>
     </form>
+
     <a href="'{% url 'volver_crear' producto.id %}'"></a>
+
     <button type="button" class="buttons__action--terciary">Volver a editar</button>
 
-    <form method="POST" action="{% url 'guardar_producto' producto.id %}">
+    <form method="POST"  id="form-product__create" action="{% url 'guardar_producto' producto.id %}">
         {% csrf_token %}
-        <button type="submit" class="buttons__action--primary create-product">Guardar cambios</button>
+        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-product__create" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Deseas guardar el producto?">Guardar cambios
+        </button>  
+
+        <!-- <button type="submit" class="buttons__action--primary create-product">Guardar cambios</button> -->
     </form>
 </div>
 
-
-<div class="popup" id="popupMessage">
-    <div class="popup__header">
-        <i class="fa-solid fa-check popup__icon"></i>
-    </div>
-    <div class="popup__body">
-        <h3 class="popup__title">¡PRODUCTO AÑADIDO!</h3>
-        <p class="popup__message">¡El producto se añadió al carrito exitosamente!</p>
-        <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-    </div>
-</div>
 
 {% endblock producto %}

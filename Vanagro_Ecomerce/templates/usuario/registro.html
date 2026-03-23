@@ -2,10 +2,9 @@
 
 {% load static %}
 
-
 {% block navbar %}
 
-{% include 'components/navbar-simple_inicio.html' %}
+    {% include 'components/navbar-simple_inicio.html' %}
 
 {% endblock navbar %}
 
@@ -16,17 +15,14 @@
 
 {% block login %}
 
-
 <div class="form-register__head">
     <p><strong>Registrar Usuario</strong></p>
 </div>
 
 <section class="form-register__block">
     <div class="form-register__block--form">
-
         <form method="POST" class="form-register__form" id="form-register__user"  enctype="multipart/form-data">
             {% csrf_token %}
-
             <div class="form-register__group">
                 <label class="form-register__label">Nombres
                     <input class="form-register__input" type="text" name="first_name"  value="{{ user_form.first_name.value|default_if_none:'' }}" placeholder="Ingrese su nombre(s)"
@@ -49,9 +45,9 @@
                 <label class="form-register__label">Tipo de documento
                     <select class="form-register__input" name="tipo_identificacion" id="tipo_id" required>
                         <option value="">Seleccione un tipo de documento</option>
-                        {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
+                            {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
                         <option value="{{ tipo.id }}" {% if tipo.id == perfil_form.tipo_identificacion.value %} selected {% endif %} >{{ tipo.tipo_identificacion }}</option>
-                        {% endfor %}
+                            {% endfor %}
                     </select>
                 </label>
 
@@ -70,10 +66,10 @@
                 <label class="form-register__label">Departamento
                     <select id="departamento" name="departamento" class="form-register__input" required>
                         <option value="">Seleccione un departamento</option>
-                        {% for dpto in perfil_form.departamento.field.queryset %}
+                            {% for dpto in perfil_form.departamento.field.queryset %}
                         <option value="{{ dpto.id }}" {% if dpto.id == perfil_form.departamento.value %} selected 
-                {% endif %}>{{ dpto.nombre_Departamento }}</option>
-                        {% endfor %}
+                            {% endif %}>{{ dpto.nombre_Departamento }}</option>
+                            {% endfor %}
                     </select>
                 </label>
 
@@ -92,12 +88,10 @@
                 </label>
             </div>
 
-            <div class="form-register__group">
-                
+            <div class="form-register__group">                
                 <label class="form-register__label">Correo Electrónico
                     <input class="form-register__input" type="email" name="email" value="{{ user_form.email.value|default_if_none:'' }}"
-                        placeholder="Ingrese su correo electrónico" required>
-                    
+                        placeholder="Ingrese su correo electrónico" required>                    
                 </label>
             
                 <label class="form-register__label">Teléfono
@@ -126,28 +120,21 @@
                         placeholder="Confirme su contraseña" required>
                 </label>              
             </div>
+        </div>
 
-    </div>
+        <div class="buttons popup-buttons"> 
+            <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+                data-url="{% url 'inicio_vista' %}" 
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancelar
+            </button>
 
-    <div class="buttons popup-buttons"> 
-        <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
-            data-url="{% url 'inicio_vista' %}" 
-            data-titulo="¿Salir?" 
-            data-mensaje="Se perderán los cambios.">Cancelar
-        </button>
-
-        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-            data-form="form-register__user" 
-            data-titulo="💾 Guardar" 
-            data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
-        </button>       
-
-        
-    </div>
+            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-register__user" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
+            </button> 
+        </div>
     </form>
-    
-
 </section>
-
-
 {% endblock login %}

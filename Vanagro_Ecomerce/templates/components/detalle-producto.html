@@ -32,17 +32,20 @@
             <br>
             <strong>Ubicación: </strong>{{ producto.productor.departamento }}, {{ producto.productor.municipio }}
             <br>
-            <strong>Nombre de la finca: </strong>{{ producto.productor.nombre_finca }}
+            <strong>Nombre de la finca/Tienda: </strong>{{ producto.productor.nombre_finca }}
             <br>
             <strong>Tienda creada desde: </strong>{{ producto.productor.fecha_creacion|date:"j \d\e F \d\e Y" }}
             <br>
-            {% comment %} <strong>Método de envío:</strong> Entrega a domicilio en 24-48 horas dentro del área
-            metropolitana o
-            retiro en punto de venta.
+            {% if producto.fecha_elaboracion %}
+            <strong>Fecha de elaboracion: </strong>{{ producto.fecha_elaboracion|date:"j \d\e F \d\e Y" }}
             <br>
-            <strong>Métodos de pago:</strong> Aceptamos pagos en efectivo, transferencia bancaria y tarjetas de
-            crédito/débito.
-            <br><br> {% endcomment %}
+            {% endif %}
+            {% if producto.fecha_vencimiento %}
+            <strong>Fecha de vencimiento: </strong>{{ producto.fecha_vencimiento|date:"j \d\e F \d\e Y" }}
+            <br>
+            {% endif %}
+            <br>
+            
         </p>
 
 

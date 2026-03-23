@@ -95,9 +95,18 @@
 
 		<!-- Botones -->
 		<div class="buttons">
-			<a href="{% url 'tienda_usuario' %}">
+			<button type="button" name="accion" value="cancelar" class="buttons__action--secondary btn-cancel btn-confirmar"
+                data-url="{% url 'tienda_usuario' %}" 
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancelar
+            </button>
+
+			<!-- <button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
+				previa</button>
+
+            <a href="{% url 'tienda_usuario' %}">
 				<button class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>
-			</a>
+			</a> -->
 			<button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
 				previa</button>
 		</div>

@@ -1,6 +1,5 @@
 # from pyexpat.errors import messages
 from django.contrib import messages
-
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .forms import Form_producto
@@ -96,6 +95,10 @@ def editar_producto(request, pk):
     print(request.POST)
     print(request.POST.get('accion'))
 
+    if not request.user.productor.activo:
+        messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
+        return redirect('sesion_inicio')
+
     if request.method == 'POST':
         form = Form_producto(request.POST, request.FILES, instance=producto)
         if form.is_valid():
@@ -137,10 +140,6 @@ def editar_producto(request, pk):
 
     return render(request, 'productos/crear_producto.html', {'form': form})
 
-
-
-
-
 # Listar producto
 
 class ListaProductos(LoginRequiredMixin, ListView):
@@ -172,12 +171,17 @@ class ListaProductos(LoginRequiredMixin, ListView):
             return Producto.objects.all()
         else:
             return Producto.objects.filter(productor=self.request.user.productor)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_superuser:
+            context['titulo'] = "Lista general de productos"
+        else:
+            context['titulo'] = "Mis productos"
+
+        return context
         
-
-
-
-
-
         
 #el usuario debe estar autenticado para crear el producto
 @login_required
@@ -198,6 +202,9 @@ def crear_producto(request):
     if next_url:
         request.session['volver_a'] = next_url
 
+    if not request.user.productor.activo:
+        messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
+        return redirect('sesion_inicio')
 
     #procesar el formulario (Si se envía)
     if request.method == 'POST':
@@ -240,11 +247,8 @@ def crear_producto(request):
         else:
             print("FORMULARIO NO VALIDO")
             messages.error(request, form.errors)
-            print(form.errors)
+            print(form.errors)           
             
-            # Imprime los errores del formulario en la consola para depuración
-            # error_message = 'Error al crear el producto. Por favor, revise los datos ingresados.'
-            # messages.error(request, error_message)
 
     #si el método es GET muestra el formulario vacío
     else:
@@ -341,12 +345,24 @@ class EditarProducto(LoginRequiredMixin, View):
 
     template_name = "productos/editar_producto.html"
      
-    def get(self, request, pk):
-        producto = get_object_or_404(
+    def get_producto(self, request, pk):
+        if request.user.is_superuser:
+            return get_object_or_404(Producto, pk=pk)
+
+        return get_object_or_404(
             Producto,
             pk=pk,
             productor=request.user.productor
         )
+    
+    def get(self, request, pk):
+
+        producto = self.get_producto(request, pk)
+
+        if not request.user.is_superuser:
+            if not request.user.productor.activo:
+                messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
+                return redirect('sesion_inicio')
 
         form = Form_producto(instance=producto)
 
@@ -358,11 +374,12 @@ class EditarProducto(LoginRequiredMixin, View):
 
     def post(self, request, pk):
 
-        producto = get_object_or_404(
-            Producto,
-            pk=pk,
-            productor=request.user.productor
-        )
+        producto = self.get_producto(request, pk)
+        # producto = get_object_or_404(
+        #     Producto,
+        #     pk=pk,
+        #     productor=request.user.productor
+        # )
 
         form = Form_producto(
             request.POST,
@@ -390,7 +407,10 @@ class EditarProducto(LoginRequiredMixin, View):
 
             if accion == "guardar":
                 producto = form.save(commit=False)
-                producto.productor = request.user.productor
+
+                if not request.user.is_superuser:
+                    producto.productor = request.user.productor
+                # producto.productor = request.user.productor
                 producto.estado_producto = "publicado"
                 producto.activo = True
                 producto.save()

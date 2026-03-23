@@ -89,6 +89,11 @@
     font-size: var(--fs-xs);
 }
 
+input[readonly] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
 
 /* ---- RESPONSIVO ---- */
 @media (width: 768px) {

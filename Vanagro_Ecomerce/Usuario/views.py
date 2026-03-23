@@ -1,33 +1,30 @@
 from django.http import JsonResponse
 from django.contrib import messages
-from django.shortcuts import render
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-# from django.http import HttpResponse
-# Ruta para obtener las vistas genéricas de django para el CRUD
 
+# Ruta para obtener las vistas genéricas de django para el CRUD
 from django.views.generic import TemplateView, View
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
+# from django.views.generic.detail import DetailView
 # Esta ruta importa las vistas genéricas para crear, actualizar y eliminar elementos del modelo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 # Ruta para manejar la autenticación y redireccionamiento
 from django.urls import reverse_lazy
 # Ruta para manejar el modelo de usuarios y login
-from django.contrib.auth.views import LoginView
+# from django.contrib.auth.views import LoginView
 # Ruta para manejar la mezcla de autenticación en las vistas
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+# from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
-
 from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor, Form_Actualizar_User
-# Importación del modelo Tarea creado
+# Importación del modelo 
 from .models import *
-# from .form_home import *
-from django.contrib import messages
+# Importas el modelo desde la carpeta 'home'
+from Home.models import Mensaje, EstadoMensaje
 from django.db import transaction
+from django.utils import timezone
 
 # Create your views here.
 
@@ -37,9 +34,18 @@ class PerfilUsuario(LoginRequiredMixin, DeleteView):
     context_object_name = 'perfil'
 
     def dispatch(self, request, *args, **kwargs):
+
         # Si es superusuario, lo dejamos entrar pero SIN perfil
         if request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs)
+
+        # if not hasattr(request.user, 'productor'):
+        #     messages.error(request, "Debes registrar una tienda primero.")
+        #     return redirect('registro_productor')
+
+        # if not request.user.productor.activo:
+        #     messages.error(request, "Tu tienda está deshabilitada.")
+        #     return redirect('sesion_inicio')        
 
         # Si NO tiene perfil, mostramos mensaje y redirigimos
         if not hasattr(request.user, 'usuario'):
@@ -79,6 +85,7 @@ class Tienda(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         
         context['titulo']= 'Tienda de Productos'
+        context['es_productor'] = hasattr(self.request.user, 'productor')
         
         return context
     
@@ -225,8 +232,9 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
 
             context['titulo']= 'Registro de tienda'
             context['es_productor'] = False
-            context['form'] = Formulario_Productor()
-            context['form'].fields['municipio'].queryset = Municipio.objects.all()
+            # context['form'] = Formulario_Productor()
+            # context['form'].fields['municipio'].queryset = Municipio.objects.all()
+            context['form'] = form
         
         return context
     
@@ -360,8 +368,7 @@ class EditarProductor(LoginRequiredMixin, UpdateView):
 
 
 
-class ListaUsuarios(LoginRequiredMixin, ListView):
-    
+class ListaUsuarios(LoginRequiredMixin, ListView):    
     model = CreacionUsuario
     template_name = "usuario/listado_usuarios.html"
     context_object_name = "usuarios"     
@@ -383,6 +390,16 @@ class ListaUsuarios(LoginRequiredMixin, ListView):
             u.es_productor = hasattr(u.user, 'productor')  # CLAVE
 
         return usuarios
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_superuser:
+            context['titulo'] = "Lista general de usuarios"
+        # else:
+        #     context['titulo'] = "Mis productos"
+
+        return context
 
 
 
@@ -402,8 +419,6 @@ def toggle_usuario(request, pk):
         tipo = request.POST.get('tipo') # verifica que tipo de dato esta recibiendo o a quien se debe modificar
 
         usuario = get_object_or_404(User, pk=pk)
-
-
         
         if usuario == request.user:
             return redirect('lista_usuarios')        
@@ -426,3 +441,75 @@ def toggle_usuario(request, pk):
         return redirect(request.POST.get('next', 'lista_usuarios'))
     
     return redirect('lista_usuarios')
+
+#  Habilitar productor 
+@login_required
+def toggle_productor(request):
+    if request.method == "POST":
+        if not hasattr(request.user, 'productor'):
+            messages.error(request, "No tienes tienda.")
+            return redirect('tienda_usuario')
+
+        productor = request.user.productor
+        productor.activo = not productor.activo
+        productor.save()
+
+        if not productor.activo:
+            messages.warning(request, "Tu tienda ha sido deshabilitada.")
+            return redirect('inicio_vista')
+                
+    return redirect(request.POST.get('next', 'tienda_usuario'))
+
+
+class ListaMensajes(LoginRequiredMixin, ListView):    
+    model = Mensaje
+    template_name = "usuario/contactar.html"
+    context_object_name = "mensajes"     
+        
+    # Accion para volver a la pagina de donde se llamo
+    def dispatch(self, request, *args, **kwargs):
+        # SOLO ADMIN
+        if not request.user.is_superuser:
+            messages.error(request, "No tienes permisos para acceder a esta sección.")
+            return redirect('sesion_inicio')
+
+        next_url = request.GET.get('next')
+        if next_url:
+            request.session['volver_a'] = next_url
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self): 
+        return Mensaje.objects.select_related('user').order_by('estado', 'fecha_envio')
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Mensajes de contacto"
+        return context
+    
+
+    
+
+@login_required
+def responder_mensaje(request):
+
+    if not request.user.is_superuser:
+        messages.error(request, "No tienes permisos.")
+        return redirect('sesion_inicio')
+
+    if request.method == "POST":
+        mensaje_id = request.POST.get("mensaje_id")
+        respuesta = request.POST.get("respuesta")
+
+        mensaje = get_object_or_404(Mensaje, id=mensaje_id)
+
+        mensaje.respuesta = respuesta
+        mensaje.estado = EstadoMensaje.RESUELTO
+        mensaje.atendido_por = request.user
+        mensaje.fecha_respuesta = timezone.now()
+        mensaje.save()
+
+        messages.success(request, "Mensaje resuelto correctamente.")
+
+    return redirect('mensajes_admin')
+    

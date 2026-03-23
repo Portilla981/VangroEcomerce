@@ -28,7 +28,7 @@
                 </li>
 
                 <li class="navbar-vanagro__item">
-                    <a href="{% url 'contactenos'%}" class="navbar-vanagro__link">Contacto</a>
+                    <a href="{% url 'contactenos'%}?next={{ request.path }}" class="navbar-vanagro__link">Contacto</a>
                 </li>
                 <li class="navbar-vanagro__item navbar-vanagro__item--cart">
                     <a href="{% url 'inicio_vista' %}" class="navbar-vanagro__link">Carrito</a>
@@ -36,8 +36,8 @@
             </ul>
         </nav>
 
-        <div class="navbar-vanagro__icons">
 
+        <div class="navbar-vanagro__icons">
             <div class="navbar-vanagro__icons--first">
                 <a href="{% url 'inicio_vista' %}">
                     <ion-icon class="navbar-vanagro__icons--cart" name="cart-outline"></ion-icon>
@@ -49,6 +49,6 @@
                     <ion-icon class="navbar-vanagro__icons--login" name="home-outline"></ion-icon>
                 </a>
             </div>
-        </div> <!--navbar-vanagro__icons-->
-    </div> <!--navbar-vanagro__container-->
+        </div> 
+    </div> 
 </header>
