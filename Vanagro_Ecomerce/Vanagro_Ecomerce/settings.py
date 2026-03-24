@@ -56,6 +56,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Autenticación de ingreso principal
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Mantiene el login por defecto
+    'Usuario.backends.EmailOrUsernameBackend',     # Funcion de autenticación según el ingreso principal
+]
+
+
 ROOT_URLCONF = 'Vanagro_Ecomerce.urls'
 
 TEMPLATES = [

@@ -19,6 +19,7 @@ def fomato_texto(texto):
 
 
 class UserForm(forms.ModelForm):
+    email = forms.EmailField(required=True, label="Correo Electrónico")
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
 
@@ -42,7 +43,15 @@ class UserForm(forms.ModelForm):
         if apellido:
             return fomato_texto(apellido)
         return apellido
-
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            email = email.lower() # Normalizamos a minúsculas
+            # Buscamos si ya existe alguien con ese correo (excluyendo al propio usuario si es edición)
+            if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+                raise forms.ValidationError("Este correo electrónico ya está registrado.")
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
