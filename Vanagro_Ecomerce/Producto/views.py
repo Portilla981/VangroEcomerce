@@ -33,6 +33,13 @@ def ver_productos(request):
 
     # if next_url:
     #     request.session['volver_a'] = next_url
+
+    next_url = request.GET.get('next')
+
+    if next_url:
+        request.session['volver_a'] = next_url
+
+    
     
     print("Productos encontrados:", productos.count())
 
@@ -50,11 +57,11 @@ def detalle_producto(request, pk):
         activo=True,
         stock__gt=0
     )
+    
+    next_url = request.GET.get('next')
 
-    # next_url = request.GET.get('next')
-
-    # if next_url:
-    #     request.session['volver_a'] = next_url
+    if next_url:
+        request.session['volver_a'] = next_url
     
     return render(request, 'productos/producto_detallado.html', {
         'producto': producto,

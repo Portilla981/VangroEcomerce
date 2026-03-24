@@ -1,8 +1,6 @@
 from django.db import models
 from django.conf import settings
 from Producto.models import Producto
-from django.utils import timezone
-
 # Create your models here.
 
 #modelo ItemCarrito

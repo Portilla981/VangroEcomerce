@@ -25,9 +25,14 @@
 </div>
 
 <div class="buttons">
-    <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
+    <form method="POST" id="form-cancel_preview" action="{% url 'cancelar_producto' producto.id %}">
         {% csrf_token %}
-        <button type="submit" class="buttons__action--secondary">Cancelar</button>
+        <button type="button" class="buttons__action--primary btn-cancel btn-confirmar" 
+                data-form="form-cancel_preview" 
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancela y salir
+        </button> 
+        <!-- <button type="submit" class="buttons__action--secondary">Cancelar</button> -->
     </form>
 
     <a href="'{% url 'volver_crear' producto.id %}'"></a>

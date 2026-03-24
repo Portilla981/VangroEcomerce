@@ -1,0 +1,73 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block navbar %}
+    {% include 'components/navbar-simple_inicio.html' %} 
+
+{% endblock navbar %}
+
+{% block script %}
+  
+{% endblock script %}
+
+{% block login %}
+<div class="user-list">
+    <h2 class="user-list__title">Gestión de Mis Ventas</h2>
+    <table class="user-list__table">
+        <thead class="user-list__table-head">
+            <tr class="user-list__row user-list__row--head">
+                <th class="user-list__cell">Id compra</th>
+                <th class="user-list__cell">Comprador</th>
+                <th class="user-list__cell">Producto</th>
+                <th class="user-list__cell">Cantidad</th>
+                <th class="user-list__cell">Total Item</th>
+                <th class="user-list__cell">Estado Pago</th>
+                <th class="user-list__cell">Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="user-list__table-body">
+            {% for detalle in ventas %}
+            <tr class="user-list__row">
+                <td class="user-list__cell" data-label="ID"><small>ID Pedido: #{{ detalle.pedido.id }}</small></td>
+                <td class="user-list__cell" data-label="ID">
+                    {{ detalle.pedido.usuario.first_name }} {{ detalle.pedido.usuario.last_name }}<br>
+                    
+                </td>
+                <td class="user-list__cell" data-label="ID">{{ detalle.producto.nombre_producto }}</td>
+                <td class="user-list__cell" data-label="ID">{{ detalle.cantidad }}</td>
+                <td class="user-list__cell" data-label="ID">$ {{ detalle.subtotal|floatformat:0|intcomma }}</td>
+                <td class="user-list__cell" data-label="ID">
+                    {% if detalle.pedido.estado == 'Pagado' %}
+                        <span class="badge bg-success">Pago Verificado</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">{{ detalle.pedido.estado }}</span>
+                    {% endif %}
+                </td>
+                <td class="user-list__cell" data-label="ID">
+                    {% if detalle.pedido.estado == 'Pagado' %}
+                        {% if not detalle.despachado %}
+                        <button class="user-list__action-btn user-list__action-btn--disable">
+                            <a href="{% url 'despachar' detalle.id %}?next={{ request.get_full_path }}" class="btn btn-primary btn-sm">
+                                Confirmar Despacho
+                            </a>
+                        </button>
+                        {% else %}
+                            <span class="badge bg-info text-dark">Producto Enviado</span>
+                        {% endif %}                        
+                    {% else %}
+                        <button class="btn btn-secondary btn-sm" disabled>Esperando Pago</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr class="user-list__row">
+                <td colspan="6" class="user-list__cell" data-label="ID">No tienes ventas registradas aún.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>   
+
+{% endblock login %}

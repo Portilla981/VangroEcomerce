@@ -1,0 +1,127 @@
+{% extends "usuario/login.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block navbar %}
+    {% include 'components/navbar-simple_inicio.html' %} 
+
+{% endblock navbar %}
+
+{% block script %}
+<script src="{% static 'js/alertas/modal_informe.js' %}" defer></script>
+  
+{% endblock script %}
+
+{% block login %}
+<div class="user-list">
+    <h2 class="user-list__title">Informe administrativo/Ventas</h2>
+    <!-- Formulario de Filtro -->
+    <form method="GET" class="form_ventas-filter">
+        <div>
+            <input type="date" name="fecha_inicio" value="{{ fecha_inicio }}" class="form-control">
+        </div>
+        <div >
+            <input type="date" name="fecha_fin" value="{{ fecha_fin }}" class="form-control">
+        </div>
+        <div >
+            <button type="submit" class="btn btn-primary">Filtrar Informe</button>
+            <button type="button" >
+            <a href="{% url 'informe_ventas' %}" class="btn btn-secondary">Limpiar</a>
+            </button>
+        </div>
+    </form>
+
+
+    <table class="user-list__table">
+        <thead class="user-list__table-head">
+            <tr class="user-list__row user-list__row--head">
+                <th class="user-list__cell">Fecha</th>
+                <th class="user-list__cell">Producto</th>
+                <th class="user-list__cell">Cantidad</th>
+                <th class="user-list__cell">Valor und</th>
+                <th class="user-list__cell">Subtotal</th>                
+            </tr>
+        </thead>
+        <tbody class="user-list__table-body">
+            {% for venta in ventas %}
+            <tr class="user-list__row">
+                <td class="user-list__cell" data-label="ID">{{ venta.pedido.fecha|date:"d/m/Y" }}</td>
+                <td class="user-list__cell" data-label="ID">{{ venta.producto.nombre_producto}} </td>
+                <td class="user-list__cell" data-label="ID">{{ venta.cantidad }}</td>
+                <td class="user-list__cell" data-label="ID">{{ venta.precio|floatformat:0|intcomma }}</td>
+                <td class="user-list__cell" data-label="ID">$ {{ venta.subtotal|floatformat:0|intcomma }}</td>
+            </tr>
+            {% empty %}
+            <tr class="user-list__row">
+                <td colspan="6" class="user-list__cell" data-label="ID">No tienes ventas registradas aún.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="user-list__row">
+                <td class="user-list__cell" colspan="4" ><strong>TOTAL GENERAL:</strong></td>
+                <td class="user-list__cell"><strong>${{ total_general }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    <button type="button" class="btn-informe" onclick="abrirModal()">
+        Visualizar Resumen Estilo PDF
+    </button>
+
+</div>
+
+<div id="modalResumen" class="modal-fondo">
+    <div class="modal-contenido">
+        <div class="modal-cabecera">
+            <span class="cerrar" onclick="cerrarModal()">&times;</span>
+            <h2>Vista Previa del Reporte</h2>
+        </div>
+        
+        <div class="modal-cuerpo">
+            <div id="areaImpresion" class="">
+                <div class="encabezado-pdf">
+                    <img src="{% static 'img/interfaz_vanagro/vanagro_logo2.jpeg' %}" class="logo-tienda" alt="Logo">
+                    <div class="datos-tienda">
+                        <h1>RESUMEN DE VENTAS</h1>
+                        <p>Productor: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                        <p>Periodo: {{ fecha_inicio|default:"Todos" }} / {{ fecha_fin|default:"Hoy" }}</p>
+                    </div>
+                </div>
+
+                <table class="tabla-pdf">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cant. Total</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in resumen %}
+                        <tr>
+                            <td>{{ item.producto__nombre_producto }}</td>
+                            <td>{{ item.cantidad_total }}</td>
+                            <td>${{ item.subtotal_acumulado }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="total-pdf">
+                    <p><strong>TOTAL RECAUDADO: ${{ total_general }}</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-pie">
+            <button onclick="cerrarModal()" class="btn-secundario">Cerrar</button>
+            <button onclick="window.print()" class="btn-primario">Imprimir / Guardar PDF</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock login %}

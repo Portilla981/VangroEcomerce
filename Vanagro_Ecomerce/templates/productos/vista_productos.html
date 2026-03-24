@@ -17,25 +17,14 @@
 
 {% block producto %}
 <div class="section-catalogo">
-
     <div class="search-bar">
         <h2>Buscador</h2>
-
         <select id="filtro-categoria">
-
             <option value="">Todas las categorías</option>
-
             {% for valor, nombre in categorias %}
-
-            <option value="{{ valor }}">
-                {{ nombre }}
-            </option>
-
+            <option value="{{ valor }}">{{ nombre }}</option>
             {% endfor %}
-
         </select>
-
-
         <input type="text" id="buscador-productos" class="form-control" placeholder="Buscar producto...">
     </div>
 

@@ -1,5 +1,4 @@
 <!-- detalle del pedido del usuario -->
-
 <!-- Herencia de la plantilla base -->
 {% extends 'carrito/ver_carrito.html' %}
 {% load humanize %}
@@ -10,11 +9,9 @@
 <div class="container-pedidos">
     <!-- card -->
     <div class="card-compra detalle-card">
-
         <div class="pedido-titulo_tabla">
             <!-- Muestra el numero del pedido -->
             <h3>Detalle del Pedido #{{ pedido.id }}</h3>
-
             <span class="">
                 <!-- se muestra el estado del pedido -->
                 {{ pedido.estado }}
@@ -22,8 +19,6 @@
         </div>
         <!-- muestra la fecha del pedido. en formato dia/mes/año con hora y minuto -->
         <p><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
-        
-
         <h5 class="pedido-subtitulo">Productos</h5>
         <div class="pedidos-tabla">
         <table class="user-list__table">
@@ -33,9 +28,9 @@
                     <th class="user-list__cell">Cantidad</th>
                     <th class="user-list__cell">Precio unitario</th>
                     <th class="user-list__cell">Subtotal</th>
+                    <th class="user-list__cell">Estado</th>
                 </tr>
             </thead>
-
             <tbody class="user-list__table-body">
                 <!-- ciclo para recorrer los productos del pedido -->
                 {% for detalle in pedido.detalles.all %}
@@ -43,9 +38,22 @@
                         <!-- se muestra el detalle de cada producto: nombre, cantidad, precio, total -->
                         <td class="user-list__cell">{{ detalle.producto.nombre_producto }}</td>
                         <td class="user-list__cell">{{ detalle.cantidad }}</td>
-                        <td class="user-list__cell">${{ detalle.precio|floatformat:0|intcomma }}</td>
+                        <td class="user-list__cell">$ {{ detalle.precio|floatformat:0|intcomma }}</td>
                         <!-- subtotal -> llama al metodo del modelo -->
-                        <td class="user-list__cell">${{ detalle.subtotal|floatformat:0|intcomma }}</td>
+                        <td class="user-list__cell">$ {{ detalle.subtotal|floatformat:0|intcomma }}</td>
+                        <td class="user-list__cell">
+                            {% if detalle.despachado %}
+                                <!-- Si es True, mostramos que ya se envió -->
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check"></i> Producto Despachado
+                                </span>
+                            {% else %}
+                                <!-- Si es False, indicamos que está pendiente -->
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-clock"></i> Pendiente de Envío
+                                </span>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

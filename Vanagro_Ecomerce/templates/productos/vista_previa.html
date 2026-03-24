@@ -27,9 +27,14 @@
 {% if modo == 'crear' %}
 
 <div class="buttons">
-    <form method="POST" action="{% url 'cancelar_producto' producto.id %}">
+    <form method="POST" id="form-cancel_preview1" action="{% url 'cancelar_producto' producto.id %}">
         {% csrf_token %}
-        <button type="submit" class="buttons__action--secondary">Cancelar</button>
+        <!-- <button type="submit" class="buttons__action--secondary">Cancelar</button> -->
+        <button type="button" class="buttons__action--secundary btn-cancel btn-confirmar" 
+                data-form="form-cancel_preview1" 
+                data-titulo="¿Salir?" 
+                data-mensaje="Se perderán los cambios.">Cancela y salir
+        </button> 
     </form>
 
     <a href="{% url 'volver_crear' producto.id %}">
@@ -37,40 +42,27 @@
     </a>
 
 
-    <form method="POST" action="{% url 'guardar_producto' producto.id %}">
+    <form method="POST" id="form-save_product" action="{% url 'guardar_producto' producto.id %}">
         {% csrf_token %}
-        <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button>
+        <!-- <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button> -->
+        <button type="button" name="accion" value="guardar" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-save_product" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Confirmas el registro del producto?">Guardar y publicar producto
+        </button> 
     </form>
 </div>
-
-
-{% comment %}
-<div class="buttons">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <a href="{% url 'mis_productos' %}">
-            <button type="button" class="buttons__action--secondary">Cancelar</button>
-        </a>
-
-        <a href="javascript:history.back()">
-            <button type="submit" class="buttons__action--terciary">Volver Editar</button>
-        </a>
-
-        <button type="submit" name="accion" value="guardar" class="buttons__action--primary create-product">Guardar y
-            publicar producto</button>
-
-    </form>
-</div>
-{% endcomment %}
 
 {% elif modo == 'editar' %}
 
 <div class="buttons">
-
-    <a href="{% url 'mis_productos' %}">
-        <button class="buttons__action--secondary">Cancelar</button>
-    </a>
+    <div class="buttons popup-buttons"> 
+        <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+            data-url="{% url 'mis_productos' %}" 
+            data-titulo="¿Salir?" 
+            data-mensaje="Se perderán los cambios.">Cancelar y salir
+        </button>
+    </div>
 
     <a href="javascript:history.back()">
         <button type="submit" class="buttons__action--terciary">Volver Editar</button>
@@ -79,16 +71,5 @@
 </div>
 {% endif %}
 
-
-<div class="popup" id="popupMessage">
-    <div class="popup__header">
-        <i class="fa-solid fa-check popup__icon"></i>
-    </div>
-    <div class="popup__body">
-        <h3 class="popup__title">¡PRODUCTO AÑADIDO!</h3>
-        <p class="popup__message">¡El producto se añadió al carrito exitosamente!</p>
-        <p class="popup__time"><strong>Por favor espera un momento...</strong></p>
-    </div>
-</div>
 
 {% endblock producto %}

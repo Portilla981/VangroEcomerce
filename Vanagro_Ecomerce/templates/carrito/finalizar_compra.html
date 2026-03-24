@@ -104,13 +104,11 @@
                             </div>
                             
                         {% endfor %}
-
                         <!-- total del carrito -->
                         <div class="card-compra_item">
                             <strong>Total:</strong>
                             <strong class="text-compra">${{ total|floatformat:0|intcomma }}</strong>
                         </div>
-
                         <!-- botón finalizar y pagar -->
                         <!-- Una vez se da clic va a la vista procesar_pago -->
                         <div class="compra-button">
@@ -119,20 +117,12 @@
                                 data-titulo="Realizar pago" 
                                 data-mensaje="¿Desea finalizar la compra?"> Finalizar y Pagar
                             </button>
-                          
                         </div>
-
                     </div>
                 </div>
-                </div>
-
-
-            
-
+            </div>      
         </div>
-
     </form>
-
 </div>
 
 {% endblock carrito %}

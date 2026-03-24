@@ -2,11 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Pedido
 
-
 # Create your views here.
-# ---------------------------------------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------------------------------------
-
 #Vista para pedido exitoso
 #el usuario debe estar autenticado para crear el producto
 @login_required
@@ -18,10 +14,6 @@ def pedido_exitoso(request, pedido_id):
     #carga el HTML pedido_exitoso
     return render(request, 'pedidos/pedido_exitoso.html', {'pedido': pedido, 'titulo': 'Exito en Pedido'})
 
-
-# ---------------------------------------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------------------------------------
-
 #vista para los pedidos del usuario
 #el usuario debe estar autenticado para crear el producto
 @login_required
@@ -31,9 +23,6 @@ def mis_pedidos(request):
     #carga el HTML de mis_pedidos
     return render(request, 'pedidos/mis_pedidos.html', {'pedidos': pedidos, 'titulo': 'Mis Pedidos'})
 
-
-# ---------------------------------------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------------------------------------
 
 #Vista para el detalle del pedido
 #el usuario debe estar autenticado para crear el producto

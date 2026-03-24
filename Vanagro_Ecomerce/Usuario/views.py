@@ -6,25 +6,21 @@ from django.contrib.auth.decorators import login_required
 # Ruta para obtener las vistas genéricas de django para el CRUD
 from django.views.generic import TemplateView, View
 from django.views.generic.list import ListView
-# from django.views.generic.detail import DetailView
-# Esta ruta importa las vistas genéricas para crear, actualizar y eliminar elementos del modelo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-# Ruta para manejar la autenticación y redireccionamiento
 from django.urls import reverse_lazy
-# Ruta para manejar el modelo de usuarios y login
-# from django.contrib.auth.views import LoginView
-# Ruta para manejar la mezcla de autenticación en las vistas
 from django.contrib.auth.mixins import LoginRequiredMixin 
-# from django.contrib.auth.forms import UserCreationForm
-# from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
 from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor, Form_Actualizar_User
 # Importación del modelo 
 from .models import *
 # Importas el modelo desde la carpeta 'home'
 from Home.models import Mensaje, EstadoMensaje
+from Pedido.models import DetallePedido, Pedido
 from django.db import transaction
 from django.utils import timezone
+from django.db.models import Sum, F
+from datetime import datetime
+from django.utils.timezone import make_aware
 
 # Create your views here.
 
@@ -513,3 +509,107 @@ def responder_mensaje(request):
 
     return redirect('mensajes_admin')
     
+
+
+@login_required
+def panel_ventas_productor(request):
+
+    next_url = request.GET.get('next')
+
+    if next_url:
+        request.session['volver_a'] = next_url
+
+    # Buscamos los detalles de pedido cuyos productos pertenecen al productor logueado
+    # 'producto__productor__user' asume que en tu modelo Producto el campo se llama 'productor' 
+    # y apunta al modelo CreacionProductor que tiene el OneToOne con User.
+    ventas_propias = DetallePedido.objects.filter(producto__productor__user=request.user).select_related('pedido', 'producto', 'pedido__usuario').order_by(
+        'despachado',    # False (0) aparece antes que True (1) -> Pendientes primero
+        '-pedido__id'    # Luego ordena por ID de pedido de forma descendente (el más reciente arriba)
+        )
+
+    return render(request, 'usuario/gestion_ventas.html', {
+        'ventas': ventas_propias
+    })
+
+
+
+@login_required
+def despachar_item(request, pk):
+
+    # Solo el dueño del producto puede marcarlo como despachado
+    item = get_object_or_404(DetallePedido, id=pk, producto__productor__user=request.user)
+    
+    # Podrías agregar un campo 'despachado' (Boolean) en DetallePedido para controlar esto
+    # Si no lo tienes, puedes manejarlo con un mensaje o una tabla de estados adicional.
+    item.despachado = True 
+    item.save()
+
+    # Mensaje de confirmación (opcional)
+    messages.success(request, "Producto marcado como despachado con éxito.")
+
+    next_url = request.META.get('HTTP_REFERER')
+    
+    if next_url:
+        return redirect(next_url)
+
+
+    return redirect('gestion_ventas')
+
+
+@login_required
+def informe_ventas_productor(request):
+
+    next_url = request.GET.get('next')
+
+    if next_url:
+        request.session['volver_a'] = next_url
+    
+
+    # 1. Obtener fechas del filtro (si existen)
+    fecha_inicio = request.GET.get('fecha_inicio')
+    fecha_fin = request.GET.get('fecha_fin')
+
+    # 2. Query base filtrada por el productor
+    ventas = DetallePedido.objects.filter(
+        producto__productor__user=request.user,
+        pedido__estado='Pagado' # Solo contar lo que ya se pagó
+    ).select_related('producto', 'pedido')
+
+    # 3. Aplicar filtro de rango de fechas si se enviaron
+    if fecha_inicio and fecha_fin:
+        # Convertimos los strings a objetos datetime
+        # f_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%d')
+        # f_fin = datetime.strptime(fecha_fin, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
+
+        # Los hacemos "conscientes" de la zona horaria del proyecto
+        f_inicio = make_aware(datetime.strptime(fecha_inicio, '%Y-%m-%d'))
+        f_fin = make_aware(datetime.strptime(fecha_fin, '%Y-%m-%d').replace(hour=23, minute=59, second=59))
+
+        
+        # Usamos las fechas ya ajustadas para el filtro
+        ventas = ventas.filter(pedido__fecha__range=[f_inicio, f_fin])
+
+    # Agrupamos por producto y sumamos cantidades y subtotales
+    resumen_productos = ventas.values('producto__nombre_producto').annotate(
+        cantidad_total=Sum('cantidad'),
+        subtotal_acumulado=Sum(F('cantidad') * F('precio'))
+    ).order_by('-cantidad_total')
+
+   
+    # 4. Calcular el Gran Total de todas las ventas filtradas
+    # Usamos aggregate para sumar (cantidad * precio) de cada fila
+    total_general = ventas.aggregate(
+        total=Sum(F('cantidad') * F('precio'))
+        )['total'] or 0
+    
+
+    
+
+    return render(request, 'usuario/informe_admin.html', {
+        'ventas': ventas,
+        'resumen': resumen_productos,
+        'total_general': total_general,
+        'fecha_inicio': fecha_inicio,
+        'fecha_fin': fecha_fin,
+        'titulo': 'Informe Administrativo'
+    })

@@ -151,6 +151,13 @@
 }
 
 
+.form_ventas-filter{
+    display: flex;
+    width: 100%;
+    gap: 24px;
+    justify-content: center;
+}
+
 /* Determinar el estilo responsive de la lista de la barra */
 @media (width > 768px) {
     
