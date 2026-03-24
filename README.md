@@ -60,3 +60,9 @@ send_mail(
     ["destinatario@gmail.com"],
     fail_silently=False,
 )
+# Forma de exportar datos con tildes o ñ
+python -Xutf8 manage.py dumpdata nombreApp --indent 4 > nombreApp/fixtures/nombre_archivo.json
+
+para cargar los datos utilizar 
+
+python -Xutf8 manage.py loaddata nombre_archivo.json

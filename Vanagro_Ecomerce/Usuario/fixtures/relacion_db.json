@@ -1,68 +1,610 @@
 [
 {
-   "model": "Usuario.departamento",
-   "pk": 1,
-   "fields": {
-      "nombre_Departamento": "Risaralda"
-   }
+    "model": "Usuario.departamento",
+    "pk": 1,
+    "fields": {
+        "nombre_Departamento": "Risaralda"
+    }
 },
 {
-   "model": "Usuario.departamento",
-   "pk": 2,
-   "fields": {
-      "nombre_Departamento": "Caldas"
-   }
+    "model": "Usuario.departamento",
+    "pk": 2,
+    "fields": {
+        "nombre_Departamento": "Caldas"
+    }
 },
 {
-   "model": "Usuario.departamento",
-   "pk": 3,
-   "fields": {
-      "nombre_Departamento": "Quindio"
-   }
+    "model": "Usuario.departamento",
+    "pk": 3,
+    "fields": {
+        "nombre_Departamento": "Quindio"
+    }
 },
 {
-   "model": "Usuario.municipio",
-   "pk": 1,
-   "fields": {
-      "nombre_Municipio": "Pereira",
-      "departamento": 1
-   }
+    "model": "Usuario.municipio",
+    "pk": 1,
+    "fields": {
+        "nombre_Municipio": "Pereira",
+        "departamento": 1
+    }
 },
 {
-   "model": "Usuario.municipio",
-   "pk": 2,
-   "fields": {
-      "nombre_Municipio": "Dosquebradas",
-      "departamento": 1
-   }
+    "model": "Usuario.municipio",
+    "pk": 2,
+    "fields": {
+        "nombre_Municipio": "Dosquebradas",
+        "departamento": 1
+    }
 },
 {
-   "model": "Usuario.municipio",
-   "pk": 3,
-   "fields": {
-      "nombre_Municipio": "Santa Rosa de Cabal",
-      "departamento": 1
-   }
+    "model": "Usuario.municipio",
+    "pk": 3,
+    "fields": {
+        "nombre_Municipio": "Santa Rosa de Cabal",
+        "departamento": 1
+    }
 },
 {
-   "model": "Usuario.identificacion",
-   "pk": 1,
-   "fields": {
-      "tipo_identificacion": "Cedula de Ciudadania"
-   }
+    "model": "Usuario.municipio",
+    "pk": 4,
+    "fields": {
+        "nombre_Municipio": "Apia",
+        "departamento": 1
+    }
 },
 {
-   "model": "Usuario.identificacion",
-   "pk": 2,
-   "fields": {
-      "tipo_identificacion": "Cedula de Extranjeria"
-   }
+    "model": "Usuario.municipio",
+    "pk": 5,
+    "fields": {
+        "nombre_Municipio": "Balboa",
+        "departamento": 1
+    }
 },
 {
-   "model": "Usuario.identificacion",
-   "pk": 3,
-   "fields": {
-      "tipo_identificacion": "Nit"
-   }
+    "model": "Usuario.municipio",
+    "pk": 6,
+    "fields": {
+        "nombre_Municipio": "Belén de Umbría",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 7,
+    "fields": {
+        "nombre_Municipio": "Guática",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 8,
+    "fields": {
+        "nombre_Municipio": "La Celia",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 9,
+    "fields": {
+        "nombre_Municipio": "Mistrató",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 10,
+    "fields": {
+        "nombre_Municipio": "Pueblo Rico",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 11,
+    "fields": {
+        "nombre_Municipio": "Quinchía",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 12,
+    "fields": {
+        "nombre_Municipio": "Santuario",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 13,
+    "fields": {
+        "nombre_Municipio": "Marsella",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 14,
+    "fields": {
+        "nombre_Municipio": "La Virginia",
+        "departamento": 1
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 15,
+    "fields": {
+        "nombre_Municipio": "Armenia",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 16,
+    "fields": {
+        "nombre_Municipio": "Buenavista",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 17,
+    "fields": {
+        "nombre_Municipio": "Calarcá",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 18,
+    "fields": {
+        "nombre_Municipio": "Finlandia",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 19,
+    "fields": {
+        "nombre_Municipio": "Salento",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 20,
+    "fields": {
+        "nombre_Municipio": "Córdoba",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 21,
+    "fields": {
+        "nombre_Municipio": "Génova",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 22,
+    "fields": {
+        "nombre_Municipio": "Pijao",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 23,
+    "fields": {
+        "nombre_Municipio": "La Tebaida",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 24,
+    "fields": {
+        "nombre_Municipio": "Montenegro",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 25,
+    "fields": {
+        "nombre_Municipio": "Quinbaya",
+        "departamento": 3
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 26,
+    "fields": {
+        "nombre_Municipio": "Manizales",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 27,
+    "fields": {
+        "nombre_Municipio": "Chinchiná",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 28,
+    "fields": {
+        "nombre_Municipio": "Neira",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 29,
+    "fields": {
+        "nombre_Municipio": "Palestina",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 30,
+    "fields": {
+        "nombre_Municipio": "Villamaria",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 31,
+    "fields": {
+        "nombre_Municipio": "Aguadas",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 32,
+    "fields": {
+        "nombre_Municipio": "Aranzazu",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 33,
+    "fields": {
+        "nombre_Municipio": "Pácora",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 34,
+    "fields": {
+        "nombre_Municipio": "Salamina",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 35,
+    "fields": {
+        "nombre_Municipio": "Filadelfia",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 36,
+    "fields": {
+        "nombre_Municipio": "La Merced",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 37,
+    "fields": {
+        "nombre_Municipio": "Marmato",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 38,
+    "fields": {
+        "nombre_Municipio": "Riosucio",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 39,
+    "fields": {
+        "nombre_Municipio": "Supia",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 40,
+    "fields": {
+        "nombre_Municipio": "Anserma",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 41,
+    "fields": {
+        "nombre_Municipio": "Belalcázar",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 42,
+    "fields": {
+        "nombre_Municipio": "Risaralda",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 43,
+    "fields": {
+        "nombre_Municipio": "San José",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 44,
+    "fields": {
+        "nombre_Municipio": "Viterbo",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 45,
+    "fields": {
+        "nombre_Municipio": "Manzanares",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 46,
+    "fields": {
+        "nombre_Municipio": "Marquetalia",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 47,
+    "fields": {
+        "nombre_Municipio": "Marulanda",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 48,
+    "fields": {
+        "nombre_Municipio": "Pensilvania",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 49,
+    "fields": {
+        "nombre_Municipio": "La Dorada",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 50,
+    "fields": {
+        "nombre_Municipio": "Norcasia",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 51,
+    "fields": {
+        "nombre_Municipio": "Samaná",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.municipio",
+    "pk": 52,
+    "fields": {
+        "nombre_Municipio": "Victoria",
+        "departamento": 2
+    }
+},
+{
+    "model": "Usuario.identificacion",
+    "pk": 1,
+    "fields": {
+        "tipo_identificacion": "Cedula de Ciudadania"
+    }
+},
+{
+    "model": "Usuario.identificacion",
+    "pk": 2,
+    "fields": {
+        "tipo_identificacion": "Cedula de Extranjeria"
+    }
+},
+{
+    "model": "Usuario.identificacion",
+    "pk": 3,
+    "fields": {
+        "tipo_identificacion": "Nit"
+    }
+},
+{
+    "model": "Usuario.creacionusuario",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "tipo_identificacion": 1,
+        "numero_identificacion": "215151",
+        "departamento": 1,
+        "municipio": 2,
+        "telefono_1": "3103102524",
+        "telefono_2": null,
+        "direccion_residencia": "calle 4 dnuemmis15465",
+        "fecha_nacimiento": "2006-02-05",
+        "fotografia": "usuarios/recolector.jpg"
+    }
+},
+{
+    "model": "Usuario.creacionusuario",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "tipo_identificacion": 1,
+        "numero_identificacion": "1478529",
+        "departamento": 1,
+        "municipio": 3,
+        "telefono_1": "123456",
+        "telefono_2": "123777",
+        "direccion_residencia": "calle 4 dnuemmis15465",
+        "fecha_nacimiento": "2000-05-02",
+        "fotografia": "usuarios/avatar1.jpg"
+    }
+},
+{
+    "model": "Usuario.creacionusuario",
+    "pk": 3,
+    "fields": {
+        "user": 4,
+        "tipo_identificacion": 2,
+        "numero_identificacion": "123456",
+        "departamento": 1,
+        "municipio": 2,
+        "telefono_1": "741258",
+        "telefono_2": "7455115",
+        "direccion_residencia": "calle 4 dnuemmis15465",
+        "fecha_nacimiento": "1985-06-12",
+        "fotografia": "usuarios/campesino.jpg"
+    }
+},
+{
+    "model": "Usuario.creacionusuario",
+    "pk": 4,
+    "fields": {
+        "user": 5,
+        "tipo_identificacion": 1,
+        "numero_identificacion": "78963",
+        "departamento": 1,
+        "municipio": 2,
+        "telefono_1": "541515",
+        "telefono_2": "15111514115",
+        "direccion_residencia": "calle 4 dnuemmis15465",
+        "fecha_nacimiento": "1985-04-02",
+        "fotografia": ""
+    }
+},
+{
+    "model": "Usuario.creacionusuario",
+    "pk": 5,
+    "fields": {
+        "user": 6,
+        "tipo_identificacion": 1,
+        "numero_identificacion": "147852",
+        "departamento": 1,
+        "municipio": 3,
+        "telefono_1": "11455151",
+        "telefono_2": "15145151",
+        "direccion_residencia": "calle de las moscas npo",
+        "fecha_nacimiento": "1988-05-02",
+        "fotografia": "usuarios/recolector_mmKn6Ii.jpg"
+    }
+},
+{
+    "model": "Usuario.creacionusuario",
+    "pk": 6,
+    "fields": {
+        "user": 7,
+        "tipo_identificacion": 1,
+        "numero_identificacion": "7896345",
+        "departamento": 1,
+        "municipio": 2,
+        "telefono_1": "2156121345",
+        "telefono_2": null,
+        "direccion_residencia": "calle 4 dnuemmis15465",
+        "fecha_nacimiento": "2001-01-02",
+        "fotografia": ""
+    }
+},
+{
+    "model": "Usuario.creacionproductor",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "nombre_finca": "La Odisea Pertina",
+        "departamento": 1,
+        "municipio": 3,
+        "vereda": "La Romelia",
+        "direccion": "la minga 2",
+        "foto_finca": "productores/finca3_0gkbu4Y.jpg",
+        "latitud": 4.892352,
+        "longitud": -75.603228,
+        "descripcion": "finca de surtido de todo rico y delicioso",
+        "activo": true,
+        "fecha_creacion": "2026-03-05"
+    }
+},
+{
+    "model": "Usuario.creacionproductor",
+    "pk": 2,
+    "fields": {
+        "user": 6,
+        "nombre_finca": "Margarita",
+        "departamento": 1,
+        "municipio": 2,
+        "vereda": "El Lembo",
+        "direccion": "la minga",
+        "foto_finca": "productores/finca.jpeg",
+        "latitud": 4.865449,
+        "longitud": -75.661214,
+        "descripcion": "Buen producto cafetero",
+        "activo": true,
+        "fecha_creacion": "2026-03-19"
+    }
+},
+{
+    "model": "Usuario.creacionproductor",
+    "pk": 3,
+    "fields": {
+        "user": 7,
+        "nombre_finca": "La Quinta Porra",
+        "departamento": 1,
+        "municipio": 3,
+        "vereda": "La Quiebra",
+        "direccion": "",
+        "foto_finca": "productores/finca7.jpg",
+        "latitud": 4.900671893229745,
+        "longitud": -75.61882792666557,
+        "descripcion": "alimentos frescos del campo y lacteos",
+        "activo": true,
+        "fecha_creacion": "2026-03-23"
+    }
 }
 ]

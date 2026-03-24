@@ -195,7 +195,7 @@ class RegistroUsuario(View):
 
 def cargar_municipios(request):
         departamento_id = request.GET.get("departamento_id")
-        municipios = Municipio.objects.filter(departamento_id=departamento_id)
+        municipios = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre_Municipio')
         data = list(municipios.values("id", "nombre_Municipio"))
         return JsonResponse(data, safe=False)
 
