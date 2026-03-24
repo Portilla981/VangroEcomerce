@@ -3,13 +3,6 @@
 {% load static %}
 
 {% block contenido %}
-<div id="loader-interfaz" class="loader-overlay">
-    <div class="loader-content">
-        <p id="mensaje-carga">Preparando entorno...</p>
-        <div class="spinner"></div> <!-- Opcional: un circulito girando -->
-    </div>
-</div>
-
 
 <section class="session-container__beginer">
     <div class="session__login">
@@ -30,7 +23,7 @@
                 {% csrf_token %}
                 <div class="beginner-form__credential">
                     <div class="beginner-form__info">
-                        <label class="beginner-form__label">Username</label>
+                        <label class="beginner-form__label">Username/Correo Electronico</label>
                         <input name="username" class="beginner-form__input" type="text" placeholder="Ingrese su usuario"
                             required>
                     </div>
