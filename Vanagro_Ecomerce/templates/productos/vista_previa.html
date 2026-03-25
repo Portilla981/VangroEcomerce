@@ -29,7 +29,6 @@
 <div class="buttons">
     <form method="POST" id="form-cancel_preview1" action="{% url 'cancelar_producto' producto.id %}">
         {% csrf_token %}
-        <!-- <button type="submit" class="buttons__action--secondary">Cancelar</button> -->
         <button type="button" class="buttons__action--secundary btn-cancel btn-confirmar" 
                 data-form="form-cancel_preview1" 
                 data-titulo="¿Salir?" 
@@ -44,7 +43,6 @@
 
     <form method="POST" id="form-save_product" action="{% url 'guardar_producto' producto.id %}">
         {% csrf_token %}
-        <!-- <button type="submit" class="buttons__action--primary create-product">Guardar y publicar producto</button> -->
         <button type="button" name="accion" value="guardar" class="buttons__action--primary btn-save btn-confirmar" 
                 data-form="form-save_product" 
                 data-titulo="💾 Guardar" 

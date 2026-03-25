@@ -46,8 +46,6 @@
         </td>
 
         <td class="user-list__cell">{{ usuario.user.first_name }} {{ usuario.user.last_name }}</td>
-        <!-- <td class="user-list__cell">{{ usuario.user.last_name }}</td> -->    
-       
         <td class="user-list__cell">
           <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">            
             {% csrf_token %}
@@ -145,11 +143,6 @@
         <h3>¿Desea cambiar la imagen?</h3>
 
         <div class="modal-actualizar__button-box">
-           <!-- <button type="button" id="cerrarModal" class="buttons__action--secondary btn-cancel btn-confirmar"
-                data-url="{% url 'lista_usuarios' %}" 
-                data-titulo="¿Salir?" 
-                data-mensaje="No se guardara la imagen.">Cancelar
-            </button> -->
             <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">Cancelar</button>
 
             <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
@@ -157,7 +150,6 @@
                 data-titulo="💾 Guardar" 
                 data-mensaje="¿Confirmas cambiar la imagen?">Guardar Imagen
             </button> 
-          <!-- <button class="modal-actualizar__button modal-button-guardar" type="submit">Guardar</button> -->
         </div>
     </form>
   </div>

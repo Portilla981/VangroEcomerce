@@ -30,22 +30,22 @@
         <tbody class="user-list__table-body">
             {% for detalle in ventas %}
             <tr class="user-list__row">
-                <td class="user-list__cell" data-label="ID"><small>ID Pedido: #{{ detalle.pedido.id }}</small></td>
-                <td class="user-list__cell" data-label="ID">
+                <td class="user-list__cell" data-label="Id compra"><small>ID Pedido: #{{ detalle.pedido.id }}</small></td>
+                <td class="user-list__cell" data-label="Comprador">
                     {{ detalle.pedido.usuario.first_name }} {{ detalle.pedido.usuario.last_name }}<br>
                     
                 </td>
-                <td class="user-list__cell" data-label="ID">{{ detalle.producto.nombre_producto }}</td>
-                <td class="user-list__cell" data-label="ID">{{ detalle.cantidad }}</td>
-                <td class="user-list__cell" data-label="ID">$ {{ detalle.subtotal|floatformat:0|intcomma }}</td>
-                <td class="user-list__cell" data-label="ID">
+                <td class="user-list__cell" data-label="Producto">{{ detalle.producto.nombre_producto }}</td>
+                <td class="user-list__cell" data-label="Cantidad">{{ detalle.cantidad }}</td>
+                <td class="user-list__cell" data-label="Total Item">$ {{ detalle.subtotal|floatformat:0|intcomma }}</td>
+                <td class="user-list__cell" data-label="Estado Pago">
                     {% if detalle.pedido.estado == 'Pagado' %}
                         <span class="badge bg-success">Pago Verificado</span>
                     {% else %}
                         <span class="badge bg-warning text-dark">{{ detalle.pedido.estado }}</span>
                     {% endif %}
                 </td>
-                <td class="user-list__cell" data-label="ID">
+                <td class="user-list__cell" data-label="Acciones">
                     {% if detalle.pedido.estado == 'Pagado' %}
                         {% if not detalle.despachado %}
                         <button class="user-list__action-btn user-list__action-btn--disable">
@@ -63,7 +63,7 @@
             </tr>
             {% empty %}
             <tr class="user-list__row">
-                <td colspan="6" class="user-list__cell" data-label="ID">No tienes ventas registradas aún.</td>
+                <td colspan="6" class="user-list__cell" data-label="">No tienes ventas registradas aún.</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,22 +1,22 @@
-<!-- pedidos del usuario -->
+{% comment %} pedidos del usuario {% endcomment %}
 
-<!-- Herencia de la plantilla base -->
+{% comment %} Herencia de la plantilla base {% endcomment %}
 {% extends 'carrito/ver_carrito.html' %}
-<!-- inicio del bloque de contenido -->
+{% comment %} inicio del bloque de contenido {% endcomment %}
 {% load humanize %}
 {% load static %}
 
 {% block carrito %}
-<!-- contenedor -->
+{% comment %} contenedor {% endcomment %}
 
 <div class="container-pedidos">
 <div class="card-compra lista">
 
     <h2 class="pedido-titulo_tabla">🧾 Mis Pedidos</h2>
-    <!--condicional para verificar si hay pedidos (se recibe desde la vista) -->
+    {% comment %}condicional para verificar si hay pedidos (se recibe desde la vista) {% endcomment %}
     {% if pedidos %}
-        <!-- se muestra la información del pedido -->
-        <!-- <div class=""> -->
+        {% comment %} se muestra la información del pedido {% endcomment %}
+        {% comment %} <div class=""> {% endcomment %}
             <div class="pedidos-tabla">
                 <table class="user-list__table">
                     <thead class="tabla-pedidos_head">
@@ -30,10 +30,10 @@
                     </thead>
 
                     <tbody class="user-list__table-body">
-                        <!-- se recorren todos los pedidos realizados por el usuario -->
+                        {% comment %} se recorren todos los pedidos realizados por el usuario {% endcomment %}
                         {% for pedido in pedidos %}
                             <tr class="user-list__row">
-                                <!-- se muestra el id, fecha, total y el estado del pedido -->
+                                {% comment %} se muestra el id, fecha, total y el estado del pedido {% endcomment %}
                                 <td class="user-list__cell">{{ pedido.id }}</td>
                                 <td class="user-list__cell">{{ pedido.fecha|date:"d/m/Y H:i" }}</td>
                                 <td class="user-list__cell">${{ pedido.total|floatformat:0|intcomma }}</td>
@@ -41,7 +41,7 @@
                                     <span class="badge bg-success"> {{ pedido.estado }} </span>
                                 </td>
                                 <td class="user-list__cell">
-                                    <!-- se llama a detalle_pedido -->
+                                    {% comment %} se llama a detalle_pedido {% endcomment %}
                                      <button class="buttons__action--secondary">
                                         <a href="{% url 'detalle_pedido' pedido.id %}" > Ver detalle </a>
                                     </button>
@@ -52,8 +52,8 @@
 
                 </table>
             </div>
-        <!-- </div> -->
-    <!-- si no hay pedidos -->
+        {% comment %} </div> {% endcomment %}
+    {% comment %} si no hay pedidos {% endcomment %}
     {% else %}
 
         <div class="alert alert-info text-center">

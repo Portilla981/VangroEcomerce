@@ -21,9 +21,8 @@
 
     <div class="navbar-vanagro__icons">
       <div class="navbar-vanagro__icons--second">
-        
-        <!-- <a href ="javascript:history.back()" class="navbar-vanagro__link"> -->
-        <a href="{{ request.session.volver_a|default:'/' }}">
+        {% comment %} <a href="{{ request.session.volver_a|default:'/' }}"> {% endcomment %}
+        <a href="{{ request.META.HTTP_REFERER|default:'/' }}">
           <ion-icon class="navbar-vanagro__icons--back" name="arrow-back-outline"></ion-icon>
         </a>
       </div>

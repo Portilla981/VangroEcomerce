@@ -41,8 +41,7 @@
 			</label>
 
 		</div>
-
-		<!-- Descripción -->
+	
 		<label class="product-form__label">Descripción del Producto
 			<textarea class="product-form__textarea" name="descripcion" value="{{ form.instance.descripcion }}"
 				required>{{ form.instance.descripcion }}
@@ -90,8 +89,7 @@
 				</div>
 			</label>
 		</div>
-
-		<!-- Botones -->
+		
 		<div class="buttons">
 			<button type="button" name="accion" value="cancelar" class="buttons__action--secondary btn-cancel btn-confirmar"
                 data-url="{% url 'mis_productos' %}" 
@@ -107,11 +105,6 @@
                 data-titulo="💾 Guardar" 
                 data-mensaje="¿Desea guardar los cambios realizados?">Guardar Cambios
             </button>
-			<!-- <a href="{% url 'mis_productos' %}">
-				<button class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>
-			</a> -->			
-			<!-- <button type="submit" class="buttons__action--primary" name="accion" value="guardar">Guardar
-				Cambios</button> -->
 		</div>
 	</form>
 </div>

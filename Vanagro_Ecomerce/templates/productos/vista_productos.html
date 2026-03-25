@@ -27,18 +27,14 @@
         </select>
         <input type="text" id="buscador-productos" class="form-control" placeholder="Buscar producto...">
     </div>
-
-
+    
     <section class="card-section__product" id="productos-container">
-
         {% for producto in productos %}
-
         <div class="product-item">
-
+            
             {% include 'components/card-producto.html' %}
 
             <div class="buttons_cards">
-
                 <a href="{% url 'detalle_producto' producto.id %}">
                     <button class="buttons__action--secondary">
                         Ver detalles

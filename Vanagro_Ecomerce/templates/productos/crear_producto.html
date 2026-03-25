@@ -16,7 +16,6 @@
 	<form action="" method="post" class="product-form__container" enctype="multipart/form-data">
 		{% csrf_token %}
 
-		<!-- Nombre, unidad, precio, pago, método -->
 		<div class="product-form__row">
 			<label class="product-form__label">Nombre del producto
 				<input class="product-form__input" name="nombre_producto" placeholder="Ingrese nombre del producto"
@@ -44,7 +43,7 @@
 
 		</div>
 
-		<!-- Descripción -->
+		{% comment %}Descripción{% endcomment %}
 		<label class="product-form__label">Descripción del Producto
 			<textarea class="product-form__textarea" name="descripcion" placeholder="Ingrese la descripción"
 				value="{{ form.instance.descripcion }}" required>{{ form.instance.descripcion }}
@@ -93,26 +92,18 @@
 			</label>
 		</div>
 
-		<!-- Botones -->
+		{% comment %}Botones{% endcomment %}
 		<div class="buttons">
 			<button type="button" name="accion" value="cancelar" class="buttons__action--secondary btn-cancel btn-confirmar"
                 data-url="{% url 'tienda_usuario' %}" 
                 data-titulo="¿Salir?" 
                 data-mensaje="Se perderán los cambios.">Cancelar
             </button>
-
-			<!-- <button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
-				previa</button>
-
-            <a href="{% url 'tienda_usuario' %}">
-				<button class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>
-			</a> -->
+			
 			<button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
 				previa</button>
 		</div>
 	</form>
-
-	<!-- Botones -->
 </div>
 
 {% endblock producto %}

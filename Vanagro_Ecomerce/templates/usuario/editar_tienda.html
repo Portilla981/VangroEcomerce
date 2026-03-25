@@ -21,12 +21,10 @@
 <div class="producter-register">
     <form method="post" action="{% url 'accion_tienda' %}" id="form-estado_tienda">               
         {% csrf_token %}
-        <!-- <input type="hidden" name="tipo" value="productor"> -->
         <input type="hidden" name="next" value="{{ request.get_full_path }}">
     </form>
-
+        
     <p class="producter-register__title"><strong>Editar Tienda</strong></p>
-
     
     <form class="producter-register__form" method="POST" id="form-edit_tienda" enctype="multipart/form-data">
         {% csrf_token %}

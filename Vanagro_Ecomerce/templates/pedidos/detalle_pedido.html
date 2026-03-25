@@ -1,23 +1,22 @@
-<!-- detalle del pedido del usuario -->
-<!-- Herencia de la plantilla base -->
+{% comment %}detalle del pedido del usuario{% endcomment %}
+{% comment %}Herencia de la plantilla base{% endcomment %}
 {% extends 'carrito/ver_carrito.html' %}
 {% load humanize %}
 {% load static %}
-<!-- inicio del bloque de contenido -->
+{% comment %}inicio del bloque de contenido{% endcomment %}
 {% block carrito %}
-<!-- contenedor -->
 <div class="container-pedidos">
-    <!-- card -->
+    {% comment %}card{% endcomment %}
     <div class="card-compra detalle-card">
         <div class="pedido-titulo_tabla">
-            <!-- Muestra el numero del pedido -->
+            {% comment %} Muestra el numero del pedido {% endcomment %}
             <h3>Detalle del Pedido #{{ pedido.id }}</h3>
             <span class="">
-                <!-- se muestra el estado del pedido -->
+                {% comment %} se muestra el estado del pedido {% endcomment %}
                 {{ pedido.estado }}
             </span>
         </div>
-        <!-- muestra la fecha del pedido. en formato dia/mes/año con hora y minuto -->
+        {% comment %} muestra la fecha del pedido. en formato dia/mes/año con hora y minuto {% endcomment %}
         <p><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
         <h5 class="pedido-subtitulo">Productos</h5>
         <div class="pedidos-tabla">
@@ -32,23 +31,23 @@
                 </tr>
             </thead>
             <tbody class="user-list__table-body">
-                <!-- ciclo para recorrer los productos del pedido -->
+                {% comment %} ciclo para recorrer los productos del pedido {% endcomment %}
                 {% for detalle in pedido.detalles.all %}
                     <tr class="user-list__row">
-                        <!-- se muestra el detalle de cada producto: nombre, cantidad, precio, total -->
+                        {% comment %} se muestra el detalle de cada producto: nombre, cantidad, precio, total {% endcomment %}
                         <td class="user-list__cell">{{ detalle.producto.nombre_producto }}</td>
                         <td class="user-list__cell">{{ detalle.cantidad }}</td>
                         <td class="user-list__cell">$ {{ detalle.precio|floatformat:0|intcomma }}</td>
-                        <!-- subtotal -> llama al metodo del modelo -->
+                        {% comment %} subtotal -> llama al metodo del modelo {% endcomment %}
                         <td class="user-list__cell">$ {{ detalle.subtotal|floatformat:0|intcomma }}</td>
                         <td class="user-list__cell">
                             {% if detalle.despachado %}
-                                <!-- Si es True, mostramos que ya se envió -->
+                                {% comment %} Si es True, mostramos que ya se envió {% endcomment %}
                                 <span class="badge bg-success">
                                     <i class="fas fa-check"></i> Producto Despachado
                                 </span>
                             {% else %}
-                                <!-- Si es False, indicamos que está pendiente -->
+                                {% comment %} Si es False, indicamos que está pendiente {% endcomment %}
                                 <span class="badge bg-warning text-dark">
                                     <i class="fas fa-clock"></i> Pendiente de Envío
                                 </span>
@@ -60,7 +59,7 @@
         </table>
         </div>
 
-        <!-- muestra el total del pedido -->
+        {% comment %} muestra el total del pedido {% endcomment %}
         <p class="pedido-total"><strong>Total:</strong> ${{ pedido.total|floatformat:0|intcomma }}</p>
 
         <button class="buttons__action--secondary">

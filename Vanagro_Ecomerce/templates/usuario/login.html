@@ -24,7 +24,7 @@
 		<script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
 		<script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
     <script src="{% static 'js/alertas/modal_respuesta_msj.js' %}" defer></script>
-    <!-- <script src="{% static 'js/departamento_municipio.js' %}" defer></script> -->
+    {% comment %}<script src="{% static 'js/departamento_municipio.js' %}" defer></script> {% endcomment %}
 
 		{% block script %} {% endblock script %}
 
@@ -142,31 +142,6 @@
                   </button>
                 </div>
               </div>
-
-              {% comment %} Reporte modal {% endcomment %}
-              <div class="profile__report" id="report">
-                <div class="profile__report--photo">
-                  <div class="profile__report--phpto-head">
-                    <img
-                      class="profile__report--img"
-                      src="{% static 'img/interfaz_vanagro/reporte.jpg' %}"
-                      alt=""/>
-                    <div class="profile__report--close">
-                      <ion-icon
-                        onclick="location.href = 'javascript:history.back()'"
-                        name="close-outline"></ion-icon>
-                    </div>
-                  </div>
-
-                  <div class="buttons">
-                    <button class="buttons__action--primary" onclick="location.href = 'javascript:history.back()'">Imprimir</button>
-                    <button
-                      class="buttons__action--primary" onclick="location.href = 'javascript:history.back()'">
-                      Descargar
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
 			    {% endif %}
 			  {% endif %}
@@ -177,8 +152,7 @@
     {% include 'components/popup-acciones.html' %}
     {% include 'components/popup-django.html' %}  
     
-	</body>
-	
-	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" ></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" ></script>
+	</body>	
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" ></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" ></script>
 </html>
