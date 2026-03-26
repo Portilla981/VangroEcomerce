@@ -66,3 +66,7 @@ python -Xutf8 manage.py dumpdata nombreApp --indent 4 > nombreApp/fixtures/nombr
 para cargar los datos utilizar 
 
 python -Xutf8 manage.py loaddata nombre_archivo.json
+
+# Forma de depuración de la carpeta media  
+-Se crea un archivo de ejecución y limpieza de la carpeta media la cual se ejecuta para eliminar basura en esta carpeta si no esta interconectada con alguna app 
+manage.py limpiar_media
