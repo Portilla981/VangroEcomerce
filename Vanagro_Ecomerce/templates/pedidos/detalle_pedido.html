@@ -109,14 +109,14 @@
                         <tr>
                             <td>{{ item.producto.nombre_producto }}</td>
                             <td>{{ item.cantidad }}</td>
-                            <td>${{ item.subtotal }}</td>
+                            <td>${{ item.subtotal|floatformat:0|intcomma }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
-                    <tfoot>
+                    <tfoot class="total-pdf" >
                         <tr class="user-list__row">
-                        <td class="user-list__cell" colspan="4" ><strong>TOTAL:</strong></td>
-                        <td class="user-list__cell"><strong>${{ total_general }}</strong></td>
+                        <td class="user-list__cell" colspan="2" ><strong>TOTAL:</strong></td>
+                        <td class="user-list__cell"><strong>${{ pedido.total|floatformat:0|intcomma }}</strong></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -127,7 +127,7 @@
         </div>
 
         <div class="modal-pie">
-            <button onclick="cerrarModal()" class="buttons__action--secundary btn-secundario">Cerrar</button>
+            <button onclick="cerrarModal()" class="buttons__action--secondary btn-secundario">Cerrar</button>
             <button onclick="window.print()" class="buttons__action--primary btn-primario">Imprimir / Guardar PDF</button>
         </div>
     </div>

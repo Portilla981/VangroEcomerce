@@ -23,7 +23,8 @@ def ver_productos(request):
     productos = Producto.objects.filter(
         estado_producto='publicado',
         activo=True,
-        stock__gt=0
+        stock__gt=0,
+        productor__activo = True
         ).select_related('productor', 'productor__user')
     
     categorias = Producto.CATEGORIA

@@ -75,7 +75,7 @@
                                 name="departamento" 
                                 class="form-register__input" 
                                 required 
-                                data-guardado="{{ form.municipio.value|default:form.instance.municipio.id|default:'' }}">
+                                data-guardado="{{ form.departamento.value|default:form.instance.departamento_id|default:'' }}">
                                 <option value="">Seleccione un departamento</option>
                                 {% for dpto in form.departamento.field.queryset %}
                                 <option value="{{ dpto.id }}"
@@ -91,7 +91,7 @@
                                 class="form-register__input" 
                                 name="municipio" 
                                 required
-                                data-guardado="{{ form.municipio.value|default:form.instance.municipio.id|default:'' }}">
+                                data-guardado="{{ form.municipio.value|default:form.instance.municipio_id|default:'' }}">
                                 <option value="">Seleccione un municipio</option>
                                 {% for mcpio in form.municipio.field.queryset %}
                                 <option value="{{ mcpio.id }}" 

@@ -1,8 +1,14 @@
 {% load humanize %}
 {% load static %}
 
+
+
 <h2>Detalle del producto</h2>
-<div class="details__block">
+<div class="details__block">  
+<div class="close">
+    <a href="javascript:history.back()" class="btn-cerrar">&times;</a>
+        {% comment %} <span class="cerrar" onclick ="{% url 'ver_productos' %}">&times;</span> {% endcomment %}
+</div>
 
     <div class="details__image">
         {% if producto.imagen_producto %}

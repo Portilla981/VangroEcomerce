@@ -27,6 +27,13 @@ botones.forEach(btn => {
     })
 })
 
-document.getElementById("cerrarModal").onclick = function(){
-    modal.style.display = "none"
+// Busca el elemento
+const btnCerrar = document.getElementById("cerrarModal");
+
+// Solo si existe, asignare el evento
+if (btnCerrar) {
+    btnCerrar.onclick = function() {
+        modal.style.display = "none"
+    };
 }
+

@@ -63,6 +63,39 @@
 
             <div class="form-register__group">
                 <label class="form-register__label">Departamento
+                            <select id="departamento"
+                                name="departamento" 
+                                class="form-register__input" 
+                                required 
+                                data-guardado="{{ perfil_form.departamento.value|default:perfil_form.instance.departamento_id|default:'' }}">
+                                <option value="">Seleccione un departamento</option>
+                                {% for dpto in perfil_form.departamento.field.queryset %}
+                                <option value="{{ dpto.id }}"
+                                {% if dpto.id|stringformat:"s" == perfil_form.departamento.value|stringformat:"s" %} selected {% endif %}>
+                                {{ dpto.nombre_Departamento }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label class="form-register__label">Municipio
+                            <select id="municipio" 
+                                data-guardado="{{ perfil_form.instance.municipio.id }}" 
+                                class="form-register__input" 
+                                name="municipio" 
+                                required
+                                data-guardado="{{ perfil_form.municipio.value|default:perfil_form.instance.municipio_id|default:'' }}">
+                                <option value="">Seleccione un municipio</option>
+                                {% for mcpio in perfil_form.municipio.field.queryset %}
+                                <option value="{{ mcpio.id }}" 
+                                {% if mcpio.id|stringformat:"s" == perfil_form.municipio.value|stringformat:"s" %} selected {% endif %}>
+                                {{ mcpio.nombre_Municipio }}
+                                {% endfor %}
+                            </select>
+                        </label>
+
+
+{% comment %} 
+                <label class="form-register__label">Departamento
                     <select id="departamento" name="departamento" class="form-register__input" required>
                         <option value="">Seleccione un departamento</option>
                             {% for dpto in perfil_form.departamento.field.queryset %}
@@ -79,7 +112,7 @@
                         <option value="{{ mcpio.id }}" {% if mcpio.id == perfil_form.municipio.value %} selected {% endif %} >{{ mcpio.nombre_Municipio }}</option>
                         {% endfor %}
                     </select>
-                </label>
+                </label> {% endcomment %}
 
                 <label class="form-register__label">Dirección
                     <input class="form-register__input" type="text" name="direccion_residencia" value="{{ perfil_form.direccion_residencia.value|default_if_none:'' }}"
