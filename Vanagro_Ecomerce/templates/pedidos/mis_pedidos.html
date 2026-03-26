@@ -1,17 +1,15 @@
-{% comment %} pedidos del usuario {% endcomment %}
-
-{% comment %} Herencia de la plantilla base {% endcomment %}
 {% extends 'carrito/ver_carrito.html' %}
+{% comment %} pedidos del usuario, herencia de la plantilla base {% endcomment %}
 {% comment %} inicio del bloque de contenido {% endcomment %}
 {% load humanize %}
 {% load static %}
+
 
 {% block carrito %}
 {% comment %} contenedor {% endcomment %}
 
 <div class="container-pedidos">
 <div class="card-compra lista">
-
     <h2 class="pedido-titulo_tabla">🧾 Mis Pedidos</h2>
     {% comment %}condicional para verificar si hay pedidos (se recibe desde la vista) {% endcomment %}
     {% if pedidos %}
@@ -56,18 +54,21 @@
     {% comment %} si no hay pedidos {% endcomment %}
     {% else %}
 
-        <div class="alert alert-info text-center">
-            Aún no has realizado ninguna compra.
+        <div class="info-pedido">
+            <p>Aún no has realizado ninguna compra.</p>            
         </div>
 
     {% endif %}
     <div class="buttons">
-    <button class="buttons__action--secondary">
+        <button class="buttons__action--secondary">
             <a href="{% url 'sesion_inicio' %}" class="btn btn-outline-secondary"> ← Volver </a>
         </button>
-        </div>
+
+        
+    </div>
 
 </div>
 </div>
+
 
 {% endblock carrito %}
