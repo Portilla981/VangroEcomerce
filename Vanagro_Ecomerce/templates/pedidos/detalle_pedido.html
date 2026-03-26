@@ -90,8 +90,8 @@
                 <div class="encabezado-pdf">
                     <img src="{% static 'img/interfaz_vanagro/vanagro_logo2.jpeg' %}" class="logo-tienda" alt="Logo">
                     <div class="datos-tienda">
-                        <h1>Factura de Ventas # {{ pedido.id }} </h1>
-                        <p>Nombre CLiente: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                        <h1>Factura de Ventas FVV-{{ pedido.id }} </h1>
+                        <p>Nombre cliente: <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></p>
                         <p>Fecha de compra: {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
                     </div>
                 </div>

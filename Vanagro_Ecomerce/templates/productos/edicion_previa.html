@@ -35,9 +35,9 @@
         
     </form>
 
-    <a href="'{% url 'volver_crear' producto.id %}'"></a>
-
+    <a href="'{% url 'volver_crear' producto.id %}'">
     <button type="button" class="buttons__action--terciary">Volver a editar</button>
+    </a>
 
     <form method="POST"  id="form-product__create" action="{% url 'guardar_producto' producto.id %}">
         {% csrf_token %}

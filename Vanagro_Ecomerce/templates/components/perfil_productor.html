@@ -47,7 +47,7 @@
         <strong>CORREO:</strong> {{ request.user.email }}
       </p>
       <p class="profile__detail">
-        <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2 }}
+        <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2|default_if_none:'' }}
       </p>
 
       <p class="profile_producter--detail"><strong>DESCRIPCIÓN:</strong> {{ productor.descripcion }}</p>

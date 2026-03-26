@@ -42,10 +42,10 @@
 
             <div class="form-register__group">
                 <label class="form-register__label">Tipo de documento
-                    <select class="form-register__input" name="tipo_identificacion" id="tipo_id" required>
+                    <select class="form-register__input" name="tipo_identificacion" id="tipo_id" required data-guardado="{{ perfil_form.tipo_identificacion.value|default:perfil_form.instance.tipo_identificacion_id|default:'' }}">
                         <option value="">Seleccione un tipo de documento</option>
                             {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
-                        <option value="{{ tipo.id }}" {% if tipo.id == perfil_form.tipo_identificacion.value %} selected {% endif %} >{{ tipo.tipo_identificacion }}</option>
+                        <option value="{{ tipo.id }}" {% if tipo.id|stringformat:"s" == perfil_form.tipo_identificacion.value|stringformat:"s" %} selected {% endif %} >{{ tipo.tipo_identificacion }}</option>
                             {% endfor %}
                     </select>
                 </label>

@@ -103,9 +103,9 @@ def editar_producto(request, pk):
     print(request.POST)
     print(request.POST.get('accion'))
 
-    if not request.user.productor.activo:
-        messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
-        return redirect('sesion_inicio')
+    # if not request.user.productor.activo:
+    #     messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
+    #     return redirect('sesion_inicio')
 
     if request.method == 'POST':
         form = Form_producto(request.POST, request.FILES, instance=producto)
@@ -195,10 +195,8 @@ class ListaProductos(LoginRequiredMixin, ListView):
 @login_required
 # Vista para crear el producto
 def crear_producto(request):
-
     # Eliminar borradores viejos del usuario
     tiempo_limite = timezone.now() - timedelta(minutes=15)
-
     Producto.objects.filter(
         productor =request.user.productor,
         estado_producto='borrador',
@@ -209,15 +207,22 @@ def crear_producto(request):
 
     if next_url:
         request.session['volver_a'] = next_url
-
-    if not request.user.productor.activo:
-        messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
-        return redirect('sesion_inicio')
-
+   
     #procesar el formulario (Si se envía)
     if request.method == 'POST':
+
         #Se capturan los datos del producto y la imagen
-        form = Form_producto(request.POST, request.FILES)
+        borrador_previo = Producto.objects.filter(
+            productor=request.user.productor, 
+            estado_producto='borrador'
+            ).first()
+
+        # 2. Si existe el borrador, le pasamos la 'instance' al formulario
+        if borrador_previo:
+            form = Form_producto(request.POST, request.FILES, instance=borrador_previo)
+        else:
+            form = Form_producto(request.POST, request.FILES)       
+        # form = Form_producto(request.POST, request.FILES)
 
         #se valida si el formulario es valido
         if form.is_valid():
@@ -226,15 +231,10 @@ def crear_producto(request):
             producto.productor = request.user.productor  # Asignar el productor desde el usuario
             
             # Si quiere vista previa
-            if accion == 'vista_previa':
-                
+            if accion == 'vista_previa':                
                 producto.estado_producto = 'borrador'
-                producto.save()
-                
-                # print(producto.estado)
-                
+                producto.save()                
                 url = reverse('vista_previa', args=[producto.id])
-                
                 return redirect(f"{url}?modo=crear")
             
             # Si quiere guardar directo
@@ -245,7 +245,6 @@ def crear_producto(request):
                 #redirige a la lista de productos
                 success_message = 'Producto creado exitosamente.'
                 messages.success(request, success_message)                 
-
                 return redirect('tienda_usuario')  
 
             elif accion == 'cancelar':
@@ -257,7 +256,6 @@ def crear_producto(request):
             messages.error(request, form.errors)
             print(form.errors)           
             
-
     #si el método es GET muestra el formulario vacío
     else:
         form = Form_producto()
@@ -367,10 +365,10 @@ class EditarProducto(LoginRequiredMixin, View):
 
         producto = self.get_producto(request, pk)
 
-        if not request.user.is_superuser:
-            if not request.user.productor.activo:
-                messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
-                return redirect('sesion_inicio')
+        # if not request.user.is_superuser:
+        #     if not request.user.productor.activo:
+        #         messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
+        #         return redirect('sesion_inicio')
 
         form = Form_producto(instance=producto)
 

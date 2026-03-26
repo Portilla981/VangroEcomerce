@@ -49,12 +49,12 @@
                         data-titulo="¿Deshabilitar Tienda?" 
                         data-mensaje="Tu tienda dejará de ser visible y no podrás vender productos.">Deshabilitar Tienda
                     </button>
-                {% else %}
+                {% comment %} {% else %}
                     <button type="button" form="form-estado_tienda" class="user-list__action-btn user-list__action-btn--enable btn-confirmar"
                     data-form="form-estado_tienda"
                     data-titulo="¿Habilitar Tienda?" 
                     data-mensaje="Tu tienda será visible nuevamente.">Habilitar Tienda
-                    </button>
+                    </button> {% endcomment %}
                 {% endif %}
             </div>  
         </div>
@@ -68,7 +68,7 @@
                     </label>
                     <label class="form-register__label">Direccion o Ubicacion exacta
                         <input class="form-register__input" type="text" name="direccion"
-                            value="{{ form.instance.direccion }}" required>
+                            value="{{ form.instance.direccion}}" required>
                     </label>
                         <label class="form-register__label">Departamento
                             <select id="departamento"
@@ -141,7 +141,7 @@
             </button>
 
             <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-                data-form="form-edit__tienda" 
+                data-form="form-edit_tienda" 
                 data-titulo="💾 Guardar" 
                 data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
             </button>
