@@ -1,26 +1,21 @@
-<!-- Permite crear o editar el producto -->
-
-<!-- Herencia de la plantilla base -->
+{% comment %} Permite crear o editar el producto 
+Herencia de la plantilla base {% endcomment %}
 {% extends "carrito/ver_carrito" %}
-
-<!-- Inicio del bloque de contenido -->
+{% comment %} Inicio del bloque de contenido {% endcomment %}
 {% block carrito %}
-<!-- contenedor -->
+{% comment %} contenedor {% endcomment %}
 <div class="container-pago">
-
-	<!-- card -->
+	{% comment %} card {% endcomment %}
     <div class="card-pago">
-    	<!-- mensaje del pago realizado -->
+    	{% comment %} mensaje del pago realizado {% endcomment %}
         <h2 class="texto-pago">¡Pago realizado con éxito!</h2>
-        <!-- mensaje -->
+        {% comment %} mensaje {% endcomment %}
         <p>Tu pedido ha sido procesado correctamente.</p>
-        <!-- Crea el botón para volver a la lista de productos -->
+        {% comment %} Crea el botón para volver a la lista de productos {% endcomment %}
         <a href="{% url 'ver_productos' %}" class="btn-volver">
             Volver a la tienda
         </a>
-
     </div>
-
 </div>
 
 {% endblock carrito %}

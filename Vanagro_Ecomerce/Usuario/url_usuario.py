@@ -9,7 +9,7 @@ urlpatterns = [
     path('tienda/', RegistroProductor.as_view(), name= 'tienda_usuario'),  
     path('salir/', LogoutView.as_view(next_page = 'inicio'), name='logout'),   
     path('registro/', RegistroUsuario.as_view(), name='registro_usuario'),
-    path('editar/<int:pk>/', editar_usuario, name='editar_usuario'),
+    path('editar/usuario/<int:pk>/', editar_usuario, name='editar_usuario'),
     path('editar/tienda/<int:pk>/', EditarProductor.as_view() , name='editar_tienda'),
     path('tienda/gestion/', panel_ventas_productor, name='gestion_ventas'),
     path('tienda/gestion/<int:pk>', despachar_item, name='despachar'),

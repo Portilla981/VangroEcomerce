@@ -16,7 +16,7 @@
 {% block login %}
 <div class="user-list">
     <h2 class="user-list__title">Informe administrativo/Ventas</h2>
-    <!-- Formulario de Filtro -->
+    {% comment %}Formulario de Filtro {% endcomment %}
     <form method="GET" class="form_ventas-filter">
         <div>
             <input type="date" name="fecha_inicio" value="{{ fecha_inicio }}" class="form-control">
@@ -46,15 +46,15 @@
         <tbody class="user-list__table-body">
             {% for venta in ventas %}
             <tr class="user-list__row">
-                <td class="user-list__cell" data-label="ID">{{ venta.pedido.fecha|date:"d/m/Y" }}</td>
-                <td class="user-list__cell" data-label="ID">{{ venta.producto.nombre_producto}} </td>
-                <td class="user-list__cell" data-label="ID">{{ venta.cantidad }}</td>
-                <td class="user-list__cell" data-label="ID">{{ venta.precio|floatformat:0|intcomma }}</td>
-                <td class="user-list__cell" data-label="ID">$ {{ venta.subtotal|floatformat:0|intcomma }}</td>
+                <td class="user-list__cell" data-label="Fecha">{{ venta.pedido.fecha|date:"d/m/Y" }}</td>
+                <td class="user-list__cell" data-label="Producto">{{ venta.producto.nombre_producto}} </td>
+                <td class="user-list__cell" data-label="Cantidad">{{ venta.cantidad }}</td>
+                <td class="user-list__cell" data-label="Valor Und">{{ venta.precio|floatformat:0|intcomma }}</td>
+                <td class="user-list__cell" data-label="Subtotal">$ {{ venta.subtotal|floatformat:0|intcomma }}</td>
             </tr>
             {% empty %}
             <tr class="user-list__row">
-                <td colspan="6" class="user-list__cell" data-label="ID">No tienes ventas registradas aún.</td>
+                <td colspan="6" class="user-list__cell" data-label="">No tienes ventas registradas aún.</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -65,10 +65,7 @@
             </tr>
         </tfoot>
     </table>
-    <button type="button" class="btn-informe" onclick="abrirModal()">
-        Visualizar Resumen Estilo PDF
-    </button>
-
+    <button type="button" class="buttons__action--terciary btn-informe" onclick="abrirModal()">Visualizar Resumen Estilo PDF</button>
 </div>
 
 <div id="modalResumen" class="modal-fondo">
@@ -115,13 +112,10 @@
         </div>
 
         <div class="modal-pie">
-            <button onclick="cerrarModal()" class="btn-secundario">Cerrar</button>
-            <button onclick="window.print()" class="btn-primario">Imprimir / Guardar PDF</button>
+            <button onclick="cerrarModal()" class="buttons__action--secondary btn-secundario">Cerrar</button>
+            <button onclick="window.print()" class="buttons__action--primary btn-primario">Imprimir / Guardar PDF</button>
         </div>
     </div>
 </div>
-
-
-
 
 {% endblock login %}

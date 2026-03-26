@@ -135,6 +135,12 @@
   height: 75vh;
 }
 
+/* estilos para pedidos */
+.info-pedido{
+  align-items: center;
+  text-align: center;
+}
+
 @media (width > 768px) {
 
   .details__image--img{

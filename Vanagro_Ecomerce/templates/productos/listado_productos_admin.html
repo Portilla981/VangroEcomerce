@@ -22,12 +22,12 @@
     <thead class="user-list__table-head">
       <tr class="user-list__row user-list__row--head">
         <th class="user-list__cell">Usuario</th>
-        <th class="user-list__cell">ID</th>
+        <th class="user-list__cell">Id Producto</th>
         <th class="user-list__cell">Imagen</th>
         <th class="user-list__cell">Nombre</th>
-        <th class="user-list__cell">U. medida</th>
-        <th class="user-list__cell">precio</th>
-        <th class="user-list__cell">stock</th>
+        <th class="user-list__cell">Und Medida</th>
+        <th class="user-list__cell">Precio</th>
+        <th class="user-list__cell">Stock</th>
         <th colspan="3" class="user-list__cell">Acciones</th>
         {% comment %} <th class="user-list__cell">Editar</th> {% endcomment %}
       </tr>
@@ -35,8 +35,8 @@
     <tbody class="user-list__table-body" id="user-table-body">
       {% for producto in productos %}
       <tr class="user-list__row"> 
-        <td class="user-list__cell" data-label="ID">{{ producto.productor.user.username }}</td>
-        <td class="user-list__cell" data-label="ID">PDV-{{ producto.id }}</td>
+        <td class="user-list__cell" data-label="Usuario">{{ producto.productor.user.username }}</td>
+        <td class="user-list__cell" data-label="Id producto">PDV-{{ producto.id }}</td>
         <td class="user-list__cell" data-label="Imagen">
           {% if producto.imagen_producto %}
           <img src="{{ producto.imagen_producto.url }}" alt="{{ producto.nombre }}" class="user-list__image">
@@ -44,11 +44,11 @@
           <img src="{% static 'img/products/sin_foto_2.jpg' %}" alt="{{ producto.nombre }}" class="user-list__image">
           {% endif %}
         </td>
-        <td class="user-list__cell">{{ producto.nombre_producto }}</td>
-        <td class="user-list__cell">{{ producto.unidad_medida }}</td>
-        <td class="user-list__cell">${{ producto.precio|floatformat:2 }}</td>
-        <td class="user-list__cell">{{ producto.stock }}</td>
-        <td class="user-list__cell">
+        <td class="user-list__cell" data-label="Nombre">{{ producto.nombre_producto }}</td>
+        <td class="user-list__cell" data-label="Und Medida">{{ producto.unidad_medida }}</td>
+        <td class="user-list__cell" data-label="Precio">${{ producto.precio|floatformat:2 }}</td>
+        <td class="user-list__cell" data-label="Stock">{{ producto.stock }}</td>
+        <td class="user-list__cell" data-label="Acciones">
           <form method="post" action="{% url 'accion_producto' producto.id %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
@@ -74,7 +74,7 @@
 
       {% empty %}
       <tr>
-        <td colspan="7" class="user-list__cell">No hay productos disponibles.</td>
+        <td colspan="10" class="user-list__cell">No hay productos disponibles.</td>
       </tr>
       {% endfor %}
     </tbody>
@@ -101,7 +101,6 @@
       <h3>¿Desea cambiar la imagen?</h3>
 
       <div class="modal-actualizar__button-box">
-        <!-- <button class="modal-actualizar__button modal-button-guardar" type="submit">Guardar</button> -->
         <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">Cancelar</button>
         <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
                 data-form="form-product__img-admin" 
@@ -111,8 +110,6 @@
       </div>
     </form>
   </div>
-
 </div>
-
 
 {% endblock login %}

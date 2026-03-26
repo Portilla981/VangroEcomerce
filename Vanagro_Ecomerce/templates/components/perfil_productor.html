@@ -5,9 +5,6 @@
   <script src="{% static 'js/render_mapa.js' %}" defer></script>  
 {% endblock script %}
 
-
-
-
 <div class="profile_producter--container">
   {% comment %}Portada con leyenda{% endcomment %}
   <div class="profile_producter--hero">
@@ -50,14 +47,14 @@
         <strong>CORREO:</strong> {{ request.user.email }}
       </p>
       <p class="profile__detail">
-        <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2 }}
+        <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2|default_if_none:'' }}
       </p>
 
       <p class="profile_producter--detail"><strong>DESCRIPCIÓN:</strong> {{ productor.descripcion }}</p>
     </div>
 
     <div class="profile_producter--info">
-      <a href="/frontend/public/views/edit-shop-user.html">
+      <a href="{% url 'editar_tienda' request.user.id %}?next={{ request.path }}">
         <ion-icon name="create-outline" class="profile_producter--edit"></ion-icon>
       </a>
 
@@ -83,21 +80,18 @@
         <button id="expandMap" class="buttons__action--primary">Ampliar</button>
       </div>
 
-      <!-- Modal -->
+      {% comment %} Modal {% endcomment %}
       <div id="modalMapa" class="modal">
         <div class="modal-overlay"></div>
-
         <div class="modal-content">
           <button id="closeModal">&times;</button>
           <div id="modalMapContainer"></div>
         </div>
       </div>
-
     </div>
 
+    {% comment %} Opciones de la tienda {% endcomment %}
     <div class="profile_producter--actions">
-
-
       <button class="profile_producter--action">
         <a href="{% url 'crear_producto' %}?next={{ request.path }}">
           <ion-icon name="add-circle-outline"></ion-icon>
@@ -105,14 +99,11 @@
         </a>
       </button>
 
-
-
       <button class="profile_producter--action">
         <a href="{% url 'mis_productos' %}?next={{ request.path }}">
           <ion-icon name="eye-outline"></ion-icon>
           <span>Listar Productos</span></a>
-      </button>
-   
+      </button>  
 
       <button class="profile_producter--action">
         <a href="{% url 'informe_ventas' %}?next={{ request.path }}">

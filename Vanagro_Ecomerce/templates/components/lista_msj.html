@@ -22,14 +22,14 @@
       {% for mensaje in mensajes %}
       <tr class="user-list__row"> 
         <td class="user-list__cell" data-label="Id">{{ mensaje.id }}</td>
-        <td class="user-list__cell" data-label="Id">{{ mensaje.fecha_envio|date:"d/m/Y" }}</td>
+        <td class="user-list__cell" data-label="Fecha envio">{{ mensaje.fecha_envio|date:"d/m/Y" }}</td>
         <td class="user-list__cell" data-label="Tipo msj">{{ mensaje.get_tipo_display }}</td>
         <td class="user-list__cell" data-label="Asunto">{{ mensaje.asunto }}</td>
         <td class="user-list__cell" data-label="Remitente">{{ mensaje.nombres }} {{ mensaje.apellidos }} </td>
         <td class="user-list__cell" data-label="Email">{{ mensaje.email }} </td>
         <td class="user-list__cell" data-label="Teléfono">{{ mensaje.telefono }} </td>
         <td class="user-list__cell" data-label="Mensaje">{{ mensaje.mensaje|truncatechars:50 }}</td>
-        <td class="user-list__cell">
+        <td class="user-list__cell" data-label="Acciones">
             {% if mensaje.estado == 'resuelto' %}
                 <button class="user-list__action-btn" disabled>Resuelto</button>
             {% else %}
@@ -40,14 +40,14 @@
             </button>
             {% endif %}
         </td>
-        <td>
+        <td class="user-list__cell" data-label="Fecha respuesta">
             {% if mensaje.fecha_respuesta %}
                 {{ mensaje.fecha_respuesta|date:"d/m/Y H:i" }}
             {% else %}
                 ---
              {% endif %}
         </td>
-        <td class="user-list__cell">
+        <td class="user-list__cell" data-label="Respuesta">
             {% if mensaje.respuesta %}
                 {{ mensaje.respuesta|truncatechars:50 }}
             {% else %}
@@ -56,7 +56,7 @@
         </td>
       {% empty %}
       <tr>
-        <td colspan="7" class="user-list__cell">No se han registrado usuarios.</td>
+        <td colspan="9" class="user-list__cell">No se han registrado usuarios.</td>
       </tr>
       {% endfor %}
     </tbody>
@@ -78,7 +78,7 @@
         <label>Respuesta</label>
         <textarea name="respuesta" required></textarea>
     
-        <div class="modal-actualizar__button-box">
+        <div class="buttons modal-actualizar__button-box">
             <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">Cancelar</button>
 
             <button type="button" class="buttons__action--primary btn-save btn-confirmar" 

@@ -21,12 +21,10 @@
 <div class="producter-register">
     <form method="post" action="{% url 'accion_tienda' %}" id="form-estado_tienda">               
         {% csrf_token %}
-        <!-- <input type="hidden" name="tipo" value="productor"> -->
         <input type="hidden" name="next" value="{{ request.get_full_path }}">
     </form>
-
+        
     <p class="producter-register__title"><strong>Editar Tienda</strong></p>
-
     
     <form class="producter-register__form" method="POST" id="form-edit_tienda" enctype="multipart/form-data">
         {% csrf_token %}
@@ -51,12 +49,12 @@
                         data-titulo="¿Deshabilitar Tienda?" 
                         data-mensaje="Tu tienda dejará de ser visible y no podrás vender productos.">Deshabilitar Tienda
                     </button>
-                {% else %}
+                {% comment %} {% else %}
                     <button type="button" form="form-estado_tienda" class="user-list__action-btn user-list__action-btn--enable btn-confirmar"
                     data-form="form-estado_tienda"
                     data-titulo="¿Habilitar Tienda?" 
                     data-mensaje="Tu tienda será visible nuevamente.">Habilitar Tienda
-                    </button>
+                    </button> {% endcomment %}
                 {% endif %}
             </div>  
         </div>
@@ -70,14 +68,14 @@
                     </label>
                     <label class="form-register__label">Direccion o Ubicacion exacta
                         <input class="form-register__input" type="text" name="direccion"
-                            value="{{ form.instance.direccion }}" required>
+                            value="{{ form.instance.direccion}}" required>
                     </label>
                         <label class="form-register__label">Departamento
                             <select id="departamento"
                                 name="departamento" 
                                 class="form-register__input" 
                                 required 
-                                data-guardado="{{ form.municipio.value|default:form.instance.municipio.id|default:'' }}">
+                                data-guardado="{{ form.departamento.value|default:form.instance.departamento_id|default:'' }}">
                                 <option value="">Seleccione un departamento</option>
                                 {% for dpto in form.departamento.field.queryset %}
                                 <option value="{{ dpto.id }}"
@@ -93,7 +91,7 @@
                                 class="form-register__input" 
                                 name="municipio" 
                                 required
-                                data-guardado="{{ form.municipio.value|default:form.instance.municipio.id|default:'' }}">
+                                data-guardado="{{ form.municipio.value|default:form.instance.municipio_id|default:'' }}">
                                 <option value="">Seleccione un municipio</option>
                                 {% for mcpio in form.municipio.field.queryset %}
                                 <option value="{{ mcpio.id }}" 
@@ -143,7 +141,7 @@
             </button>
 
             <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-                data-form="form-edit__tienda" 
+                data-form="form-edit_tienda" 
                 data-titulo="💾 Guardar" 
                 data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
             </button>

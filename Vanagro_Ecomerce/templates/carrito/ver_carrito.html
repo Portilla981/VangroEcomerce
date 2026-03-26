@@ -44,7 +44,7 @@
 
         {% comment %} si hay productos{% endcomment %}
         {% if items %}
-        <!-- se genera la tabla -->
+        {% comment %} se genera la tabla {% endcomment %}
         <table class="user-list__table">
             <thead class="user-list__table-head">
                 <tr class="user-list__row user-list__row--head">
@@ -58,44 +58,44 @@
             </thead>
 
             <tbody class="user-list__table-body">
-                <!-- ciclo para recorrer todos los productos del carrito -->
+                {% comment %} ciclo para recorrer todos los productos del carrito {% endcomment %}
                 {% for item in items %}
-                <!-- se guarda el id del producto (luego será utilizado por JS) -->
+                {% comment %} se guarda el id del producto (luego será utilizado por JS) {% endcomment %}
                 <tr class="user-list__row"  data-id="{{ item.id }}">
 
                     <td class="user-list__cell">
-                        <!-- se carga la imagen del producto -->
+                        {% comment %} se carga la imagen del producto {% endcomment %}
                         <img src="{{ item.producto.imagen_producto.url }}" width="70" style="object-fit:cover;">
                     </td>
-                    <!-- se carga el nombre del producto -->
+                    {% comment %} se carga el nombre del producto {% endcomment %}
                     <td class="user-list__cell"> {{ item.producto.nombre_producto }}</td>
 
                     <td class="user-list__cell">
                         <div class="input-group">
-                            <!-- botón para disminuir la cantidad del producto -->
+                            {% comment %} botón para disminuir la cantidad del producto {% endcomment %}
                             <button class="btn-restar">-</button>
-                            <!-- muestra la cantidad actual. con el limite menor que es 1 y el limite mayor que es la cantidad del stock -->
+                            {% comment %} muestra la cantidad actual. con el limite menor que es 1 y el limite mayor que es la cantidad del stock {% endcomment %}
                             <input type="number" class="cantidad-input"
                                 value="{{ item.cantidad }}" min="1" max="{{ item.producto.stock }}" step="1">
-                            <!-- botón para aumentar la cantidad del producto -->
+                            {% comment %} botón para aumentar la cantidad del producto {% endcomment %}
                             <button class="btn-sumar">+</button>
 
                         </div>
                         <div class="mensaje-stock">
-                        <!-- Mensaje de stock -->
-                        <!-- se muestra cuando el usuario sobrepasa el stock -->
+                        {% comment %} Mensaje de stock {% endcomment %}
+                        {% comment %} se muestra cuando el usuario sobrepasa el stock {% endcomment %}
                         <small class="stock-msg d-none">
                             Stock disponible: {{ item.producto.stock }}
                         </small>
                         </div>
                     </td>
-                    <!-- se carga el precio del producto -->
+                    {% comment %} se carga el precio del producto {% endcomment %}
                     <td class="user-list__cell">$ {{ item.producto.precio|floatformat:0|intcomma }}</td>
-                    <!-- se calcular el subtotal del producto (que esta en el modelo) -->
+                    {% comment %} se calcular el subtotal del producto (que esta en el modelo) {% endcomment %}
                     <td class="user-list__cell subtotal">$ {{ item.subtotal|floatformat:0|intcomma }}</td>
 
                     <td class="user-list__cell">
-                        <!-- botón eliminar -->
+                        {% comment %} botón eliminar {% endcomment %}
                         <button class="btn-eliminar"> 🗑 </button>
                     </td>
 
@@ -107,21 +107,21 @@
         </table>
 
         <div class="buttons">
-            <!-- Botón Seguir Comprando -->
+            {% comment %} Botón Seguir Comprando {% endcomment %}
 
             <button class="buttons__action--secondary btn-cancel">
             <a href="{% url 'ver_productos' %}" class="btn btn-outline-primary">
                 ← Seguir comprando
             </a>
             </button>
-            <!-- se carga el total -->
-            <!-- <div class="text-end"> -->
+            {% comment %} se carga el total {% endcomment %}
+            {% comment %} <div class="text-end"> {% endcomment %}
                 
                 <h4 class="">
                     Total: $ <span id="total-general">{{ total|floatformat:0|intcomma }}</span>
                 </h4>
 
-                <!-- Botón Finalizar Compra -->
+                {% comment %} Botón Finalizar Compra {% endcomment %}
                 <button type="button" class="buttons__action--primary btn-cancel btn-confirmar"
                     data-url="{% url 'finalizar_compra' %}" 
                     data-titulo="Registrar compra" 
@@ -129,10 +129,10 @@
                 </button>
 
                
-            <!-- </div> -->
+            {% comment %} </div> {% endcomment %}
 
         </div>
-        <!-- si el carrito esta vació -->
+        {% comment %} si el carrito esta vació {% endcomment %}
         {% else %}
         <div class="alert alert-warning">
             Tu carrito está vacío.
@@ -140,9 +140,6 @@
         {% endif %}
 
     </div>
-
-
-
     {% endblock carrito %}
     </div>
 

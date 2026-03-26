@@ -16,16 +16,15 @@
 	<form action="" method="post" class="product-form__container" enctype="multipart/form-data">
 		{% csrf_token %}
 
-		<!-- Nombre, unidad, precio, pago, método -->
 		<div class="product-form__row">
 			<label class="product-form__label">Nombre del producto
 				<input class="product-form__input" name="nombre_producto" placeholder="Ingrese nombre del producto"
-					value="{{ form.instance.nombre_producto }}" required />
+					value="{{ form.instance.nombre_producto|default_if_none:'' }}" required />
 			</label>
 
 			<label class="product-form__label">Unidad de medida
 				<select class="product-form__select product-form__select--unit" name="unidad_medida"
-					value="{{ form.instance.unidad_medida }}" required>
+					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
 					{% for unidad, label in form.unidad_medida.field.choices %}
 					<option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %} selected {% endif %}>{{ label }}</option>
 					{% endfor %}
@@ -34,20 +33,20 @@
 
 			<label class="product-form__label">Precio X unidad
 				<input class="product-form__input" name="precio" placeholder="Ingrese el precio"
-					value="{{ form.instance.precio|floatformat:0 }}" required />
+					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}" required />
 			</label>
 
 			<label class="product-form__label">{{ form.stock.label }}
 				<input type="number" class="product-form__input" name="stock" placeholder="Ingrese el stock"
-					value="{{ form.instance.stock }}" required />
+					value="{{ form.instance.stock|default_if_none:'' }}" required />
 			</label>
 
 		</div>
 
-		<!-- Descripción -->
+		{% comment %}Descripción{% endcomment %}
 		<label class="product-form__label">Descripción del Producto
 			<textarea class="product-form__textarea" name="descripcion" placeholder="Ingrese la descripción"
-				value="{{ form.instance.descripcion }}" required>{{ form.instance.descripcion }}
+				required>{{ form.instance.descripcion|default_if_none:'' }}
 				</textarea>
 		</label>
 
@@ -93,26 +92,18 @@
 			</label>
 		</div>
 
-		<!-- Botones -->
+		{% comment %}Botones{% endcomment %}
 		<div class="buttons">
 			<button type="button" name="accion" value="cancelar" class="buttons__action--secondary btn-cancel btn-confirmar"
                 data-url="{% url 'tienda_usuario' %}" 
                 data-titulo="¿Salir?" 
                 data-mensaje="Se perderán los cambios.">Cancelar
             </button>
-
-			<!-- <button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
-				previa</button>
-
-            <a href="{% url 'tienda_usuario' %}">
-				<button class="buttons__action--secondary" name="accion" value="cancelar">Cancelar</button>
-			</a> -->
+			
 			<button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
 				previa</button>
 		</div>
 	</form>
-
-	<!-- Botones -->
 </div>
 
 {% endblock producto %}

@@ -32,12 +32,12 @@
                 data-titulo="¿Salir?" 
                 data-mensaje="Se perderán los cambios.">Cancela y salir
         </button> 
-        <!-- <button type="submit" class="buttons__action--secondary">Cancelar</button> -->
+        
     </form>
 
-    <a href="'{% url 'volver_crear' producto.id %}'"></a>
-
+    <a href="'{% url 'volver_crear' producto.id %}'">
     <button type="button" class="buttons__action--terciary">Volver a editar</button>
+    </a>
 
     <form method="POST"  id="form-product__create" action="{% url 'guardar_producto' producto.id %}">
         {% csrf_token %}
@@ -46,8 +46,6 @@
                 data-titulo="💾 Guardar" 
                 data-mensaje="¿Deseas guardar el producto?">Guardar cambios
         </button>  
-
-        <!-- <button type="submit" class="buttons__action--primary create-product">Guardar cambios</button> -->
     </form>
 </div>
 

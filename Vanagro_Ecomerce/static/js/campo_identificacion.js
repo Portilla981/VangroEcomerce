@@ -9,21 +9,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const tipo = document.getElementById("tipo_id");
     const numero = document.getElementById("number_id");
 
-    console.log(tipo.value);    
-    // numero.value = "";
-    numero.addEventListener("input", function(e) {   
-
-    if (tipo.value === "1") {
-        // e.target.value = e.target.value.replace(/[^1-9]/g, '');
-        soloNumeros(e);
-    } 
-    else if (tipo.value === "2" || tipo.value === "3") {
-        // e.target.value = e.target.value.replace(/[^A-Za-z0-9]/g, '');
-        letrasYNumeros(e);
-    }   
-
-    });
-
+    if (tipo) {
+        const valorGuardado = tipo.getAttribute("data-guardado");
+        if (valorGuardado) {
+            tipo.value = valorGuardado;
+        }
+    }
+    
+    console.log(tipo.value); 
+    
+     if (numero && tipo) {
+        numero.addEventListener("input", function(e) {   
+            if (tipo.value === "1") { // Suponiendo 1 es Cédula
+                soloNumeros(e);
+            } 
+            else if (tipo.value === "2" || tipo.value === "3") { // Pasaporte/Extranjería
+                letrasYNumeros(e);
+            }   
+        });
+    }
 
 });
 

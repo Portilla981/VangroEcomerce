@@ -219,6 +219,8 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
             context['titulo']= 'Tu tienda'
             context['es_productor'] = True
             context['productor'] = user.productor
+            # perfil, creado = CreacionUsuario.objects.get_or_create(user=user)
+            # context['perfil'] = perfil
             # context['perfil'] = CreacionUsuario.objects.get(user=user)
             context['perfil'], _ = CreacionUsuario.objects.get_or_create(user=user)
 
@@ -271,15 +273,16 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
     
 @login_required
 def editar_usuario(request, pk):
-    
+     
     # Buscamos el usuario por su ID
     perfil = get_object_or_404(CreacionUsuario, pk=pk)
+    # Seguridad    
+    if not request.user.is_superuser:
+        if perfil.user != request.user:
+            return redirect('sesion_inicio')
+
     user = perfil.user # Accedemos al User de Django relacionado
 
-    # Seguridad
-    if perfil.user != request.user:
-        return redirect('sesion_inicio')
-        
     if request.method == 'POST':        
         user_form = Form_Actualizar_User(request.POST, instance = user)
         perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil)
@@ -343,7 +346,7 @@ class EditarProductor(LoginRequiredMixin, UpdateView):
         # Lógica dinámica de redirección
         if self.request.user.is_superuser:
             return reverse_lazy('lista_usuarios') # Nombre de tu URL de la tabla
-        return reverse_lazy('sesion_inicio') # URL para el productor normal
+        return reverse_lazy('tienda_usuario') # URL para el productor normal
 
     def form_valid(self, form):
         messages.success(self.request, "Los datos de tu tienda han sido actualizados.")
@@ -426,6 +429,10 @@ def toggle_usuario(request, pk):
             usuario.is_active = not usuario.is_active
             #utilizamos el método save de Django para actualizar el estado del producto
             usuario.save()
+            if hasattr(usuario, 'productor'):
+                productor = usuario.productor
+                productor.activo = not productor.activo
+                productor.save()
 
         elif tipo == 'productor':
             if hasattr(usuario, 'productor'):
@@ -444,7 +451,7 @@ def toggle_productor(request):
     if request.method == "POST":
         if not hasattr(request.user, 'productor'):
             messages.error(request, "No tienes tienda.")
-            return redirect('tienda_usuario')
+            return redirect('sesion_inicio')
 
         productor = request.user.productor
         productor.activo = not productor.activo
@@ -452,7 +459,7 @@ def toggle_productor(request):
 
         if not productor.activo:
             messages.warning(request, "Tu tienda ha sido deshabilitada.")
-            return redirect('inicio_vista')
+            return redirect('sesion_inicio')
                 
     return redirect(request.POST.get('next', 'tienda_usuario'))
 

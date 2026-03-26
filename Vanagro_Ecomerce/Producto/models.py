@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator
 from decimal import Decimal
 # Util para agregar fecha de creacion
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 # Register your models here.
 
@@ -35,14 +36,31 @@ class Producto(models.Model):
     # Fecha de creación del producto, se asigna automáticamente al crear el producto
     fecha_creacion = models.DateTimeField('Fecha de creación', auto_now_add=True)
 
+    def clean(self):
+        # Primero ejecutamos la limpieza base
+        super().clean()
 
-    
+        # Validamos que ambas fechas existan antes de comparar
+        if self.fecha_elaboracion and self.fecha_vencimiento:
+            if self.fecha_vencimiento <= self.fecha_elaboracion:
+                raise ValidationError({
+                    'fecha_vencimiento': "La fecha de caducidad debe ser posterior a la fecha de elaboración."
+                })
+
+    # def save(self, *args, **kwargs):
+    #     # Forzamos la ejecución de clean() antes de guardar en la BD
+    #     self.full_clean()
+    #     super().save(*args, **kwargs)
+   
     def save(self, *args, **kwargs):
         # Si el stock llega a 0 se desactiva automáticamente
         if self.stock == 0:
             self.activo = False
         #else:
             #self.activo = True
+        
+        # Forzamos la ejecución de clean() antes de guardar en la BD
+        self.full_clean()
 
         #Después de ejecutar la regla, se ejecuta el método save como Django lo realiza
         #si esta línea no se coloca, no se actualiza en bd

@@ -1,36 +1,36 @@
-<!-- Herencia de la plantilla base -->
 {% extends 'carrito/ver_carrito.html' %}
+{% comment %} Herencia de la plantilla base {% endcomment %}
 
 {% load humanize %}
 {% load static %}
 
-<!-- Inicio del bloque de contenido -->
+{% comment %} Inicio del bloque de contenido {% endcomment %}
 {% block carrito %}
 
 <div class="pedido-container">
-    <!-- Card Principal -->
+    {% comment %} Card Principal {% endcomment %}
     <div class="card-compra">
 
         <h2 class="pedido-titulo">
             ✅ ¡Compra realizada con éxito!
         </h2>
 
-        <!-- datos del pedido: número, fecha y total pagado -->
-        <!-- pedido (es una variable) viene de la vista -->
+        {% comment %} datos del pedido: número, fecha y total pagado {% endcomment %}
+        {% comment %} pedido (es una variable) viene de la vista {% endcomment %}
         <p><strong>Número de pedido:</strong> {{ pedido.id }}</p>
         <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
         
         <h5 class="pedido-subtitulo">Productos comprados</h5>
 
         <ul class="pedido-lista">
-             <!-- se recorre los productos que hacen parte del pedido -->
+             {% comment %} se recorre los productos que hacen parte del pedido {% endcomment %}
             {% for detalle in pedido.detalles.all %}
                 <li class="pedido-lista_item">
                     <span>
                         {{ detalle.producto.nombre_producto }} x {{ detalle.cantidad }}
                     </span>
                     <span>
-                         <!-- se llama al metodo subtotal que esta en el modelo -->
+                         {% comment %} se llama al metodo subtotal que esta en el modelo {% endcomment %}
                         $ {{ detalle.subtotal|floatformat:0|intcomma }}
                     </span>
                 </li>
@@ -55,5 +55,5 @@
     </div>
 
 </div>
-<!-- Fin del bloque de contenido -->
+{% comment %} Fin del bloque de contenido {% endcomment %}
 {% endblock carrito %}

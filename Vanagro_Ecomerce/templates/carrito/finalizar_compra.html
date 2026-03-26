@@ -1,37 +1,34 @@
-<!-- pago del pedido -->
-
-<!-- Herencia de la plantilla base -->
 {% extends "carrito/ver_carrito.html" %}
-
+{% comment %} pago del pedido Herencia de la plantilla base {% endcomment %}
 {% load humanize %}
 {% load static %}
 
-<!-- Inicio del bloque de contenido -->
+{% comment %} Inicio del bloque de contenido {% endcomment %}
 {% block carrito %}
-<!-- contenedor -->
+{% comment %} contenedor {% endcomment %}
 <div class="container-compra">
-    <!-- titulo de la pagina -->
+    {% comment %} titulo de la pagina {% endcomment %}
     <h2 class="compra_titulo">Finalizar Compra</h2>
-    <!-- metodo post para enviar a la vista de procesa_pago -->
+    {% comment %} metodo post para enviar a la vista de procesa_pago {% endcomment %}
     <form method="POST" action="{% url 'procesar_pago' %}" id="form-carrito__pagar" class="compra-form">
-        <!-- Token de seguridad -->
+        {% comment %} Token de seguridad {% endcomment %}
         {% csrf_token %}
-        <!-- genera las columnas -->
+        {% comment %} genera las columnas {% endcomment %}
         <div class="card-compra_union">
 
                 <div class="card-compra">
                     
                     <div class="card-compra_header">
-                        <!-- información del cliente -->
+                        {% comment %} información del cliente {% endcomment %}
                         <strong>Información del Cliente</strong>
                     </div>
 
                     <div class="card-compra_body">
-                        <!-- request.user carga la información del usuario logueado -->
+                        {% comment %} request.user carga la información del usuario logueado {% endcomment %}
                         <p><strong>Nombre:</strong> {{ request.user.first_name }}</p>
                         <p><strong>Apellido:</strong> {{ request.user.last_name }}</p>
                         <p><strong>Correo:</strong> {{ request.user.email }}</p>
-                        <!-- si el usuario tiene direccion registrada la muestra sino muestra el texto no registrada -->
+                        {% comment %} si el usuario tiene direccion registrada la muestra sino muestra el texto no registrada {% endcomment %}
                         <p><strong>Dirección:</strong> 
                             {% if perfil.direccion_residencia %}
                                 {{ perfil.direccion_residencia }}
@@ -42,7 +39,7 @@
                     </div>
                 </div>
 
-                <!-- car del metodo de pago -->
+                {% comment %} car del metodo de pago {% endcomment %}
                 <div class="card-compra">
                     <div class="card-compra_header">
                         <strong>Método de Pago</strong>
@@ -51,7 +48,7 @@
                     <div class="card-compra_body">
 
                         <div class="form-compra_check">
-                            <!-- opciones de los métodos de pago. solo se puede elegir uno -->
+                            {% comment %} opciones de los métodos de pago. solo se puede elegir uno {% endcomment %}
                             <input class="form-compra_input" type="radio" name="metodo_pago" value="tarjeta" checked>
                             <label class="form-compra_label">
                                 Tarjeta de Crédito
@@ -83,7 +80,7 @@
                     </div>
 
                     <div class="card-compra_body">
-                        <!-- ciclo para mostrar por cada producto el nombre, cantidad y subtotal -->
+                        {% comment %} ciclo para mostrar por cada producto el nombre, cantidad y subtotal {% endcomment %}
                         {% for item in items %}
                             <div class="card-compra_item">
                                 <div class="card-compra_item-valor">
@@ -104,13 +101,13 @@
                             </div>
                             
                         {% endfor %}
-                        <!-- total del carrito -->
+                        {% comment %} Total del carrito {% endcomment %}
                         <div class="card-compra_item">
                             <strong>Total:</strong>
                             <strong class="text-compra">${{ total|floatformat:0|intcomma }}</strong>
                         </div>
-                        <!-- botón finalizar y pagar -->
-                        <!-- Una vez se da clic va a la vista procesar_pago -->
+                        {% comment %} Botón finalizar y pagar {% endcomment %}
+                        {% comment %} Una vez se da clic va a la vista procesar_pago {% endcomment %}
                         <div class="compra-button">
                             <button type="button" class="buttons__action--primary btn-cancel btn-confirmar"
                                 data-form="form-carrito__pagar" 

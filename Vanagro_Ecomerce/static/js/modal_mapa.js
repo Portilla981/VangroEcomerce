@@ -1,5 +1,6 @@
-// 
 
+(function () {
+    
 
 // Usamos una variable global para el mapa del modal
 let modalMapInstance = null;
@@ -52,3 +53,4 @@ if (closeModalBtn) {
         }
     });
 }
+})();

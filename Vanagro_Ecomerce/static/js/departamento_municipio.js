@@ -5,10 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function cargarMunicipios() {
         let depId = departamentoSelect.value;
-        if (!depId) return;
+        if (!depId) {
+            municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+            return;
+        }
+
+        const idASeleccionar = municipioSelect.getAttribute("data-guardado") || municipioSelect.value;
 
         // LEER EL ID QUE ESTÁ GUARDADO EN LA BASE DE DATOS
-        let idGuardado = municipioSelect.getAttribute("data-guardado");
+        //let idGuardado = municipioSelect.getAttribute("data-guardado");
 
         fetch(`/ajax/Municipios/?departamento_id=${depId}`)
             .then(response => response.json())
@@ -23,14 +28,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     option.value = m.id;
                     option.textContent = m.nombre_Municipio;
 
-                    // COMPROBACIÓN CLAVE: Si el ID coincide con el guardado, lo marcamos
-                    if (idGuardado && m.id == idGuardado) {
+                     if (idASeleccionar && m.id == idASeleccionar) {
                         option.selected = true;
                     }
                     
+                    // COMPROBACIÓN CLAVE: Si el ID coincide con el guardado, lo marcamos
+                    // if (idGuardado && m.id == idGuardado) {
+                    //     option.selected = true;
+                    // }
+                    
                     municipioSelect.appendChild(option);
                 });
-                municipioSelect.removeAttribute("data-guardado");
+                // Limpiamos el atributo para que no interfiera en cambios manuales posteriores
+                municipioSelect.setAttribute("data-guardado", "");
+                // municipioSelect.removeAttribute("data-guardado");
             });
     }
 

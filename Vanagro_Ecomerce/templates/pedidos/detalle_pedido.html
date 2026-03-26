@@ -1,23 +1,27 @@
-<!-- detalle del pedido del usuario -->
-<!-- Herencia de la plantilla base -->
 {% extends 'carrito/ver_carrito.html' %}
+{% comment %}detalle del pedido del usuario herencia de la plantilla base{% endcomment %}
 {% load humanize %}
 {% load static %}
-<!-- inicio del bloque de contenido -->
+{% comment %}inicio del bloque de contenido{% endcomment %}
+
+{% block script %}
+<script src="{% static 'js/alertas/modal_informe.js' %}" defer></script>
+  
+{% endblock script %}
+
 {% block carrito %}
-<!-- contenedor -->
 <div class="container-pedidos">
-    <!-- card -->
+    {% comment %}card{% endcomment %}
     <div class="card-compra detalle-card">
         <div class="pedido-titulo_tabla">
-            <!-- Muestra el numero del pedido -->
+            {% comment %} Muestra el numero del pedido {% endcomment %}
             <h3>Detalle del Pedido #{{ pedido.id }}</h3>
             <span class="">
-                <!-- se muestra el estado del pedido -->
+                {% comment %} se muestra el estado del pedido {% endcomment %}
                 {{ pedido.estado }}
             </span>
         </div>
-        <!-- muestra la fecha del pedido. en formato dia/mes/año con hora y minuto -->
+        {% comment %} muestra la fecha del pedido. en formato dia/mes/año con hora y minuto {% endcomment %}
         <p><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
         <h5 class="pedido-subtitulo">Productos</h5>
         <div class="pedidos-tabla">
@@ -32,23 +36,23 @@
                 </tr>
             </thead>
             <tbody class="user-list__table-body">
-                <!-- ciclo para recorrer los productos del pedido -->
+                {% comment %} ciclo para recorrer los productos del pedido {% endcomment %}
                 {% for detalle in pedido.detalles.all %}
                     <tr class="user-list__row">
-                        <!-- se muestra el detalle de cada producto: nombre, cantidad, precio, total -->
+                        {% comment %} se muestra el detalle de cada producto: nombre, cantidad, precio, total {% endcomment %}
                         <td class="user-list__cell">{{ detalle.producto.nombre_producto }}</td>
                         <td class="user-list__cell">{{ detalle.cantidad }}</td>
                         <td class="user-list__cell">$ {{ detalle.precio|floatformat:0|intcomma }}</td>
-                        <!-- subtotal -> llama al metodo del modelo -->
+                        {% comment %} subtotal -> llama al metodo del modelo {% endcomment %}
                         <td class="user-list__cell">$ {{ detalle.subtotal|floatformat:0|intcomma }}</td>
                         <td class="user-list__cell">
                             {% if detalle.despachado %}
-                                <!-- Si es True, mostramos que ya se envió -->
+                                {% comment %} Si es True, mostramos que ya se envió {% endcomment %}
                                 <span class="badge bg-success">
                                     <i class="fas fa-check"></i> Producto Despachado
                                 </span>
                             {% else %}
-                                <!-- Si es False, indicamos que está pendiente -->
+                                {% comment %} Si es False, indicamos que está pendiente {% endcomment %}
                                 <span class="badge bg-warning text-dark">
                                     <i class="fas fa-clock"></i> Pendiente de Envío
                                 </span>
@@ -59,16 +63,75 @@
             </tbody>
         </table>
         </div>
-
-        <!-- muestra el total del pedido -->
+        {% comment %} muestra el total del pedido {% endcomment %}
         <p class="pedido-total"><strong>Total:</strong> ${{ pedido.total|floatformat:0|intcomma }}</p>
 
+        <div class="buttons">
         <button class="buttons__action--secondary">
             <a href="{% url 'mis_pedidos' %}" class="btn btn-outline-secondary"> ← Volver a mis pedidos </a>
         </button>
-
+        <button type="button" class="buttons__action--primary btn-informe" onclick="abrirModal()">Visualizar factura/PDF</button>
+        </div>
     </div>
 
 </div>
+
+{% comment %} modal de factura pdf  {% endcomment %}
+<div id="modalResumen" class="modal-fondo">
+    <div class="modal-contenido">
+        {% comment %} boton de x para cerrar {% endcomment %}
+        <div class="modal-cabecera">
+            <span class="cerrar" onclick="cerrarModal()">&times;</span>
+            <h2>Factura de venta</h2>
+        </div>
+        
+        <div class="modal-cuerpo">
+            <div id="areaImpresion" class="">
+                <div class="encabezado-pdf">
+                    <img src="{% static 'img/interfaz_vanagro/vanagro_logo2.jpeg' %}" class="logo-tienda" alt="Logo">
+                    <div class="datos-tienda">
+                        <h1>Factura de Ventas FVV-{{ pedido.id }} </h1>
+                        <p>Nombre cliente: <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></p>
+                        <p>Fecha de compra: {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
+                    </div>
+                </div>
+
+                <table class="tabla-pdf">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cant. Total</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in pedido.detalles.all %}
+                        <tr>
+                            <td>{{ item.producto.nombre_producto }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>${{ item.subtotal|floatformat:0|intcomma }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="total-pdf" >
+                        <tr class="user-list__row">
+                        <td class="user-list__cell" colspan="2" ><strong>TOTAL:</strong></td>
+                        <td class="user-list__cell"><strong>${{ pedido.total|floatformat:0|intcomma }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                {% comment %} <div class="total-pdf">
+                    <p><strong>TOTAL: ${{ total_general }}</strong></p>
+                </div> {% endcomment %}
+            </div>
+        </div>
+
+        <div class="modal-pie">
+            <button onclick="cerrarModal()" class="buttons__action--secondary btn-secundario">Cerrar</button>
+            <button onclick="window.print()" class="buttons__action--primary btn-primario">Imprimir / Guardar PDF</button>
+        </div>
+    </div>
+</div>
+
 
 {% endblock carrito %}
