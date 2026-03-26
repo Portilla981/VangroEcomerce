@@ -29,18 +29,11 @@ def ver_productos(request):
     
     categorias = Producto.CATEGORIA
     # Accion para volver a la pagina de donde se llamo
-    # def dispatch(self, request, *args, **kwargs):
-    # next_url = request.GET.get('next')
-
-    # if next_url:
-    #     request.session['volver_a'] = next_url
-
+    
     next_url = request.GET.get('next')
 
     if next_url:
         request.session['volver_a'] = next_url
-
-    
     
     print("Productos encontrados:", productos.count())
 
@@ -49,6 +42,7 @@ def ver_productos(request):
         'categorias': categorias,
         'titulo': 'Lista de productos'
     })
+
 
 def detalle_producto(request, pk):
     producto = get_object_or_404(
@@ -254,8 +248,23 @@ def crear_producto(request):
         else:
             print("FORMULARIO NO VALIDO")
             messages.error(request, form.errors)
-            print(form.errors)           
-            
+            print(form.errors)  
+
+
+            # 1. Creamos una cadena de texto vacía
+            error_msg = "Por favor corrige lo siguiente: "
+            print(form.errors)
+
+            # 2. Recorremos ambos formularios        
+            for field, errors in form.errors.items():
+                # Limpiamos el nombre del campo (ej: 'fecha_nacimiento' -> 'Fecha nacimiento')
+                nombre_limpio = field.replace('_', ' ').capitalize()
+                # Concatenamos: "Campo: error1, error2. "
+                error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}. "
+
+            # 3. Enviamos un ÚNICO mensaje de error al popup
+            messages.error(request, error_msg)         
+                
     #si el método es GET muestra el formulario vacío
     else:
         form = Form_producto()
@@ -462,13 +471,19 @@ def buscar_productos(request):
     
     # Busca lo que se va ingresando dentro de los productos que tengan el estado habilitados
         
-    productos = Producto.objects.filter(activo=True, estado_producto = 'publicado' )
+    productos = Producto.objects.filter(
+        activo=True, 
+        estado_producto = 'publicado',
+        productor__user__is_active= True,
+        productor__activo = True
+        )
 
     if categoria:
-        productos = Producto.objects.filter(activo=True, categoria = categoria)
+        print("Categoria:", categoria)
+        productos = productos.filter(categoria = categoria)
 
     if q:
-        productos = Producto.objects.filter(activo=True, nombre_producto__icontains=q)
+        productos = productos.filter(nombre_producto__icontains=q)
 
     #se carga como tipo texto la información de cada producto 
     html = render_to_string('components/card-producto_buscar.html', {'productos': productos})

@@ -156,9 +156,6 @@ class Contactenos(CreateView):
         return context
     
 
-    
- 
-
 class Inicio(LoginView):
     template_name = 'home/inicio.html'
         
@@ -175,13 +172,40 @@ class Inicio(LoginView):
        
     # si el usuario es valido 
     def form_valid(self, form):
-        messages.success(self.request, "Bienvenido al sistema")
+        username = self.request.POST.get('username')
+        user = form.get_user()
+
+        if not user.is_active:
+            messages.error(self.request,
+                "El usuario está inhabilitado. Comuníquese con el administrador."
+            )
+            return self.form_invalid(form)
+
+        messages.success(self.request, f"Bienvenido {username} al sistema")
         return super().form_valid(form)
+        
 
     # Si el usuario no es
     def form_invalid(self, form):
-        messages.error(self.request, "Usuario o contraseña incorrectos")
+        username = self.request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+
+            if not user.is_active:
+                messages.error(
+                    self.request,
+                    "El usuario existe pero está inhabilitado. Comuníquese con el administrador."
+                )
+            else:
+                messages.error(self.request, "Usuario o contraseña incorrectos")
+
+        except User.DoesNotExist:
+            messages.error(self.request, "Usuario o contraseña incorrectos")
+
         return super().form_invalid(form)
+
+        # messages.error(self.request, "Usuario o contraseña incorrectos")
+        # return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

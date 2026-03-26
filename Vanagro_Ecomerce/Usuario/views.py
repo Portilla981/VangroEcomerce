@@ -273,15 +273,16 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
     
 @login_required
 def editar_usuario(request, pk):
-    
+     
     # Buscamos el usuario por su ID
     perfil = get_object_or_404(CreacionUsuario, pk=pk)
+    # Seguridad    
+    if not request.user.is_superuser:
+        if perfil.user != request.user:
+            return redirect('sesion_inicio')
+
     user = perfil.user # Accedemos al User de Django relacionado
 
-    # Seguridad
-    if perfil.user != request.user:
-        return redirect('sesion_inicio')
-        
     if request.method == 'POST':        
         user_form = Form_Actualizar_User(request.POST, instance = user)
         perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil)
@@ -428,6 +429,10 @@ def toggle_usuario(request, pk):
             usuario.is_active = not usuario.is_active
             #utilizamos el método save de Django para actualizar el estado del producto
             usuario.save()
+            if hasattr(usuario, 'productor'):
+                productor = usuario.productor
+                productor.activo = not productor.activo
+                productor.save()
 
         elif tipo == 'productor':
             if hasattr(usuario, 'productor'):

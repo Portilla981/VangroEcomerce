@@ -1,5 +1,4 @@
 from django import forms
-
 from .models import Producto
 from django.contrib.auth.models import User
 
@@ -32,5 +31,19 @@ class Form_producto(forms.ModelForm):
         if isinstance(precio, str):
             precio = precio.replace(',', '.')
         return precio
+    
+    def clean(self):
+        # 1. Obtenemos todos los datos limpios del formulario
+        cleaned_data = super().clean()
+        fecha_e = cleaned_data.get("fecha_elaboracion")
+        fecha_v = cleaned_data.get("fecha_vencimiento")
+
+        # 2. Comparamos
+        if fecha_e and fecha_v:
+            if fecha_v <= fecha_e:
+                # 3. Lanzamos el error asociado al campo específico
+                self.add_error('fecha_vencimiento', "La fecha de caducidad no puede ser anterior a la de elaboracion.")
+        
+        return cleaned_data
         
     
