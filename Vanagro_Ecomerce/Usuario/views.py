@@ -1,3 +1,4 @@
+from os import link
 from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -6,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 # Ruta para obtener las vistas genéricas de django para el CRUD
 from django.views.generic import TemplateView, View
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.shortcuts import get_object_or_404
@@ -15,38 +16,32 @@ from Usuario.forms import UserForm, Formulario_Usuario, Formulario_Productor, Fo
 from .models import *
 # Importas el modelo desde la carpeta 'home'
 from Home.models import Mensaje, EstadoMensaje
-from Pedido.models import DetallePedido, Pedido
+from Pedido.models import DetallePedido
 from django.db import transaction
 from django.utils import timezone
 from django.db.models import Sum, F
 from datetime import datetime
 from django.utils.timezone import make_aware
+from .utils import enviar_correo_activacion, generar_link_activacion
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.models import User
+from .tokens import token_activacion
 
 # Create your views here.
-
 class PerfilUsuario(LoginRequiredMixin, DeleteView):
     model = CreacionUsuario
     template_name = 'usuario/login.html'
     context_object_name = 'perfil'
 
     def dispatch(self, request, *args, **kwargs):
-
         # Si es superusuario, lo dejamos entrar pero SIN perfil
         if request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs)
-
-        # if not hasattr(request.user, 'productor'):
-        #     messages.error(request, "Debes registrar una tienda primero.")
-        #     return redirect('registro_productor')
-
-        # if not request.user.productor.activo:
-        #     messages.error(request, "Tu tienda está deshabilitada.")
-        #     return redirect('sesion_inicio')        
-
+        
         # Si NO tiene perfil, mostramos mensaje y redirigimos
         if not hasattr(request.user, 'usuario'):
             messages.error(request, "No tienes perfil creado.")
-            return redirect('inicio')  # ajusta esta ruta
+            return redirect('inicio')  
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -54,12 +49,9 @@ class PerfilUsuario(LoginRequiredMixin, DeleteView):
         # Verifica si es superuser
         if self.request.user.is_superuser:
             return None
-
-        #return self.request.user.creacionusuario
+        
         return get_object_or_404(CreacionUsuario, user=self.request.user)
-        # perfil, created = CreacionUsuario.objects.get_or_create(user=self.request.user)
-        # return perfil
-    
+            
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)        
         context['titulo']= 'Sesion de Usuario'  
@@ -70,19 +62,13 @@ class PerfilUsuario(LoginRequiredMixin, DeleteView):
 class Tienda(LoginRequiredMixin, TemplateView):
     template_name = 'usuario/producter-profile.html'
     
-    # success_message = 'Producto creado exitosamente.'
-    # messages.success(request, success_message)   
     def dispatch(self, request, *args, **kwargs):
-        # messages.info(request, 'Ingresando al módulo de tienda')
         return super().dispatch(request, *args, **kwargs)  
 
-    def get_context_data(self, **kwargs):
-        
-        context = super().get_context_data(**kwargs)
-        
+    def get_context_data(self, **kwargs):        
+        context = super().get_context_data(**kwargs)        
         context['titulo']= 'Tienda de Productos'
-        context['es_productor'] = hasattr(self.request.user, 'productor')
-        
+        context['es_productor'] = hasattr(self.request.user, 'productor')        
         return context
     
 
@@ -91,7 +77,6 @@ class RegistroUsuario(View):
     titulo = 'Registro de Usuario'
 
     def dispatch(self, request, *args, **kwargs):
-        # messages.info(request, 'Ingresando al módulo de registro')
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -116,18 +101,15 @@ class RegistroUsuario(View):
         perfil_form.fields['municipio'].queryset = Municipio.objects.all()        
 
         if user_form.is_valid() and perfil_form.is_valid():
-
             try:
-                with transaction.atomic():
-                    print("Formularios válidos. Procediendo a crear el usuario y perfil.")
-
+                with transaction.atomic():    
                     # Crear usuario
                     usuario = User.objects.create_user(
                         first_name = user_form.cleaned_data['first_name'],
                         last_name = user_form.cleaned_data['last_name'],
                         username = user_form.cleaned_data['username'],    
                         email = user_form.cleaned_data['email'],
-                        password = user_form.cleaned_data['password1']
+                        password = user_form.cleaned_data['password1'],
                     )
 
                     CreacionUsuario.objects.create(
@@ -140,11 +122,15 @@ class RegistroUsuario(View):
                         telefono_2=perfil_form.cleaned_data['telefono_2'],
                         direccion_residencia=perfil_form.cleaned_data['direccion_residencia'],
                         fecha_nacimiento=perfil_form.cleaned_data['fecha_nacimiento'],
-                        fotografia=perfil_form.cleaned_data['fotografia']
+                        fotografia=perfil_form.cleaned_data['fotografia'],
+                        verificado=False
                     )
                     
                     print(f"Usuario {usuario.username} y perfil creado exitosamente.")
 
+                    link = generar_link_activacion(usuario, request)
+                    transaction.on_commit(lambda: enviar_correo_activacion(usuario, link))
+                    
                     messages.success(request, f'Usuario {usuario.username} creado exitosamente.') 
                     return redirect("inicio_vista")
                 
@@ -158,10 +144,8 @@ class RegistroUsuario(View):
                     })
         
         else:
-
             # 1. Creamos una cadena de texto vacía
-            error_msg = "Por favor corrige lo siguiente: "
-    
+            error_msg = "Por favor corrige lo siguiente: "    
             # 2. Recorremos ambos formularios
             for f in [user_form, perfil_form]:
                 for field, errors in f.errors.items():
@@ -169,28 +153,63 @@ class RegistroUsuario(View):
                     nombre_limpio = field.replace('_', ' ').capitalize()
                     # Concatenamos: "Campo: error1, error2. "
                     error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}. "
-
             # 3. Enviamos un ÚNICO mensaje de error al popup
             messages.error(request, error_msg)
-     
-
             print(user_form.errors)
             print(perfil_form.errors)
-
-            # for formulario in [form_user, form_perfil]:
-            #     for field, errors in formulario.errors.items():
-            #         for error in errors:
-            #             # Enviamos cada error al sistema de mensajes
-            #             nombre_campo = field.replace('_', ' ').capitalize()
-            #             messages.error(request, f"{nombre_campo}: {error}")
-
 
             return render(request, self.template_name, {
                 "user_form": user_form,
                 "perfil_form": perfil_form,
                 "titulo": self.titulo
             })
-            
+        
+
+def activar_cuenta(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    print("UID:", uid)
+    print("User:", user)
+    print("Token válido:", token_activacion.check_token(user, token))
+    print("Verificado:", user.usuario.verificado)   
+
+    if user and token_activacion.check_token(user, token):
+        perfil = user.usuario  
+
+        if not perfil.verificado:
+            perfil.verificado = True
+            perfil.save()      
+
+        return render(request, 'registration/cuenta_activa.html')
+
+    return render(request, 'registration/cuenta_activa.html', {
+        'error': True
+    })
+
+
+def reenviar_activacion(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        try:
+            user = User.objects.get(email=email)
+            perfil = user.usuario
+
+            if perfil.verificado:
+                messages.info(request, "La cuenta ya está activada.")
+            else:
+                link = generar_link_activacion(user, request)  
+                enviar_correo_activacion(user, link)   
+               
+                messages.success(request, "Correo de activación reenviado.")
+
+        except User.DoesNotExist:
+            messages.error(request, "No existe una cuenta con ese correo.")
+
+    return redirect('inicio_vista')
     
 
 def cargar_municipios(request):
@@ -204,14 +223,10 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
     template_name = "usuario/tienda.html"
 
     def dispatch(self, request, *args, **kwargs):
-        # messages.info(request, 'Ingresando al módulo de creación de tienda')
-        return super().dispatch(request, *args, **kwargs)
-    
+        return super().dispatch(request, *args, **kwargs)    
 
-    def get_context_data(self, **kwargs):
-        
-        context = super().get_context_data(**kwargs)        
-
+    def get_context_data(self, **kwargs):        
+        context = super().get_context_data(**kwargs) 
         user = self.request.user
 
         # verifica si el usuario tiene productor
@@ -219,29 +234,22 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
             context['titulo']= 'Tu tienda'
             context['es_productor'] = True
             context['productor'] = user.productor
-            # perfil, creado = CreacionUsuario.objects.get_or_create(user=user)
-            # context['perfil'] = perfil
-            # context['perfil'] = CreacionUsuario.objects.get(user=user)
             context['perfil'], _ = CreacionUsuario.objects.get_or_create(user=user)
 
         else:
             form = Formulario_Productor()
             form.fields['municipio'].queryset = Municipio.objects.all()
-
             context['titulo']= 'Registro de tienda'
             context['es_productor'] = False
-            # context['form'] = Formulario_Productor()
-            # context['form'].fields['municipio'].queryset = Municipio.objects.all()
             context['form'] = form
         
         return context
     
     # POST → Guardar datos
-    def post(self, request, *args, **kwargs):
-        
+    def post(self, request, *args, **kwargs):        
         # Validación principal
         if hasattr(request.user, 'productor'):
-            return redirect('tienda_usuario')  # ya existe
+            return redirect('tienda_usuario')  # si ya existe 
 
         form = Formulario_Productor(request.POST, request.FILES)
 
@@ -250,17 +258,14 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
             productor.user = request.user
             productor.save()
             messages.success(request, f'La finca {productor.nombre_finca} ha sido creada exitosamente.') 
-            return redirect('tienda_usuario')
-        
+            return redirect('tienda_usuario')        
         
         # 1. Creamos una cadena de texto vacía
         error_msg = "Por favor corrige lo siguiente: "
-
         # 2. Recorremos formularios
         for field, errors in form.errors.items():
             nombre_limpio = field.replace('_', ' ').capitalize()
             error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}."
-
         # 3. Enviamos un ÚNICO mensaje de error al popup
         messages.error(request, error_msg)
 
@@ -272,8 +277,7 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
     
     
 @login_required
-def editar_usuario(request, pk):
-     
+def editar_usuario(request, pk):     
     # Buscamos el usuario por su ID
     perfil = get_object_or_404(CreacionUsuario, pk=pk)
     # Seguridad    
@@ -290,12 +294,10 @@ def editar_usuario(request, pk):
         if user_form.is_valid() and perfil_form.is_valid():            
             user_form.save()
             perfil_form.save()
-
             messages.success(request, f'El usuario {user.username} ha sido editado exitosamente.')            
             
             return redirect('sesion_inicio')
-        
-    
+           
         # 1. Creamos una cadena de texto vacía
         error_msg = "Por favor corrige lo siguiente: "
         print(user_form.errors)
@@ -378,35 +380,25 @@ class ListaUsuarios(LoginRequiredMixin, ListView):
 
         if next_url:
             request.session['volver_a'] = next_url
-
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self): 
-
         usuarios = CreacionUsuario.objects.exclude(user__is_superuser=True).select_related('user__productor')
 
         for u in usuarios:
-            u.es_productor = hasattr(u.user, 'productor')  # CLAVE
-
+            u.es_productor = hasattr(u.user, 'productor') 
         return usuarios
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_superuser:
-            context['titulo'] = "Lista general de usuarios"
-        # else:
-        #     context['titulo'] = "Mis productos"
-
+            context['titulo'] = "Lista general de usuarios"       
         return context
-
-
-
 
 @login_required
 #vista para actualizar el estado del producto de forma automática (sin actualizar la pagina)
 def toggle_usuario(request, pk):
-
     next_url = request.GET.get('next')
 
     if next_url:
@@ -490,9 +482,6 @@ class ListaMensajes(LoginRequiredMixin, ListView):
         context['titulo'] = "Mensajes de contacto"
         return context
     
-
-    
-
 @login_required
 def responder_mensaje(request):
 
@@ -558,8 +547,6 @@ def despachar_item(request, pk):
     
     if next_url:
         return redirect(next_url)
-
-
     return redirect('gestion_ventas')
 
 
@@ -569,8 +556,7 @@ def informe_ventas_productor(request):
     next_url = request.GET.get('next')
 
     if next_url:
-        request.session['volver_a'] = next_url
-    
+        request.session['volver_a'] = next_url    
 
     # 1. Obtener fechas del filtro (si existen)
     fecha_inicio = request.GET.get('fecha_inicio')
@@ -600,18 +586,13 @@ def informe_ventas_productor(request):
     resumen_productos = ventas.values('producto__nombre_producto').annotate(
         cantidad_total=Sum('cantidad'),
         subtotal_acumulado=Sum(F('cantidad') * F('precio'))
-    ).order_by('-cantidad_total')
-
-   
+    ).order_by('-cantidad_total')   
     # 4. Calcular el Gran Total de todas las ventas filtradas
     # Usamos aggregate para sumar (cantidad * precio) de cada fila
     total_general = ventas.aggregate(
         total=Sum(F('cantidad') * F('precio'))
         )['total'] or 0
     
-
-    
-
     return render(request, 'usuario/informe_admin.html', {
         'ventas': ventas,
         'resumen': resumen_productos,

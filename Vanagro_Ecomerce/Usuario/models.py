@@ -41,6 +41,7 @@ class CreacionUsuario(models.Model):
     direccion_residencia = models.CharField('Dirección', max_length=255)
     fecha_nacimiento = models.DateField('Fecha de Nacimiento')
     fotografia = models.ImageField('Fotografía', upload_to='usuarios/', blank=True, null=True)
+    verificado = models.BooleanField('Correo verificado', default=False)
 
 
     def __str__(self):  

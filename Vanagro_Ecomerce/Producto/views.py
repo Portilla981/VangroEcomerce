@@ -1,22 +1,17 @@
-# from pyexpat.errors import messages
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .forms import Form_producto
 from .models import Producto
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, ListView, UpdateView, FormView
+from django.views.generic import ListView
 from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
-from django.db import transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.utils import timezone
 from datetime import timedelta
-
 
 # Create your views here.
 def ver_productos(request):
@@ -28,8 +23,7 @@ def ver_productos(request):
         ).select_related('productor', 'productor__user')
     
     categorias = Producto.CATEGORIA
-    # Accion para volver a la pagina de donde se llamo
-    
+    # Accion para volver a la pagina de donde se llamo    
     next_url = request.GET.get('next')
 
     if next_url:
@@ -97,10 +91,6 @@ def editar_producto(request, pk):
     print(request.POST)
     print(request.POST.get('accion'))
 
-    # if not request.user.productor.activo:
-    #     messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
-    #     return redirect('sesion_inicio')
-
     if request.method == 'POST':
         form = Form_producto(request.POST, request.FILES, instance=producto)
         if form.is_valid():
@@ -113,12 +103,9 @@ def editar_producto(request, pk):
                 producto.estado_producto = 'borrador'
                 producto.save()
                 
-                url = reverse('vista_previa', args=[producto.id])
-                
+                url = reverse('vista_previa', args=[producto.id])                
                 return redirect(f"{url}?modo=crear")
-                
-                # return redirect('vista_previa', producto.id)
-            
+                           
             elif accion == 'guardar':
                 producto.estado_producto = 'publicado'
                 producto.save()
@@ -128,24 +115,26 @@ def editar_producto(request, pk):
             elif accion == 'cancelar':
                 # NO borrar si ya estaba publicado
                 if producto.estado_producto == 'borrador':
-                    producto.delete()
-                    # messages.info('Saliendo del modulo de edición')
+                    producto.delete()                    
                 return redirect('tienda_usuario')
         else:
             print("FORMULARIO NO VALIDO")
-            messages.error(request, form.errors)
+            # messages.error(request, form.errors)
             print(form.errors)
-            # return redirect('vista_previa', producto.id)
+            error_msg = "Por favor corrige lo siguiente: "
+
+            for field, errors in form.errors.items():
+                nombre_limpio = field.replace('_', ' ').capitalize()
+                error_msg = f"\n• {nombre_limpio}: {', '.join(errors)}"
+            messages.error(request, error_msg)
+            
     else:
-        form = Form_producto(instance=producto)
-        # messages.info('Ingresando a editar producto')
+        form = Form_producto(instance=producto)       
 
     return render(request, 'productos/crear_producto.html', {'form': form})
 
 # Listar producto
-
-class ListaProductos(LoginRequiredMixin, ListView):
-    
+class ListaProductos(LoginRequiredMixin, ListView):    
     model = Producto
     # template_name = "productos/listado_productos.html"
     context_object_name = "productos"
@@ -164,11 +153,9 @@ class ListaProductos(LoginRequiredMixin, ListView):
 
         if next_url:
             request.session['volver_a'] = next_url
-
         return super().dispatch(request, *args, **kwargs)
 
-    def get_queryset(self):
-        
+    def get_queryset(self):        
         if self.request.user.is_superuser:
             return Producto.objects.all()
         else:
@@ -181,11 +168,9 @@ class ListaProductos(LoginRequiredMixin, ListView):
             context['titulo'] = "Lista general de productos"
         else:
             context['titulo'] = "Mis productos"
-
-        return context
+        return context        
         
-        
-#el usuario debe estar autenticado para crear el producto
+# El usuario debe estar autenticado para crear el producto
 @login_required
 # Vista para crear el producto
 def crear_producto(request):
@@ -198,13 +183,11 @@ def crear_producto(request):
     ).delete()
 
     next_url = request.GET.get('next')
-
     if next_url:
         request.session['volver_a'] = next_url
    
     #procesar el formulario (Si se envía)
     if request.method == 'POST':
-
         #Se capturan los datos del producto y la imagen
         borrador_previo = Producto.objects.filter(
             productor=request.user.productor, 
@@ -216,9 +199,8 @@ def crear_producto(request):
             form = Form_producto(request.POST, request.FILES, instance=borrador_previo)
         else:
             form = Form_producto(request.POST, request.FILES)       
-        # form = Form_producto(request.POST, request.FILES)
-
-        #se valida si el formulario es valido
+        
+        # Se valida si el formulario es valido
         if form.is_valid():
             accion = request.POST.get('accion')
             producto = form.save(commit=False)
@@ -247,10 +229,8 @@ def crear_producto(request):
             
         else:
             print("FORMULARIO NO VALIDO")
-            messages.error(request, form.errors)
-            print(form.errors)  
-
-
+            # messages.error(request, form.errors)
+            print(form.errors)
             # 1. Creamos una cadena de texto vacía
             error_msg = "Por favor corrige lo siguiente: "
             print(form.errors)
@@ -261,16 +241,12 @@ def crear_producto(request):
                 nombre_limpio = field.replace('_', ' ').capitalize()
                 # Concatenamos: "Campo: error1, error2. "
                 error_msg += f"\n• {nombre_limpio}: {', '.join(errors)}. "
-
             # 3. Enviamos un ÚNICO mensaje de error al popup
-            messages.error(request, error_msg)         
-                
-    #si el método es GET muestra el formulario vacío
+            messages.error(request, error_msg)                  
+    # Si el método es GET muestra el formulario vacío
     else:
         form = Form_producto()
-        # messages.info(request, 'Ingresando a modulo de creacion de producto, \nEspere un momento...')
-
-    #se carga el formulario para crear el producto
+    # Se carga el formulario para crear el producto
     return render(request,'productos/crear_producto.html',{
         'form':form,
         'titulo':'Crear Producto'})
@@ -282,8 +258,7 @@ def toggle_producto(request, pk):
 
     if request.method == 'POST':
         #get_object_or_404 busca en la bd el producto que llega como ID por la URL. Si el producto no existe muestra error 404'''
-        #Producto es el producto al que se le desea cambiar el estado
-        
+        #Producto es el producto al que se le desea cambiar el estado        
         if request.user.is_superuser:
             producto = get_object_or_404(Producto, pk=pk)
         else:    
@@ -291,22 +266,17 @@ def toggle_producto(request, pk):
         #cambia el estado actual del producto  
         producto.activo = not producto.activo
         #utilizamos el método save de Django para actualizar el estado del producto
-        producto.save()
-        
+        producto.save()        
         #indica si el cambio de estado fue realizado e indica el nuevo estado del producto
         return redirect(request.POST.get('next', 'mis_productos'))
     
     return redirect('mis_productos')
 
-
-
 @login_required
 def funcion_vista_previa(request, pk):
     producto = get_object_or_404(Producto, pk=pk, productor =request.user.productor)
     modo = request.GET.get('modo')
-
     return render(request, 'productos/vista_previa.html', {'producto': producto, 'modo': modo})
-
 
 # Guardar producto
 class GuardarProducto(LoginRequiredMixin, View):
@@ -314,7 +284,6 @@ class GuardarProducto(LoginRequiredMixin, View):
     def post(self, request):
         data = request.session.get("producto_data")
         files = request.session.get("producto_files")
-
         form = Form_producto(data, files)
 
         if form.is_valid():
@@ -332,10 +301,8 @@ class GuardarProducto(LoginRequiredMixin, View):
 class GuardarProductoEditado(LoginRequiredMixin, View):
    
     def post(self, request):
-
         data = request.session.get("producto_data")
         files = request.session.get("producto_files")
-
         producto_id = request.session.get("producto_id")
 
         if producto_id:
@@ -373,12 +340,7 @@ class EditarProducto(LoginRequiredMixin, View):
     def get(self, request, pk):
 
         producto = self.get_producto(request, pk)
-
-        # if not request.user.is_superuser:
-        #     if not request.user.productor.activo:
-        #         messages.error(request, "La tienda está deshabilitada, Comunícate con el administrador.")
-        #         return redirect('sesion_inicio')
-
+       
         form = Form_producto(instance=producto)
 
         return render(request, self.template_name, {
@@ -390,12 +352,7 @@ class EditarProducto(LoginRequiredMixin, View):
     def post(self, request, pk):
 
         producto = self.get_producto(request, pk)
-        # producto = get_object_or_404(
-        #     Producto,
-        #     pk=pk,
-        #     productor=request.user.productor
-        # )
-
+       
         form = Form_producto(
             request.POST,
             request.FILES,
@@ -425,7 +382,7 @@ class EditarProducto(LoginRequiredMixin, View):
 
                 if not request.user.is_superuser:
                     producto.productor = request.user.productor
-                # producto.productor = request.user.productor
+                
                 producto.estado_producto = "publicado"
                 producto.activo = True
                 producto.save()
@@ -440,16 +397,12 @@ class EditarProducto(LoginRequiredMixin, View):
 
         return render(request, self.template_name, {"form": form})
 
-
-
-
 @login_required
 def cambiar_imagen_producto(request):
 
     if request.method == 'POST':
         producto_id = request.POST.get("producto_id")
         imagen = request.FILES.get("imagen")
-
         producto = Producto.objects.get(id = producto_id)
 
         if imagen:
@@ -458,7 +411,6 @@ def cambiar_imagen_producto(request):
 
     return redirect("mis_productos")
 
-# @login_required
 #Vista para buscar los productos
 def buscar_productos(request):
     #q recibe el producto que se desea buscar (lo que el usuario va escribiendo)
@@ -467,10 +419,8 @@ def buscar_productos(request):
     #verifica si tiene filtro (todos, activo, inactivo) si no tiene filtro por defecto es activo
     categoria = request.GET.get("categoria", "")
     '''nombre__icontains (busca el nombre que se va ingresando sin importar mayúsculas o 
-    minúsculas)'''
-    
-    # Busca lo que se va ingresando dentro de los productos que tengan el estado habilitados
-        
+    minúsculas)'''    
+    # Busca lo que se va ingresando dentro de los productos que tengan el estado habilitados        
     productos = Producto.objects.filter(
         activo=True, 
         estado_producto = 'publicado',

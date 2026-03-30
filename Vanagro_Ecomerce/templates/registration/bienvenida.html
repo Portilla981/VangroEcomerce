@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido</title>
+</head>
+<body style="font-family: Arial; background-color: #f4f4f4; padding: 20px;">
+    
+    <div style="background: white; padding: 20px; border-radius: 10px;">
+        
+        <h2 style="color: #2e7d32;">🌱 Bienvenido a Vanagro</h2>
+
+        <p>Hola <strong>{{ usuario.username }}</strong>,</p>
+
+        <p>Tu cuenta fue creada exitosamente 🎉</p>
+
+        <p>Ya puedes comenzar a explorar nuestros productos.</p>
+
+        <br>
+
+        <a href="http://127.0.0.1:8000/activar/{{ uid }}/{{ token }}/">Activar cuenta</a>
+
+        <a href="http://127.0.0.1:8000/Inicio/" 
+           style="background: #2e7d32; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
+           Iniciar sesión
+        </a>
+
+        <br><br>
+
+        <small>Gracias por unirte a nuestra plataforma.</small>
+
+    </div>
+
+</body>
+</html>

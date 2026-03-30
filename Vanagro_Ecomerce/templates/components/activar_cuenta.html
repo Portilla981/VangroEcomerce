@@ -1,0 +1,21 @@
+{% extends "registration/email_base.html" %}
+
+{% block content %}
+
+<p>Hola <strong>{{ usuario.username }}</strong>,</p>
+
+<p>Gracias por registrarte en Vanagro 🎉</p>
+
+<p>Para activar tu cuenta, haz clic en el siguiente botón:</p>
+
+<div style="text-align:center; margin:20px 0;">
+    <p>{{ link_activacion }}</p>
+    <a href="{{ link_activacion }}"
+       style="word-break: break-all; background:#2e7d32; color:white; padding:12px 20px; text-decoration:none; border-radius:5px; font-weight:bold;">
+        Activar cuenta
+    </a>
+</div>
+
+<p>Si no creaste esta cuenta, puedes ignorar este mensaje.</p>
+
+{% endblock %}

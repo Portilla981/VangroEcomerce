@@ -17,6 +17,17 @@
 
         {% comment %}Lado derecho: formulario{% endcomment %}
         <div class="session__form-container">
+            {% if request.session.usuario_inactivo %}
+                <div style="margin-top:20px; padding:15px; background:#fff3cd; border-radius:5px;">
+                    <p>Tu cuenta no está activada.</p>
+                    <form method="post" action="{% url 'reenviar_activacion' %}">
+                        {% csrf_token %}                        
+                        <input type="hidden" name="email" value="{{ request.session.usuario_inactivo }}">
+                        <button type="submit">Reenviar correo de activación</button>
+                    </form>
+                </div>
+            {% endif %}
+
             <form class="beginner-form" method="POST">
                 <h2 class="session__subtitle">Iniciar Sesión</h2>
                 {% csrf_token %}

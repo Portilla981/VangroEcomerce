@@ -9,6 +9,8 @@ urlpatterns = [
     path('tienda/', RegistroProductor.as_view(), name= 'tienda_usuario'),  
     path('salir/', LogoutView.as_view(next_page = 'inicio'), name='logout'),   
     path('registro/', RegistroUsuario.as_view(), name='registro_usuario'),
+    path('activar/<uidb64>/<token>/',activar_cuenta, name='activar_cuenta'),
+    path('reenviar-activacion/', reenviar_activacion, name='reenviar_activacion'),
     path('editar/usuario/<int:pk>/', editar_usuario, name='editar_usuario'),
     path('editar/tienda/<int:pk>/', EditarProductor.as_view() , name='editar_tienda'),
     path('tienda/gestion/', panel_ventas_productor, name='gestion_ventas'),
