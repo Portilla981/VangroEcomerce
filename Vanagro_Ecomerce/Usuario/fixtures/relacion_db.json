@@ -1,460 +1,460 @@
 [
-{
+  {
     "model": "Usuario.departamento",
     "pk": 1,
     "fields": {
-        "nombre_Departamento": "Risaralda"
+      "nombre_Departamento": "Risaralda"
     }
-},
-{
+  },
+  {
     "model": "Usuario.departamento",
     "pk": 2,
     "fields": {
-        "nombre_Departamento": "Caldas"
+      "nombre_Departamento": "Caldas"
     }
-},
-{
+  },
+  {
     "model": "Usuario.departamento",
     "pk": 3,
     "fields": {
-        "nombre_Departamento": "Quindio"
+      "nombre_Departamento": "Quindío"
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 1,
     "fields": {
-        "nombre_Municipio": "Pereira",
-        "departamento": 1
+      "nombre_Municipio": "Pereira",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 2,
     "fields": {
-        "nombre_Municipio": "Dosquebradas",
-        "departamento": 1
+      "nombre_Municipio": "Dosquebradas",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 3,
     "fields": {
-        "nombre_Municipio": "Santa Rosa de Cabal",
-        "departamento": 1
+      "nombre_Municipio": "Santa Rosa de Cabal",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 4,
     "fields": {
-        "nombre_Municipio": "Apia",
-        "departamento": 1
+      "nombre_Municipio": "Apía",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 5,
     "fields": {
-        "nombre_Municipio": "Balboa",
-        "departamento": 1
+      "nombre_Municipio": "Balboa",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 6,
     "fields": {
-        "nombre_Municipio": "Belén de Umbría",
-        "departamento": 1
+      "nombre_Municipio": "Belén de Umbría",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 7,
     "fields": {
-        "nombre_Municipio": "Guática",
-        "departamento": 1
+      "nombre_Municipio": "Guática",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 8,
     "fields": {
-        "nombre_Municipio": "La Celia",
-        "departamento": 1
+      "nombre_Municipio": "La Celia",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 9,
     "fields": {
-        "nombre_Municipio": "Mistrató",
-        "departamento": 1
+      "nombre_Municipio": "Mistrató",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 10,
     "fields": {
-        "nombre_Municipio": "Pueblo Rico",
-        "departamento": 1
+      "nombre_Municipio": "Pueblo Rico",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 11,
     "fields": {
-        "nombre_Municipio": "Quinchía",
-        "departamento": 1
+      "nombre_Municipio": "Quinchía",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 12,
     "fields": {
-        "nombre_Municipio": "Santuario",
-        "departamento": 1
+      "nombre_Municipio": "Santuario",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 13,
     "fields": {
-        "nombre_Municipio": "Marsella",
-        "departamento": 1
+      "nombre_Municipio": "Marsella",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 14,
     "fields": {
-        "nombre_Municipio": "La Virginia",
-        "departamento": 1
+      "nombre_Municipio": "La Virginia",
+      "departamento": 1
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 15,
     "fields": {
-        "nombre_Municipio": "Armenia",
-        "departamento": 3
+      "nombre_Municipio": "Armenia",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 16,
     "fields": {
-        "nombre_Municipio": "Buenavista",
-        "departamento": 3
+      "nombre_Municipio": "Buenavista",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 17,
     "fields": {
-        "nombre_Municipio": "Calarcá",
-        "departamento": 3
+      "nombre_Municipio": "Calarcá",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 18,
     "fields": {
-        "nombre_Municipio": "Finlandia",
-        "departamento": 3
+      "nombre_Municipio": "Filandia",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 19,
     "fields": {
-        "nombre_Municipio": "Salento",
-        "departamento": 3
+      "nombre_Municipio": "Salento",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 20,
     "fields": {
-        "nombre_Municipio": "Córdoba",
-        "departamento": 3
+      "nombre_Municipio": "Córdoba",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 21,
     "fields": {
-        "nombre_Municipio": "Génova",
-        "departamento": 3
+      "nombre_Municipio": "Génova",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 22,
     "fields": {
-        "nombre_Municipio": "Pijao",
-        "departamento": 3
+      "nombre_Municipio": "Pijao",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 23,
     "fields": {
-        "nombre_Municipio": "La Tebaida",
-        "departamento": 3
+      "nombre_Municipio": "La Tebaida",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 24,
     "fields": {
-        "nombre_Municipio": "Montenegro",
-        "departamento": 3
+      "nombre_Municipio": "Montenegro",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 25,
     "fields": {
-        "nombre_Municipio": "Quinbaya",
-        "departamento": 3
+      "nombre_Municipio": "Quimbaya",
+      "departamento": 3
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 26,
     "fields": {
-        "nombre_Municipio": "Manizales",
-        "departamento": 2
+      "nombre_Municipio": "Manizales",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 27,
     "fields": {
-        "nombre_Municipio": "Chinchiná",
-        "departamento": 2
+      "nombre_Municipio": "Chinchiná",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 28,
     "fields": {
-        "nombre_Municipio": "Neira",
-        "departamento": 2
+      "nombre_Municipio": "Neira",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 29,
     "fields": {
-        "nombre_Municipio": "Palestina",
-        "departamento": 2
+      "nombre_Municipio": "Palestina",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 30,
     "fields": {
-        "nombre_Municipio": "Villamaria",
-        "departamento": 2
+      "nombre_Municipio": "Villamaría",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 31,
     "fields": {
-        "nombre_Municipio": "Aguadas",
-        "departamento": 2
+      "nombre_Municipio": "Aguadas",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 32,
     "fields": {
-        "nombre_Municipio": "Aranzazu",
-        "departamento": 2
+      "nombre_Municipio": "Aranzazu",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 33,
     "fields": {
-        "nombre_Municipio": "Pácora",
-        "departamento": 2
+      "nombre_Municipio": "Pácora",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 34,
     "fields": {
-        "nombre_Municipio": "Salamina",
-        "departamento": 2
+      "nombre_Municipio": "Salamina",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 35,
     "fields": {
-        "nombre_Municipio": "Filadelfia",
-        "departamento": 2
+      "nombre_Municipio": "Filadelfia",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 36,
     "fields": {
-        "nombre_Municipio": "La Merced",
-        "departamento": 2
+      "nombre_Municipio": "La Merced",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 37,
     "fields": {
-        "nombre_Municipio": "Marmato",
-        "departamento": 2
+      "nombre_Municipio": "Marmato",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 38,
     "fields": {
-        "nombre_Municipio": "Riosucio",
-        "departamento": 2
+      "nombre_Municipio": "Riosucio",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 39,
     "fields": {
-        "nombre_Municipio": "Supia",
-        "departamento": 2
+      "nombre_Municipio": "Supía",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 40,
     "fields": {
-        "nombre_Municipio": "Anserma",
-        "departamento": 2
+      "nombre_Municipio": "Anserma",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 41,
     "fields": {
-        "nombre_Municipio": "Belalcázar",
-        "departamento": 2
+      "nombre_Municipio": "Belalcázar",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 42,
     "fields": {
-        "nombre_Municipio": "Risaralda",
-        "departamento": 2
+      "nombre_Municipio": "Risaralda",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 43,
     "fields": {
-        "nombre_Municipio": "San José",
-        "departamento": 2
+      "nombre_Municipio": "San José",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 44,
     "fields": {
-        "nombre_Municipio": "Viterbo",
-        "departamento": 2
+      "nombre_Municipio": "Viterbo",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 45,
     "fields": {
-        "nombre_Municipio": "Manzanares",
-        "departamento": 2
+      "nombre_Municipio": "Manzanares",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 46,
     "fields": {
-        "nombre_Municipio": "Marquetalia",
-        "departamento": 2
+      "nombre_Municipio": "Marquetalia",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 47,
     "fields": {
-        "nombre_Municipio": "Marulanda",
-        "departamento": 2
+      "nombre_Municipio": "Marulanda",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 48,
     "fields": {
-        "nombre_Municipio": "Pensilvania",
-        "departamento": 2
+      "nombre_Municipio": "Pensilvania",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 49,
     "fields": {
-        "nombre_Municipio": "La Dorada",
-        "departamento": 2
+      "nombre_Municipio": "La Dorada",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 50,
     "fields": {
-        "nombre_Municipio": "Norcasia",
-        "departamento": 2
+      "nombre_Municipio": "Norcasia",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 51,
     "fields": {
-        "nombre_Municipio": "Samaná",
-        "departamento": 2
+      "nombre_Municipio": "Samaná",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.municipio",
     "pk": 52,
     "fields": {
-        "nombre_Municipio": "Victoria",
-        "departamento": 2
+      "nombre_Municipio": "Victoria",
+      "departamento": 2
     }
-},
-{
+  },
+  {
     "model": "Usuario.identificacion",
     "pk": 1,
     "fields": {
-        "tipo_identificacion": "Cedula de Ciudadania"
+      "tipo_identificacion": "Cédula de Ciudadanía"
     }
-},
-{
+  },
+  {
     "model": "Usuario.identificacion",
     "pk": 2,
     "fields": {
-        "tipo_identificacion": "Cedula de Extranjeria"
+      "tipo_identificacion": "Cédula de Extranjería"
     }
-},
-{
+  },
+  {
     "model": "Usuario.identificacion",
     "pk": 3,
     "fields": {
-        "tipo_identificacion": "Nit"
+      "tipo_identificacion": "Nit"
     }
-}
+  }
 ]
