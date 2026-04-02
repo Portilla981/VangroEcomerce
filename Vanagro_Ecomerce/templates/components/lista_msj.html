@@ -1,92 +1,136 @@
-<div class="user-list">
-  <h2 class="user-list__title">Recepción de mensajes</h2>
+{% load static %}
 
-  <table class="user-list__table">
-    <thead class="user-list__table-head">
-      <tr class="user-list__row user-list__row--head">
-        <th class="user-list__cell">Id</th>
-        <th class="user-list__cell">Fecha envio</th>
-        <th class="user-list__cell">Tipo</th>
-        <th class="user-list__cell">Asunto</th>
-        <th class="user-list__cell">Remitente</th>
-        <th class="user-list__cell">Correo Electrónico</th>
-        <th class="user-list__cell">Telefono</th>
-        <th class="user-list__cell">Mensaje</th>        
-        <th class="user-list__cell">Accion</th>        
-        <th class="user-list__cell">Fecha respuesta</th>        
-        <th class="user-list__cell">Respuesta</th>        
-      </tr>
-    </thead>
+<div class="list-message">
+  <h2 class="list-message__title">Recepción de mensajes</h2>
 
-    <tbody class="user-list__table-body" id="user-table-body">
-      {% for mensaje in mensajes %}
-      <tr class="user-list__row"> 
-        <td class="user-list__cell" data-label="Id">{{ mensaje.id }}</td>
-        <td class="user-list__cell" data-label="Fecha envio">{{ mensaje.fecha_envio|date:"d/m/Y" }}</td>
-        <td class="user-list__cell" data-label="Tipo msj">{{ mensaje.get_tipo_display }}</td>
-        <td class="user-list__cell" data-label="Asunto">{{ mensaje.asunto }}</td>
-        <td class="user-list__cell" data-label="Remitente">{{ mensaje.nombres }} {{ mensaje.apellidos }} </td>
-        <td class="user-list__cell" data-label="Email">{{ mensaje.email }} </td>
-        <td class="user-list__cell" data-label="Teléfono">{{ mensaje.telefono }} </td>
-        <td class="user-list__cell" data-label="Mensaje">{{ mensaje.mensaje|truncatechars:50 }}</td>
-        <td class="user-list__cell" data-label="Acciones">
+  <div class="list-message__table-container">
+    <table class="list-message__table">
+      <thead class="list-message__head">
+        <tr class="list-message__row list-message__row--head">
+          <th class="list-message__cell">Id</th>
+          <th class="list-message__cell">Fecha envío</th>
+          <th class="list-message__cell">Tipo</th>
+          <th class="list-message__cell">Asunto</th>
+          <th class="list-message__cell">Remitente</th>
+          <th class="list-message__cell">Correo Electrónico</th>
+          <th class="list-message__cell">Teléfono</th>
+          <th class="list-message__cell">Mensaje</th>        
+          <th class="list-message__cell">Acción</th>        
+          <th class="list-message__cell">Fecha respuesta</th>        
+          <th class="list-message__cell">Respuesta</th>        
+        </tr>
+      </thead>
+
+      <tbody class="list-message__body">
+        {% for mensaje in mensajes %}
+        <tr class="list-message__row"> 
+
+          <td class="list-message__cell" data-label="Id">{{ mensaje.id }}</td>
+
+          <td class="list-message__cell" data-label="Fecha envio">
+            {{ mensaje.fecha_envio|date:"d/m/Y" }}
+          </td>
+
+          <td class="list-message__cell" data-label="Tipo">
+            {{ mensaje.get_tipo_display }}
+          </td>
+
+          <td class="list-message__cell" data-label="Asunto">
+            {{ mensaje.asunto }}
+          </td>
+
+          <td class="list-message__cell" data-label="Remitente">
+            {{ mensaje.nombres }} {{ mensaje.apellidos }}
+          </td>
+
+          <td class="list-message__cell" data-label="Correo">
+            {{ mensaje.email }}
+          </td>
+
+          <td class="list-message__cell" data-label="Teléfono">
+            {{ mensaje.telefono }}
+          </td>
+
+          <td class="list-message__cell" data-label="Mensaje">
+            {{ mensaje.mensaje|truncatechars:50 }}
+          </td>
+
+          <td class="list-message__cell" data-label="Acción">
             {% if mensaje.estado == 'resuelto' %}
-                <button class="user-list__action-btn" disabled>Resuelto</button>
+              <button class="list-message__btn" disabled>Resuelto</button>
             {% else %}
-            <button type="button" class="user-list__action-btn user-list__action-btn--edit btn-abrir-modal"
+              <button 
+                type="button"
+                class="list-message__btn list-message__btn--primary btn-abrir-modal"
                 data-id="{{ mensaje.id }}"
                 data-asunto="{{ mensaje.asunto }}"
-                data-mensaje="{{ mensaje.mensaje }}">Responder
-            </button>
+                data-mensaje="{{ mensaje.mensaje }}">
+                Responder
+              </button>
             {% endif %}
-        </td>
-        <td class="user-list__cell" data-label="Fecha respuesta">
+          </td>
+
+          <td class="list-message__cell" data-label="Fecha respuesta">
             {% if mensaje.fecha_respuesta %}
-                {{ mensaje.fecha_respuesta|date:"d/m/Y H:i" }}
+              {{ mensaje.fecha_respuesta|date:"d/m/Y H:i" }}
             {% else %}
-                ---
-             {% endif %}
-        </td>
-        <td class="user-list__cell" data-label="Respuesta">
-            {% if mensaje.respuesta %}
-                {{ mensaje.respuesta|truncatechars:50 }}
-            {% else %}
-            <span style="color: gray;">Sin respuesta</span>
+              ---
             {% endif %}
-        </td>
-      {% empty %}
-      <tr>
-        <td colspan="9" class="user-list__cell">No se han registrado usuarios.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+          </td>
+
+          <td class="list-message__cell" data-label="Respuesta">
+            {% if mensaje.respuesta %}
+              {{ mensaje.respuesta|truncatechars:50 }}
+            {% else %}
+              <span class="list-message__empty">Sin respuesta</span>
+            {% endif %}
+          </td>
+
+        </tr>
+
+        {% empty %}
+        <tr>
+          <td colspan="11" class="list-message__cell">
+            No hay mensajes registrados.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
+<!-- MODAL -->
+<div id="modalRespuesta" class="modal-message">
+  <div class="modal-message__card">
 
-<div id="modalRespuesta" class="modal-actualizar">
-  <div class="modal-actualizar__card">
-    <h2>Responder mensaje</h2>
+    <h2 class="modal-message__title">Responder mensaje</h2>
 
     <p><strong>Asunto:</strong> <span id="modal-asunto"></span></p>
     <p><strong>Mensaje:</strong> <span id="modal-mensaje"></span></p>
 
-    <form id="form-respuesta" class="modal-actualizar__form"  method="POST" action="{% url 'respuesta_msj' %}">
-        <input type="hidden" name="mensaje_id" id="mensaje-id">
-        {% csrf_token %}
+    <form method="POST" action="{% url 'respuesta_msj' %}" class="modal-message__form" id="form-respuesta">
+      {% csrf_token %}
+      <input type="hidden" name="mensaje_id" id="mensaje-id">
 
-        <label>Respuesta</label>
-        <textarea name="respuesta" required></textarea>
-    
-        <div class="buttons modal-actualizar__button-box">
-            <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">Cancelar</button>
+      <label class="modal-message__label">Respuesta</label>
+      <textarea name="respuesta" required class="modal-message__textarea"></textarea>
 
-            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-                data-form="form-respuesta" 
-                data-titulo="💾 Guardar" 
-                data-mensaje="¿Confirmas guardar la respuesta?">Guardar Respuesta
-            </button> 
-        </div>
-    </form>    
+      <div class="modal-message__actions">
+        <button type="button" id="cerrarModal" class="modal-message__btn modal-message__btn--cancel">
+          Cancelar
+        </button>
+
+        <button 
+          type="button" 
+          class="modal-message__btn modal-message__btn--primary btn-confirmar"
+          data-form="form-respuesta"
+          data-titulo="Guardar"
+          data-mensaje="¿Confirmar respuesta?">
+          Guardar
+        </button>
+      </div>
+    </form>
+
   </div>
 </div>

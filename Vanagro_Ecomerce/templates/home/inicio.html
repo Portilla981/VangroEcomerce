@@ -17,6 +17,17 @@
 
         {% comment %}Lado derecho: formulario{% endcomment %}
         <div class="session__form-container">
+            {% if request.session.usuario_inactivo %}
+                <div style="margin-top:20px; padding:15px; background:#fff3cd; border-radius:5px;">
+                    <p>Tu cuenta no está activada.</p>
+                    <form method="post" action="{% url 'reenviar_activacion' %}">
+                        {% csrf_token %}                        
+                        <input type="hidden" name="email" value="{{ request.session.usuario_inactivo }}">
+                        <button type="submit">Reenviar correo de activación</button>
+                    </form>
+                </div>
+            {% endif %}
+
             <form class="beginner-form" method="POST">
                 <h2 class="session__subtitle">Iniciar Sesión</h2>
                 {% csrf_token %}
@@ -48,21 +59,64 @@
     </div>
 
     <div id="modalRecuperar" class="modal-recuperacion">
+
         <div class="modal-recuperacion__contenido">
-            <h3>Recuperar contraseña</h3>
 
             <form method="post" action="{% url 'password_reset' %}">
                 {% csrf_token %}
-                <label>Correo electrónico</label>
-                <input type="email" name="email" required>
-                
-                <div class="buttons">
-                <button type="button" id="cerrarModal" class="buttons__action--secondary">Cancelar</button>
-                
-                <button type="submit" class="buttons__action--primary">Enviar enlace</button>
+
+                <!-- HEADER -->
+                <div class="modal-recuperacion__header">
+                    <div class="modal-recuperacion__icon">
+                    <i class="fas fa-key"></i>
+                    </div>
+
+                    <h3 class="modal-recuperacion__title">
+                    Recuperar contraseña
+                    </h3>
+
+                    <p class="modal-recuperacion__text">
+                    Ingresa tu correo y te enviaremos un enlace para restablecerla.
+                    </p>
                 </div>
+
+                <!-- INPUT -->
+                <div class="modal-recuperacion__input-group">
+                    <label class="modal-recuperacion__label">
+                    Correo electrónico
+                    </label>
+
+                    <input 
+                    type="email" 
+                    name="email"
+                    class="modal-recuperacion__input"
+                    placeholder="ejemplo@correo.com"
+                    required
+                    >
+                </div>
+
+                <!-- BOTONES -->
+                <div class="modal-recuperacion__actions">
+
+                    <button 
+                    type="button" 
+                    id="cerrarModal" 
+                    class="modal-recuperacion__btn modal-recuperacion__btn--secondary">
+                    Cancelar
+                    </button>
+
+                    <button 
+                    type="submit" 
+                    class="modal-recuperacion__btn modal-recuperacion__btn--primary">
+                    Enviar enlace
+                    </button>
+
+                </div>
+
             </form>
+
         </div>
+
     </div>
 
 </section>
