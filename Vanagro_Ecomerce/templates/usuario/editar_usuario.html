@@ -2,172 +2,223 @@
 
 {% load static %}
 
-
 {% block navbar %}
-
     {% include 'components/navbar-simple_inicio.html' %}
-
 {% endblock navbar %}
 
 {% block script %}
-<script src="{% static 'js/campo_identificacion.js' %}" defer></script>
-<script src="{% static 'js/departamento_municipio.js' %}" defer></script>
+    <script src="{% static 'js/campo_identificacion.js' %}" defer></script>
+    <script src="{% static 'js/departamento_municipio.js' %}" defer></script>
 {% endblock script %}
 
 {% block login %}
 
-<div class="form-register__head">
-    <p><strong>Editar Usuario</strong></p>
-</div>
-
 <section class="form-register__block">
-    <div class="form-register__block--form">
+    <div class="form-register__head">
+        <h1 class="form-register__title">Editar usuario</h1>
+        <p class="form-register__subtitle">
+            Actualice la información de su perfil. El documento, el correo electrónico y el nombre de usuario no pueden modificarse.
+        </p>
+    </div>
 
-        <form method="POST" class="form-register__form" enctype="multipart/form-data" id="form-edit__user" >
+    <div class="form-register__block--form">
+        <form method="POST" class="form-register__form" enctype="multipart/form-data" id="form-edit__user">
             {% csrf_token %}
 
             <div class="form-register__group">
                 <label class="form-register__label">Nombres
-                    <input class="form-register__input" type="text" name="first_name"
-                        value="{{ user_form.instance.first_name|default_if_none:'' }}" required>
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        name="first_name"
+                        value="{{ user_form.instance.first_name|default_if_none:'' }}"
+                        placeholder="Ingrese sus nombres"
+                        required>
                 </label>
+
                 <label class="form-register__label">Apellidos
-                    <input class="form-register__input" type="text" name="last_name"
-                        value="{{ user_form.instance.last_name|default_if_none:'' }}" required>
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        name="last_name"
+                        value="{{ user_form.instance.last_name|default_if_none:'' }}"
+                        placeholder="Ingrese sus apellidos"
+                        required>
                 </label>
 
                 <div class="form-register__images">
-                    
                     {% if perfil_form.instance.fotografia %}
-                        <img src="{{ perfil_form.instance.fotografia.url }}" width="120">
+                        <img
+                            class="form-register__images--img"
+                            src="{{ perfil_form.instance.fotografia.url }}"
+                            alt="Foto de perfil actual">
                     {% endif %}
 
-                    <label class="form-register__label">Cargar foto de perfil
-                        <input class="form-register__file" type="file" name="fotografia">
+                    <label class="form-register__label">Foto de perfil
+                        <input
+                            class="form-register__file"
+                            type="file"
+                            name="fotografia">
                     </label>
                 </div>
             </div>
 
             <div class="form-register__group">
                 <label class="form-register__label">Tipo de documento
-                    <select class="form-register__input" name="tipo_identificacion" id="tipo_id" required>
+                    <select
+                        class="form-register__input"
+                        name="tipo_identificacion"
+                        id="tipo_id"
+                        disabled>
                         <option value="">Seleccione un tipo de documento</option>
                         {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
-                        <option value="{{ tipo.id }}" {% if tipo.id == perfil_form.tipo_identificacion.value %} selected {% endif %} >{{ tipo.tipo_identificacion }}</option>
+                            <option
+                                value="{{ tipo.id }}"
+                                {% if tipo.id|stringformat:"s" == perfil_form.tipo_identificacion.value|stringformat:"s" %}selected{% endif %}>
+                                {{ tipo.tipo_identificacion }}
+                            </option>
                         {% endfor %}
                     </select>
                 </label>
 
-                <label class="form-register__label">Número de identificación
-                    <input class="form-register__input" type="text" name="numero_identificacion"
-                        value="{{ perfil_form.instance.numero_identificacion|default_if_none:'' }}" id="number_id" required>
+                <label class="form-register__label">Número de documento
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        name="numero_identificacion"
+                        id="number_id"
+                        value="{{ perfil_form.instance.numero_identificacion|default_if_none:'' }}"
+                        placeholder="Número de documento registrado"
+                        disabled>
                 </label>
+
                 <label class="form-register__label">Fecha de nacimiento
-                    <input class="form-register__input" type="date" name="fecha_nacimiento"
-                        value="{{ perfil_form.instance.fecha_nacimiento|date:'Y-m-d' }}" id="fecha_nacimiento" required>
-                </label>
-            </div>
-
-            <div class="form-register__group">
-                <label class="form-register__label">Departamento
-                            <select id="departamento"
-                                name="departamento" 
-                                class="form-register__input" 
-                                required 
-                                data-guardado="{{ perfil_form.departamento.value|default:perfil_form.instance.departamento_id|default:'' }}">
-                                <option value="">Seleccione un departamento</option>
-                                {% for dpto in perfil_form.departamento.field.queryset %}
-                                <option value="{{ dpto.id }}"
-                                {% if dpto.id|stringformat:"s" == perfil_form.departamento.value|stringformat:"s" %} selected {% endif %}>
-                                {{ dpto.nombre_Departamento }}</option>
-                                {% endfor %}
-                            </select>
-                        </label>
-
-                        <label class="form-register__label">Municipio
-                            <select id="municipio" 
-                                data-guardado="{{ perfil_form.instance.municipio.id }}" 
-                                class="form-register__input" 
-                                name="municipio" 
-                                required
-                                data-guardado="{{ perfil_form.municipio.value|default:perfil_form.instance.municipio_id|default:'' }}">
-                                <option value="">Seleccione un municipio</option>
-                                {% for mcpio in perfil_form.municipio.field.queryset %}
-                                <option value="{{ mcpio.id }}" 
-                                {% if mcpio.id|stringformat:"s" == perfil_form.municipio.value|stringformat:"s" %} selected {% endif %}>
-                                {{ mcpio.nombre_Municipio }}
-                                {% endfor %}
-                            </select>
-                        </label>
-                {% comment %} <label class="form-register__label">Departamento
-                    <select id="departamento" name="departamento" class="form-register__input" required>
-                        <option value="">Seleccione un departamento</option>
-                        {% for dpto in perfil_form.departamento.field.queryset %}
-                        <option value="{{ dpto.id }}" {% if dpto.id == perfil_form.departamento.value %} selected 
-                {% endif %}>{{ dpto.nombre_Departamento }}</option>
-                        {% endfor %}
-                    </select>
-                </label>
-
-                <label class="form-register__label">Municipio
-                    <select id="municipio" data-guardado="{{ perfil_form.instance.municipio.id }}" class="form-register__input" name="municipio" required>
-                        <option value="">Seleccione un municipio</option>
-                        {% for mcpio in perfil_form.municipio.field.queryset %}
-                        <option value="{{ mcpio.id }}" {% if mcpio.id == perfil_form.municipio.value %} selected {% endif %} >{{ mcpio.nombre_Municipio }}</option>
-                        {% endfor %}
-                    </select>
-                </label> {% endcomment %}                
-            </div>
-
-            <div class="form-register__group">
-                <label class="form-register__label">Dirección
-                    <input class="form-register__input" type="text" name="direccion_residencia"
-                        value="{{ perfil_form.instance.direccion_residencia|default_if_none:'' }}" required>
-                </label>
-                <label class="form-register__label">Correo Electrónico
-                    <input class="form-register__input" type="email" name="email" value="{{ user_form.instance.email|default_if_none:'' }}"
+                    <input
+                        class="form-register__input"
+                        type="date"
+                        name="fecha_nacimiento"
+                        id="fecha_nacimiento"
+                        value="{{ perfil_form.instance.fecha_nacimiento|date:'Y-m-d' }}"
                         required>
                 </label>
             </div>
 
             <div class="form-register__group">
-                <label class="form-register__label">Teléfono
-                    <input class="form-register__input" type="tel" name="telefono_1"
-                        value="{{ perfil_form.instance.telefono_1|default_if_none:'' }}" required>
-                </label>
-                <label class="form-register__label">Teléfono Alterno
-                    <input class="form-register__input" type="tel" name="telefono_2"
-                        value="{{ perfil_form.instance.telefono_2|default_if_none:'' }}">
+                <label class="form-register__label">Departamento
+                    <select
+                        id="departamento"
+                        name="departamento"
+                        class="form-register__input"
+                        required
+                        data-guardado="{{ perfil_form.departamento.value|default:perfil_form.instance.departamento_id|default:'' }}">
+                        <option value="">Seleccione un departamento</option>
+                        {% for dpto in perfil_form.departamento.field.queryset %}
+                            <option
+                                value="{{ dpto.id }}"
+                                {% if dpto.id|stringformat:"s" == perfil_form.departamento.value|stringformat:"s" %}selected{% endif %}>
+                                {{ dpto.nombre_Departamento }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </label>
 
-                <label class="form-register__label">Nombre de Usuario
-                    <input class="form-register__input" type="text" name="username"
-                        value="{{ user_form.instance.username|default_if_none:'' }}" required>
+                <label class="form-register__label">Municipio
+                    <select
+                        id="municipio"
+                        name="municipio"
+                        class="form-register__input"
+                        required
+                        data-guardado="{{ perfil_form.municipio.value|default:perfil_form.instance.municipio_id|default:'' }}">
+                        <option value="">Seleccione un municipio</option>
+                        {% for mcpio in perfil_form.municipio.field.queryset %}
+                            <option
+                                value="{{ mcpio.id }}"
+                                {% if mcpio.id|stringformat:"s" == perfil_form.municipio.value|stringformat:"s" %}selected{% endif %}>
+                                {{ mcpio.nombre_Municipio }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <label class="form-register__label">Dirección de residencia
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        name="direccion_residencia"
+                        value="{{ perfil_form.instance.direccion_residencia|default_if_none:'' }}"
+                        placeholder="Ingrese su dirección de residencia"
+                        required>
                 </label>
             </div>
 
-        </div>
+            <div class="form-register__group">
+                <label class="form-register__label">Correo electrónico
+                    <input
+                        class="form-register__input"
+                        type="email"
+                        name="email"
+                        value="{{ user_form.instance.email|default_if_none:'' }}"
+                        placeholder="Correo electrónico registrado"
+                        disabled>
+                </label>
 
-        <div class="buttons popup-buttons"> 
-            <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
-                {% if user.is_superuser %}            
-                data-url="{% url 'lista_usuarios' %}" 
-                {% else %}
-                data-url="{% url 'sesion_inicio' %}" 
-                {% endif %}
-                data-titulo="¿Salir?" 
-                data-mensaje="Se perderán los cambios.">Cancelar
-            </button>
+                <label class="form-register__label">Teléfono
+                    <input
+                        class="form-register__input"
+                        type="tel"
+                        name="telefono_1"
+                        value="{{ perfil_form.instance.telefono_1|default_if_none:'' }}"
+                        placeholder="Ingrese su número de teléfono"
+                        required>
+                </label>
 
-            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-                data-form="form-edit__user" 
-                data-titulo="💾 Guardar" 
-                data-mensaje="¿Desea guardar los cambios realizados?">Guardar Usuario
-            </button>   
-            
-        </div>
-    </form>
+                <label class="form-register__label">Teléfono alterno
+                    <input
+                        class="form-register__input"
+                        type="tel"
+                        name="telefono_2"
+                        value="{{ perfil_form.instance.telefono_2|default_if_none:'' }}"
+                        placeholder="Ingrese un número de teléfono alterno">
+                </label>
+            </div>
 
+            <div class="form-register__group">
+                <label class="form-register__label">Nombre de usuario
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        name="username"
+                        value="{{ user_form.instance.username|default_if_none:'' }}"
+                        placeholder="Nombre de usuario registrado"
+                        disabled>
+                </label>
+            </div>
+
+            <div class="buttons popup-buttons">
+                <button
+                    type="button"
+                    class="buttons__action--secondary btn-cancel btn-confirmar"
+                    {% if user.is_superuser %}
+                        data-url="{% url 'lista_usuarios' %}"
+                    {% else %}
+                        data-url="{% url 'sesion_inicio' %}"
+                    {% endif %}
+                    data-titulo="Cancelar edición"
+                    data-mensaje="¿Desea salir? Se perderán los cambios realizados.">
+                    Cancelar
+                </button>
+
+                <button
+                    type="button"
+                    class="buttons__action--primary btn-save btn-confirmar"
+                    data-form="form-edit__user"
+                    data-titulo="Guardar cambios"
+                    data-mensaje="¿Desea guardar los cambios realizados?">
+                    Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
 </section>
 
 {% endblock login %}
