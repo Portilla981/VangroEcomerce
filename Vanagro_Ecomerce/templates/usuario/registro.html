@@ -3,9 +3,7 @@
 {% load static %}
 
 {% block navbar %}
-
     {% include 'components/navbar-simple_inicio.html' %}
-
 {% endblock navbar %}
 
 {% block script %}
@@ -152,13 +150,12 @@
                         placeholder="Confirme su contraseña" required>
                 </label>              
             </div>
-        </div>
 
         <div class="buttons popup-buttons"> 
             <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
                 data-url="{% url 'inicio_vista' %}" 
                 data-titulo="Cancelar creación de cuenta" 
-                data-mensaje="¿Desea salir? Se perderán los cambios realizados.">Cancelar
+                data-mensaje="¿Desea salir? Se perderá la información ingresada.">Cancelar
             </button>
 
             <button type="button" class="buttons__action--primary btn-save btn-confirmar" 

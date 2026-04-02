@@ -196,6 +196,6 @@ EMAIL_USE_TLS = True
 # EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_HOST_USER = 'vanagromercadocampesino@gmail.com'
 # Contraseña para aplicaciones que se configura con gmail
-EMAIL_HOST_PASSWORD = 'exddyjxkevcaievm'
+EMAIL_HOST_PASSWORD = 'jsuncdyftwdgfjot'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

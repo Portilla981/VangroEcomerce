@@ -168,6 +168,11 @@ class Inicio(LoginView):
     def form_valid(self, form):
         username = self.request.POST.get('username')
         user = form.get_user()
+        if user.is_superuser:
+            messages.success(self.request, f"Bienvenido {username} al sistema")
+            return super().form_valid(form)
+            # return reverse_lazy('sesion_inicio')
+
         perfil = user.usuario  
 
         if not user.is_active:
