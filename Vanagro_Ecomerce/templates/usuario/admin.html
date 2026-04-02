@@ -1,44 +1,32 @@
 {% load static %}
 
-<div class="profile__actions-admin">
-    <div class="profile__actions-admin_1">
-        <button class="profile__action">
-        <a href="{% url 'ver_productos' %}?next={{ request.path }}">
-            <ion-icon name="eye-outline"></ion-icon>
-            <span>Ver Productos catalogo</span>
-        </a>
-        </button>
+<h3 class="admin-cards__title">Bienvenido al panel de administración</h3>
+<div class="admin-cards">
 
-        <button class="profile__action">
-        <a href="{% url 'mis_pedidos' %}?next={{ request.path }}">
-            <ion-icon name="bag-add-outline"></ion-icon>
-            <span>Compras/Pedidos</span>
-        </a>
-        </button>
 
-        <button class="profile__action">
-        <a href="{% url 'lista_usuarios' %}?next={{ request.path }}">
-            <ion-icon name="people-outline"></ion-icon>
-            <span>Listar usuarios</span>
-        </a>
-        </button>
+    <a href="{% url 'ver_productos' %}?next={{ request.path }}" class="admin-cards__card">
+        <ion-icon name="eye-outline" class="admin-cards__icon"></ion-icon>
+        <span class="admin-cards__name">Ver Productos</span>
+    </a>
 
-        <button class="profile__action">
-        <a href="{% url 'mis_productos' %}?next={{ request.path }}">
-            <ion-icon name="calendar-outline"></ion-icon>
-            <span>Listar productos</span>
-        </a>
-        </button> 
+    <a href="{% url 'mis_pedidos' %}?next={{ request.path }}" class="admin-cards__card">
+        <ion-icon name="bag-add-outline" class="admin-cards__icon"></ion-icon>
+        <span class="admin-cards__name">Pedidos</span>
+    </a>
 
-        <button class="profile__action">
-        <a href="{% url 'mensajes_admin' %}?next={{ request.path }}">
-            <ion-icon name="list-outline"></ion-icon>
-            <span>Lista mensajes</span>
-        </a>
-        </button>     
-    </div>
+    <a href="{% url 'lista_usuarios' %}?next={{ request.path }}" class="admin-cards__card">
+        <ion-icon name="people-outline" class="admin-cards__icon"></ion-icon>
+        <span class="admin-cards__name">Usuarios</span>
+    </a>
 
-    <div class="profile__actions-img">
-        <img src="{% static 'img/interfaz_vanagro/vanagro2.jpg' %}" alt="">
-    </div>
-    </div>
+    <a href="{% url 'mis_productos' %}?next={{ request.path }}" class="admin-cards__card">
+        <ion-icon name="calendar-outline" class="admin-cards__icon"></ion-icon>
+        <span class="admin-cards__name">Productos</span>
+    </a>
+
+    <a href="{% url 'mensajes_admin' %}?next={{ request.path }}" class="admin-cards__card">
+        <ion-icon name="list-outline" class="admin-cards__icon"></ion-icon>
+        <span class="admin-cards__name">Mensajes</span>
+    </a>
+
+</div>
