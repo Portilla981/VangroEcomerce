@@ -131,7 +131,7 @@ class RegistroUsuario(View):
                     link = generar_link_activacion(usuario, request)
                     transaction.on_commit(lambda: enviar_correo_activacion(usuario, link))
                     
-                    messages.success(request, f'Usuario {usuario.username} creado exitosamente.') 
+                    messages.success(request, f'Usuario {usuario.username} creado exitosamente. Revisa tu correo para activar tu cuenta.') 
                     return redirect("inicio_vista")
                 
             except Exception as e:
@@ -269,11 +269,11 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
         # 3. Enviamos un ÚNICO mensaje de error al popup
         messages.error(request, error_msg)
 
-        return render(request, self.template_name, {
-            "form": form,
-            "titulo": 'Registro de tienda',
-            "es_productor": False
-        })
+        # return render(request, self.template_name, {
+        #     "form": form,
+        #     "titulo": 'Registro de tienda',
+        #     "es_productor": False
+        # })
     
     
 @login_required

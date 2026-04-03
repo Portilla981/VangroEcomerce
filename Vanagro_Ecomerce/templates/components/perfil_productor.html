@@ -50,7 +50,7 @@
         <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2|default_if_none:'' }}
       </p>
 
-      <p class="profile_producter--detail"><strong>DESCRIPCIÓN:</strong> {{ productor.descripcion }}</p>
+      
     </div>
 
     <div class="profile_producter--info">
@@ -69,16 +69,17 @@
       <p class="profile_producter--joined">Desde {{ productor.fecha_creacion|date:"j \d\e F \d\e Y" }}</p>
       <p class="profile_producter--detail"><strong>UBICACIÓN:</strong> {{ productor.municipio }} - {{ productor.departamento }}</p>
       <p class="profile_producter--detail"><strong>VEREDA:</strong> {{ productor.vereda }}</p>
+      <p class="profile_producter--detail"><strong>DESCRIPCIÓN:</strong> {{ productor.descripcion }}</p>
 
-      <div class="profile_producter--location">
+      {% comment %} <div class="profile_producter--location"> {% endcomment %}
         {% comment %} Con esta linea se cancela la ubicacion orbital para la precision en Colombia {% endcomment %}
-        {% load l10n %}
+        {% comment %} {% load l10n %}
         {% localize off %}
         <div id="map" data-lat="{{ productor.latitud }}" data-lng="{{ productor.longitud }}"
           class="producter-register__map-render"></div>
         {% endlocalize %}
         <button id="expandMap" class="buttons__action--primary">Ampliar</button>
-      </div>
+      </div> {% endcomment %}
 
       {% comment %} Modal {% endcomment %}
       <div id="modalMapa" class="modal">

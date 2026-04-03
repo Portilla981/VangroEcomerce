@@ -11,7 +11,7 @@
 {% block script %}
 
 <script src="{% static 'js/departamento_municipio.js' %}" defer></script>
-<script src="{% static 'js/render_mapa.js' %}" defer></script>
+{% comment %} <script src="{% static 'js/render_mapa.js' %}" defer></script> {% endcomment %}
 
 {% endblock script %}
 
@@ -109,7 +109,7 @@
                     </label>
                 </div>
 
-                {% load l10n %}
+                {% comment %} {% load l10n %}
                 {% localize off %}
 
                 <div class="producter-register__location">
@@ -121,7 +121,7 @@
                             <input type="hidden" name="longitud" id="id_longitud" value="{{ form.instance.longitud }}">
                     </div>
                 </div>
-                {% endlocalize %}
+                {% endlocalize %} {% endcomment %}
             </div>
         </div>
         {% if not form.instance.activo %}

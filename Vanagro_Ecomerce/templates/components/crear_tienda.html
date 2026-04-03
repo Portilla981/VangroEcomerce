@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block script %}
-<script src="{% static 'js/ubicacion.js' %}" defer></script>
+{% comment %} <script src="{% static 'js/ubicacion.js' %}" defer></script> {% endcomment %}
 <script src="{% static 'js/departamento_municipio.js' %}" defer></script>
 
 {% endblock script %}
@@ -75,14 +75,14 @@
                     </label>
                 </div>
 
-                <div class="producter-register__location">
+                {% comment %} <div class="producter-register__location">
                     <p class="producter-register__label-farm">Ubicación en el mapa</p>
                     <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu finca</h3>
                     <div class="producter-register__map" id="map">
                         <input type="hidden" name="latitud" id="latitud">
                         <input type="hidden" name="longitud" id="longitud">
                     </div>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
 

@@ -50,14 +50,23 @@
 				</textarea>
 		</label>
 
-		<div class="product-form__row product-form__row--checkbox">
+		<label class="product-form__label">Tipo de Producto
+				<select class="product-form__select product-form__select--unit" name="unidad_medida"
+					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
+					{% for categoria, label in form.categoria.field.choices %}					
+					<option value="{{ categoria }}" {% if categoria == form.categoria.value %} selected {% endif %}>{{ label }}</option>
+					{% endfor %}
+				</select>
+			</label>
+
+		{% comment %} <div class="product-form__row product-form__row--checkbox">
 			<span class="product-form__label"><strong>Tipo de Producto:</strong></span>
 			{% for categoria, label in form.categoria.field.choices %}
 			<label>
 				<input type="radio" name="categoria" value="{{ categoria }}" {% if categoria == form.instance.categoria %} checked {% endif %} required />{{ label }}
 			</label>
 			{% endfor %}
-		</div>
+		</div> {% endcomment %}
 
 		<div class="product-form__dates">
 			<h3 class="product-form__dates-title">Caducidad</h3>
