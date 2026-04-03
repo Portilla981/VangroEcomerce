@@ -24,7 +24,6 @@
     align-items: center;
 }
 
-
 .buttons__action {
     border: none;
     border-radius: 0.8rem;
@@ -75,7 +74,7 @@
 }
 
 .buttons__action--secondary:focus {
-    outline: 2px solid var(--secundary-700);
+    outline: 2px solid var(--secundary-500);
     outline-offset: 2px;
 }
 
@@ -96,11 +95,9 @@
 }
 
 .buttons__action--terciary:focus {
-    outline: 2px solid var(--terciary-700);
+    outline: 2px solid var(--terciary-500);
     outline-offset: 2px;
 }
-
-
 
 .buttons__action--icon {
     display: flex;

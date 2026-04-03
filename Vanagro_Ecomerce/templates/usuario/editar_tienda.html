@@ -1,11 +1,9 @@
 {% extends "usuario/login.html" %}
-
 {% load static %}
+{% load l10n %}
 
 {% block navbar %}
-
     {% include 'components/navbar-simple.html' %}
-
 {% endblock navbar %}
 
 {% block script %}
@@ -17,96 +15,120 @@
 
 {% block login %}
 
+<section class="form-register__block form-register__block--store">
+    <div class="form-register__head">
+        <h1 class="form-register__title">Editar finca productora</h1>
+        <p class="form-register__subtitle">
+            Modifique la información de la finca productora registrada en Vanagro.
+        </p>
+    </div>
 
-<div class="producter-register">
-    <form method="post" action="{% url 'accion_tienda' %}" id="form-estado_tienda">               
+    <form method="post" action="{% url 'accion_tienda' %}" id="form-estado_tienda">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.get_full_path }}">
     </form>
-        
-    <p class="producter-register__title"><strong>Editar Tienda</strong></p>
-    
-    <form class="producter-register__form" method="POST" id="form-edit_tienda" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% if not form.instance.activo %}
-        <fieldset disabled>
-        {% endif %}
 
-        <div class="producter-register__identification">
-            <div class="form-register__images">
-                {% if form.instance.foto_finca %}
-                    <img src="{{ form.instance.foto_finca.url }}" width="120">
-                {% endif %}
-                <label class="form-register__label">Cargar foto de finca
-                    <input class="form-register__file" type="file" name="foto_finca">
+    <div class="form-register__block--form">
+        <form id="form-edit_tienda" class="form-register__form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if not form.instance.activo %}
+                <fieldset disabled>
+            {% endif %}
+
+            <div class="form-register__group">
+                <label class="form-register__label">Nombre
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        name="nombre_finca"
+                        value="{{ form.instance.nombre_finca }}"
+                        placeholder="Ingrese el nombre de la finca productora"
+                        required>
+                </label>
+
+                <label class="form-register__label">Ubicación exacta
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        name="direccion"
+                        value="{{ form.instance.direccion }}"
+                        placeholder="Ingrese la ubicación exacta de la finca productora"
+                        required>
+                </label>
+
+                <div class="form-register__images">
+                    {% if form.instance.foto_finca %}
+                        <div class="form-register__preview">
+                            <img src="{{ form.instance.foto_finca.url }}" alt="Foto actual de la finca" width="120">
+                        </div>
+                    {% endif %}
+
+                    <label class="form-register__label">Foto de la finca productora
+                        <input
+                            class="form-register__file"
+                            type="file"
+                            name="foto_finca">
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="form-register__group">
+                <label class="form-register__label">Departamento
+                    <select
+                        id="departamento"
+                        name="departamento"
+                        class="form-register__input"
+                        required
+                        data-guardado="{{ form.departamento.value|default:form.instance.departamento_id|default:'' }}">
+                        <option value="">Seleccione un departamento</option>
+                        {% for dpto in form.departamento.field.queryset %}
+                            <option
+                                value="{{ dpto.id }}"
+                                {% if dpto.id|stringformat:"s" == form.departamento.value|stringformat:"s" %}selected{% endif %}>
+                                {{ dpto.nombre_Departamento }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <label class="form-register__label">Municipio
+                    <select
+                        id="municipio"
+                        name="municipio"
+                        class="form-register__input"
+                        required
+                        data-guardado="{{ form.municipio.value|default:form.instance.municipio_id|default:'' }}">
+                        <option value="">Seleccione un municipio</option>
+                        {% for mcpio in form.municipio.field.queryset %}
+                            <option
+                                value="{{ mcpio.id }}"
+                                {% if mcpio.id|stringformat:"s" == form.municipio.value|stringformat:"s" %}selected{% endif %}>
+                                {{ mcpio.nombre_Municipio }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </label>
             </div>
 
-            <div class="status-tienda">
-                {% if form.instance.activo %}
-                    <button type="button" form="form-estado_tienda" class="user-list__action-btn user-list__action-btn--disable btn-confirmar"
-                        data-form="form-estado_tienda"
-                        data-titulo="¿Deshabilitar Tienda?" 
-                        data-mensaje="Tu tienda dejará de ser visible y no podrás vender productos.">Deshabilitar Tienda
-                    </button>
-                {% comment %} {% else %}
-                    <button type="button" form="form-estado_tienda" class="user-list__action-btn user-list__action-btn--enable btn-confirmar"
-                    data-form="form-estado_tienda"
-                    data-titulo="¿Habilitar Tienda?" 
-                    data-mensaje="Tu tienda será visible nuevamente.">Habilitar Tienda
-                    </button> {% endcomment %}
-                {% endif %}
-            </div>  
-        </div>
+            <div class="form-register__group form-register__group--fullwidth">
+                <label class="form-register__label form-register__label--textarea">Descripción
+                    <textarea
+                        class="form-register__textarea"
+                        name="descripcion"
+                        placeholder="Describa detalladamente los productos o servicios que ofrece en su finca productora"
+                        required>{{ form.instance.descripcion }}</textarea>
+                </label>
+            </div>
 
-        <div class="producter-register__container">
-            <div class="producter-register__farm-location">
-                <div class="producter-register__fields-farm">
-                    <label class="form-register__label">Nombre Finca/Tienda
-                        <input class="form-register__input" type="text" name="nombre_finca"
-                            value="{{ form.instance.nombre_finca }}" required>
-                    </label>
-                    <label class="form-register__label">Direccion o Ubicacion exacta
-                        <input class="form-register__input" type="text" name="direccion"
-                            value="{{ form.instance.direccion}}" required>
-                    </label>
-                        <label class="form-register__label">Departamento
-                            <select id="departamento"
-                                name="departamento" 
-                                class="form-register__input" 
-                                required 
-                                data-guardado="{{ form.departamento.value|default:form.instance.departamento_id|default:'' }}">
-                                <option value="">Seleccione un departamento</option>
-                                {% for dpto in form.departamento.field.queryset %}
-                                <option value="{{ dpto.id }}"
-                                {% if dpto.id|stringformat:"s" == form.departamento.value|stringformat:"s" %} selected {% endif %}>
-                                {{ dpto.nombre_Departamento }}</option>
-                                {% endfor %}
-                            </select>
-                        </label>
-
-                        <label class="form-register__label">Municipio
-                            <select id="municipio" 
-                                data-guardado="{{ form.instance.municipio.id }}" 
-                                class="form-register__input" 
-                                name="municipio" 
-                                required
-                                data-guardado="{{ form.municipio.value|default:form.instance.municipio_id|default:'' }}">
-                                <option value="">Seleccione un municipio</option>
-                                {% for mcpio in form.municipio.field.queryset %}
-                                <option value="{{ mcpio.id }}" 
-                                {% if mcpio.id|stringformat:"s" == form.municipio.value|stringformat:"s" %} selected {% endif %}>
-                                {{ mcpio.nombre_Municipio }}
-                                {% endfor %}
-                            </select>
-                        </label>                
-                    <label class="form-register__label">Vereda
-                        <input class="form-register__input" type="text" name="vereda"
-                            value="{{ form.instance.vereda }}" required>
-                    </label>
-                    <label class="form-register__label">Descripcion de tu tienda
-                        <textarea class="form-register__input" name="descripcion" required>{{ form.instance.descripcion }}</textarea>
-                    </label>
+            {% localize off %}
+            <div class="form-register__map-section">
+                <div class="form-register__map-head">
+                    <h2 class="form-register__map-title">Ubicación en el mapa</h2>
+                    <p class="form-register__map-subtitle">
+                        Haga clic sobre el mapa para actualizar la ubicación exacta de la finca.
+                    </p>
                 </div>
 
                 {% comment %} {% load l10n %}
@@ -123,33 +145,49 @@
                 </div>
                 {% endlocalize %} {% endcomment %}
             </div>
-        </div>
-        {% if not form.instance.activo %}
-            </fieldset>
-        {% endif %}
+            {% endlocalize %}
 
-        <div class="producter-register__actions">
+            {% if not form.instance.activo %}
+                </fieldset>
+            {% endif %}
 
-            <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
-                 {% if user.is_superuser %}            
-                data-url="{% url 'lista_usuarios' %}" 
-                {% else %}
-                data-url="{% url 'tienda_usuario' %}" 
-                {% endif %} 
-                data-titulo="¿Salir?" 
-                data-mensaje="Se perderán los cambios.">Cancelar
-            </button>
+            <div class="buttons popup-buttons">
+                <button
+                    type="button"
+                    class="buttons__action--secondary btn-cancel btn-confirmar"
+                    {% if user.is_superuser %}
+                        data-url="{% url 'lista_usuarios' %}"
+                    {% else %}
+                        data-url="{% url 'tienda_usuario' %}"
+                    {% endif %}
+                    data-titulo="Cancelar edición"
+                    data-mensaje="¿Desea salir? Se perderán los cambios realizados.">
+                    Cancelar
+                </button>
 
-            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-                data-form="form-edit_tienda" 
-                data-titulo="💾 Guardar" 
-                data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
-            </button>
+                <button
+                    type="button"
+                    class="buttons__action--primary btn-save btn-confirmar"
+                    data-form="form-edit_tienda"
+                    data-titulo="Guardar cambios"
+                    data-mensaje="¿Desea guardar los cambios de esta finca productora?">
+                    Guardar cambios
+                </button>
 
-        </div>
-    </form>
-    
-        
-</div>    
+                {% if form.instance.activo %}
+                        <button
+                            type="button"
+                            form="form-estado_tienda"
+                            class="buttons__action--terciary btn-confirmar"
+                            data-form="form-estado_tienda"
+                            data-titulo="Deshabilitar finca productora"
+                            data-mensaje="La finca dejará de ser visible y no podrá vender productos.">
+                            Deshabilitar finca
+                        </button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</section>
 
 {% endblock login %}
