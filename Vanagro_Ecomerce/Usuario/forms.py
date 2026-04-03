@@ -193,10 +193,10 @@ class Formulario_Productor(forms.ModelForm):
                    'vereda',
                    'direccion',
                    'foto_finca',
-                   'latitud',
-                   'longitud',
+                #    'latitud',
+                #    'longitud',
                    'descripcion',
-                   'activo'
+                #    'activo'
                    ]
         
     def clean_nombre_finca(self):

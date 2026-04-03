@@ -1,0 +1,193 @@
+/* RESET */
+* {
+    box-sizing: border-box;
+}
+
+/* CONTENEDOR */
+.list-message {
+    max-width: 1400px;
+    margin: 24px auto;
+    padding: 16px;
+}
+
+/* TITULO */
+.list-message__title {
+    font-size: var(--fs-md);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* CONTENEDOR SCROLL (IMPORTANTE PARA TABLET) */
+.list-message__table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* TABLA */
+.list-message__table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-width: 900px; 
+}
+
+/* HEAD */
+.list-message__head {
+    background: var(--primary-900);
+    color: var(--white);
+}
+
+
+
+/* CELDAS */
+.list-message__cell {
+    padding: 12px;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: var(--fs-xxxs);
+    text-align: left;
+}
+
+/* BOTONES */
+.list-message__btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.list-message__btn--primary {
+    background: var(--primary-900);
+    color: var(--white);
+}
+
+.list-message__btn:disabled {
+    background: var(--gray-200);
+}
+
+/* TEXTO VACIO */
+.list-message__empty {
+    color: var(--gray-400);
+}
+
+
+
+@media (max-width: 768px) {
+
+    .list-message__table-container {
+        overflow-x: hidden;
+    }
+
+
+    .list-message__table {
+        min-width: 100%;
+    }
+
+    /* OCULTAR ENCABEZADO */
+    .list-message__head {
+        display: none;
+    }
+
+    /* TABLA → BLOQUES */
+    .list-message__table,
+    .list-message__body,
+    .list-message__row {
+        display: block;
+        width: 100%;
+    }
+
+    /* CARD */
+    .list-message__row {
+        background: var(--white);
+        margin-bottom: 16px;
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    /* CAMPOS */
+    .list-message__cell {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 6px 0;
+        border: none;
+        font-size: var(--fs-xxs);
+        flex-wrap: wrap;
+    }
+
+    /* ETIQUETA */
+    .list-message__cell::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--gray-700);
+    }
+
+    /* TEXTO LARGO */
+    .list-message__cell {
+        word-break: break-word; 
+    }
+
+    /* BOTONES */
+    .list-message__btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+
+@media (max-width: 1024px) {
+
+    .list-message__table {
+        font-size: 12px;
+    }
+
+    .list-message__cell {
+        padding: 10px;
+    }
+}
+
+
+
+.modal-message {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-message__card {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.modal-message__textarea {
+    width: 100%;
+    min-height: 100px;
+    margin-top: 8px;
+    padding: 10px;
+}
+
+.modal-message__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.modal-message__btn--primary {
+    background: var(--primary-900);
+    color: var(--white);
+}
+
+.modal-message__btn--cancel {
+    background: var(--gray-500);
+}

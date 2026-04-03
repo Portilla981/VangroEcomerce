@@ -1,0 +1,195 @@
+/* ===============================
+   CONTENEDOR
+================================ */
+.list-orders {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 16px;
+}
+
+/* TARJETA GENERAL */
+.list-orders__card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* TÍTULO */
+.list-orders__title {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: var(--fs-md);
+}
+
+/* SCROLL */
+.list-orders__table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* TABLA */
+.list-orders__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+/* HEAD */
+.list-orders__head {
+  background: var(--primary-900);
+  color: var(--white);
+}
+
+/* FILAS */
+.list-orders__row {
+  transition: 0.2s;
+}
+
+/* CELDAS */
+.list-orders__cell {
+  padding: 14px;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: var(--fs-xxxs);
+  text-align: left;
+}
+
+/* BADGE */
+.list-orders__badge {
+  background: var(--primary-900);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+/* BOTÓN */
+.list-orders__btn {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--secundary-900);
+  color: var(--black);
+  text-decoration: none;
+  font-size: 12px;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.list-orders__btnback{
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--gray-300);
+    color: var(--black);
+    text-decoration: none;
+    font-size: 12px;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.list-orders__btn:hover {
+  transform: scale(1.05);
+}
+
+/* VACÍO */
+.list-orders__empty {
+  text-align: center;
+  padding: 20px;
+  color: var(--gray-400);
+}
+
+/* BOTÓN VOLVER */
+.list-orders__back {
+  margin-top: 16px;
+  text-align: center;
+  color: var(--primary-900);
+}
+
+/* ===============================
+   TABLET
+================================ */
+@media (max-width: 1024px) {
+
+  .list-orders__table {
+    min-width: 600px;
+  }
+
+  .list-orders__cell {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .list-orders__btn {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}
+
+/* ===============================
+   CELULAR (CARDS)
+================================ */
+@media (max-width: 768px) {
+
+  .list-orders__table {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .list-orders__head {
+    display: none;
+  }
+
+  .list-orders__row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--white);
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  }
+
+  .list-orders__cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    border: none;
+  }
+
+  .list-orders__cell::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--gray-600);
+    font-size: 11px;
+  }
+
+  /* ACCIONES */
+  .list-orders__cell--actions {
+    margin-top: 6px;
+  }
+
+  .list-orders__btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+
+/* ===============================
+   CELULAR PEQUEÑO
+================================ */
+@media (max-width: 480px) {
+
+  .list-orders__title {
+    font-size: var(--fs-sm);
+  }
+
+  .list-orders__btn {
+    font-size: 11px;
+    padding: 8px;
+  }
+}

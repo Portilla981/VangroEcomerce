@@ -77,15 +77,30 @@
 				value="{{ form.instance.fecha_elaboracion|date:'Y-m-d' }}">
 			</label>
 
-			<label class="product-form__label">
-				Fecha de vencimiento
-				<input
-				type="date"
-				class="product-form__dates-input"
-				name="fecha_vencimiento"
-				value="{{ form.instance.fecha_vencimiento|date:'Y-m-d' }}">
+		{% comment %}Descripción{% endcomment %}
+		<label class="product-form__label">Descripción del Producto
+			<textarea class="product-form__textarea" name="descripcion" placeholder="Ingrese la descripción"
+				required>{{ form.instance.descripcion|default_if_none:'' }}
+				</textarea>
+		</label>
+
+		<label class="product-form__label">Tipo de Producto
+				<select class="product-form__select product-form__select--unit" name="unidad_medida"
+					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
+					{% for categoria, label in form.categoria.field.choices %}					
+					<option value="{{ categoria }}" {% if categoria == form.categoria.value %} selected {% endif %}>{{ label }}</option>
+					{% endfor %}
+				</select>
 			</label>
-		</div>
+
+		{% comment %} <div class="product-form__row product-form__row--checkbox">
+			<span class="product-form__label"><strong>Tipo de Producto:</strong></span>
+			{% for categoria, label in form.categoria.field.choices %}
+			<label>
+				<input type="radio" name="categoria" value="{{ categoria }}" {% if categoria == form.instance.categoria %} checked {% endif %} required />{{ label }}
+			</label>
+			{% endfor %}
+		</div> {% endcomment %}
 
 		<div class="product-form__row product-form__row--full">
 			<div class="product-form__label">

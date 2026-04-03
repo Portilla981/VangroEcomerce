@@ -152,13 +152,13 @@ class Inicio(LoginView):
     # Condición para redireccionar si el usuario ya esta autenticado
     redirect_authenticated_user = True
     # Redireccion después de iniciar sesion exitosamente
-    def get_success_url(self):
-        user = self.request.user
-        if user.is_superuser:
-            return reverse_lazy('sesion_inicio')
+    # def get_success_url(self):
+    #     user = self.request.user
+    #     if user.is_superuser:
+    #         return reverse_lazy('sesion_inicio')
 
-        # Redireccion a la vista después de iniciar sesion
-        return reverse_lazy('sesion_inicio')  
+    #     # Redireccion a la vista después de iniciar sesion
+    #     return reverse_lazy('sesion_inicio')  
     
     def get(self, request, *args, **kwargs):
         request.session.pop('usuario_inactivo', None)
@@ -171,7 +171,6 @@ class Inicio(LoginView):
         if user.is_superuser:
             messages.success(self.request, f"Bienvenido {username} al sistema")
             return super().form_valid(form)
-            # return reverse_lazy('sesion_inicio')
 
         perfil = user.usuario  
 

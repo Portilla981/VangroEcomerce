@@ -1,0 +1,216 @@
+/* CONTENEDOR */
+.order-details {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 16px;
+}
+
+/* CARD */
+.order-details__card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.order-details__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* TITLE */
+.order-details__title {
+  font-size: var(--fs-md);
+}
+
+/* STATUS */
+.order-details__status {
+  background: var(--primary-700);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* DATE */
+.order-details__date {
+  margin-bottom: 10px;
+}
+
+/* SUBTITLE */
+.order-details__subtitle {
+  margin: 16px 0 10px;
+}
+
+/* TABLE */
+.order-details__table-container {
+  overflow-x: auto;
+}
+
+.order-details__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.order-details__head {
+  background: var(--primary-900);
+  color: var(--white);
+}
+
+
+.order-details__cell {
+  padding: 14px;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: var(--fs-xxxs);
+}
+
+/* BADGES */
+.order-details__badge {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.order-details__badge--success {
+  background: var(--primary-900);
+  color: var(--white);
+}
+
+.order-details__badge--warning {
+  background: var(--secundary-900);
+  color: var(--black);
+}
+
+/* TOTAL */
+.order-details__total {
+  margin-top: 14px;
+  font-size: 16px;
+  text-align: right;
+}
+
+/* BOTONES */
+.order-details__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.order-details__btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+  background-color: var(--secundary-900);
+}
+
+.order-details__btn--primary {
+  background: var(--primary-900);
+  color: var(--white);
+}
+
+.order-details__btn--secondary {
+  background: var(--gray-300);
+  color: var(--black);
+}
+
+.order-details__btn:hover {
+  transform: scale(1.05);
+}
+
+/* ===============================
+   TABLET
+================================ */
+@media (max-width: 1024px) {
+
+  .order-details__table {
+    min-width: 600px;
+  }
+
+  .order-details__cell {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+
+/* ===============================
+   CELULAR (CARDS)
+================================ */
+@media (max-width: 768px) {
+
+  .order-details__table {
+    display: block;
+    min-width: 100%;
+  }
+
+  .order-details__head {
+    display: none;
+  }
+
+  .order-details__row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--white);
+    margin-bottom: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  }
+
+  .order-details__cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    border: none;
+  }
+
+  .order-details__cell::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--gray-600);
+  }
+
+  .order-details__actions {
+    flex-direction: column;
+  }
+
+  .order-details__btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .order-details__header {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .order-details__total {
+    text-align: left;
+  }
+}
+
+/* ===============================
+   CELULAR PEQUEÑO
+================================ */
+@media (max-width: 480px) {
+
+  .order-details__title {
+    font-size: var(--fs-sm);
+  }
+
+  .order-details__btn {
+    font-size: 12px;
+    padding: 8px;
+  }
+}

@@ -7,9 +7,10 @@
 {% endblock navbar %}
 
 {% block script %}
-    <script src="{% static 'js/ubicacion.js' %}" defer></script>
-    <script src="{% static 'js/departamento_municipio.js' %}" defer></script>
-    <script src="{% static 'js/render_mapa.js' %}" defer></script>
+
+<script src="{% static 'js/departamento_municipio.js' %}" defer></script>
+{% comment %} <script src="{% static 'js/render_mapa.js' %}" defer></script> {% endcomment %}
+
 {% endblock script %}
 
 {% block login %}
@@ -130,10 +131,19 @@
                     </p>
                 </div>
 
-                <div class="form-register__map" id="map">
-                    <input type="hidden" name="latitud" id="id_latitud" value="{{ form.instance.latitud }}">
-                    <input type="hidden" name="longitud" id="id_longitud" value="{{ form.instance.longitud }}">
+                {% comment %} {% load l10n %}
+                {% localize off %}
+
+                <div class="producter-register__location">
+                    <p class="producter-register__label-farm">Ubicación en el mapa</p>
+                    <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu finca</h3>
+                    <div class="producter-register__map" >
+                        <div id="map" style="height: 400px;"></div>
+                            <input type="hidden" name="latitud" id="id_latitud" value="{{ form.instance.latitud }}">
+                            <input type="hidden" name="longitud" id="id_longitud" value="{{ form.instance.longitud }}">
+                    </div>
                 </div>
+                {% endlocalize %} {% endcomment %}
             </div>
             {% endlocalize %}
 
