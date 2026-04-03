@@ -1,0 +1,8 @@
+Angelly/
+*/Angelly/
+
+__pycache__/
+*.pyc
+
+.env
+venv/

@@ -32,5 +32,9 @@
 @import url('components/forget.css');
 @import url('components/alert-message.css');
 @import url('components/passwor-edir.css');
+@import url('components/admin.css');
+@import url('components/list-message.css');
+@import url('components/list-orders.css');
+@import url('components/order-details.css');
 /* @import url('components/alert-warning.css'); */
 
