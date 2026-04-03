@@ -11,99 +11,162 @@
 {% block producto %}
 
 <div class="product-form">
-	<h2 class="product-form__title">Crear Producto</h2>
+	<div class="product-form__header">
+		<h2 class="product-form__title">Crear Producto</h2>
+		<p class="product-form__subtitle">
+			Complete la información del producto que desea publicar.
+		</p>
+  	</div>
 
 	<form action="" method="post" class="product-form__container" enctype="multipart/form-data">
 		{% csrf_token %}
 
 		<div class="product-form__row">
-			<label class="product-form__label">Nombre del producto
-				<input class="product-form__input" name="nombre_producto" placeholder="Ingrese nombre del producto"
-					value="{{ form.instance.nombre_producto|default_if_none:'' }}" required />
+			<label class="product-form__label">
+				Nombre del producto
+				<input
+				class="product-form__input"
+				name="nombre_producto"
+				placeholder="Ingrese el nombre del producto"
+				value="{{ form.instance.nombre_producto|default_if_none:'' }}"
+				required>
 			</label>
 
-			<label class="product-form__label">Unidad de medida
-				<select class="product-form__select product-form__select--unit" name="unidad_medida"
-					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
-					{% for unidad, label in form.unidad_medida.field.choices %}
-					<option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %} selected {% endif %}>{{ label }}</option>
-					{% endfor %}
+			<label class="product-form__label">
+				Unidad de medida
+				<select class="product-form__select" name="unidad_medida" required>
+				{% for unidad, label in form.unidad_medida.field.choices %}
+				<option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %}selected{% endif %}>
+					{{ label }}
+				</option>
+				{% endfor %}
 				</select>
 			</label>
-
-			<label class="product-form__label">Precio X unidad
-				<input class="product-form__input" name="precio" placeholder="Ingrese el precio"
-					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}" required />
-			</label>
-
-			<label class="product-form__label">{{ form.stock.label }}
-				<input type="number" class="product-form__input" name="stock" placeholder="Ingrese el stock"
-					value="{{ form.instance.stock|default_if_none:'' }}" required />
-			</label>
-
 		</div>
 
-		{% comment %}Descripción{% endcomment %}
-		<label class="product-form__label">Descripción del Producto
-			<textarea class="product-form__textarea" name="descripcion" placeholder="Ingrese la descripción"
-				required>{{ form.instance.descripcion|default_if_none:'' }}
-				</textarea>
-		</label>
-
-		<div class="product-form__row product-form__row--checkbox">
-			<span class="product-form__label"><strong>Tipo de Producto:</strong></span>
-			{% for categoria, label in form.categoria.field.choices %}
-			<label>
-				<input type="radio" name="categoria" value="{{ categoria }}" {% if categoria == form.instance.categoria %} checked {% endif %} required />{{ label }}
-			</label>
-			{% endfor %}
-		</div>
-
-		<div class="product-form__dates">
-			<h3 class="product-form__dates-title">Caducidad</h3>
-
-			<label class="product-form__label--checkbox">{{ form.caducidad.label }}
-				<input type="checkbox" name="caducidad" id="caducidad-checkbox" {% if form.instance.caducidad %} checked
-					{% endif %} />
+		<div class="product-form__row">
+			<label class="product-form__label">
+				Cantidad disponible
+				<input
+				type="number"
+				class="product-form__input"
+				name="stock"
+				placeholder="0"
+				value="{{ form.instance.stock|default_if_none:'' }}"
+				required>
 			</label>
 
-			<div>
-				<p class="product-form__label">Fecha de Elaboración</p>
-				<input type="date" class="product-form__dates-input" name="fecha_elaboracion"
-					value="{{ form.instance.fecha_elaboracion|date:'Y-m-d' }}" />
-			</div>
+			<label class="product-form__label">
+				Precio por unidad
+				<input
+				class="product-form__input"
+				name="precio"
+				placeholder="Ingrese el precio"
+				value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
+				required>
+			</label>
+		</div>
+		
+		<div class="product-form__row">
+			<label class="product-form__label">
+				Fecha de elaboración
+				<input
+				type="date"
+				class="product-form__dates-input"
+				name="fecha_elaboracion"
+				value="{{ form.instance.fecha_elaboracion|date:'Y-m-d' }}">
+			</label>
 
-			<div>
-				<p class="product-form__label">Fecha de Vencimiento</p>
-				<input type="date" class="product-form__dates-input" name="fecha_vencimiento"
-					value="{{ form.instance.fecha_vencimiento|date:'Y-m-d' }}" />
-			</div>
+			<label class="product-form__label">
+				Fecha de vencimiento
+				<input
+				type="date"
+				class="product-form__dates-input"
+				name="fecha_vencimiento"
+				value="{{ form.instance.fecha_vencimiento|date:'Y-m-d' }}">
+			</label>
 		</div>
 
-		<div class="product-form__image">
-			<label class="product-form__image-upload">
-				<span>Imagen del producto</span>
-				<div class="product-form__image-preview">
-					{% if form.instance.imagen_producto %}
-					<img src="{{ form.instance.imagen_producto.url }}" width="120">
-					{% endif %}
-					<input type="file" name="imagen_producto" />
+		<div class="product-form__row product-form__row--full">
+			<div class="product-form__label">
+				Tipo de producto
+
+				<div class="product-form__row--checkbox">
+				{% for categoria, label in form.categoria.field.choices %}
+				<label>
+					<input
+					type="radio"
+					name="categoria"
+					value="{{ categoria }}"
+					{% if categoria == form.instance.categoria %}checked{% endif %}
+					required>
+					{{ label }}
+				</label>
+				{% endfor %}
 				</div>
+			</div>
+		</div>
+
+		
+
+		<!--<div class="product-form__row product-form__row--full">
+			<label class="product-form__row--checkbox">
+				<input
+				type="checkbox"
+				name="caducidad"
+				id="caducidad-checkbox"
+				{% if form.instance.caducidad %}checked{% endif %}>
+				Este producto tiene fecha de caducidad
+			</label>
+		</div>-->
+
+		<div class="product-form__row product-form__row--full">
+			<label class="product-form__label">
+				Descripción del producto
+				<textarea
+				class="product-form__textarea"
+				name="descripcion"
+				placeholder="Describa el producto, sus características y beneficios"
+				required>{{ form.instance.descripcion|default_if_none:'' }}</textarea>
 			</label>
 		</div>
 
-		{% comment %}Botones{% endcomment %}
-		<div class="buttons">
-			<button type="button" name="accion" value="cancelar" class="buttons__action--secondary btn-cancel btn-confirmar"
-                data-url="{% url 'tienda_usuario' %}" 
-                data-titulo="¿Salir?" 
-                data-mensaje="Se perderán los cambios.">Cancelar
-            </button>
-			
-			<button type="submit" class="buttons__action--terciary" name="accion" value="vista_previa">Vista
-				previa</button>
-		</div>
-	</form>
-</div>
+		<div class="product-form__row product-form__row--full">
+			<div class="product-form__image">
+				<label class="product-form__label">Imagen del producto</label>
 
+				<label class="product-form__image-upload">
+				<input type="file" name="imagen_producto">
+				</label>
+
+				{% if form.instance.imagen_producto %}
+				<div class="product-form__image-preview">
+				<img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
+				</div>
+				{% endif %}
+			</div>
+		</div>
+
+		<div class="product-form__actions">
+			<button
+				type="button"
+				name="accion"
+				value="cancelar"
+				class="buttons__action--secondary btn-cancel btn-confirmar"
+				data-url="{% url 'tienda_usuario' %}"
+				data-titulo="¿Salir?"
+				data-mensaje="Se perderán los cambios.">
+				Cancelar
+			</button>
+
+			<button
+				type="submit"
+				class="buttons__action--terciary"
+				name="accion"
+				value="vista_previa">
+				Vista previa
+			</button>
+		</div>
+  	</form>
+</div>
 {% endblock producto %}
