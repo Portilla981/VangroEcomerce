@@ -54,7 +54,6 @@
 .profile__info--name {
   color: var(--gray-800);
   font-size: var(--fs-xxs);
-
 }
 
 /* Foto más pequeña y equilibrada */
@@ -84,7 +83,7 @@
   width: 100%;
 }
 
-/* --- Campos de finca y mapa --- */
+/* --- Campos de finca --- */
 .producter-register__farm-location {
   display: flex;
   justify-content: space-between;
