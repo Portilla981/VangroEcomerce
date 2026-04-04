@@ -16,108 +16,110 @@
         {% comment %} genera las columnas {% endcomment %}
         <div class="card-compra_union">
 
-                <div class="card-compra">
-                    
-                    <div class="card-compra_header">
-                        {% comment %} información del cliente {% endcomment %}
-                        <strong>Información del Cliente</strong>
-                    </div>
-
-                    <div class="card-compra_body">
-                        {% comment %} request.user carga la información del usuario logueado {% endcomment %}
-                        <p><strong>Nombre:</strong> {{ request.user.first_name }}</p>
-                        <p><strong>Apellido:</strong> {{ request.user.last_name }}</p>
-                        <p><strong>Correo:</strong> {{ request.user.email }}</p>
-                        {% comment %} si el usuario tiene direccion registrada la muestra sino muestra el texto no registrada {% endcomment %}
-                        <p><strong>Dirección:</strong> 
-                            {% if perfil.direccion_residencia %}
-                                {{ perfil.direccion_residencia }}
-                            {% else %}
-                                No registrada
-                            {% endif %}
-                        </p>
-                    </div>
+            <div class="card-compra">
+                
+                <div class="card-compra_header">
+                    {% comment %} información del cliente {% endcomment %}
+                    <strong>Información del cliente</strong>
                 </div>
 
-                {% comment %} car del metodo de pago {% endcomment %}
-                <div class="card-compra">
-                    <div class="card-compra_header">
-                        <strong>Método de Pago</strong>
-                    </div>
-
-                    <div class="card-compra_body">
-
-                        <div class="form-compra_check">
-                            {% comment %} opciones de los métodos de pago. solo se puede elegir uno {% endcomment %}
-                            <input class="form-compra_input" type="radio" name="metodo_pago" value="tarjeta" checked>
-                            <label class="form-compra_label">
-                                Tarjeta de Crédito
-                            </label>
-                        </div>
-
-                        <div class="form-compra_check ">
-                            <input class="form-compra_input" type="radio" name="metodo_pago" value="transferencia">
-                            <label class="form-compra_label">
-                                Transferencia Bancaria
-                            </label>
-                        </div>
-
-                        <div class="form-compra_check">
-                            <input class="form-compra_input" type="radio" name="metodo_pago" value="contraentrega">
-                            <label class="form-compra_label">
-                                Pago Contra Entrega
-                            </label>
-                        </div>
-
-                    </div>
+                <div class="card-compra_body">
+                    {% comment %} request.user carga la información del usuario logueado {% endcomment %}
+                    <p><strong>Nombre:</strong> {{ request.user.first_name }}</p>
+                    <p><strong>Apellido:</strong> {{ request.user.last_name }}</p>
+                    <p><strong>Correo:</strong> {{ request.user.email }}</p>
+                    {% comment %} si el usuario tiene direccion registrada la muestra sino muestra el texto no registrada {% endcomment %}
+                    <p><strong>Dirección:</strong> 
+                        {% if perfil.direccion_residencia %}
+                            {{ perfil.direccion_residencia }}
+                        {% else %}
+                            No registra
+                        {% endif %}
+                    </p>
                 </div>
+            </div>
+
+            {% comment %} car del metodo de pago {% endcomment %}
+            <div class="card-compra">
+                <div class="card-compra_header">
+                    <strong>Método de Pago</strong>
                 </div>
 
-                <div class="card-recibo">
-                    <div class="card-compra recibo">
-                    <div class="card-compra_header">
-                        <strong>Resumen del Pedido</strong>
+                <div class="card-compra_body">
+
+                    <div class="form-compra_check">
+                        {% comment %} opciones de los métodos de pago. solo se puede elegir uno {% endcomment %}
+                        <input class="form-compra_input" type="radio" name="metodo_pago" value="tarjeta" checked>
+                        <label class="form-compra_label">
+                            Tarjeta de crédito
+                        </label>
                     </div>
 
-                    <div class="card-compra_body">
-                        {% comment %} ciclo para mostrar por cada producto el nombre, cantidad y subtotal {% endcomment %}
-                        {% for item in items %}
-                            <div class="card-compra_item">
-                                <div class="card-compra_item-valor">
-                                    <strong>{{ item.producto.nombre_producto }}</strong> 
-                                    
-                                    <small class="text-compra">
-                                        Cantidad: {{ item.cantidad }}
-                                    </small>
-                                    {% if item.producto.imagen_producto %}
-                                    <img class="compra-card_image" src="{{ item.producto.imagen_producto.url }}" alt="Foto de producto"/>
-                                        {% else %}
-                                    <img class="compra-card_image" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Foto de producto"/>
-                                    {% endif %}
-                                </div>
-                                <div class="compra-subtotal">
-                                    ${{ item.subtotal|floatformat:0|intcomma }}
-                                </div>
-                            </div>
+                    <div class="form-compra_check ">
+                        <input class="form-compra_input" type="radio" name="metodo_pago" value="transferencia">
+                        <label class="form-compra_label">
+                            Transferencia bancaria
+                        </label>
+                    </div>
+
+                    <div class="form-compra_check">
+                        <input class="form-compra_input" type="radio" name="metodo_pago" value="contraentrega">
+                        <label class="form-compra_label">
+                            Pago contra entrega
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-recibo">
+            <div class="card-compra recibo">
+
+                <div class="card-compra_header">
+                    <strong>Resumen del pedido</strong>
+                </div>
+
+                <div class="card-compra_body">
+                    {% comment %} ciclo para mostrar por cada producto el nombre, cantidad y subtotal {% endcomment %}
+                    {% for item in items %}
+
+                    <div class="card-compra_item">
+                        <div class="card-compra_item-valor">
+                            <strong>{{ item.producto.nombre_producto }}</strong> 
                             
-                        {% endfor %}
-                        {% comment %} Total del carrito {% endcomment %}
-                        <div class="card-compra_item">
-                            <strong>Total:</strong>
-                            <strong class="text-compra">${{ total|floatformat:0|intcomma }}</strong>
+                            <small class="text-compra">
+                                Cantidad: {{ item.cantidad }}
+                            </small>
+                            {% if item.producto.imagen_producto %}
+                            <img class="compra-card_image" src="{{ item.producto.imagen_producto.url }}" alt="Foto de producto"/>
+                                {% else %}
+                            <img class="compra-card_image" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Foto de producto"/>
+                            {% endif %}
                         </div>
-                        {% comment %} Botón finalizar y pagar {% endcomment %}
-                        {% comment %} Una vez se da clic va a la vista procesar_pago {% endcomment %}
-                        <div class="compra-button">
-                            <button type="button" class="buttons__action--primary btn-cancel btn-confirmar"
-                                data-form="form-carrito__pagar" 
-                                data-titulo="Realizar pago" 
-                                data-mensaje="¿Desea finalizar la compra?"> Finalizar y Pagar
-                            </button>
+
+                        <div class="compra-subtotal">
+                            ${{ item.subtotal|floatformat:0|intcomma }}
                         </div>
                     </div>
+                        
+                    {% endfor %}
+                    {% comment %} Total del carrito {% endcomment %}
+                    <div class="card-compra_item">
+                        <strong>Total:</strong>
+                        <strong class="text-compra">${{ total|floatformat:0|intcomma }}</strong>
+                    </div>
+
+                    {% comment %} Botón finalizar y pagar {% endcomment %}
+                    {% comment %} Una vez se da clic va a la vista procesar_pago {% endcomment %}
+                    <div class="compra-button">
+                        <button type="button" class="buttons__action--primary btn-cancel btn-confirmar"
+                            data-form="form-carrito__pagar" 
+                            data-titulo="Realizar pago" 
+                            data-mensaje="¿Desea finalizar la compra?"> Finalizar y Pagar
+                        </button>
+                    </div>
                 </div>
-            </div>      
+            </div>     
         </div>
     </form>
 </div>

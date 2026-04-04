@@ -3,8 +3,8 @@
 
 <div class="product-item">
 
-{% include 'components/card-producto.html' %}
-<div class="buttons_cards">
+    {% include 'components/card-producto.html' %}
+    <div class="buttons_cards">
 
         <a href="{% url 'detalle_producto' producto.id %}">
             <button class="buttons__action--secondary">
@@ -28,13 +28,11 @@
         </a>
 
         {% endif %}
-
     </div>
-
 </div>
 
 {% empty %}
 
-<p>No se encontraron productos</p>
+<p>No se encontraron productos.</p>
 
 {% endfor %}

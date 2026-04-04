@@ -13,19 +13,17 @@
     <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon/favicon.svg' %}" />
     <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" />
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}" />
-    <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />    
+    <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" />    
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    
     <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
     <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
     <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
-    
+
     {% block script %}
     {% endblock script %}
 
@@ -33,162 +31,114 @@
 </head>
 
 <body>
+    {% block navbar %}
+        {% include 'components/navbar-profile_acciones.html' %}
+    {% endblock navbar %}
 
-{% block navbar %}
-{% include 'components/navbar-profile_acciones.html' %}
-{% endblock navbar %}
+    <div class="contenido_general">
+        {% block carrito %}
+        <div class="shopping-cart">
+            <h2 class="shopping-cart__title">Mi Carrito</h2>
 
-<div class="contenido_general">
+            {% if items %}
+            <div class="shopping-cart__layout">
+                <!-- IZQUIERDA: PRODUCTOS -->
+                <div class="shopping-cart__products">
+                    <table class="shopping-cart__table">
+                        <thead class="shopping-cart__thead">
+                            <tr class="shopping-cart__row shopping-cart__row--head">
+                                <th class="shopping-cart__cell">Imagen</th>
+                                <th class="shopping-cart__cell">Producto</th>
+                                <th class="shopping-cart__cell">Cantidad</th>
+                                <th class="shopping-cart__cell">Precio</th>
+                                <th class="shopping-cart__cell">Subtotal</th>
+                                <th class="shopping-cart__cell">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="shopping-cart__tbody">
+                            {% for item in items %}
+                            <tr class="shopping-cart__row" data-id="{{ item.id }}">
+                                <td class="shopping-cart__cell">
+                                    {% if item.producto.imagen_producto %}
+                                        <img class="shopping-cart__image" src="{{ item.producto.imagen_producto.url }}" alt="{{ item.producto.nombre_producto }}" />
+                                    {% else %}
+                                        <img class="shopping-cart__image" src="{% static 'img/sin_imagen.png' %}" alt="Sin imagen" />
+                                    {% endif %}
+                                </td>
+                                <td class="shopping-cart__cell">
+                                    {{ item.producto.nombre_producto }}
+                                </td>
+                                <td class="shopping-cart__cell">
+                                    <div class="shopping-cart__controls input-group">
+                                        <button class="btn-restar">-</button>
+                                        <input type="number" class="cantidad-input" value="{{ item.cantidad }}" min="1" max="{{ item.producto.stock }}" step="1">
+                                        <button class="btn-sumar">+</button>
+                                    </div>
+                                    <div class="shopping-cart__stock mensaje-stock">
+                                        <small class="stock-msg d-none">
+                                            Stock disponible: {{ item.producto.stock }}
+                                        </small>
+                                    </div>
+                                </td>
+                                <td class="shopping-cart__cell">
+                                    $ {{ item.producto.precio|floatformat:0|intcomma }}
+                                </td>
+                                <td class="shopping-cart__cell">
+                                    $ {{ item.subtotal|floatformat:0|intcomma }}
+                                </td>
+                                <td class="shopping-cart__cell">
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 
-{% block carrito %}
+                    <div class="shopping-cart__actions buttons">
+                        <!-- Limpieza de estilos para quitar la raya del link -->
+                        <a href="{% url 'ver_productos' %}" class="buttons__action--secondary btn-cancel" style="text-decoration: none;">
+                            Seguir comprando
+                        </a>
+                    </div>
+                </div>
 
-<div class="shopping-cart">
-
-    <h2 class="shopping-cart__title">Mi Carrito</h2>
-
-    {% if items %}
-
-    <div class="shopping-cart__layout">
-
-        <!-- IZQUIERDA -->
-        <div class="shopping-cart__products">
-
-            <table class="shopping-cart__table">
-
-                <thead class="shopping-cart__thead">
-                    <tr class="shopping-cart__row shopping-cart__row--head">
-                        <th class="shopping-cart__cell">Imagen</th>
-                        <th class="shopping-cart__cell">Producto</th>
-                        <th class="shopping-cart__cell">Cantidad</th>
-                        <th class="shopping-cart__cell">Precio</th>
-                        <th class="shopping-cart__cell">Subtotal</th>
-                        <th class="shopping-cart__cell">Eliminar</th>
-                    </tr>
-                </thead>
-
-                <tbody class="shopping-cart__tbody">
-                    {% for item in items %}
-                    <tr class="shopping-cart__row" data-id="{{ item.id }}">
-
-                        <td class="shopping-cart__cell">
-                            {% if item.producto.imagen_producto %}
-                                <img class="shopping-cart__image"
-                                    src="{{ item.producto.imagen_producto.url }}">
-                            {% else %}
-                                <img class="shopping-cart__image"
-                                    src="/static/img/sin_imagen.png">
-                            {% endif %}
-                        </td>
-
-                        <td class="shopping-cart__cell">
-                            {{ item.producto.nombre_producto }}
-                        </td>
-
-                        <td class="shopping-cart__cell">
-                            <div class="shopping-cart__controls input-group">
-
-                                <button class="btn-restar">-</button>
-
-                                <input type="number"
-                                    class="cantidad-input"
-                                    value="{{ item.cantidad }}"
-                                    min="1"
-                                    max="{{ item.producto.stock }}"
-                                    step="1">
-
-                                <button class="btn-sumar">+</button>
-
-                            </div>
-
-                            <div class="shopping-cart__stock mensaje-stock">
-                                <small class="stock-msg d-none">
-                                    Stock disponible: {{ item.producto.stock }}
-                                </small>
-                            </div>
-                        </td>
-
-                        <td class="shopping-cart__cell">
-                            $ {{ item.producto.precio|floatformat:0|intcomma }}
-                        </td>
-
-                        <td class="shopping-cart__cell">
-                            $ {{ item.subtotal|floatformat:0|intcomma }}
-                        </td>
-
-                        <td class="shopping-cart__cell">
-                            <button class="btn-eliminar">🗑</button>
-                        </td>
-
-                    </tr>
-                    {% endfor %}
-                </tbody>
-
-            </table>
-
-            <div class="shopping-cart__actions buttons">
-
-                <button class="buttons__action--secondary btn-cancel">
-                    <a href="{% url 'ver_productos' %}">
-                        ← Seguir comprando
-                    </a>
-                </button>
-
+                <!-- DERECHA: RESUMEN -->
+                <div class="shopping-cart__summary">
+                    <h3 class="shopping-cart__summary-title">Resumen del pedido</h3>
+                    <div class="shopping-cart__summary-row">
+                        <span>Subtotal</span>
+                        <span>$ {{ total|floatformat:0|intcomma }}</span>
+                    </div>
+                    <div class="shopping-cart__summary-row">
+                        <span>Envío</span>
+                        <span>gratis</span>
+                    </div>
+                    <div class="shopping-cart__summary-total">
+                        Total: $ <span id="total-general">{{ total|floatformat:0|intcomma }}</span>
+                    </div>
+                    <button 
+                        class="shopping-cart__btn shopping-cart__btn--primary btn-confirmar"
+                        data-url="{% url 'finalizar_compra' %}" 
+                        data-titulo="Registrar compra" 
+                        data-mensaje="¿Desea comprar los productos seleccionados?">
+                        Finalizar compra
+                    </button>
+                </div>
             </div>
-
+            {% else %}
+            <div class="alert alert-warning">
+                Tu carrito está vacío.
+            </div>
+            {% endif %}
         </div>
-
-        <!-- DERECHA -->
-        <div class="shopping-cart__summary">
-
-            <h3 class="shopping-cart__summary-title">Resumen del pedido</h3>
-
-            <div class="shopping-cart__summary-row">
-                <span>Subtotal</span>
-                <span>$ {{ total|floatformat:0|intcomma }}</span>
-            </div>
-
-            <div class="shopping-cart__summary-row">
-                <span>Envío</span>
-                <span>Gratis</span>
-            </div>
-
-            <div class="shopping-cart__summary-total">
-                Total: 
-                $ <span id="total-general">{{ total|floatformat:0|intcomma }}</span>
-            </div>
-
-            <button 
-                class="shopping-cart__btn shopping-cart__btn--primary btn-confirmar"
-                data-url="{% url 'finalizar_compra' %}" 
-                data-titulo="Registrar compra" 
-                data-mensaje="¿Desea registrar los productos seleccionados?">
-                Finalizar compra
-            </button>
-
-        </div>
-
+        {% endblock carrito %}
     </div>
 
-    {% else %}
+    {% include 'components/footer_vanagro.html' %}
+    {% include 'components/popup-acciones.html' %}
+    {% include 'components/popup-django.html' %}
 
-    <div class="alert alert-warning">
-        Tu carrito está vacío.
-    </div>
-
-    {% endif %}
-
-</div>
-
-{% endblock carrito %}
-</div>
-
-{% include 'components/footer_vanagro.html' %}
-{% include 'components/popup-acciones.html' %}
-{% include 'components/popup-django.html' %}  
-
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
-
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
 </html>
