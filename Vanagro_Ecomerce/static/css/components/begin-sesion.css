@@ -49,7 +49,6 @@
     width: auto;
 }
 
-
 .beginner-form__info {
     display: flex;
     flex-direction: column;
@@ -65,18 +64,34 @@
 }
 
 .beginner-form__label {
-    font-size: var(--fs-xxxs);
+    font-size: var(--fs-xxs);
     margin-bottom: 4px;
-    color: var(--black);
+    color: var(--gray-900);
     text-align: left;
+    letter-spacing: 0.02em;
 }
 
 .beginner-form__input {
-    min-width: 320px;
+    /*min-width: 320px;
     padding: 16px;
     height: 48px;
     border-radius: 1rem;
     background-color: var(--white);
+    width: 95%;*/
+    min-width: 320px;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid var(--gray-400);
+    border-radius: 12px;
+    background: var(--white);
+    font-family: var(--main-font);
+    font-size: var(--fs-xxs);
+    color: var(--gray-900);
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+    box-sizing: border-box;
 }
 
 .begin-lost_password {
@@ -93,6 +108,18 @@
     font-weight: 600;
 }
 
+
+
+.beginner-form__input:hover{
+    border-color: var(--primary-500);
+}
+
+.beginner-form__input:focus,
+.beginner-form__input:focus-visible {
+    outline: none;
+    border-color: var(--primary-900);
+    box-shadow: 0 0 0 4px rgba(85, 180, 12, 0.18);
+}
 
 @media (min-width: 768px) {
 
@@ -117,9 +144,7 @@
 
 }
 
-
 @media (max-width: 480px) {
-
 
     .session__form-container {
         width: 100%;
@@ -132,6 +157,4 @@
         padding: 16px;
         border-radius: 8px;
     }
-
 }
-

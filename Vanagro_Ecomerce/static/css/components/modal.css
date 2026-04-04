@@ -189,8 +189,8 @@
 /* BOTONES */
 .modal-recuperacion__actions {
   display: flex;
-  gap: 10px;
-  margin-top: 8px;
+  gap: 32px;
+  margin-top: 24px;
 }
 
 .modal-recuperacion__btn {

@@ -92,7 +92,7 @@
 }
 
 .product-form__textarea {
-  width: 95%;
+  width: 97.5%;
   padding: 16px;
   border: 1px solid var(--gray-400);
   border-radius: 12px;
@@ -151,28 +151,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-/* Tipo de producto */
-.product-form__row--checkbox {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-}
-
-.product-form__row--checkbox label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--fs-xxs);
-  color: var(--gray-900);
-  font-weight: 500;
-}
-
-.product-form__row--checkbox input[type="radio"],
-.product-form__row--checkbox input[type="checkbox"] {
-  accent-color: var(--primary-900);
 }
 
 /* Fechas */

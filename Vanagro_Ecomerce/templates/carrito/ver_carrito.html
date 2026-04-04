@@ -71,8 +71,13 @@
                     <tr class="shopping-cart__row" data-id="{{ item.id }}">
 
                         <td class="shopping-cart__cell">
-                            <img class="shopping-cart__image"
-                                 src="{{ item.producto.imagen_producto.url }}">
+                            {% if item.producto.imagen_producto %}
+                                <img class="shopping-cart__image"
+                                    src="{{ item.producto.imagen_producto.url }}">
+                            {% else %}
+                                <img class="shopping-cart__image"
+                                    src="/static/img/sin_imagen.png">
+                            {% endif %}
                         </td>
 
                         <td class="shopping-cart__cell">
