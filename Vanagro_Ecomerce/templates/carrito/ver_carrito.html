@@ -8,6 +8,7 @@
 
     {% load static %}
     {% load humanize %}
+
     <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-96x96.png' %}" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon/favicon.svg' %}" />
     <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" />
@@ -18,6 +19,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />    
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     
     <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
@@ -31,121 +33,153 @@
 </head>
 
 <body>
-    {% block navbar %}
-    {% include 'components/navbar-profile_acciones.html' %}
-    {% endblock navbar %}
 
-    <div class="contenido_general">
-    {% block carrito %}
+{% block navbar %}
+{% include 'components/navbar-profile_acciones.html' %}
+{% endblock navbar %}
 
-    <div class="container mt-4">
+<div class="contenido_general">
 
-        <h2 class="user-list__title">Mi Carrito</h2>
+{% block carrito %}
 
-        {% comment %} si hay productos{% endcomment %}
-        {% if items %}
-        {% comment %} se genera la tabla {% endcomment %}
-        <table class="user-list__table">
-            <thead class="user-list__table-head">
-                <tr class="user-list__row user-list__row--head">
-                    <th class="user-list__cell">Imagen</th>
-                    <th class="user-list__cell">Producto</th>
-                    <th class="user-list__cell">Cantidad</th>
-                    <th class="user-list__cell">Precio</th>
-                    <th class="user-list__cell">Subtotal</th>
-                    <th class="user-list__cell">Eliminar</th>
-                </tr>
-            </thead>
+<div class="shopping-cart">
 
-            <tbody class="user-list__table-body">
-                {% comment %} ciclo para recorrer todos los productos del carrito {% endcomment %}
-                {% for item in items %}
-                {% comment %} se guarda el id del producto (luego será utilizado por JS) {% endcomment %}
-                <tr class="user-list__row"  data-id="{{ item.id }}">
+    <h2 class="shopping-cart__title">Mi Carrito</h2>
 
-                    <td class="user-list__cell">
-                        {% comment %} se carga la imagen del producto {% endcomment %}
-                        <img src="{{ item.producto.imagen_producto.url }}" width="70" style="object-fit:cover;">
-                    </td>
-                    {% comment %} se carga el nombre del producto {% endcomment %}
-                    <td class="user-list__cell"> {{ item.producto.nombre_producto }}</td>
+    {% if items %}
 
-                    <td class="user-list__cell">
-                        <div class="input-group">
-                            {% comment %} botón para disminuir la cantidad del producto {% endcomment %}
-                            <button class="btn-restar">-</button>
-                            {% comment %} muestra la cantidad actual. con el limite menor que es 1 y el limite mayor que es la cantidad del stock {% endcomment %}
-                            <input type="number" class="cantidad-input"
-                                value="{{ item.cantidad }}" min="1" max="{{ item.producto.stock }}" step="1">
-                            {% comment %} botón para aumentar la cantidad del producto {% endcomment %}
-                            <button class="btn-sumar">+</button>
+    <div class="shopping-cart__layout">
 
-                        </div>
-                        <div class="mensaje-stock">
-                        {% comment %} Mensaje de stock {% endcomment %}
-                        {% comment %} se muestra cuando el usuario sobrepasa el stock {% endcomment %}
-                        <small class="stock-msg d-none">
-                            Stock disponible: {{ item.producto.stock }}
-                        </small>
-                        </div>
-                    </td>
-                    {% comment %} se carga el precio del producto {% endcomment %}
-                    <td class="user-list__cell">$ {{ item.producto.precio|floatformat:0|intcomma }}</td>
-                    {% comment %} se calcular el subtotal del producto (que esta en el modelo) {% endcomment %}
-                    <td class="user-list__cell subtotal">$ {{ item.subtotal|floatformat:0|intcomma }}</td>
+        <!-- IZQUIERDA -->
+        <div class="shopping-cart__products">
 
-                    <td class="user-list__cell">
-                        {% comment %} botón eliminar {% endcomment %}
-                        <button class="btn-eliminar"> 🗑 </button>
-                    </td>
+            <table class="shopping-cart__table">
 
-                </tr>
-                {% endfor %}
+                <thead class="shopping-cart__thead">
+                    <tr class="shopping-cart__row shopping-cart__row--head">
+                        <th class="shopping-cart__cell">Imagen</th>
+                        <th class="shopping-cart__cell">Producto</th>
+                        <th class="shopping-cart__cell">Cantidad</th>
+                        <th class="shopping-cart__cell">Precio</th>
+                        <th class="shopping-cart__cell">Subtotal</th>
+                        <th class="shopping-cart__cell">Eliminar</th>
+                    </tr>
+                </thead>
 
-            </tbody>
+                <tbody class="shopping-cart__tbody">
+                    {% for item in items %}
+                    <tr class="shopping-cart__row" data-id="{{ item.id }}">
 
-        </table>
+                        <td class="shopping-cart__cell">
+                            <img class="shopping-cart__image"
+                                 src="{{ item.producto.imagen_producto.url }}">
+                        </td>
 
-        <div class="buttons">
-            {% comment %} Botón Seguir Comprando {% endcomment %}
+                        <td class="shopping-cart__cell">
+                            {{ item.producto.nombre_producto }}
+                        </td>
 
-            <button class="buttons__action--secondary btn-cancel">
-            <a href="{% url 'ver_productos' %}" class="btn btn-outline-primary">
-                ← Seguir comprando
-            </a>
-            </button>
-            {% comment %} se carga el total {% endcomment %}
-            {% comment %} <div class="text-end"> {% endcomment %}
-                
-                <h4 class="">
-                    Total: $ <span id="total-general">{{ total|floatformat:0|intcomma }}</span>
-                </h4>
+                        <td class="shopping-cart__cell">
+                            <div class="shopping-cart__controls input-group">
 
-                {% comment %} Botón Finalizar Compra {% endcomment %}
-                <button type="button" class="buttons__action--primary btn-cancel btn-confirmar"
-                    data-url="{% url 'finalizar_compra' %}" 
-                    data-titulo="Registrar compra" 
-                    data-mensaje="¿Desea registrar los productos seleccionados?">Finalizar Compra
+                                <button class="btn-restar">-</button>
+
+                                <input type="number"
+                                    class="cantidad-input"
+                                    value="{{ item.cantidad }}"
+                                    min="1"
+                                    max="{{ item.producto.stock }}"
+                                    step="1">
+
+                                <button class="btn-sumar">+</button>
+
+                            </div>
+
+                            <div class="shopping-cart__stock mensaje-stock">
+                                <small class="stock-msg d-none">
+                                    Stock disponible: {{ item.producto.stock }}
+                                </small>
+                            </div>
+                        </td>
+
+                        <td class="shopping-cart__cell">
+                            $ {{ item.producto.precio|floatformat:0|intcomma }}
+                        </td>
+
+                        <td class="shopping-cart__cell subtotal">
+                            $ {{ item.subtotal|floatformat:0|intcomma }}
+                        </td>
+
+                        <td class="shopping-cart__cell">
+                            <button class="btn-eliminar">🗑</button>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+            <div class="shopping-cart__actions buttons">
+
+                <button class="buttons__action--secondary btn-cancel">
+                    <a href="{% url 'ver_productos' %}">
+                        ← Seguir comprando
+                    </a>
                 </button>
 
-               
-            {% comment %} </div> {% endcomment %}
+            </div>
 
         </div>
-        {% comment %} si el carrito esta vació {% endcomment %}
-        {% else %}
-        <div class="alert alert-warning">
-            Tu carrito está vacío.
+
+        <!-- DERECHA -->
+        <div class="shopping-cart__summary">
+
+            <h3 class="shopping-cart__summary-title">Resumen del pedido</h3>
+
+            <div class="shopping-cart__summary-row">
+                <span>Subtotal</span>
+                <span>$ {{ total|floatformat:0|intcomma }}</span>
+            </div>
+
+            <div class="shopping-cart__summary-row">
+                <span>Envío</span>
+                <span>Gratis</span>
+            </div>
+
+            <div class="shopping-cart__summary-total">
+                Total: 
+                $ <span id="total-general">{{ total|floatformat:0|intcomma }}</span>
+            </div>
+
+            <button 
+                class="shopping-cart__btn shopping-cart__btn--primary btn-confirmar"
+                data-url="{% url 'finalizar_compra' %}" 
+                data-titulo="Registrar compra" 
+                data-mensaje="¿Desea registrar los productos seleccionados?">
+                Finalizar compra
+            </button>
+
         </div>
-        {% endif %}
 
     </div>
-    {% endblock carrito %}
+
+    {% else %}
+
+    <div class="alert alert-warning">
+        Tu carrito está vacío.
     </div>
 
-    {% include 'components/footer_vanagro.html' %}
-    {% include 'components/popup-acciones.html' %}
-    {% include 'components/popup-django.html' %}  
+    {% endif %}
+
+</div>
+
+{% endblock carrito %}
+</div>
+
+{% include 'components/footer_vanagro.html' %}
+{% include 'components/popup-acciones.html' %}
+{% include 'components/popup-django.html' %}  
 
 </body>
 

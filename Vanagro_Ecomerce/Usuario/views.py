@@ -289,7 +289,7 @@ def editar_usuario(request, pk):
 
     if request.method == 'POST':        
         user_form = Form_Actualizar_User(request.POST, instance = user)
-        perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil)
+        perfil_form = Formulario_Usuario(request.POST, request.FILES, instance = perfil)
         
         if user_form.is_valid() and perfil_form.is_valid():            
             user_form.save()
@@ -322,7 +322,8 @@ def editar_usuario(request, pk):
     context = {
         'user_form': user_form,
         'perfil_form': perfil_form,
-        'titulo': 'Editar Usuario' 
+        'titulo': 'Editar Usuario',
+        'es_superuser': request.user.is_superuser 
         }
         
         

@@ -174,7 +174,7 @@ class Formulario_Usuario(forms.ModelForm):
         return fecha
     
    
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):        
         super().__init__(*args, **kwargs)
         
         if 'departamento' in self.data:
@@ -182,6 +182,8 @@ class Formulario_Usuario(forms.ModelForm):
             self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=dep_id)
         else:
             self.fields['municipio'].queryset = Municipio.objects.none()
+        
+       
 
 
 class Formulario_Productor(forms.ModelForm):

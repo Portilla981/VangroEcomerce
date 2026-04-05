@@ -1,6 +1,5 @@
 :root {
     /* Primary color*/
-
     --primary-950: #4DB100;    
     --primary-900: #55B40C;
     --primary-800: #67BC26;
@@ -14,7 +13,6 @@
     --primary-50: #F6FBF2;
 
     /* Secundary color*/
-
     --secundary-950:#FED638;
     --secundary-900:#FED841;
     --secundary-800:#FEDC55;
@@ -104,20 +102,20 @@
 
     /* ==== Breakpoints ====== */
 /* 
-Alias       max-width       uso tipico
-sm          640px           Telefonos grandes
-md          768px           Tablests
+Alias       max-width       uso típico
+sm          640px           Teléfonos grandes
+md          768px           Tablets
 lg          1024px          Laptos
 xl          1280px          Desktop
-2x1         1536px          BigScreem
+2x1         1536px          BigScream
 
 */
 
---scream-A: 640px;   /*Telefonos grandes*/
---scream-B: 768px;   /*Tablests*/
+--scream-A: 640px;   /*Teléfonos grandes*/
+--scream-B: 768px;   /*Tablets*/
 --scream-C: 1024px;  /*Laptos*/
 --scream-D: 1280px;  /*Desktop*/
---scream-E: 1536px;  /*BigScreem*/
+--scream-E: 1536px;  /*BigScream*/
 
 
 }

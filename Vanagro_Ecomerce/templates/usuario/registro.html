@@ -3,9 +3,7 @@
 {% load static %}
 
 {% block navbar %}
-
     {% include 'components/navbar-simple_inicio.html' %}
-
 {% endblock navbar %}
 
 {% block script %}
@@ -15,17 +13,21 @@
 
 {% block login %}
 
-<div class="form-register__head">
+{% comment %} <div class="form-register__head">
     <p><strong>Registrar Usuario</strong></p>
-</div>
+</div> {% endcomment %}
 
 <section class="form-register__block">
+    <div class="form-register__head">
+        <h1 class="form-register__title">Crear cuenta de usuario</h1>
+        <p class="form-register__subtitle">Complete la información para registrar un nuevo usuario en Vanagro.</p>
+    </div>
     <div class="form-register__block--form">
         <form method="POST" class="form-register__form" id="form-register__user"  enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-register__group">
                 <label class="form-register__label">Nombres
-                    <input class="form-register__input" type="text" name="first_name"  value="{{ user_form.first_name.value|default_if_none:'' }}" placeholder="Ingrese su nombre(s)"
+                    <input class="form-register__input" type="text" name="first_name"  value="{{ user_form.first_name.value|default_if_none:'' }}" placeholder="Ingrese su nombre o nombres"
                         required>
                 </label>
                 <label class="form-register__label">Apellidos
@@ -34,7 +36,7 @@
                 </label>
 
                 <div class="form-register__images">
-                    <label class="form-register__label">Cargar foto de perfil
+                    <label class="form-register__label">Foto de perfil
                         <input class="form-register__file" type="file" name="fotografia">
                     </label>
                 </div>
@@ -50,10 +52,9 @@
                     </select>
                 </label>
 
-                <label class="form-register__label">Número de identificación
+                <label class="form-register__label">Número de documento
                     <input class="form-register__input" type="text" id="number_id" name="numero_identificacion"  value="{{ perfil_form.numero_identificacion.value|default_if_none:'' }}" 
-                        placeholder="Ingrese el numero" required>
-                    
+                        placeholder="Ingrese su número de documento" required>                    
                 </label>
 
                 <label class="form-register__label">Fecha de nacimiento
@@ -116,12 +117,12 @@
 
                 <label class="form-register__label">Dirección
                     <input class="form-register__input" type="text" name="direccion_residencia" value="{{ perfil_form.direccion_residencia.value|default_if_none:'' }}"
-                        placeholder="Ingrese su direccion de residencia" required>
+                        placeholder="Ingrese su dirección de residencia" required>
                 </label>
             </div>
 
             <div class="form-register__group">                
-                <label class="form-register__label">Correo Electrónico
+                <label class="form-register__label">Correo electrónico
                     <input class="form-register__input" type="email" name="email" value="{{ user_form.email.value|default_if_none:'' }}"
                         placeholder="Ingrese su correo electrónico" required>                    
                 </label>
@@ -130,16 +131,16 @@
                     <input class="form-register__input" type="tel" name="telefono_1" value="{{ perfil_form.telefono_1.value|default_if_none:'' }}"
                         placeholder="Ingrese su número de teléfono" required>
                 </label>
-                <label class="form-register__label">Teléfono Alterno
+                <label class="form-register__label">Teléfono alterno
                     <input class="form-register__input" type="tel" name="telefono_2" value="{{ perfil_form.telefono_2.value|default_if_none:'' }}"
                         placeholder="Ingrese su número de teléfono alterno" >
                 </label>
             </div>
 
             <div class="form-register__group">
-                <label class="form-register__label">Nombre de Usuario
+                <label class="form-register__label">Nombre de usuario
                     <input class="form-register__input" type="text" name="username"
-                        placeholder="Ingrese nombre para su usuario" required>
+                        placeholder="Ingrese un nombre de usuario" required>
                 </label>
                 
                 <label class="form-register__label">Contraseña
@@ -147,7 +148,7 @@
                         placeholder="Ingrese una contraseña" required>
                 </label>
 
-                <label class="form-register__label">Confirmar contraseña
+                <label class="form-register__label">Confirmación de contraseña
                     <input class="form-register__input" type="password" name="password2"
                         placeholder="Confirme su contraseña" required>
                 </label>              
@@ -157,14 +158,14 @@
         <div class="buttons popup-buttons"> 
             <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
                 data-url="{% url 'inicio_vista' %}" 
-                data-titulo="¿Salir?" 
-                data-mensaje="Se perderán los cambios.">Cancelar
+                data-titulo="Cancelar creación de cuenta" 
+                data-mensaje="¿Desea salir? Se perderá la información ingresada.">Cancelar
             </button>
 
             <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
                 data-form="form-register__user" 
-                data-titulo="💾 Guardar" 
-                data-mensaje="¿Confirmas el registro de los datos?">Guardar Usuario
+                data-titulo="Crear usuario" 
+                data-mensaje="¿Desea registrar este usuario?">Crear usuario
             </button> 
         </div>
     </form>

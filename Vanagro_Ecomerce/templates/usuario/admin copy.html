@@ -1,0 +1,44 @@
+{% load static %}
+
+<div class="profile__actions-admin">
+    <div class="profile__actions-admin_1">
+        <button class="profile__action">
+        <a href="{% url 'ver_productos' %}?next={{ request.path }}">
+            <ion-icon name="eye-outline"></ion-icon>
+            <span>Ver Productos catalogo</span>
+        </a>
+        </button>
+
+        <button class="profile__action">
+        <a href="{% url 'mis_pedidos' %}?next={{ request.path }}">
+            <ion-icon name="bag-add-outline"></ion-icon>
+            <span>Compras/Pedidos</span>
+        </a>
+        </button>
+
+        <button class="profile__action">
+        <a href="{% url 'lista_usuarios' %}?next={{ request.path }}">
+            <ion-icon name="people-outline"></ion-icon>
+            <span>Listar usuarios</span>
+        </a>
+        </button>
+
+        <button class="profile__action">
+        <a href="{% url 'mis_productos' %}?next={{ request.path }}">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Listar productos</span>
+        </a>
+        </button> 
+
+        <button class="profile__action">
+        <a href="{% url 'mensajes_admin' %}?next={{ request.path }}">
+            <ion-icon name="list-outline"></ion-icon>
+            <span>Lista mensajes</span>
+        </a>
+        </button>     
+    </div>
+
+    <div class="profile__actions-img">
+        <img src="{% static 'img/interfaz_vanagro/vanagro2.jpg' %}" alt="">
+    </div>
+    </div>

@@ -1,0 +1,92 @@
+<div class="user-list">
+  <h2 class="user-list__title">Recepción de mensajes</h2>
+
+  <table class="user-list__table">
+    <thead class="user-list__table-head">
+      <tr class="user-list__row user-list__row--head">
+        <th class="user-list__cell">Id</th>
+        <th class="user-list__cell">Fecha envio</th>
+        <th class="user-list__cell">Tipo</th>
+        <th class="user-list__cell">Asunto</th>
+        <th class="user-list__cell">Remitente</th>
+        <th class="user-list__cell">Correo Electrónico</th>
+        <th class="user-list__cell">Telefono</th>
+        <th class="user-list__cell">Mensaje</th>        
+        <th class="user-list__cell">Accion</th>        
+        <th class="user-list__cell">Fecha respuesta</th>        
+        <th class="user-list__cell">Respuesta</th>        
+      </tr>
+    </thead>
+
+    <tbody class="user-list__table-body" id="user-table-body">
+      {% for mensaje in mensajes %}
+      <tr class="user-list__row"> 
+        <td class="user-list__cell" data-label="Id">{{ mensaje.id }}</td>
+        <td class="user-list__cell" data-label="Fecha envio">{{ mensaje.fecha_envio|date:"d/m/Y" }}</td>
+        <td class="user-list__cell" data-label="Tipo msj">{{ mensaje.get_tipo_display }}</td>
+        <td class="user-list__cell" data-label="Asunto">{{ mensaje.asunto }}</td>
+        <td class="user-list__cell" data-label="Remitente">{{ mensaje.nombres }} {{ mensaje.apellidos }} </td>
+        <td class="user-list__cell" data-label="Email">{{ mensaje.email }} </td>
+        <td class="user-list__cell" data-label="Teléfono">{{ mensaje.telefono }} </td>
+        <td class="user-list__cell" data-label="Mensaje">{{ mensaje.mensaje|truncatechars:50 }}</td>
+        <td class="user-list__cell" data-label="Acciones">
+            {% if mensaje.estado == 'resuelto' %}
+                <button class="user-list__action-btn" disabled>Resuelto</button>
+            {% else %}
+            <button type="button" class="user-list__action-btn user-list__action-btn--edit btn-abrir-modal"
+                data-id="{{ mensaje.id }}"
+                data-asunto="{{ mensaje.asunto }}"
+                data-mensaje="{{ mensaje.mensaje }}">Responder
+            </button>
+            {% endif %}
+        </td>
+        <td class="user-list__cell" data-label="Fecha respuesta">
+            {% if mensaje.fecha_respuesta %}
+                {{ mensaje.fecha_respuesta|date:"d/m/Y H:i" }}
+            {% else %}
+                ---
+             {% endif %}
+        </td>
+        <td class="user-list__cell" data-label="Respuesta">
+            {% if mensaje.respuesta %}
+                {{ mensaje.respuesta|truncatechars:50 }}
+            {% else %}
+            <span style="color: gray;">Sin respuesta</span>
+            {% endif %}
+        </td>
+      {% empty %}
+      <tr>
+        <td colspan="9" class="user-list__cell">No se han registrado usuarios.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<div id="modalRespuesta" class="modal-actualizar">
+  <div class="modal-actualizar__card">
+    <h2>Responder mensaje</h2>
+
+    <p><strong>Asunto:</strong> <span id="modal-asunto"></span></p>
+    <p><strong>Mensaje:</strong> <span id="modal-mensaje"></span></p>
+
+    <form id="form-respuesta" class="modal-actualizar__form"  method="POST" action="{% url 'respuesta_msj' %}">
+        <input type="hidden" name="mensaje_id" id="mensaje-id">
+        {% csrf_token %}
+
+        <label>Respuesta</label>
+        <textarea name="respuesta" required></textarea>
+    
+        <div class="buttons modal-actualizar__button-box">
+            <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">Cancelar</button>
+
+            <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+                data-form="form-respuesta" 
+                data-titulo="💾 Guardar" 
+                data-mensaje="¿Confirmas guardar la respuesta?">Guardar Respuesta
+            </button> 
+        </div>
+    </form>    
+  </div>
+</div>

@@ -11,35 +11,96 @@
 {% block producto %}
 
 <div class="product-form">
-	<h2 class="product-form__title">Crear Producto</h2>
+	{% comment %} <h2 class="product-form__title">Crear Producto</h2> {% endcomment %}
+	<div class="product-form__header">
+		<h2 class="product-form__title">Crear Producto</h2>
+		<p class="product-form__subtitle">
+			Complete la información del producto que desea publicar.
+		</p>
+  	</div>
+
 
 	<form action="" method="post" class="product-form__container" enctype="multipart/form-data">
 		{% csrf_token %}
 
 		<div class="product-form__row">
-			<label class="product-form__label">Nombre del producto
-				<input class="product-form__input" name="nombre_producto" placeholder="Ingrese nombre del producto"
-					value="{{ form.instance.nombre_producto|default_if_none:'' }}" required />
+			<label class="product-form__label">
+				Nombre del producto
+				<input
+				class="product-form__input"
+				name="nombre_producto"
+				placeholder="Ingrese el nombre del producto"
+				value="{{ form.instance.nombre_producto|default_if_none:'' }}"
+				required>
 			</label>
 
 			<label class="product-form__label">Unidad de medida
+			<select name="unidad_medida" class="product-form__select product-form__select--unit" required>
+				{% for unidad, label in form.fields.unidad_medida.choices %}
+					<option value="{{ unidad }}"
+						{% if unidad|stringformat:"s" == form.unidad_medida.value|stringformat:"s" %}
+							selected
+						{% endif %}>
+						{{ label }}
+					</option>
+				{% endfor %}
+			</select>
+			</label>
+
+			{% comment %} <label class="product-form__label">Unidad de medida
 				<select class="product-form__select product-form__select--unit" name="unidad_medida"
 					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
 					{% for unidad, label in form.unidad_medida.field.choices %}
-					<option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %} selected {% endif %}>{{ label }}</option>
+					<option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %} selected {% endif %}>
+						{{ label }}
+					</option>
 					{% endfor %}
 				</select>
+
+			{% comment %} <label class="product-form__label">Unidad de medida
+				<select class="product-form__select product-form__select--unit" name="unidad_medida"
+					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
+					{% for unidad, label in form.unidad_medida.field.choices %}
+					<option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %} selected {% endif %}>
+						{{ label }}
+					</option>
+					{% endfor %}
+				</select>
+			</label> {% endcomment %}
+			</div>
+		
+		<div class="product-form__row">
+			<label class="product-form__label">
+				Cantidad disponible
+				<input
+				type="number"
+				class="product-form__input"
+				name="stock"
+				placeholder="0"
+				value="{{ form.instance.stock|default_if_none:'' }}"
+				required>
 			</label>
 
-			<label class="product-form__label">Precio X unidad
+			<label class="product-form__label">
+				Precio por unidad
+				<input
+				class="product-form__input"
+				name="precio"
+				placeholder="Ingrese el precio"
+				value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
+				required>
+			</label>
+
+
+			{% comment %} <label class="product-form__label">Precio X unidad
 				<input class="product-form__input" name="precio" placeholder="Ingrese el precio"
 					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}" required />
-			</label>
+			</label> {% endcomment %}
 
-			<label class="product-form__label">{{ form.stock.label }}
+			{% comment %} <label class="product-form__label">{{ form.stock.label }}
 				<input type="number" class="product-form__input" name="stock" placeholder="Ingrese el stock"
 					value="{{ form.instance.stock|default_if_none:'' }}" required />
-			</label>
+			</label> {% endcomment %}
 
 		</div>
 
@@ -50,14 +111,26 @@
 				</textarea>
 		</label>
 
-		<label class="product-form__label">Tipo de Producto
+		<select name="categoria" class="product-form__select product-form__select--unit" required>
+			{% for indice, label in form.fields.categoria.choices %}
+				<option value="{{ indice }}"
+					{% if indice|stringformat:"s" == form.categoria.value|stringformat:"s" %}
+						selected
+					{% endif %}>
+					{{ label }}
+				</option>
+			{% endfor %}
+		</select>
+
+
+		{% comment %} <label class="product-form__label">Tipo de Producto
 				<select class="product-form__select product-form__select--unit" name="unidad_medida"
 					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
 					{% for categoria, label in form.categoria.field.choices %}					
 					<option value="{{ categoria }}" {% if categoria == form.categoria.value %} selected {% endif %}>{{ label }}</option>
 					{% endfor %}
 				</select>
-			</label>
+			</label> {% endcomment %}
 
 		{% comment %} <div class="product-form__row product-form__row--checkbox">
 			<span class="product-form__label"><strong>Tipo de Producto:</strong></span>

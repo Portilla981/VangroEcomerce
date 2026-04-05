@@ -66,7 +66,7 @@
 
         <td class="user-list__cell">
           <button type="button" class="user-list__action-btn user-list__action-btn--img" data-id="{{ producto.id }}"
-            data-imagen="{{ producto.imagen_producto.url }}">Cambiar Imagen</button>
+            data-imagen="{% if producto.imagen_producto %}{{ producto.imagen_producto.url }}{% else %}{% endif %}">Cambiar Imagen</button>
         </td>
       </tr>
 

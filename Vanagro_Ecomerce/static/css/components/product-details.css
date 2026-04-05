@@ -1,175 +1,150 @@
-
+/* ========================= */
+/* OVERLAY (FONDO OSCURO) */
+/* ========================= */
 .details {
-  /* visibility: hidden; */
-  /* position: fixed; */
-  /* inset: 0; */
-  /* background: rgba(0,0,0,0.5); */
+  visibility: hidden;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* z-index: 1000; */
-  transition: all 0.4s;
+  justify-content: center;  
+  align-items: center;     
+  z-index: 1000;
+  padding: 20px; 
 }
 
-/* .details:target{
-    visibility: visible;
-    /* opacity: 1;  */
-/* } */
+.details:target {
+  visibility: visible;
+}
 
-
+/* ========================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================= */
 .details__block {
-  background-color: var(--gray-100);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 90%;              
+  max-width: 420px;        
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ========================= */
+/* IMAGEN */
+/* ========================= */
+.details__image {
+  display: flex;
   justify-content: center;
-  /* background-color: var(--gray-50); */
+  align-items: center;
   padding: 16px;
-  gap: 8px;
+  background: var(--white);
 }
 
-.details__image--img{
-    width: 200px;
-    height: 200px;
-    margin: 16px;
-  }
+.details__name {
+  text-align: center;
+}
 
+.details__image--img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+}
 
+/* ========================= */
+/* INFO */
+/* ========================= */
 .details__info {
-  text-align: left;
-  background-color: var(--white);
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 600px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  width: 100%;
 }
 
+/* TITULO */
 .details__title {
   font-size: var(--fs-sm);
-  color: var(--gray-950);
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
 }
 
+/* RATING */
 .details__rating {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  margin-bottom: 1rem;
+  gap: 4px;
+  margin-bottom: 12px;
+  color: var(--secundary-900);
 }
 
-.details__rating i {
-  color: var(--secundary-950);
-  font-size: var(--fs-lg);
-}
-
-.details__rating-text {
-  font-size: var(--fs-xs);
-  color: var(--gray-700);
-  margin-left: 0.3rem;
-}
-
+/* PRECIO */
 .details__price {
   font-size: var(--fs-md);
   color: var(--primary-900);
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
 }
 
+/* DESCRIPCIÓN */
 .details__description {
   font-size: var(--fs-xs);
-  color: var(--gray-700);
-  margin-bottom: 2rem;
-  line-height: 1.6;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  word-break: break-word;
 }
 
+/* BOTONES */
 .details__actions {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
+  gap: 12px;
+  align-items: center; 
+  margin: 16px 0;
 }
 
-.details:target{
-    visibility: visible;
-    /* opacity: 1;  */
-}
-
-.product-list{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
-  gap: 1.5rem;
-  padding: 1.5rem;
-  width: 320px;
-}
-
-.product-list__grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 16px 0 ;
-  padding: 16px 0;
-}
-
-.buttons_cards{
-  margin: 8px;
-  display: flex;
-  gap: 48px;
-  width: 340px;
-  justify-content: center;
-}
-
-.buttons_cards a{
-  text-decoration: none;
-  font-size: var(--fs-xxs);
-  color: var(--black);
-
-}
-
-.product-detail_container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 75vh;
-}
-
-/* estilos para pedidos */
-.info-pedido{
-  align-items: center;
-  text-align: center;
-}
-
-@media (width > 768px) {
-
-  .details__image--img{
-    width: 300px;
-    height: 300px;
-  }
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (min-width: 768px) {
 
   .details__block {
     flex-direction: row;
-    align-items: center;
+    max-width: 800px; 
   }
 
-  .details__image{
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .details__image {
+    flex: 1;
   }
 
-  
+  .details__image--img {
+    max-width: 260px;
+  }
+
   .details__info {
     flex: 1;
-    
+    padding: 24px;
   }
 
   .details__actions {
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 1.5rem;
+    justify-content: center;
+  }
 }
+
+/* ========================= */
+/* 💻 DESKTOP */
+/* ========================= */
+@media (min-width: 1024px) {
+
+  .details__block {
+    max-width: 900px;
+  }
+
+  .details__image--img {
+    max-width: 300px;
+  }
+
+  .details__info {
+    padding: 32px;
+  }
 }

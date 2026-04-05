@@ -98,140 +98,25 @@
 
 /*============ Modal de recuperación de contraseña =================*/
 
-/* FONDO MODAL */
-.modal-recuperacion {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(30, 30, 30, 0.6); /* gris oscuro elegante */
-  backdrop-filter: blur(4px); /* efecto glass 🔥 */
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+.modal-recuperacion{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
 }
 
-/* CARD */
-.modal-recuperacion__contenido {
-  background: var(--white);
-  padding: 28px 24px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  animation: modalFade 0.3s ease;
-}
+.modal-recuperacion__contenido{
+    background: var(--white);
+    padding:25px;
+    border-radius:8px;
+    width:400px;
+    gap: 16px;
 
-/* ANIMACIÓN */
-@keyframes modalFade {
-  from {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* HEADER */
-.modal-recuperacion__header {
-  text-align: center;
-}
-
-.modal-recuperacion__icon {
-  font-size: 40px;
-  color: var(--primary-700);
-  margin-bottom: 8px;
-}
-
-.modal-recuperacion__title {
-  font-size: var(--fs-md);
-  margin-bottom: 4px;
-}
-
-.modal-recuperacion__text {
-  font-size: 13px;
-  color: var(--gray-500);
-}
-
-/* INPUT */
-.modal-recuperacion__input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.modal-recuperacion__label {
-  font-size: 12px;
-  color: var(--gray-600);
-}
-
-.modal-recuperacion__input {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--gray-300);
-  outline: none;
-  font-size: 13px;
-  transition: 0.2s;
-}
-
-.modal-recuperacion__input:focus {
-  border-color: var(--primary-700);
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
-}
-
-/* BOTONES */
-.modal-recuperacion__actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.modal-recuperacion__btn {
-  flex: 1;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  transition: 0.2s;
-}
-
-.modal-recuperacion__btn--primary {
-  background: var(--primary-900);
-  color: white;
-}
-
-.modal-recuperacion__btn--secondary {
-  background: var(--gray-300);
-}
-
-.modal-recuperacion__btn:hover {
-  transform: scale(1.03);
-}
-
-/* RESPONSIVE */
-@media (max-width: 480px) {
-
-  .modal-recuperacion__contenido {
-    margin: 0 16px;
-    padding: 20px;
-  }
-
-  .modal-recuperacion__icon {
-    font-size: 34px;
-  }
-
-  .modal-recuperacion__btn {
-    font-size: 12px;
-    padding: 8px;
-  }
 }
 
 /*=================== modal informe ======*/

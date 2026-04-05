@@ -8,9 +8,9 @@
 }
 
 .session__left {
-    flex: 1;
+    flex: 0.8;
     position: relative;
-    background: url(../../img/interfaz_vanagro/vanagro5.jpg) no-repeat center/cover ;    
+    background: url(../../img/interfaz_vanagro/vanagro5.jpg) no-repeat center/cover;    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,13 +33,14 @@
     font-size: var(--fs-md);
     padding: 8px;
     margin: 8px;
+    text-align: center;
 }
 
 .beginner-form {
     display: flex;
     flex-direction: column;
     padding: 24px;
-    margin: 48px;
+    margin: 24px;
     border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.50);
     background: var(--white);
@@ -78,22 +79,24 @@
 }
 
 .begin-lost_password {
-    text-decoration: none;
-    color: var(--terciary-950);
+   text-decoration: none;
+    color: var(--black);
     font-size: var(--fs-xxs);
     margin: 16px;
+    text-align: center;
 }
 
 .begin-lost_password:hover {
-    color: var(--terciary-900);
+    color: var(--black);
     cursor: pointer;
     font-weight: 600;
 }
 
-@media (width > 768px) {
+@media (min-width: 768px) {
 
     .session__login {
         flex: 1;
+        display: flex;
         flex-direction: row;
         min-height: 80vh;
     }
@@ -108,16 +111,22 @@
     
     .beginner-button__links {
         flex-direction: row;       
-    }
-
-    /* .beginner-form{
-        margin: 24px 0;
-    } */
+    }    
 
 }
 
-@media (width > 1024px) {
-    /* .beginner-form {
-        margin: 0;
-    } */
+@media (max-width: 480px) {
+
+    .session__form-container {
+        width: 100%;
+        padding: 10px 12px; 
+    }
+
+    .beginner-form {
+        width: 100%;
+        margin: 0; 
+        padding: 16px;
+        border-radius: 8px;
+    }
+
 }
