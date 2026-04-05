@@ -1,3 +1,14 @@
+{% extends "productos/productos.html" %}
+{% load static %}
+
+{% block navbar %}
+{% if user.is_authenticated %}
+    {% include 'components/navbar-profile_simple.html' %}
+{% else %}
+    {% include 'components/navbar_vanagro.html' %}
+{% endif %}
+{% endblock navbar %}
+
 {% block producto %}
 
 <section class="preview-product">
@@ -10,12 +21,10 @@
 
                 <div class="details__block">
 
-                    <!-- BODY (SIN HEADER) -->
                     <div class="details__body">
                         {% include 'components/detalle-producto.html' %}
                     </div>
 
-                    <!-- BOTONES -->
                     <div class="details__actions">
 
                         <a href="javascript:history.back()">
@@ -40,9 +49,12 @@
                     </div>
 
                 </div>
+
             </div>
+
         </div>
     </div>
+
 </section>
 
 {% endblock producto %}

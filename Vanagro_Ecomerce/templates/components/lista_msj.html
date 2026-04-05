@@ -7,13 +7,12 @@
     <table class="list-message__table">
       <thead class="list-message__head">
         <tr class="list-message__row list-message__row--head">
-          <th class="list-message__cell">Id</th>
+          <!--<th class="list-message__cell">Id</th>-->
           <th class="list-message__cell">Fecha envío</th>
           <th class="list-message__cell">Tipo</th>
           <th class="list-message__cell">Asunto</th>
           <th class="list-message__cell">Remitente</th>
-          <th class="list-message__cell">Correo Electrónico</th>
-          <th class="list-message__cell">Teléfono</th>
+          <th class="list-message__cell">Correo electrónico</th>
           <th class="list-message__cell">Mensaje</th>        
           <th class="list-message__cell">Acción</th>        
           <th class="list-message__cell">Fecha respuesta</th>        
@@ -27,7 +26,7 @@
 
           <td class="list-message__cell" data-label="Id">{{ mensaje.id }}</td>
 
-          <td class="list-message__cell" data-label="Fecha envio">
+          <td class="list-message__cell" data-label="Fecha envío">
             {{ mensaje.fecha_envio|date:"d/m/Y" }}
           </td>
 
@@ -47,9 +46,9 @@
             {{ mensaje.email }}
           </td>
 
-          <td class="list-message__cell" data-label="Teléfono">
+          <!--<td class="list-message__cell" data-label="Teléfono">
             {{ mensaje.telefono }}
-          </td>
+          </td>-->
 
           <td class="list-message__cell" data-label="Mensaje">
             {{ mensaje.mensaje|truncatechars:50 }}
@@ -85,7 +84,6 @@
               <span class="list-message__empty">Sin respuesta</span>
             {% endif %}
           </td>
-
         </tr>
 
         {% empty %}
@@ -131,6 +129,5 @@
         </button>
       </div>
     </form>
-
   </div>
 </div>
