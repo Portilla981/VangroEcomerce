@@ -1,145 +1,307 @@
-.section-catalogo{
-    /* display: flex; */
-    flex: 1;
-     overflow-y:auto;
-    overflow-x: hidden;
-    /* background-color: var(--gray-50); */
+/* ===============================
+   SEARCH BAR CONTENEDOR
+================================ */
+.search-bar {
+  width: 100%;
+  background: var(--gray-50);
+  padding: 20px;
+  justify-content: center;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 1px;
 }
 
-.search-bar{
-    /* position: fixed; */
-    width: 100%;
-    /* display: flex; */
-    background-color: var(--white);
+/* TÍTULO */
+.search-bar h2 {
+  width: 100%;
+  font-size: var(--fs-sm);
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+/* ===============================
+   SELECT (CATEGORÍAS)
+================================ */
+#filtro-categoria {
+  flex: 1;
+  max-width: 360px;
+
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--gray-300);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+  font-size: var(--fs-xxs);
+  color: var(--gray-800);
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  
+}
+
+#filtro-categoria:focus {
+  outline: none;
+  border-color: var(--primary-700);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+/* ===============================
+   INPUT BUSCADOR
+================================ */
+#buscador-productos {
+  flex: 1;
+  max-width: 500px;
+
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--gray-300);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+  font-size: var(--fs-xxs);
+  color: var(--gray-800);
+
+  transition: all 0.2s ease;
+}
+
+/* FOCUS PRO */
+#buscador-productos:focus {
+  outline: none;
+  border-color: var(--primary-700);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+/* PLACEHOLDER */
+#buscador-productos::placeholder {
+  color: var(--gray-400);
+}
+
+/* ===============================
+   EFECTO HOVER GENERAL
+================================ */
+#filtro-categoria:hover,
+#buscador-productos:hover {
+  border-color: var(--primary-500);
+}
+
+/* ===============================
+   RESPONSIVE TABLET
+================================ */
+@media (max-width: 1024px) {
+
+  .search-bar {
     padding: 16px;
-    z-index: 100;
+  }
+
+  #filtro-categoria,
+  #buscador-productos {
+    font-size: 13px;
+  }
 }
 
+/* ===============================
+   RESPONSIVE CELULAR
+================================ */
+@media (max-width: 768px) {
 
-.card-section__product{  
-    /* margin-top: 120px;   */
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 24px;
-    padding: 24px;
-    width: 100%;
-    box-sizing: border-box;
-    
-    /* background-color: var(--gray-50); */
-   
-}
-
-
-.product-item{
-    display: flex;
+  .search-bar {
     flex-direction: column;
-    align-items: center;
-}
-
-.product-card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 12px;
-    /* margin: 16px; */
-}
+  }
 
-.buttons_cards{
-    display:flex;
-    gap:16px;
-    width:100%;
-    max-width:320px;
-    margin-top:16px;
-
-}
-
-.card-product__info{
-    display: flex;
-    flex-direction: column;
+  .search-bar h2 {
     text-align: center;
-    gap: 8px;
-    padding: 16px;
+  }
 
+  #filtro-categoria,
+  #buscador-productos {
+    width: 100%;
+  }
+}
+
+/* ===============================
+   CELULARES PEQUEÑOS
+================================ */
+@media (max-width: 480px) {
+
+  .search-bar {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  #filtro-categoria,
+  #buscador-productos {
+    padding: 9px;
+    font-size: 12px;
+  }
 }
 
 
-/* Card individual */
+/* ===============================
+   GRID GENERAL
+================================ */
+.card-section__product {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  padding: 24px;
+}
+
+/* ===============================
+   ITEM CONTENEDOR
+================================ */
+.product-item {
+  display: flex;
+}
+
+/* ===============================
+   CARD PRINCIPAL
+================================ */
 .card-product {
-    /* width: 95%; */
-    max-width: 320px;
-    width:100%;    
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--white);
-    border-radius: 8px;
-    border: 1px solid var(--gray-200);
-    /* padding: 16px; */
-    box-shadow: 0 2px 6px var(--primary-500);
-    cursor: pointer;
-    height: 320px;
-    transition:transform 0.3s ease;
-
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 2px 6px var(--primary-700);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  max-height: 420px;
 }
 
-.card-product:hover{
-    transform:scale(1.05);
+.card-product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
 }
 
-
-/* Imagen */
+/* ===============================
+   IMAGEN
+================================ */
 .card-product__image {
-    /* width: 200px;  */
-    height: 100px;
-    object-fit: cover;
-    border-radius: 6px;
-}
-.card-product__image_1 {
-    /* width: 300px;  */
-    height: 200px;
-    object-fit: cover;
-    border-radius: 6px;
+  width: 90%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }
 
+/* ===============================
+   CONTENIDO
+================================ */
+.card-product__info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+/* TÍTULO */
 .card-product__title {
-    font-family: var(--main-font);
-    font-size: var(--fs-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: center;
 }
 
-/* Descripción */
+/* DESCRIPCIÓN */
 .card-product__description {
-    font-family: var(--main-font);
-    margin: 16px 0;
-    font-size: var(--fs-xs); 
-    text-align: center;
-    color: var(--gray-900);
-    width: 100%;
-    display:-webkit-box;
-    
+  font-size: var(--fs-xs);
+  color: var(--gray-700);
+  text-align: center;
+
+  display: -webkit-box;
+ 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.card-product__title-farm {
-    font-family: var(--main-font);
-    font-size: var(--fs-xs);
-    margin-bottom: 10px;
-}
-
-/* Descripción */
-.card-product__description-farm {
-    font-family: var(--main-font);
-    margin: 16px;
-    font-size: var(--fs-xs); 
-    text-align: center;
-    color: var(--gray-900);
-    width: 100%;
-}
-
-/* Precio en negrilla */
+/* PRECIO */
 .card-product__price {
-    font-family: var(--main-font);
-    font-weight: bold;
-    color: var(--black);
-    font-size: var(--fs-sm); 
+  font-size: var(--fs-sm);
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
 }
 
+/* ===============================
+   BOTONES (AHORA DENTRO)
+================================ */
+.buttons_cards {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid var(--gray-200);
+  background: #fafafa;
+}
+
+.buttons_cards button {
+  flex: 1;
+  font-size: 13px;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+/* FIX PARA LINKS */
+.buttons_cards a {
+  width: 100%;
+  text-decoration: none;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* TABLET */
+@media (max-width: 1024px) {
+
+  .card-section__product {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  }
+
+  .card-product__image {
+    height: 160px;
+  }
+}
+
+/* CELULAR */
+@media (max-width: 768px) {
+
+  .card-section__product {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .card-product {
+    min-height: auto;
+  }
+
+  .buttons_cards {
+    flex-direction: column;
+  }
+
+  .buttons_cards button {
+    width: 100%;
+  }
+}
+
+/* CELULAR PEQUEÑO */
+@media (max-width: 480px) {
+
+  .card-product__title {
+    font-size: 14px;
+  }
+
+  .card-product__description {
+    font-size: 12px;
+  }
+
+  .card-product__price {
+    font-size: 14px;
+  }
+}

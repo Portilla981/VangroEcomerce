@@ -1,9 +1,9 @@
-
 {% for producto in productos %}
 
 <div class="product-item">
 
     {% include 'components/card-producto.html' %}
+<<<<<<< HEAD
     <div class="buttons_cards">
 
         <a href="{% url 'detalle_producto' producto.id %}">
@@ -29,6 +29,9 @@
 
         {% endif %}
     </div>
+=======
+
+>>>>>>> Angelly
 </div>
 
 {% empty %}
@@ -36,3 +39,4 @@
 <p>No se encontraron productos.</p>
 
 {% endfor %}
+
