@@ -1,151 +1,184 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="referrer" content="no-referrer-when-downgrade">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="no-referrer-when-downgrade">
 
-		{% load static %}
-    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-96x96.png' %}" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon/favicon.svg' %}" />
-    <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}" />
-    <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    
-    
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-		
-    
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" />		
-		<script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
-		<script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
-		<script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
-    <script src="{% static 'js/alertas/modal_respuesta_msj.js' %}" defer></script>
-    
+  {% load static %}
 
-		{% block script %} {% endblock script %}
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-96x96.png' %}" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon/favicon.svg' %}" />
+  <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}" />
+  <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />
 
-		<title>{{ titulo }}</title>
-	</head>
+  <!-- Librerías -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-	<body>
-		{% block navbar %} 
-      {% if user.is_authenticated %} 
-        {% if user.is_superuser %}
-          {% include 'components/navbar-profile_admin.html' %} 
-        {% else %}
-          {% include 'components/navbar-profile.html' %} 
-        {% endif %} 
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+  <!-- JS -->
+  <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
+  <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
+  <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
+  <script src="{% static 'js/alertas/modal_respuesta_msj.js' %}" defer></script>
+
+  {% block script %}{% endblock script %}
+
+  <title>{{ titulo }}</title>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  {% block navbar %} 
+    {% if user.is_authenticated %} 
+      {% if user.is_superuser %}
+        {% include 'components/navbar-profile_admin.html' %} 
+      {% else %}
+        {% include 'components/navbar-profile.html' %} 
       {% endif %} 
-    {% endblock navbar %}
+    {% endif %} 
+  {% endblock navbar %}
 
-		<div class="contenido_general">
-			{% block login %}
-        {% if user.is_authenticated %}
-          {% if user.is_superuser %}
-            {% include 'usuario/admin.html' %}
-          {% else %}
+  <div class="contenido_general">
 
-            <div class="profile__container">
-              {% comment %}Portada con leyenda{% endcomment %}
-              <div class="profile__hero">
-                <div class="profile__legend">
-                  <h2 class="profile__role">CLIENTE</h2>
-                  <p class="profile__message">
-                    ¡Tu visita nos alegra el día! Gracias por apoyar a nuestros
-                    campesinos y por ser parte de este mercado con alma rural.
+    {% block login %}
+    {% if user.is_authenticated %}
+
+      {% if user.is_superuser %}
+        {% include 'usuario/admin.html' %}
+      {% else %}
+
+      <!-- PERFIL CLIENTE -->
+      <div class="profile_client--container">
+
+        <!-- HEADER -->
+        <div class="profile_client--header">
+          <div>
+            <p class="profile_client--eyebrow">Perfil de Cliente</p>
+            <p class="profile_client--subtitle">
+              Este es su perfil, {{ request.user.first_name }} {{ request.user.last_name }}.
+              Desde aquí puede consultar sus pedidos, editar su información y explorar los productos disponibles.
+            </p>
+          </div>
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="profile_client--content">
+
+          <!-- CARD -->
+          <div class="profile_client--cards">
+            <div class="profile_client--card">
+
+              <!-- EDITAR -->
+              <a href="{% url 'editar_usuario' perfil.id %}?next={{ request.path }}" class="profile_client--edit-icon">
+                <ion-icon name="create-outline"></ion-icon>
+              </a>
+
+              <!-- CABECERA -->
+              <div class="profile_client--card-head">
+                {% if perfil.fotografia %}
+                  <img class="profile_client--user-image" src="{{ perfil.fotografia.url }}" alt="Foto del usuario" />
+                {% else %}
+                  <img class="profile_client--user-image" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}" alt="Foto por defecto" />
+                {% endif %}
+
+                <div>
+                  <h2 class="profile_client--card-title">
+                    {{ request.user.first_name }} {{ request.user.last_name }}
+                  </h2>
+                  <p class="profile_client--card-subtitle">
+                    Desde {{ request.user.date_joined|date:"j \\d\\e F \\d\\e Y" }}
                   </p>
                 </div>
               </div>
 
-              {% comment %}Contenido principal{% endcomment %}
-              <div class="profile__content">
-                {% comment %}Columna izquierda: datos del productor{% endcomment %}
-                <div class="profile__info">
-                  {% if perfil.fotografia %}
-                  <img
-                    class="profile__avatar"
-                    src="{{ perfil.fotografia.url }}"
-                    alt="Foto del productor"/>
-                  {% else %}
-                  <img
-                    class="profile__avatar"
-                    src="{% static 'img/interfaz_vanagro/usuario_default.png' %}"
-                    alt="Foto del productor"/>
-                  {% endif %}
-                  <h3 class="profile__name">
-                    Bienvenido {{ request.user.first_name }} {{ request.user.last_name }}
-                  </h3>
-                  <p class="profile__joined">
-                    Se unió el {{ request.user.date_joined|date:"j \d\e F \d\e Y" }}
-                  </p>
-                  <p class="profile__detail">
-                    <strong>IDENTIFICACIÓN:</strong> {{ perfil.tipo_identificacion }}
-                    {{ perfil.numero_identificacion }}
-                  </p>
-                  <p class="profile__detail">
-                    <strong>UBICACIÓN:</strong> {{ perfil.departamento }} - {{ perfil.municipio }}
-                  </p>
-                  <p class="profile__detail">
-                    <strong>DIRECCIÓN:</strong> {{ perfil.direccion_residencia }}
-                  </p>
-                  <p class="profile__detail">
-                    <strong>CORREO:</strong> {{ request.user.email }}
-                  </p>
-                  <p class="profile__detail">
-                    <strong>TELÉFONO:</strong> {{ perfil.telefono_1 }} // {{ perfil.telefono_2|default_if_none:'' }}
-                  </p>
+              <!-- DETALLES -->
+              <div class="profile_client--details-grid">
+
+                <div class="profile_client--detail-box">
+                  <span>Identificación</span>
+                  <p>{{ perfil.tipo_identificacion }} {{ perfil.numero_identificacion }}</p>
                 </div>
 
-                {% comment %}Columna derecha: opciones{% endcomment %}
-                <div class="profile__actions">
-                  <button class="profile__action">
-                    <a href="{% url 'ver_productos' %}?next={{ request.path }}">
-                      <ion-icon name="eye-outline"></ion-icon>
-                      <span>Ver Productos</span>
-                    </a>
-                  </button>
-
-                  <button class="profile__action">
-                    <a href="{% url 'mis_pedidos' %}">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                      <span>Compras/Pedidos</span>
-                    </a>
-                  </button>
-
-                  <button class="profile__action">
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <a href="{% url 'contactenos' %}?next={{ request.path }}">
-                      <ion-icon name="megaphone-outline"></ion-icon>
-                      <span>Contactar Administrador</span>
-                    </a>
-                  </button>
-
-                  <button type="button" class="profile__action">
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <a
-                      class="profile__link"
-                      href="{% url 'editar_usuario' perfil.id %}?next={{ request.path }}">
-                      <ion-icon name="settings-outline"></ion-icon>
-                      <span>Editar Perfil</span>
-                    </a>
-                  </button>
+                <div class="profile_client--detail-box">
+                  <span>Ubicación</span>
+                  <p>{{ perfil.departamento }} - {{ perfil.municipio }}</p>
                 </div>
+
+                <div class="profile_client--detail-box">
+                  <span>Dirección</span>
+                  <p>{{ perfil.direccion_residencia }}</p>
+                </div>
+
+                <div class="profile_client--detail-box">
+                  <span>Correo</span>
+                  <p>{{ request.user.email }}</p>
+                </div>
+
+                <div class="profile_client--detail-box profile_client--detail-box--full">
+                  <span>Teléfono</span>
+                  <p>{{ perfil.telefono_1 }} {{ perfil.telefono_2|default_if_none:'' }}</p>
+                </div>
+
               </div>
+
             </div>
-			    {% endif %}
-			  {% endif %}
-      {% endblock login %}
-		</div>
+          </div>
 
-		{% include 'components/footer_vanagro.html' %}
-    {% include 'components/popup-acciones.html' %}
-    {% include 'components/popup-django.html' %}  
-    
-	</body>	
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" ></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" ></script>
+          <!-- ACCIONES -->
+          <aside class="profile_client--actions">
+
+            <a class="profile_client--action" href="{% url 'ver_productos' %}?next={{ request.path }}">
+              <ion-icon name="eye-outline"></ion-icon>
+              <div>
+                <strong>Explorar productos</strong>
+                <span>Descubra productos disponibles</span>
+              </div>
+            </a>
+
+            <a class="profile_client--action" href="{% url 'mis_pedidos' %}">
+              <ion-icon name="bag-handle-outline"></ion-icon>
+              <div>
+                <strong>Mis pedidos</strong>
+                <span>Consulte sus compras</span>
+              </div>
+            </a>
+
+            <a class="profile_client--action" href="{% url 'contactenos' %}?next={{ request.path }}">
+              <ion-icon name="megaphone-outline"></ion-icon>
+              <div>
+                <strong>Soporte</strong>
+                <span>Contactar administrador</span>
+              </div>
+            </a>
+
+          </aside>
+
+        </div>
+      </div>
+
+      {% endif %}
+    {% endif %}
+    {% endblock login %}
+
+  </div>
+
+  <!-- FOOTER -->
+  {% include 'components/footer_vanagro.html' %}
+  {% include 'components/popup-acciones.html' %}
+  {% include 'components/popup-django.html' %}  
+
+</body>
+
+<!-- ICONOS -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 </html>

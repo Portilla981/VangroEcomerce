@@ -1,5 +1,5 @@
 .product-form {
-  width: min(1200px, calc(100% - 48px));
+  width: min(1000px, calc(100% - 48px));
   margin: 32px auto;
   padding: 24px;
   background: var(--white);

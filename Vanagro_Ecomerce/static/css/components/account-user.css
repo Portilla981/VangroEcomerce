@@ -1,252 +1,192 @@
-.profile__container {
-    width: 100%;
-    height: auto;
-    background: var(--gray-50);
-    font-family: var(--main-font, sans-serif);
+.profile_client--container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  font-family: var(--main-font);
 }
 
-.profile__hero {
-    position: relative;
-    width: 100%;
-    height: auto;
-    /* overflow: hidden; */
-    background: url(../../img/interfaz_vanagro/cielo.jpg) no-repeat center center/cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+body {
+  background: var(--gray-50);
 }
 
-.profile__legend {
-    text-align: center;
-    color: var(--black);
-    padding: 16px;
-    border-radius: 1rem;
-    max-width: 90%;
+.profile_client--header {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 12px;
+  border: 1px solid var(--gray-100);
+  box-shadow: 0 6px 20px rgba(16, 16, 16, 0.05);
 }
 
-.profile__role {
-    font-size: var(--fs-sm);
-    font-weight: bold;
-    margin: 1;
+.profile_client--eyebrow {
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+  color: var(--primary-900);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-top: auto;
 }
 
-.profile__message {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    margin: 0.5rem 0 0;
+.profile_client--subtitle {
+  margin-top: 10px;
+  font-size: var(--fs-xs);
+  color: var(--gray-800);
+  line-height: 1.5;
+  margin-bottom: unset;
 }
 
-/* === CONTENIDO PRINCIPAL (dos columnas) === */
-.profile__content {
-    display: flex;
-    text-align: left;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 24px;
+.profile_client--content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: stretch;
 }
 
-.profile__info {
-    flex: 1;
-    background: var(--white);
-    border-radius: 1rem;
-    padding: 2rem;
-    box-shadow: 0 3px 3px var(--gray-500);
+.profile_client--cards {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
-
-.profile__avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--primary-950);
-    border-radius: 100%;
-    /* margin-bottom: 1rem; */
+.profile_client--card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid var(--gray-100);
+  box-shadow: 0 8px 20px rgba(16, 16, 16, 0.04);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
 }
 
-.profile__name {
-    font-size: var(--fs-sm);
-    font-weight: bold;
-    margin: 0.5rem 0;
+.profile_client--edit-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: var(--fs-sm);
+  color: var(--primary-900);
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.profile__joined {
-    font-size: var(--fs-xs);
-    color: var(--gray-700);
-    margin-bottom: 1rem;
+.profile_client--edit-icon:hover {
+  color: var(--primary-900);
 }
 
-.profile__detail {
-    font-size: var(--fs-xs);
-    margin: 1.25rem 0;
+.profile_client--card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.profile__actions {
-    /* flex: 1; */
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    justify-content: center;
-    align-items: center;
+.profile_client--user-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  object-fit: cover;
 }
 
-
-
-.profile__actions-admin{
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    height: 100%;
-    justify-content: space-around;
-
+.profile_client--card-title {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--gray-900);
+  font-weight: 500;
 }
 
-.profile__actions-admin_1 {
-    /* flex: 1; */
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    justify-content: center;
-    /* align-items: center; */
-    height: 100%;
+.profile_client--card-subtitle {
+  font-size: var(--fs-xxs);
+  color: var(--gray-500);
 }
 
-.profile__actions-img{
-    height: 100%;
-    
-    /* width: 300px; */
-    /* background-size: contain; */
-    /* size: inherit; */
+.profile_client--details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.profile__actions-img img{
-    width: 400px;
-    /* background-size: */
+.profile_client--detail-box {
+  background: var(--gray-50);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--gray-100);
+  display: flex;
+  flex-direction: column;
 }
 
-.profile__link {
-    text-decoration: none;
+.profile_client--detail-box--full {
+  grid-column: span 2;
 }
 
-.profile__action {
-    box-shadow: 0 1px 4px var(--black);
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    gap: 16px;
-    height: 52px;
-    width: 320px;
-    background: var(--gray-200);
-    border: none;
-    padding: 16px;
-    border-radius: 0.5rem;
-    font-size: var(--fs-xs);
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
+.profile_client--detail-box span {
+  font-size: var(--fs-xxs);
+  color: var(--black);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.profile__action a{
-    text-decoration: none;
-    color: var(--black);
+.profile_client--detail-box p {
+  font-size: var(--fs-xs);
+  color: var(--gray-700);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.4;
 }
 
-.profile__action:hover {
-    background: var(--primary-500);
-    color: var(--black);
+.profile_client--actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
 }
 
-
-.profile__action ion-icon {
-    font-size: var(--fs-sm);
+.profile_client--action {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--gray-100);
+  text-decoration: none;
+  color: var(--gray-900);
+  box-shadow: 0 6px 16px rgba(16, 16, 16, 0.04);
+  transition: all 0.2s ease;
 }
 
-
-.profile__report {
-    visibility: hidden;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    transition: all 0.4s;
-    gap: 16px;
+.profile_client--action:hover {
+  transform: translateY(-3px);
+  background: var(--primary-50);
+  border-color: var(--primary-300);
 }
 
-
-.profile__report:target {
-    visibility: visible;
-    /* opacity: 1;  */
+.profile_client--action ion-icon {
+  font-size: var(--fs-md);
+  color: var(--primary-900);
 }
 
-
-.profile__report--phpto-head {
-    display: flex;
-    width: 100%;
-    /* display: flex; */
-    /* justify-content: flex-start; */
-    flex-direction: column-reverse;
-    /* justify-content: space-between;
-    align-items: center; */
+.profile_client--action strong {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 500;
 }
 
-
-.profile__report--close{
-    display: flex;
-    justify-content: baseline;
+.profile_client--action span {
+  font-size: var(--fs-xxs);
+  color: var(--gray-500);
 }
 
+@media (max-width: 1024px) {
+  .profile_client--content {
+    grid-template-columns: 1fr;
+  }
 
-.profile__report--close ion-icon {
-    font-size: var(--fs-lg);
-    cursor: pointer;
-}
+  .profile_client--details-grid {
+    grid-template-columns: 1fr;
+  }
 
-
-.profile__report--photo {    
-    border-radius: 5px;
-    object-fit: cover;
-    border: 2px solid var(--primary-950);
-    /* border-radius: 100%; */
-    padding: 0 16px;
-    background-color: var(--gray-100);
-    padding-bottom: 16px;
-}
-
-.profile__report--img {
-    width: 100%;
-    height: auto;  
-}
-
-
-.profile__buttons {
-    display: flex;    
-    padding: 16px;
-    justify-content: space-around;
-}
-
-
-@media (min-width: 768px) {  
-    .profile__content {
-        flex: 1;
-        flex-direction: row;
-        /* align-items: stretch; */
-        min-height: 60vh;
-    }
-}
-
-
-@media (max-width: 768px) {
-
-    .profile__actions {
-        max-width: 320px;
-        width: 100%;
-        margin: 0 auto;
-        margin-bottom: 2rem;
-        margin-top: 2rem;
-    }
+  .profile_client--detail-box--full {
+    grid-column: span 1;
+  }
 }
