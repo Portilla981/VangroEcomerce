@@ -1,35 +1,8 @@
-
 {% for producto in productos %}
 
 <div class="product-item">
 
-{% include 'components/card-producto.html' %}
-<div class="buttons_cards">
-
-        <a href="{% url 'detalle_producto' producto.id %}">
-            <button class="buttons__action--secondary">
-                Ver detalles
-            </button>
-        </a>
-
-        {% if user.is_authenticated %}
-
-        <button class="buttons__action--primary">
-            <a href="{% url 'agregar_carrito' producto.id %}">
-            Añadir al carrito</a>
-        </button>
-
-        {% else %}
-
-        <a href="{% url 'inicio_vista' %}?next={{ request.path }}">
-            <button class="buttons__action--primary">
-                Añadir al carrito
-            </button>
-        </a>
-
-        {% endif %}
-
-    </div>
+    {% include 'components/card-producto.html' %}
 
 </div>
 
@@ -38,3 +11,4 @@
 <p>No se encontraron productos</p>
 
 {% endfor %}
+
