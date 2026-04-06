@@ -10,12 +10,11 @@ Herencia de la plantilla base {% endcomment %}
     	{% comment %} mensaje del pago realizado {% endcomment %}
         <h2 class="texto-pago">¡Pago realizado con éxito!</h2>
         {% comment %} mensaje {% endcomment %}
-        <p>Tu pedido ha sido procesado correctamente.</p>
+        <p>Su pedido ha sido procesado correctamente.</p>
         {% comment %} Crea el botón para volver a la lista de productos {% endcomment %}
         <a href="{% url 'ver_productos' %}" class="btn-volver">
-            Volver a la tienda
+            Volver
         </a>
     </div>
 </div>
-
 {% endblock carrito %}

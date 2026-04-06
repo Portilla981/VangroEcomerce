@@ -47,7 +47,7 @@
                         required>
                 </label>
 
-                <label class="form-register__label">Ubicación exacta
+                <label class="form-register__label">Ubicación
                     <input
                         class="form-register__input"
                         type="text"
@@ -122,31 +122,6 @@
                 </label>
             </div>
 
-            {% localize off %}
-            <div class="form-register__map-section">
-                <div class="form-register__map-head">
-                    <h2 class="form-register__map-title">Ubicación en el mapa</h2>
-                    <p class="form-register__map-subtitle">
-                        Haga clic sobre el mapa para actualizar la ubicación exacta de la finca.
-                    </p>
-                </div>
-
-                {% comment %} {% load l10n %}
-                {% localize off %}
-
-                <div class="producter-register__location">
-                    <p class="producter-register__label-farm">Ubicación en el mapa</p>
-                    <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu finca</h3>
-                    <div class="producter-register__map" >
-                        <div id="map" style="height: 400px;"></div>
-                            <input type="hidden" name="latitud" id="id_latitud" value="{{ form.instance.latitud }}">
-                            <input type="hidden" name="longitud" id="id_longitud" value="{{ form.instance.longitud }}">
-                    </div>
-                </div>
-                {% endlocalize %} {% endcomment %}
-            </div>
-            {% endlocalize %}
-
             {% if not form.instance.activo %}
                 </fieldset>
             {% endif %}
@@ -161,7 +136,7 @@
                         data-url="{% url 'tienda_usuario' %}"
                     {% endif %}
                     data-titulo="Cancelar edición"
-                    data-mensaje="¿Desea salir? Se perderán los cambios realizados.">
+                    data-mensaje="Se perderán los cambios realizados.">
                     Cancelar
                 </button>
 
@@ -170,20 +145,20 @@
                     class="buttons__action--primary btn-save btn-confirmar"
                     data-form="form-edit_tienda"
                     data-titulo="Guardar cambios"
-                    data-mensaje="¿Desea guardar los cambios de esta finca productora?">
-                    Guardar cambios
+                    data-mensaje="¿Desea guardar los cambios?">
+                    Guardar
                 </button>
 
                 {% if form.instance.activo %}
-                        <button
-                            type="button"
-                            form="form-estado_tienda"
-                            class="buttons__action--terciary btn-confirmar"
-                            data-form="form-estado_tienda"
-                            data-titulo="Deshabilitar finca productora"
-                            data-mensaje="La finca dejará de ser visible y no podrá vender productos.">
-                            Deshabilitar finca
-                        </button>
+                <button
+                    type="button"
+                    form="form-estado_tienda"
+                    class="buttons__action--terciary btn-confirmar"
+                    data-form="form-estado_tienda"
+                    data-titulo="Deshabilitar finca productora"
+                    data-mensaje="La finca dejará de ser visible y no podrá vender productos.">
+                    Deshabilitar finca
+                </button>
                 {% endif %}
             </div>
         </form>

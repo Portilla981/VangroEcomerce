@@ -17,56 +17,31 @@
 
 {% block producto %}
 <div class="section-catalogo">
+
     <div class="search-bar">
-        <h2>Buscador</h2>
+        <!--<h2>Buscador</h2>-->
+
         <select id="filtro-categoria">
             <option value="">Todas las categorías</option>
             {% for valor, nombre in categorias %}
             <option value="{{ valor }}">{{ nombre }}</option>
             {% endfor %}
         </select>
+
         <input type="text" id="buscador-productos" class="form-control" placeholder="Buscar producto...">
     </div>
     
     <section class="card-section__product" id="productos-container">
+
         {% for producto in productos %}
         <div class="product-item">
-            
+
             {% include 'components/card-producto.html' %}
 
-            <div class="buttons_cards">
-                <a href="{% url 'detalle_producto' producto.id %}">
-                    <button class="buttons__action--secondary">
-                        Ver detalles
-                    </button>
-                </a>
-
-                {% if user.is_authenticated %}
-
-                <button class="buttons__action--primary agregar-carrito-btn"
-                    data-id="{{ producto.id }}"
-                    data-activo="{{ producto.activo|yesno:'true,false' }}" 
-                    data-stock="{{ producto.stock }}">Añadir al carrito
-                </button>
-
-                {% else %}
-
-                <a href="{% url 'inicio_vista' %}?next={{ request.path }}">
-                    <button class="buttons__action--primary">
-                        Añadir al carrito
-                    </button>
-                </a>
-
-                {% endif %}
-
-            </div>
-
         </div>
-
         {% endfor %}
 
     </section>
 </div>
-
 
 {% endblock producto %}

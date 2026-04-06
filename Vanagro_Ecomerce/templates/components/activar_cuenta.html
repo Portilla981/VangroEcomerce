@@ -2,20 +2,22 @@
 
 {% block content %}
 
-<p>Hola <strong>{{ usuario.username }}</strong>,</p>
+<p>Le damos la bienvenida a Vanagro, <strong>{{ usuario.username }}</strong>:</p>
 
-<p>Gracias por registrarte en Vanagro 🎉</p>
+<p>Le agradecemos por registrarse en nuestra plataforma. 🎉</p>
 
-<p>Para activar tu cuenta, haz clic en el siguiente botón:</p>
+<p>Para activar su cuenta, por favor haga clic en el siguiente botón:</p>
 
 <div style="text-align:center; margin:20px 0;">
-    <p>{{ link_activacion }}</p>
     <a href="{{ link_activacion }}"
-       style="word-break: break-all; background:#2e7d32; color:white; padding:12px 20px; text-decoration:none; border-radius:5px; font-weight:bold;">
+       style="display: inline-block; background:#2e7d32; color:white; padding:12px 25px; text-decoration:none; border-radius:5px; font-weight:bold;">
         Activar cuenta
     </a>
 </div>
 
-<p>Si no creaste esta cuenta, puedes ignorar este mensaje.</p>
+<p>Si usted no realizó este registro, puede ignorar este mensaje con total seguridad.</p>
+
+<p>Atentamente,<br>
+<strong>El equipo de Vanagro</strong></p>
 
 {% endblock %}

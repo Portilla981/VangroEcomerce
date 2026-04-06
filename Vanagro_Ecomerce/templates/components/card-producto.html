@@ -14,8 +14,38 @@
     <div class="card-product__info">        
         <p class="card-product__description">{{ producto.descripcion }}</p>
         
-        <strong class="card-product__price">Precio $ {{ producto.precio|floatformat:0|intcomma }} X {{ producto.unidad_medida }}</strong>
-        
-    </div>        
-</div>
+        <strong class="card-product__price">
+            Precio $ {{ producto.precio|floatformat:0|intcomma }} X {{ producto.unidad_medida }}
+        </strong>
+    </div>
 
+    <div class="buttons_cards">
+
+        <a href="{% url 'detalle_producto' producto.id %}">
+            <button class="buttons__action--secondary">
+                Ver detalles
+            </button>
+        </a>
+
+        {% if user.is_authenticated %}
+
+        <button class="buttons__action--primary agregar-carrito-btn"
+            data-id="{{ producto.id }}"
+            data-activo="{{ producto.activo|yesno:'true,false' }}" 
+            data-stock="{{ producto.stock }}">
+            Añadir al carrito
+        </button>
+
+        {% else %}
+
+        <a href="{% url 'inicio_vista' %}?next={{ request.path }}">
+            <button class="buttons__action--primary">
+                Añadir al carrito
+            </button>
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>

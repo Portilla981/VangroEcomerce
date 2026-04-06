@@ -297,55 +297,7 @@ select.form-register__input {
   box-shadow: 0 0 0 4px rgba(85, 180, 12, 0.18);
 }
 
-.form-register__map-section {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 8px;
-  padding: 20px;
-  border: 1px solid var(--gray-100);
-  border-radius: 16px;
-  background: var(--gray-50);
-}
-
-.form-register__map-head {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-register__map-title {
-  margin: 0;
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  color: var(--gray-900);
-}
-
-.form-register__map-subtitle {
-  margin: 0;
-  font-size: var(--fs-xxs);
-  color: var(--gray-600);
-  line-height: 1.5;
-}
-
-.form-register__map {
-  width: 100%;
-  min-height: 360px;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--gray-300);
-  box-shadow: 0 8px 20px rgba(16, 16, 16, 0.08);
-}
-
 @media (max-width: 640px) {
-  .form-register__map-section {
-    padding: 16px;
-  }
-
-  .form-register__map {
-    min-height: 280px;
-  }
-
   .form-register__textarea {
     min-height: 120px;
   }

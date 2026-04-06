@@ -1,46 +1,60 @@
 {% extends "productos/productos.html" %}
-
 {% load static %}
 
 {% block navbar %}
-
 {% if user.is_authenticated %}
-{% include 'components/navbar-profile_simple.html' %}
+    {% include 'components/navbar-profile_simple.html' %}
 {% else %}
-{% include 'components/navbar_vanagro.html' %}
+    {% include 'components/navbar_vanagro.html' %}
 {% endif %}
-
 {% endblock navbar %}
-
-{% block script %}
-{% endblock script %}
 
 {% block producto %}
 
-<div class="product-detail_container">
+<section class="preview-product">
 
-    {% include 'components/detalle-producto.html' %}
+    <div class="preview-product__content">
 
-    <div class="details__actions">
-        {% comment %} <a href="{% url 'ver_productos' %}"> {% endcomment %}
-        <a href="javascript:history.back()">
-            <button class="buttons__action--secondary">Volver</button>
-        </a>
-       
-        {% if user.is_authenticated %}
-        <button class="buttons__action--primary agregar-carrito-btn" data-id="{{ producto.id }}"
-            data-activo="{{ producto.activo|yesno:'true,false' }}" data-stock="{{ producto.stock }}">
-            Añadir al carrito
-        </button>
-                
-        {% else %}
-        <a href="{% url 'inicio_vista' %}">
-            <button type="button" class="buttons__action--primary">Añadir al carrito</button>
-        </a>
-        {% endif %}
+        <div class="preview-product__details">
+
+            <div class="details">
+
+                <div class="details__block">
+
+                    <div class="details__body">
+                        {% include 'components/detalle-producto.html' %}
+                    </div>
+
+                    <div class="details__actions">
+
+                        <a href="javascript:history.back()">
+                            <button class="buttons__action--secondary">Volver</button>
+                        </a>
+
+                        {% if user.is_authenticated %}
+                            <button class="buttons__action--primary agregar-carrito-btn"
+                                data-id="{{ producto.id }}"
+                                data-activo="{{ producto.activo|yesno:'true,false' }}"
+                                data-stock="{{ producto.stock }}">
+                                Añadir al carrito
+                            </button>
+                        {% else %}
+                            <a href="{% url 'inicio_vista' %}">
+                                <button type="button" class="buttons__action--primary">
+                                    Añadir al carrito
+                                </button>
+                            </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
-</div>
-
+</section>
 
 {% endblock producto %}

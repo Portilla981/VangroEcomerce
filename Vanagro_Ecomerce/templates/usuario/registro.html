@@ -61,37 +61,36 @@
             </div>
 
             <div class="form-register__group">
-                <label class="form-register__label">Departamento
-                            <select id="departamento"
-                                name="departamento" 
-                                class="form-register__input" 
-                                required 
-                                data-guardado="{{ perfil_form.departamento.value|default:perfil_form.instance.departamento_id|default:'' }}">
-                                <option value="">Seleccione un departamento</option>
-                                {% for dpto in perfil_form.departamento.field.queryset %}
-                                <option value="{{ dpto.id }}"
-                                {% if dpto.id|stringformat:"s" == perfil_form.departamento.value|stringformat:"s" %} selected {% endif %}>
-                                {{ dpto.nombre_Departamento }}</option>
-                                {% endfor %}
-                            </select>
-                        </label>
+                <label class="form-register__label">Departament
+                    <select id="departamento"
+                        name="departamento" 
+                        class="form-register__input" 
+                        required 
+                        data-guardado="{{ perfil_form.departamento.value|default:perfil_form.instance.departamento_id|default:'' }}">
+                        <option value="">Seleccione un departamento</option>
+                        {% for dpto in perfil_form.departamento.field.queryset %}
+                        <option value="{{ dpto.id }}"
+                        {% if dpto.id|stringformat:"s" == perfil_form.departamento.value|stringformat:"s" %} selected {% endif %}>
+                        {{ dpto.nombre_Departamento }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
 
-                        <label class="form-register__label">Municipio
-                            <select id="municipio" 
-                                data-guardado="{{ perfil_form.instance.municipio.id }}" 
-                                class="form-register__input" 
-                                name="municipio" 
-                                required
-                                data-guardado="{{ perfil_form.municipio.value|default:perfil_form.instance.municipio_id|default:'' }}">
-                                <option value="">Seleccione un municipio</option>
-                                {% for mcpio in perfil_form.municipio.field.queryset %}
-                                <option value="{{ mcpio.id }}" 
-                                {% if mcpio.id|stringformat:"s" == perfil_form.municipio.value|stringformat:"s" %} selected {% endif %}>
-                                {{ mcpio.nombre_Municipio }}
-                                {% endfor %}
-                            </select>
-                        </label>
-
+                <label class="form-register__label">Municipio
+                    <select id="municipio" 
+                        data-guardado="{{ perfil_form.instance.municipio.id }}" 
+                        class="form-register__input" 
+                        name="municipio" 
+                        required
+                        data-guardado="{{ perfil_form.municipio.value|default:perfil_form.instance.municipio_id|default:'' }}">
+                        <option value="">Seleccione un municipio</option>
+                        {% for mcpio in perfil_form.municipio.field.queryset %}
+                        <option value="{{ mcpio.id }}" 
+                        {% if mcpio.id|stringformat:"s" == perfil_form.municipio.value|stringformat:"s" %} selected {% endif %}>
+                        {{ mcpio.nombre_Municipio }}
+                        {% endfor %}
+                    </select>
+                </label>
 {% comment %} 
                 <label class="form-register__label">Departamento
                     <select id="departamento" name="departamento" class="form-register__input" required>
@@ -128,6 +127,7 @@
                     <input class="form-register__input" type="tel" name="telefono_1" value="{{ perfil_form.telefono_1.value|default_if_none:'' }}"
                         placeholder="Ingrese su número de teléfono" required>
                 </label>
+
                 <label class="form-register__label">Teléfono alterno
                     <input class="form-register__input" type="tel" name="telefono_2" value="{{ perfil_form.telefono_2.value|default_if_none:'' }}"
                         placeholder="Ingrese su número de teléfono alterno" >
@@ -154,8 +154,8 @@
         <div class="buttons popup-buttons"> 
             <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
                 data-url="{% url 'inicio_vista' %}" 
-                data-titulo="Cancelar creación de cuenta" 
-                data-mensaje="¿Desea salir? Se perderá la información ingresada.">Cancelar
+                data-titulo="Cancelar creación de usuario" 
+                data-mensaje="Se perderá la información ingresada.">Cancelar
             </button>
 
             <button type="button" class="buttons__action--primary btn-save btn-confirmar" 

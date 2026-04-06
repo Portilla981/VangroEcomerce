@@ -8,7 +8,7 @@
 
 <section class="form-register__block form-register__block--store">
     <div class="form-register__head">
-        <h1 class="form-register__title">Registrar finca productora</h1>
+        <h1 class="form-register__title">Crear finca productora</h1>
         <p class="form-register__subtitle">
             Complete la información para registrar una nueva finca productora en Vanagro.
         </p>
@@ -28,7 +28,7 @@
                         required>
                 </label>
 
-                <label class="form-register__label">Ubicación exacta
+                <label class="form-register__label">Ubicación
                     <input
                         class="form-register__input"
                         type="text"
@@ -83,15 +83,6 @@
                         {% endfor %}
                     </select>
                 </label>
-
-                <!-- <label class="form-register__label">Vereda
-                    <input
-                        class="form-register__input"
-                        type="text"
-                        name="vereda"
-                        placeholder="Ubicación exacta"
-                        required> -->
-                </label>
             </div>
 
             <div class="form-register__group form-register__group--fullwidth">
@@ -104,31 +95,13 @@
                 </label>
             </div>
 
-            <div class="form-register__map-section">
-                <div class="form-register__map-head">
-                    <h2 class="form-register__map-title">Ubicación en el mapa</h2>
-                    <p class="form-register__map-subtitle">
-                        Haga clic sobre el mapa para seleccionar la ubicación exacta de la finca.
-                    </p>
-                </div>
-
-                {% comment %} <div class="producter-register__location">
-                    <p class="producter-register__label-farm">Ubicación en el mapa</p>
-                    <h3 class="producter-register__message">Haz clic en el mapa para seleccionar la ubicación de tu finca</h3>
-                    <div class="producter-register__map" id="map">
-                        <input type="hidden" name="latitud" id="latitud">
-                        <input type="hidden" name="longitud" id="longitud">
-                    </div>
-                </div> {% endcomment %}
-            </div>
-
             <div class="buttons popup-buttons">
                 <button
                     type="button"
                     class="buttons__action--secondary btn-cancel btn-confirmar"
                     data-url="{% url 'sesion_inicio' %}"
-                    data-titulo="Cancelar registro"
-                    data-mensaje="¿Desea salir? Se perderá la información ingresada.">
+                    data-titulo="Cancelar creación"
+                    data-mensaje="La información ingresada no será guardada.">
                     Cancelar
                 </button>
 
@@ -136,8 +109,8 @@
                     type="button"
                     class="buttons__action--primary btn-save btn-confirmar"
                     data-form="form-register__tienda"
-                    data-titulo="Registrar finca productora"
-                    data-mensaje="¿Desea registrar esta finca productora?">
+                    data-titulo="Confirmar creación"
+                    data-mensaje="¿Está seguro de que desea crear esta finca productora?">
                     Crear finca productora
                 </button>
             </div>

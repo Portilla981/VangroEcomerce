@@ -1,59 +1,49 @@
 {% load humanize %}
 {% load static %}
 
+<div class="details__image">
+    {% if producto.imagen_producto %}
+        <img class="details__image--img" src="{{ producto.imagen_producto.url }}" alt="Foto de {{ producto.nombre_producto }}" />
+    {% else %}
+        <img class="details__image--img" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Producto sin imagen" />
+    {% endif %}
+</div>
 
+<div class="details__info">
+    <h2 class="details__title">{{ producto.nombre_producto }}</h2>
+    
+    <p class="details__price">
+        ${{ producto.precio|floatformat:0|intcomma }} / {{ producto.unidad_medida }}
+    </p>
 
-<h3 class="details__name">Detalle del producto</h3>
-<div class="details__block">  
-<!-- <div class="close">
-    <a href="javascript:history.back()" class="btn-cerrar">&times;</a>
-        {% comment %} <span class="cerrar" onclick ="{% url 'ver_productos' %}">&times;</span> {% endcomment %}
-</div> -->
-
-    <div class="details__image">
-        {% if producto.imagen_producto %}
-        <img class="card-product__image_1" src="{{ producto.imagen_producto.url }}" alt="Foto de producto" />
-        {% else %}
-        <img class="card-product__image_1" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Foto de producto" />
-        {% endif %}
-    </div>
-
-    <div class="details__info">
-        <h2 class="details__title">{{ producto.nombre_producto}}</h2>
-        <div class="details__rating">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <span class="details__rating-text">(4.0)</span>
-        </div>
-        <p class="details__price">Precio: ${{ producto.precio|floatformat:0|intcomma }} X {{ producto.unidad_medida }}
-        </p>
-
+    {% if producto.descripcion %}
         <p class="details__description">
-            <strong>Stock: </strong>{{ producto.stock }}
-            <br>
-            <strong>Vendido por: </strong>{{ producto.productor.user.first_name }}  {{ producto.productor.user.last_name }}
-            <br>
-            <strong>Ubicación: </strong>{{ producto.productor.departamento }}, {{ producto.productor.municipio }}
-            <br>
-            <strong>Nombre de la finca/Tienda: </strong>{{ producto.productor.nombre_finca }}
-            <br>
-            <strong>Tienda creada desde: </strong>{{ producto.productor.fecha_creacion|date:"j \d\e F \d\e Y" }}
-            <br>
-            {% if producto.fecha_elaboracion %}
-            <strong>Fecha de elaboracion: </strong>{{ producto.fecha_elaboracion|date:"j \d\e F \d\e Y" }}
-            <br>
-            {% endif %}
-            {% if producto.fecha_vencimiento %}
-            <strong>Fecha de vencimiento: </strong>{{ producto.fecha_vencimiento|date:"j \d\e F \d\e Y" }}
-            <br>
-            {% endif %}
-            <br>
-            
+            {{ producto.descripcion }}
         </p>
+    {% endif %}
 
+    <div class="details__meta">
+        <p><strong>Stock:</strong> {{ producto.stock }}</p>
+        
+        <p>
+            <strong>Ubicación:</strong> 
+            {{ producto.productor.departamento }}, {{ producto.productor.municipio }}
+        </p>
+        
+        <p><strong>Finca:</strong> {{ producto.productor.nombre_finca }}</p>
 
+        {% if producto.fecha_elaboracion %}
+            <p>
+                <strong>Elaboración:</strong> 
+                {{ producto.fecha_elaboracion|date:"j \d\e F \d\e Y" }}
+            </p>
+        {% endif %}
+
+        {% if producto.fecha_vencimiento %}
+            <p>
+                <strong>Vencimiento:</strong> 
+                {{ producto.fecha_vencimiento|date:"j \d\e F \d\e Y" }}
+            </p>
+        {% endif %}
     </div>
 </div>

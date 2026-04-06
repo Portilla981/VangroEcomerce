@@ -1,23 +1,84 @@
 {% extends 'index_vanagro.html' %}
-
 {% load static %}
 
-
 {% block contenido %}
-    <div class="cards-container">
 
-        {% for card in cards %}
-        
-        <div class="card">
-            {% comment %}Este bloque se rellena directamente con datos de las cards{% endcomment %}
-            <h2 class="card__title-about">{{ card.title }}</h2>
-            <p class="card__description">{{ card.description|safe }}</p>
-            <div class="card-img__nosotros">
-                <img src="{% static card.img %}" alt="[Imagen]" class="card__img">
+<section class="about">
+
+    <!-- QUIÉNES SOMOS -->
+    <div class="about__section">
+        <div class="about__section--grid">
+            <div class="about__text">
+                <h2>Impulsamos el campo de Risaralda</h2>
+                <p>
+                    Vanagro es un proyecto formativo que busca acercar a los productores agrícolas
+                    con las personas que valoran su trabajo. Queremos crear una comunidad donde el
+                    comercio justo, la visibilidad y el apoyo al campo sean protagonistas.
+                </p>
             </div>
         </div>
-
-        {% endfor %}
     </div>
 
-{% endblock contenido %}
+    <!-- VALORES -->
+    <div class="about__section">
+        <h2 class="section-title">Nuestros valores</h2>
+
+        <div class="about__cards">
+            {% for card in cards %}
+            <div class="about-card">
+                <img src="{% static card.img %}" alt="{{ card.title }}">
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.description|safe }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- EQUIPO -->
+    <div class="about__team">
+        <h2 class="section-title">Nuestro equipo</h2>
+
+        <div class="team-container">
+
+            <div class="team-member">
+                <img src="{% static 'img/interfaz_vanagro/Natalia.jpeg' %}" alt="Angelly Agudelo Idarraga">
+                <h3>Angelly Agudelo Idarraga</h3>
+                <span>Diseño y organización</span>
+                <span>Desarrollo y soporte</span>
+            </div>
+
+            <div class="team-member">
+                <img src="{% static 'img\interfaz_vanagro\Johan.jpeg' %}" alt="Johan Portilla Zambrano">
+                <h3>Johan Portilla Zambrano</h3>
+                <span>Desarrollo y soporte</span>
+            </div>
+
+            <div class="team-member">
+                <img src="{% static 'img/interfaz_vanagro/valentina.jpg' %}" alt="Valentina Toro Peña">
+                <h3>Valentina Toro Peña</h3>
+                <span>Contenido y comunicación</span>
+                <span>Desarrollo y soporte</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- REDES -->
+    <div class="about__social">
+        <h2>Sigue nuestras redes sociales</h2>
+        <p>Conoce nuestras novedades y el trabajo que hacemos con los productores.</p>
+
+        <div class="social-links">
+            <a href="https://www.instagram.com/vanagro_risaralda/?hl=es" target="_blank">
+                Instagram
+            </a>
+
+            <a href="https://www.facebook.com/share/1HodyzDncN/" target="_blank">
+                Facebook
+            </a>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

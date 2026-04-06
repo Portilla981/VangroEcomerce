@@ -1,27 +1,34 @@
 {% load static %}
-
 <footer class="footer-vanagro">
-  <div class="footer-vanagro__content">
-    <div class="footer-vanagro__text">
-      <p class="footer-vanagro__parafo">© 2025 VANAGRO - Todos los derechos reservados</p>
+  <!-- FRANJA VERDE: Información y Redes -->
+    <div class="footer-vanagro__content">
+        <div class="footer-vanagro__text">
+          <p class="footer-vanagro__parafo">© {% now "Y" %} VANAGRO - Todos los derechos reservados</p>
+        </div>
+
+        <div class="footer-vanagro__social">
+            <!-- Correo Oficial -->
+            <a href="mailto:vanagromercadocampesino@gmail.com" class="footer-vanagro__icon">
+                <i class="fas fa-envelope"></i>
+                <span>vanagromercadocampesino@gmail.com</span>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com" target="_blank" class="footer-vanagro__icon">
+                <i class="fab fa-instagram"></i>
+                <span>vanagro_risaralda</span>
+            </a>
+
+            <!-- Facebook -->
+            <a href="https://facebook.com" target="_blank" class="footer-vanagro__icon">
+                <i class="fab fa-facebook"></i>
+                <span>Vanagro Risaralda</span>
+            </a>
+        </div>
     </div>
-    <div class="footer-vanagro__social">
-      <a href="https://www.instagram.com/" target="_blank" class="footer-vanagro__icon">
-        <i class="fab fa-instagram"></i>
-        <span>Vanagro_Risaralda</span>
-      </a>
-      <a href="https://www.facebook.com/" target="_blank" class="footer-vanagro__icon">
-        <i class="fab fa-facebook"></i>
-        <span>VANAGRO</span>
-      </a>
-      <a href="https://wa.me/573054411190" target="_blank" class="footer-vanagro__icon">
-        <i class="fab fa-whatsapp"></i>
-        <span>3054411190</span>
-      </a>
+
+    <!-- FRANJA AZUL: Logo Institucional -->
+    <div class="logo_gov">
+        <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png' %}" alt="Logo GOV.CO">
     </div>
-  </div>
-  <div class="logo_gov">
-    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
-</div>
-  {% comment %} <div class="footer-vanagro__gov"></div> {% endcomment %}
 </footer>

@@ -5,59 +5,100 @@
 {% endblock script %}
 
 <section class="contact-form">
-  <p class="contact-us__title">
-    <strong>CONTÁCTENOS</strong><br />Estamos para ayudarte con pedidos, soporte
-    y preguntas.
-  </p>
+  <div class="contact-form__head">
+    <p class="contact-form__title">
+      Contáctenos
+    </p>
+    <p class="contact-form__subtitle">
+      Estamos para servirle con sus pedidos, soporte y preguntas.
+    </p>
+  </div>
 
-  <form class="contact-form__form" id="form-contac__user" method="POST" id="contactForm">
+  <form class="contact-form__form" id="form-contac__user" method="POST">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
     <div class="contact-form__row">
-      <label class="contact-form__label">Asunto
-        <input type="text" name="asunto" class="contact-form__input" value="{{ form.asunto.value|default_if_none:'' }}" placeholder="Ej: Problema con pedido" required />
+      <label class="contact-form__label">
+        Asunto
+        <input
+          type="text"
+          name="asunto"
+          class="contact-form__input"
+          value="{{ form.asunto.value|default_if_none:'' }}"
+          placeholder="Ej: Problema con un pedido"
+          required/>
+      </label>
+
+      <label class="contact-form__label">
+        Correo electrónico
+        <input
+          type="email"
+          name="email"
+          class="contact-form__input"
+          value="{{ form.email.value|default_if_none:'' }}"
+          {% if user.is_authenticated %}readonly{% endif %}
+          placeholder="Ingrese su correo electrónico"
+          required/>
       </label>
     </div>
 
     <div class="contact-form__row">
-      <label class="contact-form__label">Nombres
-        <input type="text" name="nombres" class="contact-form__input" value="{{ form.nombres.value|default_if_none:'' }}" {% if user.is_authenticated %}readonly{% endif %} placeholder="Ingrese su nombre o nombres"required />
+      <label class="contact-form__label">
+        Nombres
+        <input
+          type="text"
+          name="nombres"
+          class="contact-form__input"
+          value="{{ form.nombres.value|default_if_none:'' }}"
+          {% if user.is_authenticated %}readonly{% endif %}
+          placeholder="Ingrese sus nombres"
+          required/>
       </label>
-      <label class="contact-form__label">Apellidos
-        <input type="text" name="apellidos" class="contact-form__input" value="{{ form.apellidos.value|default_if_none:'' }}" {% if user.is_authenticated %}readonly{% endif %} placeholder="Ingrese su apellido o apellidos" required />
-      </label>
-    </div>
 
-    <div class="contact-form__row">
-      <label class="contact-form__label">Teléfono
-        <input type="tel" name="telefono" class="contact-form__input" value="{{ form.telefono.value|default_if_none:'' }}" {% if user.is_authenticated %}readonly{% endif %}
-        placeholder="Ingrese su teléfono" required />
-      </label>
-      <label class="contact-form__label">Correo Electrónico
-        <input type="email" name="email" class="contact-form__input" value="{{ form.email.value|default_if_none:'' }}" {% if user.is_authenticated %}readonly{% endif %} placeholder="Ingrese su correo electrónico" required />
+      <label class="contact-form__label">
+        Apellidos
+        <input
+          type="text"
+          name="apellidos"
+          class="contact-form__input"
+          value="{{ form.apellidos.value|default_if_none:'' }}"
+          {% if user.is_authenticated %}readonly{% endif %}
+          placeholder="Ingrese sus apellidos"
+          required/>
       </label>
     </div>
 
     <div class="contact-form__row contact-form__row--full">
-      <label class="contact-form__label">Mensaje
-        <textarea name="mensaje" class="contact-form__input contact-form__textarea"
-          placeholder="Ingresa aquí su mensaje..." required>{{ form.mensaje.value|default_if_none:'' }}</textarea>
+      <label class="contact-form__label contact-form__label--textarea">
+        Mensaje
+        <textarea
+          name="mensaje"
+          class="contact-form__textarea"
+          placeholder="Escriba aquí su mensaje..."
+          required
+        >{{ form.mensaje.value|default_if_none:'' }}</textarea>
       </label>
     </div>
 
     <div class="buttons popup-buttons">
-      <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
+      <button
+        type="button"
+        class="buttons__action--secondary btn-cancel btn-confirmar"
         data-url="{{ request.GET.next|default:request.get_full_path }}"
-        data-titulo="¿Salir?" 
-        data-mensaje="Se perderán los cambios.">Cancelar
+        data-titulo="Cancelar envío"
+        data-mensaje="La información ingresada no será guardada.">
+        Cancelar
       </button>
 
-      <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+      <button
+        type="button"
+        class="buttons__action--primary btn-save btn-confirmar"
         data-form="form-contac__user"
-        data-titulo="Enviar" 
-        data-mensaje="¿Deseas enviar la solicitud?">Enviar
+        data-titulo="Enviar mensaje"
+        data-mensaje="¿Está seguro de que desea enviar su solicitud?">
+        Enviar
       </button>
     </div>
   </form>
-
 </section>
