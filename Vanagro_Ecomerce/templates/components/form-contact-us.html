@@ -29,10 +29,10 @@
     </div>
 
     <div class="contact-form__row">
-      <label class="contact-form__label">Teléfono
+      {% comment %} <label class="contact-form__label">Teléfono
         <input type="tel" name="telefono" class="contact-form__input" value="{{ form.telefono.value|default_if_none:'' }}" {% if user.is_authenticated %}readonly{% endif %}
         placeholder="Ingrese su teléfono" required />
-      </label>
+      </label> {% endcomment %}
       <label class="contact-form__label">Correo Electrónico
         <input type="email" name="email" class="contact-form__input" value="{{ form.email.value|default_if_none:'' }}" {% if user.is_authenticated %}readonly{% endif %} placeholder="Ingrese su correo electrónico" required />
       </label>
