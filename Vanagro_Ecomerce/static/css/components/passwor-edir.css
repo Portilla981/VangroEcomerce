@@ -72,52 +72,112 @@
 
 /*========= Resetear de contraseña ===============*/
 
-.section-password{
+/* ===============================
+   CONTENEDOR GENERAL
+================================ */
+.password-reset {
     display: flex;
-    height: 75vh;
+    justify-content: center;
+    padding: 20px;
 }
 
-.contenedor-reset{
-    max-width:400px;
-    margin:80px auto;
-    padding:30px;
-    background:var(--white);
-    border-radius:8px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    text-align:center;
-    height: 300px;
+/* CARD */
+.password-reset__container {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 24px;
+    width: 95%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.reset-campo{
-    margin-bottom:20px;
-    text-align:left;
-}
-
-.reset-campo input{
-    width:100%;
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:4px;
-
-}
-
-.btn-reset{
-    background:var(--primary-900);
-    color:var(--white);
-    padding:10px 20px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-.btn-volver{
-    display:inline-block;
-    margin-top:20px;
-    color: var(--primary-900);
-    text-decoration:none;
-}
-
-.btn-volver:hover{
+/* TÍTULO */
+.password-reset__title {
+    font-size: var(--fs-sm);
+    text-align: center;
     color: var(--black);
-    scale: 1.2;
+}
+
+/* FORM */
+.password-reset__form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* CAMPOS */
+.password-reset__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.password-reset__text {
+    font-size: var(--fs-xxs);
+    color: var(--gray-700);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* LABEL */
+.password-reset__label {
+    font-size: var(--fs-xxs);
+    font-weight: bold;
+    color: var(--black);
+}
+
+/* INPUT (IMPORTANTE para Django forms) */
+.password-reset__field input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-300);
+    font-size: var(--fs-xxs);
+    outline: none;
+    transition: 0.2s;
+}
+
+.password-reset__field input:focus {
+    border-color: var(--primary-700);
+    box-shadow: 0 0 0 2px rgba(var(--primary-700), 0.1);
+}
+
+/* ERRORES */
+.password-reset__error {
+    font-size: 11px;
+    color: #e74c3c;
+}
+
+/* BOTONES */
+.password-reset__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* MENSAJE INVALIDO */
+.password-reset__invalid {
+    text-align: center;
+    color: #e74c3c;
+    font-size: var(--fs-xxs);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+
+  .password-reset__container {
+        padding: 18px;
+  }
+
+  .password-reset__title {
+        font-size: var(--fs-xs);
+  }
+
+  .password-reset__field input {
+        font-size: 13px;
+  }
 }

@@ -1,73 +1,87 @@
 {% extends "productos/productos.html" %}
-
 {% load static %}
 
 {% block navbar %}
-
 {% include 'components/navbar-simple_inicio.html' %}
-
 {% endblock navbar %}
 
-{% block script %}
-
-{% endblock script %}
-
 {% block producto %}
-<h2>Vista previa</h2>
 
-<div class="product-preview">
-    <div class="card-section__product">
-        {% include 'components/card-producto.html' with producto=producto %}
+<section class="preview-product">
+
+    <div class="preview-product__content">
+
+        <div class="preview-product__details">
+
+            <div class="details">
+
+                <div class="details__block">
+
+                    <div class="details__header">
+                        <h2>Vista previa</h2>
+                        <p class="details__subtitle">
+                            Así verán los clientes el detalle del producto
+                        </p>
+                    </div>
+
+                    <div class="details__body">
+                        {% include 'components/detalle-producto.html' with producto=producto %}
+                    </div>
+
+                    <div class="details__actions">
+
+                        {% if modo == 'crear' %}
+
+                        <form method="POST" id="form-cancel_preview1" action="{% url 'cancelar_producto' producto.id %}">
+                            {% csrf_token %}
+                            <button type="button" 
+                                    class="buttons__action--terciary btn-confirmar" 
+                                    data-form="form-cancel_preview1" 
+                                    data-titulo="Cancelar creación" 
+                                    data-mensaje="La información ingresada no se guardará.">
+                                Cancelar
+                            </button> 
+                        </form>
+
+                        <a href="{% url 'volver_crear' producto.id %}">
+                            <button type="button" class="buttons__action--secondary">
+                                Volver a editar
+                            </button>
+                        </a>
+
+                        <form method="POST" id="form-save_product" action="{% url 'guardar_producto' producto.id %}">
+                            {% csrf_token %}
+                            <button type="button" 
+                                    class="buttons__action--primary btn-confirmar"
+                                    data-form="form-save_product" 
+                                    data-titulo="Confirmar creación" 
+                                    data-mensaje="¿Desea crear el producto?">
+                                Crear
+                            </button> 
+                        </form>
+
+                        {% elif modo == 'editar' %}
+
+                        <button type="button" 
+                                class="buttons__action--secondary btn-confirmar"
+                                data-url="{% url 'mis_productos' %}" 
+                                data-titulo="Cancelar" 
+                                data-mensaje="Se perderán los cambios.">
+                            Cancelar
+                        </button>
+
+                        <a href="javascript:history.back()">
+                            <button type="button" class="buttons__action--terciary">
+                                Volver a editar
+                            </button>
+                        </a>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="details">
-        {% include 'components/detalle-producto.html' with producto=producto %}
-    </div>
-</div>
-
-{% if modo == 'crear' %}
-
-<div class="buttons">
-    <form method="POST" id="form-cancel_preview1" action="{% url 'cancelar_producto' producto.id %}">
-        {% csrf_token %}
-        <button type="button" class="buttons__action--secundary btn-cancel btn-confirmar" 
-                data-form="form-cancel_preview1" 
-                data-titulo="¿Salir?" 
-                data-mensaje="Se perderán los cambios.">Cancela y salir
-        </button> 
-    </form>
-
-    <a href="{% url 'volver_crear' producto.id %}">
-        <button type="button" class="buttons__action--terciary">Volver a editar</button>
-    </a>
-
-
-    <form method="POST" id="form-save_product" action="{% url 'guardar_producto' producto.id %}">
-        {% csrf_token %}
-        <button type="button" name="accion" value="guardar" class="buttons__action--primary btn-save btn-confirmar" 
-                data-form="form-save_product" 
-                data-titulo="💾 Guardar" 
-                data-mensaje="¿Confirmas el registro del producto?">Guardar y publicar producto
-        </button> 
-    </form>
-</div>
-
-{% elif modo == 'editar' %}
-
-<div class="buttons">
-    <div class="buttons popup-buttons"> 
-        <button type="button" class="buttons__action--secondary btn-cancel btn-confirmar"
-            data-url="{% url 'mis_productos' %}" 
-            data-titulo="¿Salir?" 
-            data-mensaje="Se perderán los cambios.">Cancelar y salir
-        </button>
-    </div>
-
-    <a href="javascript:history.back()">
-        <button type="submit" class="buttons__action--terciary">Volver Editar</button>
-    </a>
-
-</div>
-{% endif %}
-
+</section>
 
 {% endblock producto %}
