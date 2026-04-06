@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", function(){
         /* busca el campo donde esta la cantidad */
         const input = fila.querySelector(".cantidad-input");
         /* busca el campo donde esta el subtotal */
-        const subtotalCell = fila.querySelector(".subtotal");
+        // const subtotalCell = fila.querySelector(".subtotal");
         /* busca el campo del total del carrito */
-        const totalGeneral = document.getElementById("total-general");
+        // const totalGeneral = document.querySelector(".total-general");
 
         /* cuando se da clic en sumar. verifica la cantidad actual, que no supere el stock y si puede suma 1 */
         if (e.target.classList.contains("btn-sumar")) {
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		        cantidad++;
                 /* se actualiza la cantidad del producto */
 		        actualizar(itemId, cantidad);
-
+                
 		    } 
 
             else {
@@ -77,7 +77,8 @@ document.addEventListener("DOMContentLoaded", function(){
                     /* si todo es correcto elimina la fila */
                     fila.remove();
                     /* actualiza el total */
-                    totalGeneral.textContent = data.total;
+                    // totalGeneral.textContent = data.total;
+                    actualizarTotalEnPantalla(data.total);
 
                     const contador = document.getElementById("carrito-contador");
 
@@ -146,29 +147,49 @@ document.addEventListener("DOMContentLoaded", function(){
     })
     .then(res => res.json())
     .then(data => {
-
         const fila = document.querySelector(`tr[data-id='${id}']`);
+        if (!fila) return; // Evita romper todo
+
         const input = fila.querySelector(".cantidad-input");
         const stockMsg = fila.querySelector(".stock-msg");
+        const subtotalCell = fila.querySelector(".subtotal");
+            
+        // const fila = document.querySelector(`tr[data-id='${id}']`);
+        // const input = fila.querySelector(".cantidad-input");
+        // const stockMsg = fila.querySelector(".stock-msg");
 
         if (data.success) {
 
             input.value = cantidad;
             /* se actualiza el subtotal */
-            fila.querySelector(".subtotal").textContent = "$" + data.subtotal;
+             if (subtotalCell) {
+            subtotalCell.textContent = "$" + data.subtotal;
+        }
+            // fila.querySelector(".subtotal").textContent = "$" + data.subtotal;
             /* se actualiza el total */
-            document.getElementById("total-general").textContent = data.total;
-
+            // document.querySelector(".total-general").textContent = data.total;
+            actualizarTotalEnPantalla(data.total);
             // Oculta mensaje si estaba visible
+            if (stockMsg) {
             stockMsg.classList.add("d-none");
+        }
+            // stockMsg.classList.add("d-none");
 
         } else {
 
             // Mostrar mensaje de stock
-           	stockMsg.classList.remove("d-none");
+           	// stockMsg.classList.remove("d-none");
 
             // Opcional: volver al máximo permitido
-            input.value = input.max;
+            // input.value = input.max;
+             if (stockMsg) {
+            stockMsg.classList.remove("d-none");
+            }
+
+            if (input) {
+                input.value = input.max;
+            }
+            
         }
     });
 }
@@ -192,5 +213,13 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         return cookieValue;
     }
+
+    function actualizarTotalEnPantalla(total) {
+        document.querySelectorAll(".total-general").forEach(el => {
+            el.textContent = total;
+        });
+    }
+
+    
 
 });

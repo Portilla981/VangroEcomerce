@@ -83,7 +83,7 @@
                                 <td class="shopping-cart__cell">
                                     $ {{ item.producto.precio|floatformat:0|intcomma }}
                                 </td>
-                                <td class="shopping-cart__cell">
+                                <td class="shopping-cart__cell subtotal">
                                     $ {{ item.subtotal|floatformat:0|intcomma }}
                                 </td>
                                 <td class="shopping-cart__cell">
@@ -107,14 +107,14 @@
                     <h3 class="shopping-cart__summary-title">Resumen del pedido</h3>
                     <div class="shopping-cart__summary-row">
                         <span>Subtotal</span>
-                        <span>$ {{ total|floatformat:0|intcomma }}</span>
+                        <span class="total-general">$ {{ total|floatformat:0|intcomma }}</span>
                     </div>
                     <div class="shopping-cart__summary-row">
                         <span>Envío</span>
                         <span>gratis</span>
                     </div>
                     <div class="shopping-cart__summary-total">
-                        Total: $ <span id="total-general">{{ total|floatformat:0|intcomma }}</span>
+                        Total: $ <span class="total-general">{{ total|floatformat:0|intcomma }}</span>
                     </div>
                     <button 
                         class="shopping-cart__btn shopping-cart__btn--primary btn-confirmar"

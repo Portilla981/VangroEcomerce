@@ -1,3 +1,6 @@
+
+(function() {   
+
 const botones = document.querySelectorAll(".user-list__action-btn--img")
 
 const modal = document.getElementById("modalImagen")
@@ -24,4 +27,6 @@ botones.forEach(btn => {
 
 document.getElementById("cerrarModal").onclick = function(){
     modal.style.display = "none"
-}
+}       
+
+})();

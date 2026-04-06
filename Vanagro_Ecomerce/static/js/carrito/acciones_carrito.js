@@ -242,7 +242,9 @@
             /* se actualiza el subtotal */
             fila.querySelector(".subtotal").textContent = "$" + formatoNumero( data.subtotal);
             /* se actualiza el total */
-            document.getElementById("total-general").textContent = formatoNumero(data.total);
+            // document.getElementById("total-general").textContent = formatoNumero(data.total);
+            actualizarTotalEnPantalla(formatoNumero(data.total));
+        //    formatoNumero(data.total);
 
             // Oculta mensaje si estaba visible
             stockMsg.classList.add("d-none");
@@ -283,5 +285,12 @@
         }
         return cookieValue;
     }
+
+    function actualizarTotalEnPantalla(total) {
+        document.querySelectorAll(".total-general").forEach(el => {
+            el.textContent = total;
+        });
+    }
+
 
 });
