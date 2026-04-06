@@ -145,10 +145,11 @@
                 </div>
                 {% endlocalize %} {% endcomment %}
             </div>
-        </div>
-        {% if not form.instance.activo %}
-            </fieldset>
-        {% endif %}
+            {% endlocalize %}
+
+            {% if not form.instance.activo %}
+                </fieldset>
+            {% endif %}
 
             <div class="buttons popup-buttons">
                 <button

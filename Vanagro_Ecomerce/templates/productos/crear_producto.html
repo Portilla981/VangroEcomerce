@@ -77,6 +77,13 @@
 				value="{{ form.instance.fecha_elaboracion|date:'Y-m-d' }}">
 			</label>
 
+		{% comment %}Descripción{% endcomment %}
+		<label class="product-form__label">Descripción del Producto
+			<textarea class="product-form__textarea" name="descripcion" placeholder="Ingrese la descripción"
+				required>{{ form.instance.descripcion|default_if_none:'' }}
+				</textarea>
+		</label>
+
 		<label class="product-form__label">Tipo de Producto
 				<select class="product-form__select product-form__select--unit" name="unidad_medida"
 					value="{{ form.instance.unidad_medida|default_if_none:'' }}" required>
@@ -95,6 +102,23 @@
 			{% endfor %}
 		</div>
 
+		<div class="product-form__row product-form__row--full">
+			<div class="product-form__label">
+				Tipo de producto
+
+				<div class="product-form__row--checkbox">
+				{% for categoria, label in form.categoria.field.choices %}
+				<label>
+					<input
+					type="radio"
+					name="categoria"
+					value="{{ categoria }}"
+					{% if categoria == form.instance.categoria %}checked{% endif %}
+					required>
+					{{ label }}
+				</label>
+				{% endfor %}
+				</div>
 		<div class="product-form__row product-form__row--full">
 			<div class="product-form__label">
 				Tipo de producto
