@@ -5,12 +5,17 @@
         <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
     </div>
     <div class="navbar-vanagro__container">
+       <div class="navbar-vanagro__begin">
         <h1 class="navbar-vanagro__title">VANAGRO
             <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
         </h1>
 
+        <button class="navbar-vanagro__toggle" id="menuToggle">
+            ☰
+        </button>
+        </div>
         <nav class="navbar-vanagro">
-            <ul class="navbar-vanagro__list">
+            <ul class="navbar-vanagro__list" id="menuList">
                 <li class="navbar-vanagro__item">
                     <a href="{% url 'sesion_inicio' %}" class="navbar-vanagro__link">Quiero comprar</a>
                 </li>
