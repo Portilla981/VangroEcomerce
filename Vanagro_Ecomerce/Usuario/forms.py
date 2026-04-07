@@ -17,9 +17,8 @@ def fomato_texto(texto):
         return " ".join(p.capitalize() for p in palabras)
 
 
-
 class UserForm(forms.ModelForm):
-    email = forms.EmailField(required=True, label="Correo Electrónico")
+    email = forms.EmailField(required=True, label="Correo electrónico")
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
 
@@ -50,7 +49,7 @@ class UserForm(forms.ModelForm):
             email = email.lower() # Normalizamos a minúsculas
             # Buscamos si ya existe alguien con ese correo (excluyendo al propio usuario si es edición)
             if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
-                raise forms.ValidationError("Este correo electrónico ya está registrado.")
+                raise forms.ValidationError("Ya existe una cuenta asociada a este correo electrónico")
         return email
 
     def clean(self):
@@ -59,7 +58,7 @@ class UserForm(forms.ModelForm):
         p2 = cleaned_data.get("password2")
 
         if p1 and p2 and p1 != p2:
-            raise forms.ValidationError("Las contraseñas no coinciden")
+            raise forms.ValidationError("Las contraseñas ingresadas no coinciden")
         
 
 class Form_Actualizar_User(forms.ModelForm):
@@ -110,12 +109,12 @@ class Formulario_Usuario(forms.ModelForm):
             
             # Forma simple de ahorrar código para validar que sean números y q no comience por 0
             if not re.match(r'^[1-9][0-9]*$', num):
-                raise forms.ValidationError("La cédula debe ser numérica y no comenzar con cero.")
+                raise forms.ValidationError("El número de cédula debe ser numérico y no puede comenzar con cero")
 
         # Para los otro tipos de identificacion, se permite la combinacion de números y letras
         else:
             if not re.match(r'^[A-Za-z0-9]+$', num):
-                raise forms.ValidationError("El número de identificación debe contener solo letras y números para este tipo de identificación")
+                raise forms.ValidationError("El número de identificación debe contener únicamente letras y números")
         
         # Colocar el número de identificación en mayúsculas y sin espacios
         if num:
@@ -128,18 +127,18 @@ class Formulario_Usuario(forms.ModelForm):
 
         
         if buscare.exists():
-            raise forms.ValidationError("Este número de identificación ya existe")
+            raise forms.ValidationError("Este número de identificación ya se encuentra registrado en nuestro sistema.")
         
         return num
     
     def clean_telefono_1(self):
         telefono = self.cleaned_data.get('telefono_1')
         if not telefono.isdigit():
-            raise forms.ValidationError("El número de teléfono debe contener solo números")
+            raise forms.ValidationError("El número de teléfono debe contener únicamente dígitos numéricos")
         
         # Validar longitud si es necesario
         if len(telefono) != 10:
-            raise forms.ValidationError("El teléfono debe tener 10 dígitos.")
+            raise forms.ValidationError("El número de teléfono debe tener exactamente 10 dígitos")
         
         return telefono
 
@@ -151,16 +150,14 @@ class Formulario_Usuario(forms.ModelForm):
             return telefono
         
         if not telefono.isdigit():
-            raise forms.ValidationError("El número de teléfono alterno debe contener solo números")
+            raise forms.ValidationError("El número de teléfono alterno debe contener únicamente dígitos numéricos.")
         
         # Validar longitud si es necesario
         if len(telefono) != 10:
-            raise forms.ValidationError("El teléfono debe tener 10 dígitos.")
+            raise forms.ValidationError("El número de teléfono alterno debe tener exactamente 10 dígitos.")
                        
         return telefono
     
-
-   
     def clean_fecha_nacimiento(self):
         fecha = self.cleaned_data.get('fecha_nacimiento')
         hoy = date.today()
@@ -169,11 +166,11 @@ class Formulario_Usuario(forms.ModelForm):
         edad = hoy.year - fecha.year - ((hoy.month, hoy.day) < (fecha.month, fecha.day))
         
         if edad < 18:
-            raise ValidationError("Debes tener al menos 18 años para registrarte.")
+            raise ValidationError("Usted debe ser mayor de 18 años para realizar el registro.")
         
         return fecha
-    
-   
+
+        
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -215,7 +212,7 @@ class Formulario_Productor(forms.ModelForm):
         foto = self.cleaned_data.get('foto_finca')
         if foto:
             if foto.size > 5 * 1024 * 1024:  # Limitar a 5MB
-                raise forms.ValidationError("La foto de la finca no puede superar los 5MB.")
+                raise forms.ValidationError("El archivo seleccionado es demasiado grande. El tamaño máximo permitido es de 5 MB")
         return foto
     
     def __init__(self, *args, **kwargs):

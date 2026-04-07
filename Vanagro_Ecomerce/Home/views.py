@@ -28,17 +28,17 @@ class Home(TemplateView):
         context['cards']=[            
             {
                 "title":"Nosotros",
-                "description":"<strong>VANAGRO</strong><br> es un proyecto del SENA creado para conectar a los campesinos colombianos con los consumidores, promoviendo la compra directa, el comercio justo y el reconocimiento al trabajo del campo.",
+                "description":"Vanagro busca conectar el campo risaraldense con la ciudad, facilitando el acceso directo a productos locales. Promueve el desarrollo rural, el consumo consciente y proyecta su crecimiento hacia todo el territorio colombiano.",
                 "img":"img/interfaz_vanagro/vanagro4.jpg"
             },
             {
                 "title":"Misión",
-                "description":"Ser la plataforma líder en Colombia en la conexión entre el campo y el consumidor, promoviendo un sistema agroalimentario más justo, sostenible y humano, en donde los productos campesinos sean valorados, visibles y preferidos por su calidad, origen y aporte al desarrollo rural.",
+                "description":"Facilitar la conexión entre productores del campo risaraldense y consumidores urbanos mediante una plataforma accesible, promoviendo el comercio justo, la transparencia y el fortalecimiento de la economía local.",
                 "img":"img/interfaz_vanagro/vanagro1a.jpg"
             },
             {
                 "title":"Visión",
-                "description":"Impulsar la comercialización directa de productos campesinos a través de una plataforma digital accesible, transparente y solidaria, que fomente el consumo consciente, fortalezca la economía rural y reconozca el esfuerzo de las comunidades colombianas.",
+                "description":"Consolidarse como una plataforma referente en la integración del sector agrícola con la ciudad, iniciando en Risaralda y proyectándose a nivel nacional, destacándose por su impacto social y desarrollo sostenible.",
                 "img":"img/interfaz_vanagro/vanagro3.jpg"
             }
             ]        
@@ -115,13 +115,13 @@ class Contactenos(CreateView):
 
             messages.success(
                 self.request,
-                '¡Gracias por tu mensaje!, Nos pondremos en contacto contigo pronto.'
+                '¡Muchas gracias por su mensaje! En breve nos pondremos en contacto con usted.'
             )
 
         except Exception:
             messages.warning(
                 self.request,
-                'El mensaje se guardó pero hubo un problema al enviar el correo.'
+                'Su mensaje se ha recibido correctamente en nuestro sistema. Sin embargo, tuvimos un inconveniente al enviarle el correo de confirmación. No se preocupe, atenderemos su solicitud en breve.'
             )
 
         return super().form_valid(form)       
@@ -129,7 +129,7 @@ class Contactenos(CreateView):
 
     # MANEJO DE ERRORES
     def form_invalid(self, form):
-        error_msg = "Por favor corrige lo siguiente: "
+        error_msg = "Por favor corrija los siguientes campos en el formulario: "
 
         for field, errors in form.errors.items():
             nombre_limpio = field.replace('_', ' ').capitalize()
@@ -169,27 +169,27 @@ class Inicio(LoginView):
         username = self.request.POST.get('username')
         user = form.get_user()
         if user.is_superuser:
-            messages.success(self.request, f"Bienvenido {username} al sistema")
+            messages.success(self.request, f"Le damos la bienvenida, {username}. Ha ingresado al sistema con éxito.")
             return super().form_valid(form)
 
         perfil = user.usuario  
 
         if not user.is_active:
             messages.error(self.request,
-                "El usuario está inhabilitado. Comuníquese con el administrador."
+                "Su usuario se encuentra desactivado. Por favor, comuníquese con soporte."
             )
             return self.form_invalid(form)               
 
         if not perfil.verificado:
             messages.error(
                 self.request,
-                "Tu cuenta no ha sido activada. Revisa tu correo o solicita otro enlace."
+                "Su cuenta aún no ha sido activada. Por favor, revise su correo electrónico o solicite un nuevo enlace de activación."
             )
 
             self.request.session['usuario_inactivo'] = user.email
             return super().form_invalid(form)
 
-        messages.success(self.request, f"Bienvenido {username} al sistema")
+        messages.success(self.request, f"Le damos la bienvenida, {username}. Ha ingresado al sistema con éxito.")
         return super().form_valid(form)
         
 
@@ -203,24 +203,24 @@ class Inicio(LoginView):
             if not user.is_active:
                 messages.error(
                     self.request,
-                    "El usuario existe pero está inhabilitado. Comuníquese con el administrador."
+                    "La cuenta se encuentra desctivada actualmente. Por favor, comuníquese con soporte."
                 )
                 return super().form_invalid(form)
             
             if not perfil.verificado:
                 messages.error(
                     self.request,
-                    "Tu cuenta no ha sido activada. Revisa tu correo o solicita otro enlace."
+                    "Su cuenta aún no ha sido activada. Por favor, revise su correo electrónico o solicite un nuevo enlace de activación."
                 )
 
                 self.request.session['usuario_inactivo'] = user.email
 
                 return super().form_invalid(form)
             
-            messages.error(self.request, "Usuario o contraseña incorrectos")
+            messages.error(self.request, "El usuario o la contraseña son incorrectos. Por favor, inténtelo de nuevo.")
 
         except User.DoesNotExist:
-            messages.error(self.request, "Usuario o contraseña incorrectos")
+            messages.error(self.request, "El usuario o la contraseña son incorrectos. Por favor, inténtelo de nuevo.")
 
         return super().form_invalid(form)  
 
@@ -233,4 +233,3 @@ class Inicio(LoginView):
 def logout_view(request):
     logout(request)
     return redirect('inicio')
-
