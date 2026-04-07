@@ -49,7 +49,7 @@ class UserForm(forms.ModelForm):
             email = email.lower() # Normalizamos a minúsculas
             # Buscamos si ya existe alguien con ese correo (excluyendo al propio usuario si es edición)
             if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
-                raise forms.ValidationError("Ya existe una cuenta asociada a este correo electrónico")
+                raise forms.ValidationError("Ya existe una cuenta asociada a ese correo electrónico.\nPor favor, verifique sus datos.")
         return email
 
     def clean(self):
