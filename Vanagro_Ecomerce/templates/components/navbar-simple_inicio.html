@@ -11,8 +11,12 @@
       <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
     </h1>
 
+    <button class="navbar-vanagro__toggle" id="menuToggle">
+      ☰
+    </button>
+
     <nav class="navbar-vanagro">
-      <ul class="navbar-vanagro__list">
+      <ul class="navbar-vanagro__list" id="menuList">
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
           <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="navbar-vanagro__link">Regresar</a>
         </li>

@@ -15,7 +15,7 @@
   <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />
 
   <!-- Librerías -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/> {% endcomment %}
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -27,6 +27,7 @@
   <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
   <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
   <script src="{% static 'js/alertas/modal_respuesta_msj.js' %}" defer></script>
+  <script src="{% static 'js/alertas/menu_hamburguesa.js' %}" defer></script>
 
   {% block script %}{% endblock script %}
 

@@ -10,9 +10,12 @@
       <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
     </h1>
 
-    <nav class="navbar-vanagro">
-      <ul class="navbar-vanagro__list">
+    <button class="navbar-vanagro__toggle" id="menuToggle">
+      ☰
+    </button>
 
+    <nav class="navbar-vanagro">
+      <ul class="navbar-vanagro__list" id="menuList">
         <li class="navbar-vanagro__item">
           {% if user.productor %}
             {% if user.productor.activo %}

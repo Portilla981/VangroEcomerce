@@ -10,7 +10,11 @@
             <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
         </h1>
 
-            <ul class="navbar-vanagro__list">
+        <button class="navbar-vanagro__toggle" id="menuToggle">
+            ☰
+        </button>
+        <nav class="navbar-vanagro">
+            <ul class="navbar-vanagro__list" id="menuList">
                 <li class="navbar-vanagro__item navbar-vanagro__item--sesion2">
                     <a href="{% url 'inicio_vista' %}" class="navbar-vanagro__link">Iniciar Sesión</a>
                 </li>
@@ -45,3 +49,5 @@
         </div> 
     </div> 
 </header>
+
+<div class="navbar-overlay" id="overlay"></div>
