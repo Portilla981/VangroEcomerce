@@ -54,7 +54,7 @@ def detalle_producto(request, pk):
     
     return render(request, 'productos/producto_detallado.html', {
         'producto': producto,
-        'titulo': 'Detalle producto'        
+        'titulo': 'Detalle del producto'        
     })
 
 
@@ -69,7 +69,7 @@ def confirmar_producto(request, pk):
     producto.activo = True
     producto.save()
 
-    messages.success(request, "Producto publicado correctamente.")
+    messages.success(request, "Producto publicado correctamente")
     return redirect('tienda_usuario')
 
 
@@ -80,7 +80,7 @@ def cancelar_producto(request, pk):
     if producto.estado_producto == 'borrador':
         producto.delete()
 
-        messages.info(request, "Creación del producto cancelada.")
+        messages.info(request, "La creación del producto ha sido cancelada")
 
     return redirect('tienda_usuario')
 
@@ -109,7 +109,7 @@ def editar_producto(request, pk):
             elif accion == 'guardar':
                 producto.estado_producto = 'publicado'
                 producto.save()
-                messages.success(request, "Producto actualizado correctamente.")
+                messages.success(request, "Producto actualizado correctamente")
                 return redirect('tienda_usuario')
 
             elif accion == 'cancelar':
@@ -121,7 +121,7 @@ def editar_producto(request, pk):
             print("FORMULARIO NO VALIDO")
             # messages.error(request, form.errors)
             print(form.errors)
-            error_msg = "Por favor corrige lo siguiente: "
+            error_msg = "Por favor corrija los siguientes campos en el formulario: "
 
             for field, errors in form.errors.items():
                 nombre_limpio = field.replace('_', ' ').capitalize()
@@ -232,7 +232,7 @@ def crear_producto(request):
             # messages.error(request, form.errors)
             print(form.errors)
             # 1. Creamos una cadena de texto vacía
-            error_msg = "Por favor corrige lo siguiente: "
+            error_msg = "Por favor corrija los siguientes campos en el formulario: "
             print(form.errors)
 
             # 2. Recorremos ambos formularios        
@@ -290,7 +290,7 @@ class GuardarProducto(LoginRequiredMixin, View):
             producto = form.save(commit=False)
             producto.productor = request.user.productor
             producto.save()
-            messages.success('El producto se guardo satisfactoriamente.')
+            messages.success('El producto se guardó satisfactoriamente')
 
         request.session.pop("producto_data", None)
         request.session.pop("producto_files", None)
@@ -442,4 +442,3 @@ def buscar_productos(request):
     #con la información que se va digitado y va actualizando la sección de la página. Es decir permite realizar el proceso
     #actualizando la pagina de forma automática (no hay que actualizar con F5 la pagina para ver los resultados)
     return JsonResponse({'html': html})
-

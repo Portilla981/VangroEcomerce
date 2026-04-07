@@ -12,7 +12,7 @@ def pedido_exitoso(request, pedido_id):
     #pedido del usuario logueado
     pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
     #carga el HTML pedido_exitoso
-    return render(request, 'pedidos/pedido_exitoso.html', {'pedido': pedido, 'titulo': 'Exito en Pedido'})
+    return render(request, 'pedidos/pedido_exitoso.html', {'pedido': pedido, 'titulo': 'Pedido Éxitoso'})
 
 #vista para los pedidos del usuario
 #el usuario debe estar autenticado para crear el producto
@@ -33,4 +33,4 @@ def detalle_pedido(request, pedido_id):
     #pedido del usuario logueado
     pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
     #carga el HTML de detalle_pedido
-    return render(request, 'pedidos/detalle_pedido.html', {'pedido': pedido, 'titulo': 'Pedido detallado'})
+    return render(request, 'pedidos/detalle_pedido.html', {'pedido': pedido, 'titulo': 'Detalles del pedido'})
