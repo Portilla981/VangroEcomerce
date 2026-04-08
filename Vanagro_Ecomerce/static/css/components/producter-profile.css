@@ -27,6 +27,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.08em;
   margin-top: auto;
+  margin-bottom: auto;
 }
 
 .profile_producter--subtitle {
@@ -171,7 +172,7 @@ body {
 
 .profile_producter--action:hover {
   transform: translateY(-3px);
-  background: var(--primary-50);
+  background: var(--primary-100);
   border-color: var(--primary-300);
 }
 

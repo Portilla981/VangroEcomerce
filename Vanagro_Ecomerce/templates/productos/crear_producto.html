@@ -22,6 +22,7 @@
 	<form action="" method="post" class="product-form__container" enctype="multipart/form-data">
 		{% csrf_token %}
 
+		<!-- FILA 1 -->
 		<div class="product-form__row">
 			{% comment %} <label class="product-form__label">
 				Tipo de producto
@@ -55,6 +56,7 @@
 			</label>
 		</div>
 
+		<!-- FILA 2 -->
 		<div class="product-form__row">
 			<label class="product-form__label">
 				Nombre
@@ -70,12 +72,12 @@
 			<label class="product-form__label">
 				Cantidad disponible
 				<input
-				type="number"
-				class="product-form__input"
-				name="stock"
-				placeholder="0"
-				value="{{ form.instance.stock|default_if_none:'' }}"
-				required>
+					type="number"
+					class="product-form__input"
+					name="stock"
+					placeholder="0"
+					value="{{ form.instance.stock|default_if_none:'' }}"
+					required>
 			</label>
 
 			
@@ -83,13 +85,13 @@
 
 		<div class="product-form__row">
 			<label class="product-form__label">
-				Precio 
+				Precio por unidad
 				<input
-				class="product-form__input"
-				name="precio"
-				placeholder="Ingrese el precio del producto"
-				value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
-				required>
+					class="product-form__input"
+					name="precio"
+					placeholder="Ingrese el precio"
+					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
+					required>
 			</label>
 
 			
@@ -102,22 +104,14 @@
 					placeholder="Describa el producto, sus características y beneficios"
 					required>{{ form.instance.descripcion|default_if_none:'' }}</textarea>
 				</label>
-			</div>
 
-			<div class="product-form__row product-form__row--full">			
-				<div class="product-form__image">
-					<label class="product-form__label">Imagen del producto</label>
-
-					<label class="product-form__image-upload">
-						<input type="file" name="imagen_producto">
-					</label>
-					{% if form.instance.imagen_producto %}
-					<div class="product-form__image-preview">
-						<img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
-					</div>
-					{% endif %}
+				{% if form.instance.imagen_producto %}
+				<div class="product-form__image-preview">
+					<img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
 				</div>
+				{% endif %}
 			</div>
+		</div>
 
 			<div class="product-form__row product-form__row--full">
 					{% comment %} <label class="product-form__row--checkbox">
@@ -151,7 +145,19 @@
 			</div>
 		</div>
 
-		
+		<!-- FILA 5 (FULL WIDTH) -->
+		<div class="product-form__row product-form__row--full">
+			<label class="product-form__label">
+				Descripción del producto
+				<textarea
+					class="product-form__textarea"
+					name="descripcion"
+					placeholder="Describa el producto, sus características y beneficios"
+					required>{{ form.instance.descripcion|default_if_none:'' }}</textarea>
+			</label>
+		</div>
+
+		<!-- BOTONES -->
 		<div class="product-form__actions">
 			<button
 				type="button"
@@ -174,7 +180,6 @@
 		</div>
 
 	</form>
-
 </div>
 
 {% endblock producto %}

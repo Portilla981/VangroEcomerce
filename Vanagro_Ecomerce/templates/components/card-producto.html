@@ -12,7 +12,6 @@
     {% endif %}
     
     <div class="card-product__info">        
-        <p class="card-product__description">{{ producto.descripcion }}</p>
         
         <strong class="card-product__price">
             Precio $ {{ producto.precio|floatformat:0|intcomma }} X {{ producto.unidad_medida }}
@@ -29,7 +28,7 @@
 
         {% if user.is_authenticated %}
 
-        <button class="buttons__action--primary agregar-carrito-btn"
+        <button class="buttons__action--primary"
             data-id="{{ producto.id }}"
             data-activo="{{ producto.activo|yesno:'true,false' }}" 
             data-stock="{{ producto.stock }}">

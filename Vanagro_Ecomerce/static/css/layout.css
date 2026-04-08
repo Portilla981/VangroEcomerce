@@ -34,7 +34,7 @@ body {
 
 .contenido_general{
     flex: 1;
-    background-color: var(--gray-50);
+    background-color: var(--secundary-50);
     /* align-content: center; */
     /* overflow-y: auto; */
 }

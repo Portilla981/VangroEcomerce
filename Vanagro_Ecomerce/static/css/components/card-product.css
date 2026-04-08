@@ -3,7 +3,7 @@
 ================================ */
 .search-bar {
   width: 100%;
-  background: var(--gray-50);
+  background: var(--secundary-50);
   padding: 20px;
   justify-content: center;
 
@@ -14,7 +14,7 @@
   margin-bottom: 1px;
 }
 
-/* TÍTULO */
+/* Titulo */
 .search-bar h2 {
   width: 100%;
   font-size: var(--fs-sm);
@@ -23,11 +23,11 @@
 }
 
 /* ===============================
-   SELECT (CATEGORÍAS)
+   SELECT 
 ================================ */
 #filtro-categoria {
   flex: 1;
-  max-width: 360px;
+  max-width: 340px;
 
   padding: 10px 14px;
   border-radius: 10px;
@@ -37,16 +37,12 @@
   font-size: var(--fs-xxs);
   color: var(--gray-800);
   cursor: pointer;
-
   transition: all 0.2s ease;
-
-  
 }
 
 #filtro-categoria:focus {
   outline: none;
   border-color: var(--primary-700);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
 }
 
 /* ===============================
@@ -54,7 +50,7 @@
 ================================ */
 #buscador-productos {
   flex: 1;
-  max-width: 500px;
+  max-width: 460px;
 
   padding: 10px 14px;
   border-radius: 10px;
@@ -62,32 +58,136 @@
   box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
   font-size: var(--fs-xxs);
   color: var(--gray-800);
-
   transition: all 0.2s ease;
 }
 
-/* FOCUS PRO */
 #buscador-productos:focus {
   outline: none;
   border-color: var(--primary-700);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
 }
 
-/* PLACEHOLDER */
 #buscador-productos::placeholder {
   color: var(--gray-400);
 }
 
-/* ===============================
-   EFECTO HOVER GENERAL
-================================ */
+/* HOVER */
 #filtro-categoria:hover,
 #buscador-productos:hover {
   border-color: var(--primary-500);
 }
 
 /* ===============================
-   RESPONSIVE TABLET
+   GRID GENERAL
+================================ */
+.card-section__product {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+/* ===============================
+   ITEM CONTENEDOR
+================================ */
+.product-item {
+  display: flex;
+}
+
+/* ===============================
+   CARD PRINCIPAL 
+================================ */
+.card-product {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 2px 6px var(--primary-700);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 300px;
+}
+
+.card-product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+/* ===============================
+   IMAGEN 
+================================ */
+.card-product__image {
+  width: 85%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ===============================
+   CONTENIDO
+================================ */
+.card-product__info {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+/* Titulo */
+.card-product__title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Descripcion */
+.card-product__description {
+  font-size: var(--fs-xs);
+  color: var(--gray-700);
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* PRECIO */
+.card-product__price {
+  font-size: var(--fs-sm);
+  font-weight: bold;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* ===============================
+   BOTONES
+================================ */
+.buttons_cards {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid var(--gray-200);
+  background: #fafafa;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.buttons_cards button {
+  flex: 1;
+  font-size: 12px;
+  padding: 8px;
+  white-space: nowrap;
+}
+
+/* ===============================
+   RESPONSIVE TABLET (2 columnas)
 ================================ */
 @media (max-width: 1024px) {
 
@@ -99,10 +199,23 @@
   #buscador-productos {
     font-size: 13px;
   }
+
+  .card-section__product {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .card-product {
+    height: auto;
+  }
+
+  .card-product__image {
+    height: 120px;
+  }
 }
 
 /* ===============================
-   RESPONSIVE CELULAR
+   RESPONSIVE CELULAR (1 columna)
 ================================ */
 @media (max-width: 768px) {
 
@@ -119,9 +232,29 @@
   #filtro-categoria,
   #buscador-productos {
     width: 100%;
+    max-width: 100%;
+  }
+
+  .card-section__product {
+    grid-template-columns: 1fr;
+    padding: 36px;
+    gap: 20px;
+  }
+
+  .card-product {
+    height: auto;
+  }
+
+  .buttons_cards {
+    flex-direction: row; /* ← siempre en fila */
+    gap: 8px;
+  }
+
+  .buttons_cards button {
+    flex: 1; /* ← se reparten el espacio */
+    width: auto;
   }
 }
-
 /* ===============================
    CELULARES PEQUEÑOS
 ================================ */
@@ -137,161 +270,6 @@
     padding: 9px;
     font-size: 12px;
   }
-}
-
-
-/* ===============================
-   GRID GENERAL
-================================ */
-.card-section__product {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
-  padding: 24px;
-}
-
-/* ===============================
-   ITEM CONTENEDOR
-================================ */
-.product-item {
-  display: flex;
-}
-
-/* ===============================
-   CARD PRINCIPAL
-================================ */
-.card-product {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: var(--white);
-  border-radius: 16px;
-  border: 1px solid var(--gray-200);
-  box-shadow: 0 2px 6px var(--primary-700);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  max-height: 420px;
-}
-
-.card-product:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
-}
-
-/* ===============================
-   IMAGEN
-================================ */
-.card-product__image {
-  width: 90%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-}
-
-/* ===============================
-   CONTENIDO
-================================ */
-.card-product__info {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-}
-
-/* TÍTULO */
-.card-product__title {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  text-align: center;
-}
-
-/* DESCRIPCIÓN */
-.card-product__description {
-  font-size: var(--fs-xs);
-  color: var(--gray-700);
-  text-align: center;
-
-  display: -webkit-box;
- 
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* PRECIO */
-.card-product__price {
-  font-size: var(--fs-sm);
-  font-weight: bold;
-  text-align: center;
-  margin-top: 10px;
-}
-
-/* ===============================
-   BOTONES (AHORA DENTRO)
-================================ */
-.buttons_cards {
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  border-top: 1px solid var(--gray-200);
-  background: #fafafa;
-}
-
-.buttons_cards button {
-  flex: 1;
-  font-size: 13px;
-  padding: 10px;
-  white-space: nowrap;
-}
-
-/* FIX PARA LINKS */
-.buttons_cards a {
-  width: 100%;
-  text-decoration: none;
-}
-
-/* ===============================
-   RESPONSIVE
-================================ */
-
-/* TABLET */
-@media (max-width: 1024px) {
-
-  .card-section__product {
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  }
-
-  .card-product__image {
-    height: 160px;
-  }
-}
-
-/* CELULAR */
-@media (max-width: 768px) {
-
-  .card-section__product {
-    grid-template-columns: 1fr;
-    padding: 16px;
-  }
-
-  .card-product {
-    min-height: auto;
-  }
-
-  .buttons_cards {
-    flex-direction: column;
-  }
-
-  .buttons_cards button {
-    width: 100%;
-  }
-}
-
-/* CELULAR PEQUEÑO */
-@media (max-width: 480px) {
 
   .card-product__title {
     font-size: 14px;

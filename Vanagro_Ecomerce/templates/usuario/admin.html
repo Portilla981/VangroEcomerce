@@ -1,32 +1,102 @@
 {% load static %}
 
-<h3 class="admin-cards__title">Bienvenido al panel de administración</h3>
-<div class="admin-cards">
+<div class="profile_admin--container">
 
+    <div class="profile_admin--header">
+        <div>
+        <p class="profile_admin--eyebrow">Panel de administración</p>
+        <p class="profile_admin--subtitle">
+            Desde aquí puede supervisar usuarios, productos, pedidos y mensajes
+            de toda la plataforma Vanagro.
+        </p>
+        </div>
+    </div>
 
-    <a href="{% url 'ver_productos' %}?next={{ request.path }}" class="admin-cards__card">
-        <ion-icon name="eye-outline" class="admin-cards__icon"></ion-icon>
-        <span class="admin-cards__name">Ver Productos</span>
-    </a>
+    <div class="profile_admin--content">
 
-    <a href="{% url 'mis_pedidos' %}?next={{ request.path }}" class="admin-cards__card">
-        <ion-icon name="bag-add-outline" class="admin-cards__icon"></ion-icon>
-        <span class="admin-cards__name">Pedidos</span>
-    </a>
+        <div class="profile_admin--card">
+        <div class="profile_admin--card-head">
+            <div class="profile_admin--avatar-wrap">
+            <ion-icon name="shield-checkmark-outline" class="profile_admin--avatar-icon"></ion-icon>
+            </div>
 
-    <a href="{% url 'lista_usuarios' %}?next={{ request.path }}" class="admin-cards__card">
-        <ion-icon name="people-outline" class="admin-cards__icon"></ion-icon>
-        <span class="admin-cards__name">Usuarios</span>
-    </a>
+            <div>
+            <h2 class="profile_admin--card-title">
+                {{ request.user.first_name }} {{ request.user.last_name }}
+            </h2>
+            <p class="profile_admin--card-subtitle">
+                Administrador de Vanagro
+            </p>
+            </div>
+        </div>
 
-    <a href="{% url 'mis_productos' %}?next={{ request.path }}" class="admin-cards__card">
-        <ion-icon name="calendar-outline" class="admin-cards__icon"></ion-icon>
-        <span class="admin-cards__name">Productos</span>
-    </a>
+        <div class="profile_admin--details-grid">
 
-    <a href="{% url 'mensajes_admin' %}?next={{ request.path }}" class="admin-cards__card">
-        <ion-icon name="list-outline" class="admin-cards__icon"></ion-icon>
-        <span class="admin-cards__name">Mensajes</span>
-    </a>
+            <div class="profile_admin--detail-box">
+            <span>Correo</span>
+            <p>{{ request.user.email }}</p>
+            </div>
+
+            <div class="profile_admin--detail-box">
+            <span>Rol</span>
+            <p>Administrador principal</p>
+            </div>
+
+            <div class="profile_admin--detail-box profile_admin--detail-box--full">
+            <span>Acceso</span>
+            <p>
+                Tiene permisos para gestionar usuarios, revisar pedidos,
+                administrar productos y responder mensajes.
+            </p>
+            </div>
+
+        </div>
+        </div>
+
+        <aside class="profile_admin--actions">
+
+        <a class="profile_admin--action" href="{% url 'ver_productos' %}?next={{ request.path }}">
+            <ion-icon name="storefront-outline"></ion-icon>
+            <div>
+            <strong>Ver catálogo</strong>
+            <span>Revise todos los productos publicados</span>
+            </div>
+        </a>
+
+        <a class="profile_admin--action" href="{% url 'mis_pedidos' %}?next={{ request.path }}">
+            <ion-icon name="receipt-outline"></ion-icon>
+            <div>
+            <strong>Pedidos</strong>
+            <span>Consulte órdenes y compras realizadas</span>
+            </div>
+        </a>
+
+        <a class="profile_admin--action" href="{% url 'lista_usuarios' %}?next={{ request.path }}">
+            <ion-icon name="people-circle-outline"></ion-icon>
+            <div>
+            <strong>Usuarios</strong>
+            <span>Administre clientes y productores</span>
+            </div>
+        </a>
+
+        <a class="profile_admin--action" href="{% url 'mis_productos' %}?next={{ request.path }}">
+            <ion-icon name="cube-outline"></ion-icon>
+            <div>
+            <strong>Productos</strong>
+            <span>Edite el inventario y publicaciones</span>
+            </div>
+        </a>
+
+        <a class="profile_admin--action" href="{% url 'mensajes_admin' %}?next={{ request.path }}">
+            <ion-icon name="mail-unread-outline"></ion-icon>
+            <div>
+            <strong>Mensajes</strong>
+            <span>Revise solicitudes y contacto de usuarios</span>
+            </div>
+        </a>
+
+        </aside>
+
+    </div>
 
 </div>
