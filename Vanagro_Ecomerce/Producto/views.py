@@ -219,7 +219,7 @@ def crear_producto(request):
                 producto.save()
                 #si cumple, se guarda en l bd con el método save de Django
                 #redirige a la lista de productos
-                success_message = 'Producto creado exitosamente.'
+                success_message = 'Producto creado exitosamente'
                 messages.success(request, success_message)                 
                 return redirect('tienda_usuario')  
 

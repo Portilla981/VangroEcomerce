@@ -127,7 +127,7 @@ class Formulario_Usuario(forms.ModelForm):
 
         
         if buscare.exists():
-            raise forms.ValidationError("Este número de identificación ya se encuentra registrado en nuestro sistema.")
+            raise forms.ValidationError("Este número de identificación ya se encuentra registrado en nuestro sistema")
         
         return num
     
@@ -150,11 +150,11 @@ class Formulario_Usuario(forms.ModelForm):
             return telefono
         
         if not telefono.isdigit():
-            raise forms.ValidationError("El número de teléfono alterno debe contener únicamente dígitos numéricos.")
+            raise forms.ValidationError("El número de teléfono alterno debe contener únicamente dígitos numéricos")
         
         # Validar longitud si es necesario
         if len(telefono) != 10:
-            raise forms.ValidationError("El número de teléfono alterno debe tener exactamente 10 dígitos.")
+            raise forms.ValidationError("El número de teléfono alterno debe tener exactamente 10 dígitos")
                        
         return telefono
     
@@ -166,7 +166,7 @@ class Formulario_Usuario(forms.ModelForm):
         edad = hoy.year - fecha.year - ((hoy.month, hoy.day) < (fecha.month, fecha.day))
         
         if edad < 18:
-            raise ValidationError("Usted debe ser mayor de 18 años para realizar el registro.")
+            raise ValidationError("Usted debe ser mayor de 18 años para realizar el registro")
         
         return fecha
 
