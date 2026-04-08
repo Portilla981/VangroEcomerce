@@ -88,9 +88,18 @@ def actualizar_cantidad(request, item_id):
 
     #calcula el total del carrito (toma cada subtotal)
     total = sum(i.subtotal() for i in ItemCarrito.objects.filter(usuario=request.user))
+    
+    total_items = ItemCarrito.objects.filter(usuario=request.user).count()
+
+    # return JsonResponse({
+    #     "success": True,
+    #     "subtotal": subtotal,
+    #     "total": total,
+    #     "total_items": total_items
+    # })
 
     #mensaje con el subtotal de cada producto y el total del carrito. Informa que todo quedo ok
-    return JsonResponse({"success": True, "subtotal": subtotal, "total": total})
+    return JsonResponse({"success": True, "subtotal": subtotal, "total": total, "total_items": total_items})
 
 #------------------------------------------------------------------------------------------------
 # el usuario debe estar autenticado para ver el carrito

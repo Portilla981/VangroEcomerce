@@ -69,6 +69,22 @@
 			</label>
 
 
+			<div class="product-form__image">
+				<label class="product-form__label">Imagen del producto</label>
+
+				<label class="product-form__image-upload">
+					<input type="file" name="imagen_producto">
+				</label>
+
+				{% if form.instance.imagen_producto %}
+				<div class="product-form__image-preview">
+					<img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
+				</div>
+				{% endif %}
+			</div>
+		</div>
+
+		<div class="product-form__row">
 			<label class="product-form__label">
 				Cantidad disponible
 				<input
@@ -80,10 +96,6 @@
 					required>
 			</label>
 
-			
-		</div>
-
-		<div class="product-form__row">
 			<label class="product-form__label">
 				Precio por unidad
 				<input
@@ -92,25 +104,8 @@
 					placeholder="Ingrese el precio"
 					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
 					required>
-			</label>
-
+			</label>			
 			
-			<div class="product-form__row product-form__row--full">
-				<label class="product-form__label">
-					Descripción del producto
-					<textarea
-					class="product-form__textarea"
-					name="descripcion"
-					placeholder="Describa el producto, sus características y beneficios"
-					required>{{ form.instance.descripcion|default_if_none:'' }}</textarea>
-				</label>
-
-				{% if form.instance.imagen_producto %}
-				<div class="product-form__image-preview">
-					<img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
-				</div>
-				{% endif %}
-			</div>
 		</div>
 
 			<div class="product-form__row product-form__row--full">
@@ -143,9 +138,8 @@
 					</label>
 				</div>	
 			</div>
-		</div>
 
-		<!-- FILA 5 (FULL WIDTH) -->
+			<!-- FILA 5 (FULL WIDTH) -->
 		<div class="product-form__row product-form__row--full">
 			<label class="product-form__label">
 				Descripción del producto
@@ -156,6 +150,20 @@
 					required>{{ form.instance.descripcion|default_if_none:'' }}</textarea>
 			</label>
 		</div>
+
+			<!-- <div class="product-form__row product-form__row--full">
+				<label class="product-form__label">
+					Descripción del producto
+					<textarea
+					class="product-form__textarea"
+					name="descripcion"
+					placeholder="Describa el producto, sus características y beneficios"
+					required>{{ form.instance.descripcion|default_if_none:'' }}</textarea>
+				</label>		
+			</div> -->
+		</div>
+
+		
 
 		<!-- BOTONES -->
 		<div class="product-form__actions">
