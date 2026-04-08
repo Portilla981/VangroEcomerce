@@ -3,7 +3,9 @@
 {% load static %}
 
 {% block script %}
+
 <script src="{% static 'js/alertas/modal_informe.js' %}" defer></script>
+
 {% endblock script %}
 
 {% block navbar %}
@@ -16,152 +18,93 @@
 
   <div class="order-details__card">
 
-    <!-- HEADER -->
-    <div class="order-details__header">
-      <h3 class="order-details__title">Detalle del Pedido #{{ pedido.id }}</h3>
-      <span class="order-details__status">{{ pedido.estado }}</span>
-    </div>
 
-    <p class="order-details__date">
-      <strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}
-    </p>
+<div class="order-details__header">
+  <h3 class="order-details__title">Detalle del Pedido #{{ pedido.id }}</h3>
+  <span class="order-details__status">{{ pedido.estado }}</span>
+</div>
 
-    <h5 class="order-details__subtitle">Productos</h5>
+<p class="order-details__date">
+  <strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}
+</p>
 
-    <!-- TABLA -->
-    <div class="order-details__table-container">
+<h5 class="order-details__subtitle">Productos</h5>
 
-      <table class="order-details__table">
+<div class="order-details__table-container">
 
-        <thead class="order-details__head">
-          <tr class="order-details__row">
-            <th class="order-details__cell">Producto</th>
-            <th class="order-details__cell">Cantidad</th>
-            <th class="order-details__cell">Precio</th>
-            <th class="order-details__cell">Subtotal</th>
-            <th class="order-details__cell">Estado</th>
-          </tr>
-        </thead>
+  <table class="order-details__table">
 
-        <tbody class="order-details__body">
+    <thead class="order-details__head">
+      <tr class="order-details__row">
+        <th class="order-details__cell">Producto</th>
+        <th class="order-details__cell">Cantidad</th>
+        <th class="order-details__cell">Precio</th>
+        <th class="order-details__cell">Subtotal</th>
+        <th class="order-details__cell">Estado</th>
+      </tr>
+    </thead>
 
-          {% for detalle in pedido.detalles.all %}
-          <tr class="order-details__row">
+    <tbody class="order-details__body">
 
-            <td class="order-details__cell" data-label="Producto">
-              {{ detalle.producto.nombre_producto }}
-            </td>
+      {% for detalle in pedido.detalles.all %}
+      <tr class="order-details__row">
 
-            <td class="order-details__cell" data-label="Cantidad">
-              {{ detalle.cantidad }}
-            </td>
+        <td class="order-details__cell" data-label="Producto">
+          {{ detalle.producto.nombre_producto }}
+        </td>
 
-            <td class="order-details__cell" data-label="Precio">
-              $ {{ detalle.precio|floatformat:0|intcomma }}
-            </td>
+        <td class="order-details__cell" data-label="Cantidad">
+          {{ detalle.cantidad }}
+        </td>
 
-            <td class="order-details__cell" data-label="Subtotal">
-              $ {{ detalle.subtotal|floatformat:0|intcomma }}
-            </td>
+        <td class="order-details__cell" data-label="Precio">
+          $ {{ detalle.precio|floatformat:0|intcomma }}
+        </td>
 
-            <td class="order-details__cell" data-label="Estado">
-              {% if detalle.despachado %}
-                <span class="order-details__badge order-details__badge--success">
-                  ✔ Despachado
-                </span>
-              {% else %}
-                <span class="order-details__badge order-details__badge--warning">
-                  ⏳ Pendiente
-                </span>
-              {% endif %}
-            </td>
+        <td class="order-details__cell" data-label="Subtotal">
+          $ {{ detalle.subtotal|floatformat:0|intcomma }}
+        </td>
 
-          </tr>
-          {% endfor %}
+        <td class="order-details__cell" data-label="Estado">
+          {% if detalle.despachado %}
+            <span class="order-details__badge order-details__badge--success">
+              ✔ Despachado
+            </span>
+          {% else %}
+            <span class="order-details__badge order-details__badge--warning">
+              ⏳ Pendiente
+            </span>
+          {% endif %}
+        </td>
 
-        </tbody>
+      </tr>
+      {% endfor %}
 
-      </table>
+    </tbody>
 
-    </div>
-
-    <!-- TOTAL -->
-    <p class="order-details__total">
-      <strong>Total:</strong> ${{ pedido.total|floatformat:0|intcomma }}
-    </p>
-
-    <!-- BOTONES -->
-    <div class="order-details__actions">
-
-      <a href="{% url 'mis_pedidos' %}" class="order-details__btn order-details__btn--secondary">
-        ← Volver
-      </a>
-
-      <button type="button" class="order-details__btn order-details__btn--primary" onclick="abrirModal()">
-        Ver factura / PDF
-      </button>
-
-    </div>
-
-  </div>
+  </table>
 
 </div>
 
-{% comment %} modal de factura pdf  {% endcomment %}
-<div id="modalResumen" class="modal-fondo">
-    <div class="modal-contenido">
-        {% comment %} boton de x para cerrar {% endcomment %}
-        <div class="modal-cabecera">
-            <span class="cerrar" onclick="cerrarModal()">&times;</span>
-            <h2>Factura de venta</h2>
-        </div>
-        
-        <div class="modal-cuerpo">
-            <div id="areaImpresion" class="">
-                <div class="encabezado-pdf">
-                    <img src="{% static 'img/interfaz_vanagro/vanagro_logo2.jpeg' %}" class="logo-tienda" alt="Logo">
-                    <div class="datos-tienda">
-                        <h1>Factura de Ventas FVV-{{ pedido.id }} </h1>
-                        <p>Nombre cliente: <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></p>
-                        <p>Fecha de compra: {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
-                    </div>
-                </div>
+<p class="order-details__total">
+  <strong>Total:</strong> ${{ pedido.total|floatformat:0|intcomma }}
+</p>
 
-                <table class="tabla-pdf">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cant. Total</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in pedido.detalles.all %}
-                        <tr>
-                            <td>{{ item.producto.nombre_producto }}</td>
-                            <td>{{ item.cantidad }}</td>
-                            <td>${{ item.subtotal|floatformat:0|intcomma }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    <tfoot class="total-pdf" >
-                        <tr class="user-list__row">
-                        <td class="user-list__cell" colspan="2" ><strong>TOTAL:</strong></td>
-                        <td class="user-list__cell"><strong>${{ pedido.total|floatformat:0|intcomma }}</strong></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                {% comment %} <div class="total-pdf">
-                    <p><strong>TOTAL: ${{ total_general }}</strong></p>
-                </div> {% endcomment %}
-            </div>
-        </div>
+<div class="order-details__actions">
 
-        <div class="modal-pie">
-            <button onclick="cerrarModal()" class="buttons__action--secondary btn-secundario">Cerrar</button>
-            <button onclick="window.print()" class="buttons__action--primary btn-primario">Imprimir / Guardar PDF</button>
-        </div>
-    </div>
+  <a href="{% url 'mis_pedidos' %}" class="order-details__btn order-details__btn--secondary">
+    ← Volver
+  </a>
+
+  <button type="button" class="order-details__btn order-details__btn--primary" onclick="abrirModal()">
+    Ver factura / PDF
+  </button>
+
+</div>
+
+
+  </div>
+
 </div>
 
 {% endblock carrito %}

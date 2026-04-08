@@ -1,8 +1,16 @@
-/* CONTENEDOR */
+/* ===============================
+   CONTENEDOR
+================================ */
 .order-details {
   max-width: 1100px;
   margin: 24px auto;
   padding: 16px;
+  overflow-x: hidden;
+}
+
+.order-details__head {
+  background: var(--primary-900); /* verde */
+  color: var(--white);
 }
 
 /* CARD */
@@ -11,6 +19,7 @@
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  width: 100%;
 }
 
 /* HEADER */
@@ -35,72 +44,34 @@
   font-size: 12px;
 }
 
-/* DATE */
-.order-details__date {
-  margin-bottom: 10px;
-}
-
-/* SUBTITLE */
-.order-details__subtitle {
-  margin: 16px 0 10px;
-}
-
 /* TABLE */
 .order-details__table-container {
+  width: 100%;
   overflow-x: auto;
+}
+
+.order-details__badge {
+  padding: 6px 12px;
+  border-radius: 20px; /* 🔥 más moderno */
+  font-weight: 600;
+  font-size: 12px;
+  background: var(--secundary-900);
+  color: var(--black);
 }
 
 .order-details__table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 700px;
 }
 
-.order-details__head {
-  background: var(--primary-900);
-  color: var(--white);
-}
-
-
+/* CELLS */
 .order-details__cell {
   padding: 14px;
   border-bottom: 1px solid var(--gray-200);
   font-size: var(--fs-xxxs);
 }
-
-/* BADGES */
-.order-details__badge {
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-size: 11px;
-}
-
-.order-details__badge--success {
-  background: var(--primary-900);
-  color: var(--white);
-}
-
-.order-details__badge--warning {
-  background: var(--secundary-900);
-  color: var(--black);
-}
-
-/* TOTAL */
-.order-details__total {
-  margin-top: 14px;
-  font-size: 16px;
-  text-align: right;
-}
-
-/* BOTONES */
-.order-details__actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 16px;
-  flex-wrap: wrap;
-}
-
 .order-details__btn {
+  display: inline-block;
   padding: 10px 14px;
   border-radius: 10px;
   text-decoration: none;
@@ -108,9 +79,12 @@
   cursor: pointer;
   font-size: 13px;
   transition: 0.2s;
-  background-color: var(--secundary-900);
+  background: var(--secundary-900);
+  color: var(--black);
+  text-align: center;
 }
 
+/* 🔥 RESTAURAR COLORES */
 .order-details__btn--primary {
   background: var(--primary-900);
   color: var(--white);
@@ -121,96 +95,115 @@
   color: var(--black);
 }
 
+/* 🔥 EFECTO */
 .order-details__btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
-
 /* ===============================
-   TABLET
+   TABLET FIX
 ================================ */
 @media (max-width: 1024px) {
 
+  .order-details__table-container {
+    overflow-x: hidden;
+  }
+
   .order-details__table {
-    min-width: 600px;
+    table-layout: fixed;
   }
 
   .order-details__cell {
     padding: 10px;
     font-size: 12px;
+    word-break: break-word;
   }
 }
 
 /* ===============================
-   CELULAR (CARDS)
+   MOBILE FIX REAL (EL IMPORTANTE)
 ================================ */
 @media (max-width: 768px) {
 
-  .order-details__table {
-    display: block;
-    min-width: 100%;
+  .order-details__head {
+    display: none !important;
   }
 
-  .order-details__head {
-    display: none;
+
+  .order-details__table-container {
+    overflow: visible;
+  }
+
+  /* 🔥 RESET TOTAL CORRECTO */
+  .order-details__table {
+    display: block;
+    width: 100%;
+  }
+
+  .order-details__body {
+    display: block; /* 🔥 ESTE ERA EL ERROR */
+    width: 100%;
   }
 
   .order-details__row {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: block;
+    width: 100%;
     background: var(--white);
-    margin-bottom: 14px;
-    padding: 14px;
+    margin-bottom: 16px;
+    padding: 16px;
     border-radius: 14px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
   }
 
   .order-details__cell {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 0;
+    display: block;
+    width: 100%;
+    padding: 6px 0;
     border: none;
+    font-size: 13px;
   }
 
   .order-details__cell::before {
     content: attr(data-label);
+    display: block;
     font-weight: 600;
     font-size: 11px;
     color: var(--gray-600);
+    margin-bottom: 2px;
   }
 
-  .order-details__actions {
+  /* HEADER */
+  .order-details__header {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* BOTONES */
+  .order-details__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .order-details__btn {
     width: 100%;
-    text-align: center;
-  }
-
-  .order-details__header {
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-start;
   }
 
   .order-details__total {
     text-align: left;
   }
-}
 
-/* ===============================
-   CELULAR PEQUEÑO
-================================ */
-@media (max-width: 480px) {
-
-  .order-details__title {
-    font-size: var(--fs-sm);
+  .order-details__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .order-details__btn {
-    font-size: 12px;
-    padding: 8px;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
   }
+
+
 }
