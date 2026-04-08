@@ -1,121 +1,116 @@
 {% extends "usuario/login.html" %}
-
 {% load static %}
 {% load humanize %}
 
 {% block navbar %}
-    {% include 'components/navbar-simple_inicio.html' %} 
-
+    {% include 'components/navbar-simple_inicio.html' %}
 {% endblock navbar %}
 
 {% block script %}
 <script src="{% static 'js/alertas/modal_informe.js' %}" defer></script>
-  
 {% endblock script %}
 
 {% block login %}
-<div class="user-list">
-    <h2 class="user-list__title">Informe administrativo/Ventas</h2>
-    {% comment %}Formulario de Filtro {% endcomment %}
-    <form method="GET" class="form_ventas-filter">
-        <div>
-            <input type="date" name="fecha_inicio" value="{{ fecha_inicio }}" class="form-control">
+
+<div class="report-sales">
+
+    <div class="report-sales__header">
+        <p class="report-sales__eyebrow">Panel administrativo</p>
+        <h2 class="report-sales__title">Informe administrativo / Ventas</h2>
+        <p class="report-sales__subtitle">
+            Consulte sus ventas por rango de fechas y visualice un resumen listo para imprimir.
+        </p>
+    </div>
+
+    <form method="GET" class="report-sales__filters">
+        <div class="report-sales__field">
+            <label for="fecha_inicio">Fecha inicio</label>
+            <input
+                id="fecha_inicio"
+                type="date"
+                name="fecha_inicio"
+                value="{{ fecha_inicio }}"
+                class="report-sales__input"
+            >
         </div>
-        <div >
-            <input type="date" name="fecha_fin" value="{{ fecha_fin }}" class="form-control">
+
+        <div class="report-sales__field">
+            <label for="fecha_fin">Fecha fin</label>
+            <input
+                id="fecha_fin"
+                type="date"
+                name="fecha_fin"
+                value="{{ fecha_fin }}"
+                class="report-sales__input"
+            >
         </div>
-        <div >
-            <button type="submit" class="btn btn-primary">Filtrar Informe</button>
-            <button type="button" >
-            <a href="{% url 'informe_ventas' %}" class="btn btn-secondary">Limpiar</a>
+
+        <div class="report-sales__actions">
+            <button type="submit" class="buttons__action--primary">
+                Filtrar informe
             </button>
+
+            <a href="{% url 'informe_ventas' %}" class="buttons__action--secondary report-sales__clear-btn">
+                Limpiar
+            </a>
         </div>
     </form>
 
+    <div class="report-sales__table-wrapper">
+        <table class="user-list__table">
+            <thead class="user-list__table-head">
+                <tr class="user-list__row user-list__row--head">
+                    <th class="user-list__cell">Fecha</th>
+                    <th class="user-list__cell">Producto</th>
+                    <th class="user-list__cell">Cantidad</th>
+                    <th class="user-list__cell">Valor und.</th>
+                    <th class="user-list__cell">Subtotal</th>
+                </tr>
+            </thead>
 
-    <table class="user-list__table">
-        <thead class="user-list__table-head">
-            <tr class="user-list__row user-list__row--head">
-                <th class="user-list__cell">Fecha</th>
-                <th class="user-list__cell">Producto</th>
-                <th class="user-list__cell">Cantidad</th>
-                <th class="user-list__cell">Valor und</th>
-                <th class="user-list__cell">Subtotal</th>                
-            </tr>
-        </thead>
-        <tbody class="user-list__table-body">
-            {% for venta in ventas %}
-            <tr class="user-list__row">
-                <td class="user-list__cell" data-label="Fecha">{{ venta.pedido.fecha|date:"d/m/Y" }}</td>
-                <td class="user-list__cell" data-label="Producto">{{ venta.producto.nombre_producto}} </td>
-                <td class="user-list__cell" data-label="Cantidad">{{ venta.cantidad }}</td>
-                <td class="user-list__cell" data-label="Valor Und">{{ venta.precio|floatformat:0|intcomma }}</td>
-                <td class="user-list__cell" data-label="Subtotal">$ {{ venta.subtotal|floatformat:0|intcomma }}</td>
-            </tr>
-            {% empty %}
-            <tr class="user-list__row">
-                <td colspan="6" class="user-list__cell" data-label="">No tienes ventas registradas aún.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr class="user-list__row">
-                <td class="user-list__cell" colspan="4" ><strong>TOTAL GENERAL:</strong></td>
-                <td class="user-list__cell"><strong>${{ total_general }}</strong></td>
-            </tr>
-        </tfoot>
-    </table>
-    <button type="button" class="buttons__action--terciary btn-informe" onclick="abrirModal()">Visualizar Resumen Estilo PDF</button>
-</div>
+            <tbody class="user-list__table-body">
+                {% for venta in ventas %}
+                <tr class="user-list__row">
+                    <td class="user-list__cell" data-label="Fecha">{{ venta.pedido.fecha|date:"d/m/Y" }}</td>
+                    <td class="user-list__cell" data-label="Producto">{{ venta.producto.nombre_producto }}</td>
+                    <td class="user-list__cell" data-label="Cantidad">{{ venta.cantidad }}</td>
+                    <td class="user-list__cell" data-label="Valor und.">${{ venta.precio|floatformat:0|intcomma }}</td>
+                    <td class="user-list__cell report-sales__subtotal" data-label="Subtotal">${{ venta.subtotal|floatformat:0|intcomma }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="user-list__empty">
+                        <div class="user-list__empty-content">
+                            <h3>No hay ventas registradas</h3>
+                            <p>Aún no existen ventas dentro del rango seleccionado.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
 
-<div id="modalResumen" class="modal-fondo">
-    <div class="modal-contenido">
-        <div class="modal-cabecera">
-            <span class="cerrar" onclick="cerrarModal()">&times;</span>
-            <h2>Vista Previa del Reporte</h2>
-        </div>
-        
-        <div class="modal-cuerpo">
-            <div id="areaImpresion" class="">
-                <div class="encabezado-pdf">
-                    <img src="{% static 'img/interfaz_vanagro/vanagro_logo2.jpeg' %}" class="logo-tienda" alt="Logo">
-                    <div class="datos-tienda">
-                        <h1>RESUMEN DE VENTAS</h1>
-                        <p>Productor: {{ request.user.first_name }} {{ request.user.last_name }}</p>
-                        <p>Periodo: {{ fecha_inicio|default:"Todos" }} / {{ fecha_fin|default:"Hoy" }}</p>
-                    </div>
-                </div>
-
-                <table class="tabla-pdf">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cant. Total</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in resumen %}
-                        <tr>
-                            <td>{{ item.producto__nombre_producto }}</td>
-                            <td>{{ item.cantidad_total }}</td>
-                            <td>${{ item.subtotal_acumulado }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <div class="total-pdf">
-                    <p><strong>TOTAL RECAUDADO: ${{ total_general }}</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal-pie">
-            <button onclick="cerrarModal()" class="buttons__action--secondary btn-secundario">Cerrar</button>
-            <button onclick="window.print()" class="buttons__action--primary btn-primario">Imprimir / Guardar PDF</button>
-        </div>
+            {% if ventas %}
+            <tfoot>
+                <tr class="report-sales__total-row">
+                    <td colspan="4" class="report-sales__total-label">TOTAL GENERAL</td>
+                    <td class="report-sales__total-value">${{ total_general|intcomma }}</td>
+                </tr>
+            </tfoot>
+            {% endif %}
+        </table>
     </div>
-</div>
 
+    {% if resumen %}
+    <div class="report-sales__footer">
+        <button
+            type="button"
+            class="buttons__action--terciary btn-informe"
+            onclick="abrirModal()"
+        >
+            Visualizar resumen estilo PDF
+        </button>
+    </div>
+    {% endif %}
+
+</div>
 {% endblock login %}

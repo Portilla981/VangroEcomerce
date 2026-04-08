@@ -9,79 +9,102 @@
 {% block carrito %}
 
 <div class="list-orders">
-    
-  <div class="list-orders__card">
-    
-    <h2 class="list-orders__title">Lista de pedidos</h2>
 
-    {% if pedidos %}
+    <div class="list-orders__card">
 
-      <div class="list-orders__table-container">
-        
-        <table class="list-orders__table">
-          
-          <thead class="list-orders__head">
-            <tr class="list-orders__row">
-              <th class="list-orders__cell"># Pedido</th>
-              <th class="list-orders__cell">Fecha</th>
-              <th class="list-orders__cell">Total</th>
-              <th class="list-orders__cell">Estado</th>
-              <th class="list-orders__cell">Acción</th>
-            </tr>
-          </thead>
+        <div class="list-orders__header">
 
-          <tbody class="list-orders__table-body">
-            
-            {% for pedido in pedidos %}
-            <tr class="list-orders__row">
+            <div class="list-orders__title-box">
+                <p class="list-orders__eyebrow">Historial de compras</p>
+                <h2 class="list-orders__title">Mis pedidos</h2>
+            </div>
 
-              <td class="list-orders__cell" data-label="# Pedido">
-                {{ pedido.id }}
-              </td>
+            <div class="list-orders__counter">
+                {{ pedidos|length }} pedido{{ pedidos|length|pluralize }}
+            </div>
 
-              <td class="list-orders__cell" data-label="Fecha">
-                {{ pedido.fecha|date:"d/m/Y H:i" }}
-              </td>
+        </div>
 
-              <td class="list-orders__cell" data-label="Total">
-                ${{ pedido.total|floatformat:0|intcomma }}
-              </td>
+        {% if pedidos %}
 
-              <td class="list-orders__cell" data-label="Estado">
-                <span class="list-orders__badge">
-                  {{ pedido.estado }}
-                </span>
-              </td>
+        <div class="list-orders__table-container">
 
-              <td class="list-orders__cell list-orders__cell--actions" data-label="Acción">
-                <a href="{% url 'detalle_pedido' pedido.id %}" class="list-orders__btn">
-                  Ver detalle
-                </a>
-              </td>
+            <table class="list-orders__table">
 
-            </tr>
-            {% endfor %}
+                <thead class="list-orders__head">
+                    <tr class="list-orders__row">
+                        <th class="list-orders__cell">Pedido</th>
+                        <th class="list-orders__cell">Fecha</th>
+                        <th class="list-orders__cell">Total</th>
+                        <th class="list-orders__cell">Estado</th>
+                        <th class="list-orders__cell">Detalle</th>
+                    </tr>
+                </thead>
 
-          </tbody>
-        </table>
+                <tbody class="list-orders__table-body">
 
-      </div>
+                    {% for pedido in pedidos %}
+                    <tr class="list-orders__row">
 
-    {% else %}
+                        <td class="list-orders__cell list-orders__order-id" data-label="Pedido">
+                            #{{ pedido.id }}
+                        </td>
 
-      <p class="list-orders__empty">
-        Aún no has realizado ninguna compra.
-      </p>
+                        <td class="list-orders__cell" data-label="Fecha">
+                            {{ pedido.fecha|date:"d/m/Y" }}<br>
+                            {{ pedido.fecha|date:"h:i A" }}
+                        </td>
 
-    {% endif %}
+                        <td class="list-orders__cell list-orders__total" data-label="Total">
+                            ${{ pedido.total|floatformat:0|intcomma }}
+                        </td>
 
-    <div class="list-orders__back">
-      <a href="{% url 'sesion_inicio' %}" class="list-orders__btnback">
-        ← Volver
-      </a>
+                        <td class="list-orders__cell" data-label="Estado">
+                            <span class="list-orders__badge
+                                {% if pedido.estado|lower == 'pendiente' %}
+                                    list-orders__badge--pending
+                                {% elif pedido.estado|lower == 'pagado' or pedido.estado|lower == 'completado' %}
+                                    list-orders__badge--paid
+                                {% elif pedido.estado|lower == 'cancelado' %}
+                                    list-orders__badge--cancelled
+                                {% endif %}">
+                                {{ pedido.estado }}
+                            </span>
+                        </td>
+
+                        <td class="list-orders__cell list-orders__actions" data-label="Detalle">
+                            <a href="{% url 'detalle_pedido' pedido.id %}" class="list-orders__btn">
+                                Ver detalle
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="list-orders__empty">
+            <h3 class="list-orders__empty-title">Aún no cuenta con pedidos.</h3>
+            <p class="list-orders__empty-text">
+              Cuando realice **su** primera compra en Vanagro, aparecerá aquí.
+            </p>
+        </div>
+
+        {% endif %}
+
+        <div class="list-orders__back">
+            <a href="{% url 'sesion_inicio' %}" class="list-orders__btnback">
+                ← Volver al inicio
+            </a>
+        </div>
+
     </div>
-
-  </div>
 
 </div>
 

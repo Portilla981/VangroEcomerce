@@ -26,8 +26,8 @@
           <th class="user-list__cell">Nombre Completo</th>
           <th colspan="2" class="user-list__cell">Acciones usuario</th>
           <th class="user-list__cell">¿Es productor?</th>
-          <th class="user-list__cell">Nombre Tienda</th>
-          <th class="user-list__cell" colspan="2">Acciones tienda</th>
+          <th class="user-list__cell">Nombre finca</th>
+          <th class="user-list__cell" colspan="2">Acciones finca</th>
         </tr>
       </thead>
 
@@ -64,11 +64,11 @@
 
               {% if usuario.user.is_active %}
                 <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
-                  Deshabilitar
+                  Desactivar
                 </button>
               {% else %}
                 <button type="submit" class="user-list__action-btn user-list__action-btn--enable">
-                  Habilitar
+                  Activar
                 </button>
               {% endif %}
             </form>
@@ -93,34 +93,34 @@
           </td>
 
           <!-- NOMBRE TIENDA -->
-          <td class="user-list__cell" data-label="Tienda">
+          <td class="user-list__cell" data-label="Finca">
             {{ usuario.user.productor.nombre_finca }}
           </td>
 
           {% if usuario.es_productor %}
 
           <!-- EDITAR TIENDA -->
-          <td class="user-list__cell user-list__cell--actions" data-label="Editar tienda">          
-            <a href="{% url 'editar_tienda' usuario.user.productor.id %}?next={{ request.path }}" 
-               class="user-list__action-btn user-list__action-btn--edit">
-              Editar tienda         
+          <td class="user-list__cell user-list__cell--actions" data-label="Editar finca">          
+            <a href="{% url 'editar_tienda' usuario.user.productor.id %}?next={{ request.path }}"
+              class="user-list__action-btn user-list__action-btn--edit">
+              Editar finca      
             </a>            
           </td>
 
           <!-- ESTADO TIENDA -->
-          <td class="user-list__cell user-list__cell--actions" data-label="Estado tienda">
+          <td class="user-list__cell user-list__cell--actions" data-label="Estado finca">
             <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">              
               {% csrf_token %}
               <input type="hidden" name="tipo" value="productor">
               <input type="hidden" name="next" value="{{ request.path }}">
-                       
+
               {% if usuario.user.productor.activo %}
                 <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
-                  Deshabilitar Tienda
+                  Desactivar finca
                 </button>
               {% else %}
                 <button type="submit" class="user-list__action-btn user-list__action-btn--enable">
-                  Habilitar Tienda
+                  Activar finca
                 </button>
               {% endif %}
             </form>           
@@ -128,15 +128,15 @@
 
           {% else %}
 
-          <td class="user-list__cell user-list__cell--actions" data-label="Editar tienda">
+          <td class="user-list__cell user-list__cell--actions" data-label="Editar finca">
             <button class="user-list__action-btn" disabled>
               Editar
             </button>
           </td>
 
-          <td class="user-list__cell user-list__cell--actions" data-label="Estado tienda">
+          <td class="user-list__cell user-list__cell--actions" data-label="Estado finca">
             <button class="user-list__action-btn" disabled>
-              Habilitar
+              Activar
             </button>
           </td>
 
@@ -183,9 +183,9 @@
 
         <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
           data-form="form-change__img" 
-          data-titulo="💾 Guardar" 
-          data-mensaje="¿Confirmas cambiar la imagen?">
-          Guardar Imagen
+          data-titulo="Guardar cambios" 
+          data-mensaje="¿Confirma el cambio de la imagen?">Guardar cambios
+
         </button> 
       </div>
 

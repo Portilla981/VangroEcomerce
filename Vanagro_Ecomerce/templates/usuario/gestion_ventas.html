@@ -21,8 +21,8 @@
                 <th class="gestion-ventas__cell">Comprador</th>
                 <th class="gestion-ventas__cell">Producto</th>
                 <th class="gestion-ventas__cell">Cantidad</th>
-                <th class="gestion-ventas__cell">Total Item</th>
-                <th class="gestion-ventas__cell">Estado Pago</th>
+                <th class="gestion-ventas__cell">Total item</th>
+                <th class="gestion-ventas__cell">Estado pago</th>
                 <th class="gestion-ventas__cell">Acciones</th>
             </tr>
         </thead>
@@ -47,11 +47,11 @@
                     {{ detalle.cantidad }}
                 </td>
 
-                <td class="gestion-ventas__cell" data-label="Total Item">
+                <td class="gestion-ventas__cell" data-label="Total item">
                     $ {{ detalle.subtotal|floatformat:0|intcomma }}
                 </td>
 
-                <td class="gestion-ventas__cell" data-label="Estado Pago">
+                <td class="gestion-ventas__cell" data-label="Estado pago">
                     {% if detalle.pedido.estado == 'Pagado' %}
                         <span class="badge bg-success" style="display:inline-block;">
                             Pago Verificado
@@ -66,18 +66,18 @@
                 <td class="gestion-ventas__cell gestion-ventas__cell--actions" data-label="Acciones">
                     {% if detalle.pedido.estado == 'Pagado' %}
                         {% if not detalle.despachado %}
-                            <a href="{% url 'despachar' detalle.id %}?next={{ request.get_full_path }}"
-                               class="gestion-ventas__action-btn gestion-ventas__action-btn--primary">
-                               Confirmar Envío
-                            </a>
+                        <a href="{% url 'despachar' detalle.id %}?next={{ request.get_full_path }}"
+                            class="gestion-ventas__action-btn buttons__action--primary">
+                            Confirmar envío
+                        </a>
                         {% else %}
                             <span class="badge bg-info text-dark" style="display:inline-block;">
-                                Producto Enviado
+                                Producto enviado
                             </span>
                         {% endif %}
                     {% else %}
                         <button class="gestion-ventas__action-btn" disabled>
-                            Esperando Pago
+                            Esperando pago
                         </button>
                     {% endif %}
                 </td>
@@ -86,7 +86,7 @@
             {% empty %}
             <tr class="gestion-ventas__row">
                 <td class="gestion-ventas__cell gestion-ventas__empty" data-label="Información">
-                    No tienes ventas registradas aún.
+                    Aún no tiene ventas registradas.
                 </td>
             </tr>
             {% endfor %}

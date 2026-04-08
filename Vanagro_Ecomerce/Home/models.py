@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxLengthValidator
 
 class EstadoMensaje(models.TextChoices):
     PENDIENTE = 'pendiente', 'Pendiente'
@@ -14,13 +15,13 @@ class Mensaje(models.Model):
 	apellidos = models.CharField('Apellidos', max_length=70)
 	telefono = models.CharField('Teléfono', max_length=15)
 	email = models.EmailField('Correo Electrónico')
-	mensaje = models.TextField('Su mensaje')
+	mensaje = models.TextField('Su mensaje', max_length=500, validators=[MaxLengthValidator(500)])
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 	tipo = models.CharField(max_length=20, choices=[('publico', 'Público'),('usuario', 'Usuario'),],default='publico')
 	estado = models.CharField(max_length=20, choices=EstadoMensaje.choices, default=EstadoMensaje.PENDIENTE)
 	respuesta = models.TextField(blank=True, null=True)
 	atendido_por = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='mensajes_atendidos')
 	fecha_respuesta = models.DateTimeField(null=True, blank=True)
- 	
+
 	def __str__(self):
 		return f'{self.fecha_envio} - {self.nombres} {self.apellidos} - {self.estado}'
