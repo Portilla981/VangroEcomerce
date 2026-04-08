@@ -7,11 +7,11 @@
 {% comment %} Inicio del bloque de contenido {% endcomment %}
 {% block carrito %}
 
-<div class="pedido-container">
+<div class="pedido-exito__container">
     {% comment %} Card Principal {% endcomment %}
-    <div class="card-compra">
+    <div class="card-exito__compra">
 
-        <h2 class="pedido-titulo">
+        <h2 class="pedido-exito__titulo">
             ✅ ¡Compra realizada con éxito!
         </h2>
 
@@ -20,12 +20,12 @@
         <p><strong>Número de pedido:</strong> {{ pedido.id }}</p>
         <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
         
-        <h5 class="pedido-subtitulo">Productos comprados</h5>
+        <h5 class="pedido-exito__subtitulo">Productos comprados</h5>
 
-        <ul class="pedido-lista">
+        <ul class="pedido-exito__lista">
              {% comment %} se recorre los productos que hacen parte del pedido {% endcomment %}
             {% for detalle in pedido.detalles.all %}
-                <li class="pedido-lista_item">
+                <li class="pedido-exito_item">
                     <span>
                         {{ detalle.producto.nombre_producto }} x {{ detalle.cantidad }}
                     </span>
@@ -37,19 +37,16 @@
             {% endfor %}
         </ul>
 
-        <p class="pedido-total"><strong>Total pagado:</strong> $ {{ pedido.total|floatformat:0|intcomma }}</p>
+        <p class="pedido-exito__total"><strong>Total pagado:</strong> $ {{ pedido.total|floatformat:0|intcomma }}</p>
+
 
         <div class="buttons">
-            <button class="buttons__action--secondary">
-            <a href="{% url 'ver_productos' %}" >
+            <a href="{% url 'ver_productos' %}" class="buttons__exito--secondary">
                 Seguir comprando
             </a>
-            </button>
-            <button class="buttons__action--primary">
-            <a href="{% url 'mis_pedidos' %}" >
+            <a href="{% url 'mis_pedidos' %}" class="buttons__exito--primary">
                 Ver mis pedidos
             </a>
-            </button>
         </div>
 
     </div>

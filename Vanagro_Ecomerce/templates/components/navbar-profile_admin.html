@@ -2,7 +2,9 @@
 
 <header class="header-vanagro">
   <div class="logo_gov">
-    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
+    <a class="image_gov" href="https://www.gov.co/" target="_blank" >
+    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="pagina del gobierno de Colombia">
+    </a>
   </div>
 
   <div class="navbar-vanagro__container">
@@ -18,20 +20,25 @@
         </div>
 
     <nav class="navbar-vanagro">
-      <ul class="navbar-vanagro__list" id="menuList">        
+      <ul class="navbar-vanagro__list" id="menuList"> 
+        <li class="navbar-vanagro__item navbar-vanagro__item--cart">
+          <a href="{% url 'sesion_inicio' %}" class="navbar-vanagro__link">Inicio</a>
+        </li>       
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
           <form method="post" action="{% url 'logout' %}" id="logout-form" style="display: none;">
             {% csrf_token %}            
           </form>
-          <a href="#" class="navbar-vanagro__link-logout" onclick="document.getElementById('logout-form').submit(); return false;">
+          <a class="navbar-vanagro__link-logout" onclick="document.getElementById('logout-form').submit(); return false;">
             <span class="logout-text">Cerrar Sesión</span>
           </a> 
         </li>
       </ul>
     </nav>
 
-    <div class="navbar-vanagro__icons">     
+    <div class="navbar-vanagro__icons"> 
+      <a href="{% url 'sesion_inicio' %}">     
       <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />
+      </a>
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit" style="background: none; border: none;">
@@ -40,6 +47,7 @@
             href="{% url 'logout' %}"></ion-icon>
         </button>
       </form>
+      
     </div>
   </div>
 

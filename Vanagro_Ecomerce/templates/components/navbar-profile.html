@@ -1,9 +1,11 @@
 {% load static %}
 
 <header class="header-vanagro">
-<div class="logo_gov">
-  <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
-</div>
+  <div class="logo_gov">
+    <a class="image_gov" href="https://www.gov.co/" target="_blank" >
+    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="pagina del gobierno de Colombia">
+    </a>
+  </div>
 
   <div class="navbar-vanagro__container">
     <div class="navbar-vanagro__begin">
@@ -38,7 +40,8 @@
         </li>
         
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
-          <a href="{% url 'ver_carrito' %}" class="navbar-vanagro__link">Carrito</a>          
+          <a href="{% url 'ver_carrito' %}" class="navbar-vanagro__link">Carrito</a>
+          <span id="carrito-contador" class="carrito-badge" {% if carrito_total_items == 0 %} style= "display:none;" {% endif %}>{{ carrito_total_items }}</span>          
         </li>
 
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">

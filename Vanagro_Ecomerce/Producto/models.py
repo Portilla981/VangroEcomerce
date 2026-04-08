@@ -12,7 +12,7 @@ from django.core.exceptions import ValidationError
 
 class Producto(models.Model):
     UNIDAD_MEDIDA = [('Kg', 'Kilogramos'), ('Lt', 'Litros'), ('Lb', 'Libras'),('N/A', 'Sin medida'),('Und', 'Unidad'),]
-    CATEGORIA = [('Frutas', 'Frutas'), ('Verduras', 'Verduras'), ('Granos', 'Granos'), ('Lácteos', 'Lácteos'), ('Carnes', 'Carnes'), ('Otros', 'Otros')]
+    CATEGORIA = [('Frutas', 'Frutas'), ('Verduras', 'Verduras'), ('Granos', 'Granos'), ('Lácteos', 'Lácteos'), ('Otros', 'Otros')]
     ESTADOS = [('borrador', 'Borrador'), ('publicado', 'Publicado')]
     
     productor = models.ForeignKey(CreacionProductor, on_delete=models.CASCADE, related_name='productor')        
