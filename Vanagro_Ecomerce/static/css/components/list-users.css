@@ -92,6 +92,7 @@
 .user-list__action-btn--edit {
   background: var(--primary-900);
   color: var(--white);
+  text-decoration: none;
 }
 
 .user-list__action-btn:hover {

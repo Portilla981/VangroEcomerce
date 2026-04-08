@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block navbar %}
-{% include 'components/navbar-simple_inicio.html' %}
+{% include 'components/navbar-simple.html' %}
 {% endblock navbar %}
 
 {% block producto %}
@@ -23,17 +23,19 @@
 		<!-- FILA 1 -->
 		<div class="product-form__row">
 			<label class="product-form__label">
-				Nombre
-				<input 
-					class="product-form__input"
-					name="nombre_producto"
-					value="{{ form.instance.nombre_producto }}"
-					required>
-			</label>
+				Categoría
+				<select class="product-form__select" name="categoria" id="id_categoria" required>
+					{% for categoria, label in form.categoria.field.choices %}
+					<option value="{{ categoria }}" {% if categoria == form.instance.categoria %}selected{% endif %}>
+						{{ label }}
+					</option>
+					{% endfor %}
+				</select>
+			</label>			
 
 			<label class="product-form__label">
 				Unidad de medida
-				<select class="product-form__select" name="unidad_medida" required>
+				<select class="product-form__select" name="unidad_medida" id="id_unidad_medida" required>
 					{% for unidad, label in form.unidad_medida.field.choices %}
 					<option value="{{ unidad }}" {% if unidad == form.instance.unidad_medida %}selected{% endif %}>
 						{{ label }}
@@ -45,6 +47,16 @@
 
 		<!-- FILA 2 -->
 		<div class="product-form__row">
+
+			<label class="product-form__label">
+				Nombre
+				<input 
+					class="product-form__input"
+					name="nombre_producto"
+					value="{{ form.instance.nombre_producto }}"
+					required>
+			</label>
+
 			<label class="product-form__label">
 				Cantidad disponible
 				<input 
@@ -55,6 +67,11 @@
 					required>
 			</label>
 
+			
+		</div>
+
+		<!-- FILA 3 -->
+		<div class="product-form__row">
 			<label class="product-form__label">
 				Precio
 				<input 
@@ -63,20 +80,7 @@
 					value="{{ form.instance.precio|floatformat:0 }}"
 					required>
 			</label>
-		</div>
-
-		<!-- FILA 3 -->
-		<div class="product-form__row">
-			<label class="product-form__label">
-				Categoría
-				<select class="product-form__select" name="categoria" required>
-					{% for categoria, label in form.categoria.field.choices %}
-					<option value="{{ categoria }}" {% if categoria == form.instance.categoria %}selected{% endif %}>
-						{{ label }}
-					</option>
-					{% endfor %}
-				</select>
-			</label>
+			
 		</div>
 
 		<!-- DESCRIPCIÓN -->
