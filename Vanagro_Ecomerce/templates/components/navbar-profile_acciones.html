@@ -2,22 +2,31 @@
 
 <header class="header-vanagro">
   <div class="logo_gov">
-    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
+    <a class="image_gov" href="https://www.gov.co/" target="_blank" >
+    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="pagina del gobierno de Colombia">
+    </a>
   </div>
 
   <div class="navbar-vanagro__container">
 
-    <h1 class="navbar-vanagro__title">VANAGRO
-      <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
-    </h1>
+    <div class="navbar-vanagro__begin">
+        <h1 class="navbar-vanagro__title">VANAGRO
+            <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
+        </h1>
 
-    <nav class="navbar-vanagro">
-      <ul class="navbar-vanagro__list">
+        <button class="navbar-vanagro__toggle" id="menuToggle">
+            ☰
+        </button>
+        </div>
+
+    <nav class="navbar-vanagro" >
+      <ul class="navbar-vanagro__list" id="menuList">
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
-          <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="navbar-vanagro__link">Regresar</a>
+          <a href="{% url 'sesion_inicio' %}" class="navbar-vanagro__link">Inicio</a>
         </li>        
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
           <a href="{% url 'ver_carrito' %}" class="navbar-vanagro__link">Carrito</a>
+          <span id="carrito-contador" class="carrito-badge" {% if carrito_total_items == 0 %} style= "display:none;" {% endif %}>{{ carrito_total_items }}</span>
         </li>        
         <li class="navbar-vanagro__item navbar-vanagro__item--cart">
           <form method="post" action="{% url 'logout' %}" id="logout-form" style="display: none;">
@@ -39,7 +48,7 @@
       </div>
 
       <div class="navbar-vanagro__icons--second">
-        <a href="{{ request.META.HTTP_REFERER|default:'/' }}">
+        <a href="{% url 'sesion_inicio' %}">
           <ion-icon class="navbar-vanagro__icons--back" name="arrow-back-outline"></ion-icon>
         </a>
       </div>
@@ -58,7 +67,7 @@
       
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
-        <button type="submit" style="background: none; border: none;">
+        <button type="submit" >
           <ion-icon class="navbar-vanagro__icons--logout log-out" name="log-out-outline"
             href="{% url 'logout' %}"></ion-icon>
         </button>

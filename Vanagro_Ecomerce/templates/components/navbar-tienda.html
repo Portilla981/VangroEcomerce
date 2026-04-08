@@ -2,15 +2,22 @@
 
 <header class="header-vanagro">
     <div class="logo_gov">
-        <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
+        <a class="image_gov" href="https://www.gov.co/" target="_blank" >
+        <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="pagina del gobierno de Colombia">
+        </a>
     </div>
     <div class="navbar-vanagro__container">
+       <div class="navbar-vanagro__begin">
         <h1 class="navbar-vanagro__title">VANAGRO
             <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
         </h1>
 
+        <button class="navbar-vanagro__toggle" id="menuToggle">
+            ☰
+        </button>
+        </div>
         <nav class="navbar-vanagro">
-            <ul class="navbar-vanagro__list">
+            <ul class="navbar-vanagro__list" id="menuList">
                 <li class="navbar-vanagro__item">
                     <a href="{% url 'sesion_inicio' %}" class="navbar-vanagro__link">Quiero comprar</a>
                 </li>
@@ -26,14 +33,7 @@
             </ul>
         </nav>
 
-        <div class="navbar-vanagro__icons">            
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" style="background: none; border: none;">
-                    <ion-icon class="navbar-vanagro__icons--logout log-out-user" name="log-out-outline"></ion-icon>
-                </button>
-            </form>
-            
+        <div class="navbar-vanagro__icons">  
             <a href="{% url 'sesion_inicio' %}"> 
                 {% if request.user.is_superuser %}
                     <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />
@@ -45,7 +45,14 @@
                             alt="Foto del productor" />
                     {% endif %}
                 {% endif %}
-            </a>                      
+            </a>
+            
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" >
+                    <ion-icon class="navbar-vanagro__icons--logout log-out-user" name="log-out-outline"></ion-icon>
+                </button>
+            </form>
         </div>
     </div>
   

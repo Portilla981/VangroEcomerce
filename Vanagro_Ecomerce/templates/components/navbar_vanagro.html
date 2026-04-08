@@ -1,11 +1,14 @@
 {% load static %}
 
 <div class="logo_gov">
-    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="">
+    <a class="image_gov" href="https://www.gov.co/" target="_blank" >
+    <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="pagina del gobierno de Colombia">
+    </a>
 </div>
 
 <header class="header-vanagro">
     <div class="navbar-vanagro__container">
+        <div class="navbar-vanagro__begin">
         <h1 class="navbar-vanagro__title">VANAGRO
             <span class="navbar-vanagro__subtitle">Mercado Campesino</span>
         </h1>
@@ -13,6 +16,7 @@
         <button class="navbar-vanagro__toggle" id="menuToggle">
             ☰
         </button>
+        </div>
         <nav class="navbar-vanagro">
             <ul class="navbar-vanagro__list" id="menuList">
                 <li class="navbar-vanagro__item navbar-vanagro__item--sesion2">

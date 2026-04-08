@@ -65,20 +65,33 @@
 
             <div class="form-register__group">
                 <label class="form-register__label">Tipo de documento
+                    {% if es_superuser %}
                     <select
                         class="form-register__input"
                         name="tipo_identificacion"
-                        id="tipo_id"
-                        disabled>
+                        id="tipo_id">
                         <option value="">Seleccione un tipo de documento</option>
                         {% for tipo in perfil_form.tipo_identificacion.field.queryset %}
                             <option
                                 value="{{ tipo.id }}"
-                                {% if tipo.id|stringformat:"s" == perfil_form.tipo_identificacion.value|stringformat:"s" %}selected{% endif %}>
-                                {{ tipo.tipo_identificacion }}
+                                {% if tipo.id|stringformat:"s" == perfil_form.tipo_identificacion.value|stringformat:"s" %}selected{% endif %}>{{ tipo.tipo_identificacion }}
                             </option>
                         {% endfor %}
                     </select>
+                    {% else %}
+
+                    <input
+                        class="form-register__input"
+                        type="text"
+                        value="{{ perfil_form.instance.tipo_identificacion.tipo_identificacion }}"
+                        readonly>
+
+                    <input
+                        type="hidden"
+                        name="tipo_identificacion"
+                        value="{{ perfil_form.tipo_identificacion.value }}">
+
+                    {% endif %}
                 </label>
 
                 <label class="form-register__label">Número de documento
@@ -87,9 +100,9 @@
                         type="text"
                         name="numero_identificacion"
                         id="number_id"
-                        value="{{ perfil_form.instance.numero_identificacion|default_if_none:'' }}"
+                        value="{{ perfil_form.numero_identificacion.value|default_if_none:'' }}"
                         placeholder="Número de documento registrado"
-                        disabled>
+                        {% if not es_superuser %} readonly {% endif %}>
                 </label>
 
                 <label class="form-register__label">Fecha de nacimiento

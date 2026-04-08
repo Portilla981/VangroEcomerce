@@ -40,7 +40,7 @@ class PerfilUsuario(LoginRequiredMixin, DeleteView):
         
         # Si NO tiene perfil, mostramos mensaje y redirigimos
         if not hasattr(request.user, 'usuario'):
-            messages.error(request, "No tienes perfil creado.")
+            messages.error(request, "No cuenta con un perfil creado en el sistema")
             return redirect('inicio')  
 
         return super().dispatch(request, *args, **kwargs)
@@ -93,7 +93,7 @@ class RegistroUsuario(View):
     def post(self, request):
 
         if 'cancelar-registro' in request.POST:
-            messages.info(request, 'Saliendo sin guardar cambios')
+            messages.info(request, 'Se ha cancelado el registro. Los cambios no fueron guardados')
             return redirect("inicio_vista")
 
         user_form = UserForm(request.POST)
@@ -126,17 +126,17 @@ class RegistroUsuario(View):
                         verificado=False
                     )
                     
-                    print(f"Usuario {usuario.username} y perfil creado exitosamente.")
+                    print(f"Registro exitoso: Usuario '{usuario.username}' y su perfil asociado")
 
                     link = generar_link_activacion(usuario, request)
                     transaction.on_commit(lambda: enviar_correo_activacion(usuario, link))
                     
-                    messages.success(request, f'Usuario {usuario.username} creado exitosamente. Revisa tu correo para activar tu cuenta.') 
+                    messages.success(request, f'El usuario {usuario.username} ha sido creado exitosamente. Por favor, revise su correo electrónico para activar la cuenta') 
                     return redirect("inicio_vista")
                 
             except Exception as e:
-                print("Error al crear el usuario o perfil:", e)
-                messages.error(request, 'Ocurrió un error al crear el usuario. Por favor, inténtalo de nuevo.')
+                print("Error al crear el usuario o perfil: ", e)
+                messages.error(request, 'Ocurrió un error al crear el usuario. Por favor, intente de nuevo')
                 return render(request, self.template_name, {
                     "user_form": user_form,
                     "perfil_form": perfil_form,
@@ -145,7 +145,7 @@ class RegistroUsuario(View):
         
         else:
             # 1. Creamos una cadena de texto vacía
-            error_msg = "Por favor corrige lo siguiente: "    
+            error_msg = "Por favor corrija los siguientes campos en el formulario: "    
             # 2. Recorremos ambos formularios
             for f in [user_form, perfil_form]:
                 for field, errors in f.errors.items():
@@ -199,15 +199,15 @@ def reenviar_activacion(request):
             perfil = user.usuario
 
             if perfil.verificado:
-                messages.info(request, "La cuenta ya está activada.")
+                messages.info(request, "La cuenta ya se encuentra activada")
             else:
                 link = generar_link_activacion(user, request)  
                 enviar_correo_activacion(user, link)   
                
-                messages.success(request, "Correo de activación reenviado.")
+                messages.success(request, "El correo electrónico de activación ha sido reenviado con éxito")
 
         except User.DoesNotExist:
-            messages.error(request, "No existe una cuenta con ese correo.")
+            messages.error(request, "No existe una cuenta asociada al correo electrónico ingresado")
 
     return redirect('inicio_vista')
     
@@ -257,7 +257,7 @@ class RegistroProductor(LoginRequiredMixin, TemplateView):
             productor = form.save(commit=False)
             productor.user = request.user
             productor.save()
-            messages.success(request, f'La finca {productor.nombre_finca} ha sido creada exitosamente.') 
+            messages.success(request, f'La finca {productor.nombre_finca} ha sido creada exitosamente') 
             return redirect('tienda_usuario')        
         
         # 1. Creamos una cadena de texto vacía
@@ -294,12 +294,12 @@ def editar_usuario(request, pk):
         if user_form.is_valid() and perfil_form.is_valid():            
             user_form.save()
             perfil_form.save()
-            messages.success(request, f'El usuario {user.username} ha sido editado exitosamente.')            
+            messages.success(request, f'El usuario {user.username} ha sido editado exitosamente')            
             
             return redirect('sesion_inicio')
            
         # 1. Creamos una cadena de texto vacía
-        error_msg = "Por favor corrige lo siguiente: "
+        error_msg = "Por favor corrija los siguientes campos en el formulario: "
         print(user_form.errors)
         print(perfil_form.errors) 
 
@@ -325,9 +325,7 @@ def editar_usuario(request, pk):
         'titulo': 'Editar Usuario' 
         }
         
-        
     return render(request, 'usuario/editar_usuario.html', context)
-
 
 
 class EditarProductor(LoginRequiredMixin, UpdateView):
@@ -351,12 +349,12 @@ class EditarProductor(LoginRequiredMixin, UpdateView):
         return reverse_lazy('tienda_usuario') # URL para el productor normal
 
     def form_valid(self, form):
-        messages.success(self.request, "Los datos de tu tienda han sido actualizados.")
+        messages.success(self.request, "Los datos de su finca han sido actualizados correctamente")
         return super().form_valid(form)
 
 
     def form_invalid(self, form):
-        error_msg = "Por favor corrige lo siguiente: "
+        error_msg = "Por favor corrija los siguientes campos en el formulario: "
 
         for field, errors in form.errors.items():
             nombre_limpio = field.replace('_', ' ').capitalize()
@@ -365,8 +363,6 @@ class EditarProductor(LoginRequiredMixin, UpdateView):
         messages.error(self.request, error_msg)
 
         return super().form_invalid(form)
-
-
 
 
 class ListaUsuarios(LoginRequiredMixin, ListView):    
@@ -442,7 +438,7 @@ def toggle_usuario(request, pk):
 def toggle_productor(request):
     if request.method == "POST":
         if not hasattr(request.user, 'productor'):
-            messages.error(request, "No tienes tienda.")
+            messages.error(request, "No tiene una finca registrada")
             return redirect('sesion_inicio')
 
         productor = request.user.productor
@@ -450,7 +446,7 @@ def toggle_productor(request):
         productor.save()
 
         if not productor.activo:
-            messages.warning(request, "Tu tienda ha sido deshabilitada.")
+            messages.warning(request, "Su finca ha sido desactivada")
             return redirect('sesion_inicio')
                 
     return redirect(request.POST.get('next', 'tienda_usuario'))
@@ -465,7 +461,7 @@ class ListaMensajes(LoginRequiredMixin, ListView):
     def dispatch(self, request, *args, **kwargs):
         # SOLO ADMIN
         if not request.user.is_superuser:
-            messages.error(request, "No tienes permisos para acceder a esta sección.")
+            messages.error(request, "Usted no cuenta con los permisos necesarios para acceder a esta sección")
             return redirect('sesion_inicio')
 
         next_url = request.GET.get('next')
@@ -486,7 +482,7 @@ class ListaMensajes(LoginRequiredMixin, ListView):
 def responder_mensaje(request):
 
     if not request.user.is_superuser:
-        messages.error(request, "No tienes permisos.")
+        messages.error(request, "No tiene permisos para realizar esta acción")
         return redirect('sesion_inicio')
 
     if request.method == "POST":
@@ -501,7 +497,7 @@ def responder_mensaje(request):
         mensaje.fecha_respuesta = timezone.now()
         mensaje.save()
 
-        messages.success(request, "Mensaje resuelto correctamente.")
+        messages.success(request, "El mensaje ha sido resuelto correctamente")
 
     return redirect('mensajes_admin')
     
@@ -541,7 +537,7 @@ def despachar_item(request, pk):
     item.save()
 
     # Mensaje de confirmación (opcional)
-    messages.success(request, "Producto marcado como despachado con éxito.")
+    messages.success(request, "El producto ha sido enviado con éxito")
 
     next_url = request.META.get('HTTP_REFERER')
     
