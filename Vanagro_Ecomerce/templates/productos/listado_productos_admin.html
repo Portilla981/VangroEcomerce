@@ -1,6 +1,5 @@
 
 {% extends "usuario/login.html" %}
-
 {% load static %}
 
 {% block script %}
@@ -149,41 +148,64 @@
 
   <div class="modal-actualizar__card">
 
-    <form id="form-product__img-admin" 
-          class="modal-actualizar__form" 
-          method="POST" 
-          enctype="multipart/form-data"
-          action="{% url 'actualizar_img' %}">
+    <form
+      id="form-product__img-admin"
+      class="modal-actualizar__form"
+      method="POST"
+      enctype="multipart/form-data"
+      action="{% url 'actualizar_img' %}">
 
       {% csrf_token %}
 
-      <input class="modal-actualizar__input" type="hidden" name="producto_id" id="producto_id">
+      <input
+        type="hidden"
+        name="producto_id"
+        id="producto_id"
+        class="modal-actualizar__input"
+      >
 
-      <h3>Cambiar imagen</h3>
+      <h3 class="modal-actualizar__title">Cambiar imagen del producto</h3>
 
-      <img class="modal-actualizar__img-preview" id="previewImagen">
+      <img
+        id="previewImagen"
+        class="modal-actualizar__img-preview"
+        alt="Vista previa de la imagen"
+      >
 
-      <input class="modal-actualizar__input" type="file" name="imagen">
+      <input
+        type="file"
+        name="imagen"
+        class="modal-actualizar__input"
+      >
 
-      <h3>¿Desea cambiar la imagen?</h3>
+      <p class="modal-actualizar__text">
+        ¿Desea guardar esta nueva imagen para el producto?
+      </p>
 
       <div class="modal-actualizar__button-box">
-        <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">
+
+        <button
+          type="button"
+          id="cerrarModal"
+          class="modal-actualizar__button modal-button-cerrar">
           Cancelar
         </button>
 
-        <button type="button" 
-                class="buttons__action--primary btn-save btn-confirmar" 
-                data-form="form-product__img-admin" 
-                data-titulo="Guardar" 
-                data-mensaje="¿Confirma cambiar la imagen?">
-          Guardar Imagen
-        </button>  
+        <button
+          type="button"
+          class="buttons__action--primary btn-save btn-confirmar"
+          data-form="form-product__img-admin"
+          data-titulo="Guardar cambios"
+          data-mensaje="¿Confirma el cambio de la imagen?">
+          Guardar cambios
+        </button>
+
       </div>
 
     </form>
 
   </div>
+
 </div>
 
 {% endblock login %}

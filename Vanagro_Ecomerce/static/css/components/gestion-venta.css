@@ -1,4 +1,3 @@
-/* RESET */
 * {
   box-sizing: border-box;
 }
@@ -76,6 +75,7 @@
   padding: 8px 14px;
   border-radius: 10px;
   border: none;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 12px;
   font-weight: 600;
@@ -106,54 +106,13 @@
 
 /* ===============================
    TABLET
-================================ */
-@media (max-width: 1024px) {
-
-  .gestion-ventas {
-    width: 95%;
-  }
-
-  .gestion-ventas__table {
-    min-width: 750px;
-  }
-
-  .gestion-ventas__cell {
-    padding: 10px;
-    font-size: 12px;
-  }
-
-  .gestion-ventas__actions-group {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .gestion-ventas__action-btn {
-    padding: 6px 10px;
-    font-size: 11px;
-  }
-}
-
-/* ===============================
-   CELULAR (MODO CARDS 🔥)
-================================ */
-@media (max-width: 768px) {
-
-  .gestion-ventas {
-    width: 94%;
-    margin: 20px auto;
-  }
-
-  /* QUITAR SCROLL */
-  .gestion-ventas__table-container {
-    overflow: visible;
-    border: none;
-    box-shadow: none;
   }
 
   /* ROMPER TABLA */
   .gestion-ventas__table {
     display: block;
     min-width: 0;
+    background: transparent;
   }
 
   .gestion-ventas__table-head {
@@ -206,5 +165,6 @@
   .gestion-ventas__cell a,
   .gestion-ventas__cell form {
     width: 100%;
+    font-size: var(--fs-xxs);
   }
 }
