@@ -41,7 +41,7 @@
 
     <form method="POST"  id="form-product__create" action="{% url 'guardar_producto' producto.id %}">
         {% csrf_token %}
-        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
+        <button type="submit" class="buttons__action--primary btn-save btn-confirmar" 
                 data-form="form-product__create" 
                 data-titulo="Guardar" 
                 data-mensaje="¿Desea guardar el producto?">Guardar cambios

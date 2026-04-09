@@ -112,8 +112,8 @@
 
                 <!-- Cambiar imagen -->
                 <button 
-                  type="button" 
-                  class="producto-admin__action-btn producto-admin__action-btn--img"
+                  type="submit" 
+                  class="producto-admin__action-btn user-list__action-btn--img"
                   data-id="{{ producto.id }}"
                   data-imagen="{% if producto.imagen_producto %}{{ producto.imagen_producto.url }}{% else %}{% static 'img/products/sin_foto_2.jpg' %}{% endif %}">
                   Imagen
@@ -192,7 +192,7 @@
         </button>
 
         <button
-          type="button"
+          type="submit"
           class="buttons__action--primary btn-save btn-confirmar"
           data-form="form-product__img-admin"
           data-titulo="Guardar cambios"
