@@ -131,7 +131,7 @@ def editar_producto(request, pk):
     else:
         form = Form_producto(instance=producto)       
 
-    return render(request, 'productos/crear_producto.html', {'form': form})
+    return render(request, 'productos/crear_producto.html', {'form': form, 'titulo': 'Editar Producto'})
 
 # Listar producto
 class ListaProductos(LoginRequiredMixin, ListView):    
@@ -346,7 +346,8 @@ class EditarProducto(LoginRequiredMixin, View):
         return render(request, self.template_name, {
             "form": form,
             "producto": producto,
-            "modo": "editar"
+            "modo": "editar",
+            'titulo': 'Editar Producto'
         })
 
     def post(self, request, pk):
@@ -394,8 +395,9 @@ class EditarProducto(LoginRequiredMixin, View):
             if accion == 'cancelar':
                 # messages.info(request, 'Saliendo del modulo, espere un momento')
                 return redirect("mis_productos")
+        
 
-        return render(request, self.template_name, {"form": form})
+        return render(request, self.template_name, {"form": form, 'titulo': 'Editar Producto'})
 
 @login_required
 def cambiar_imagen_producto(request):

@@ -144,12 +144,17 @@ document.addEventListener("DOMContentLoaded", function(){
     //2. Botones de confirmación
     document.querySelectorAll(".btn-confirmar").forEach(boton => {
 
-        boton.addEventListener("click", function(e){
 
+        boton.addEventListener("click", function(e){
+            e.preventDefault(); 
+            
+            const boton = this;
             const formId = this.dataset.form;
             const titulo = this.dataset.titulo;
             const mensaje = this.dataset.mensaje;
             const url = this.dataset.url;
+            console.log("Formulario:", formId);
+            console.log(document.getElementById(formId));
 
             if (formId) {
                 const formulario = document.getElementById(formId);
@@ -158,13 +163,15 @@ document.addEventListener("DOMContentLoaded", function(){
                     formulario.reportValidity();
                     return;
                 }
-            }
+            }           
 
             confirmarAccion(titulo, mensaje, "warning", () => {
                 if (url) {
                     window.location.href = url;
                 } else if (formId) {
-                    document.getElementById(formId).submit();
+                    // document.getElementById(formId).submit();
+                    const formulario = document.getElementById(formId);
+                    formulario.requestSubmit(boton);
                 }
             });
 

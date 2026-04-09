@@ -107,4 +107,62 @@
 
 </div>
 
+{% comment %} modal de factura pdf  {% endcomment %}
+<div id="modalResumen" class="modal-fondo">
+    <div class="modal-contenido">
+        {% comment %} boton de x para cerrar {% endcomment %}
+        <div class="modal-cabecera">
+            <span class="cerrar" onclick="cerrarModal()">&times;</span>
+            <h2>Factura de venta</h2>
+        </div>
+        
+        <div class="modal-cuerpo">
+            <div id="areaImpresion" class="">
+                <div class="encabezado-pdf">
+                    <img src="{% static 'img/interfaz_vanagro/vanagro_logo2.jpeg' %}" class="logo-tienda" alt="Logo">
+                    <div class="datos-tienda">
+                        <h1>Factura de Ventas FVV-{{ pedido.id }} </h1>
+                        <p>Nombre cliente: <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></p>
+                        <p>Fecha de compra: {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
+                    </div>
+                </div>
+
+                <table class="tabla-pdf">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cant. Total</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in pedido.detalles.all %}
+                        <tr>
+                            <td>{{ item.producto.nombre_producto }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>${{ item.subtotal|floatformat:0|intcomma }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="total-pdf" >
+                        <tr class="user-list__row">
+                        <td class="user-list__cell" colspan="2" ><strong>TOTAL:</strong></td>
+                        <td class="user-list__cell"><strong>${{ pedido.total|floatformat:0|intcomma }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                {% comment %} <div class="total-pdf">
+                    <p><strong>TOTAL: ${{ total_general }}</strong></p>
+                </div> {% endcomment %}
+            </div>
+        </div>
+
+        <div class="modal-pie">
+            <button onclick="cerrarModal()" class="buttons__action--secondary btn-secundario">Cerrar</button>
+            <button onclick="window.print()" class="buttons__action--primary btn-primario">Imprimir / Guardar PDF</button>
+        </div>
+    </div>
+</div>
+
+
 {% endblock carrito %}
