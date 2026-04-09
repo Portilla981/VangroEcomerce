@@ -1,231 +1,299 @@
 /* ===============================
-   CONTENEDOR
+   CONTENEDOR GENERAL
 ================================ */
 .list-orders {
-  max-width: 1200px;
-  margin: 24px auto;
-  padding: 16px;
-  overflow-x: hidden;
+    width: min(1100px, 94%);
+    margin: 40px auto 80px;
 }
 
-/* TARJETA GENERAL */
 .list-orders__card {
-  background: var(--white);
-  border-radius: 14px;
-  padding: 20px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    background: var(--white);
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--gray-200);
 }
 
-/* TÍTULO */
-.list-orders__title {
-  text-align: center;
-  margin-bottom: 16px;
-  font-size: var(--fs-md);
+/* ===============================
+   HEADER
+================================ */
+.list-orders__header {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* SCROLL */
+.list-orders__title-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.list-orders__eyebrow {
+    font-size: var(--fs-md);
+    letter-spacing: 1.4px;
+    color: var(--primary-700);
+    font-weight: 700;
+    margin: 0;
+    text-align: left;
+}
+
+.list-orders__counter {
+    background: var(--primary-100);
+    color: var(--primary-900);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: var(--fs-xxs);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ===============================
+   TABLA
+================================ */
 .list-orders__table-container {
-  width: 100%;
-  overflow-x: auto;
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 22px;
+    border: 1px solid var(--gray-200);
 }
 
-/* TABLA */
 .list-orders__table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 700px;
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+    background: var(--white);
 }
 
-/* HEAD */
 .list-orders__head {
-  background: var(--primary-900);
-  color: var(--white);
+    background: var(--primary-900);
 }
 
-/* FILAS */
+.list-orders__head .list-orders__cell {
+    color: var(--white);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    border: none;
+    padding: 12px 16px;
+    text-align: left;
+}
+
 .list-orders__row {
-  transition: 0.2s;
+    transition: background 0.2s ease;
 }
 
-/* CELDAS */
+.list-orders__row:not(:last-child) {
+    border-bottom: 1px solid var(--gray-200);
+}
+
 .list-orders__cell {
-  padding: 14px;
-  border-bottom: 1px solid var(--gray-200);
-  font-size: var(--fs-xxxs);
-  text-align: left;
-}
-
-/* BADGE */
-.list-orders__badge {
-  background: var(--primary-900);
-  color: var(--white);
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 11px;
-}
-
-/* BOTÓN */
-.list-orders__btn {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 8px;
-  background: var(--secundary-900);
-  color: var(--black);
-  text-decoration: none;
-  font-size: 12px;
-  transition: 0.2s;
-  text-align: center;
-}
-
-.list-orders__btnback{
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 8px;
-    background: var(--gray-300);
+    padding: 18px 16px;
+    font-size: var(--fs-xxs);
     color: var(--black);
-    text-decoration: none;
+    vertical-align: middle;
+}
+
+.list-orders__order-id {
+    font-weight: 700;
+    color: var(--primary-900);
+    font-size: var(--fs-xxs);
+}
+
+.list-orders__total {
+    font-weight: 700;
+}
+
+/* ===============================
+   BADGES
+================================ */
+.list-orders__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border-radius: 999px;
     font-size: 12px;
-    transition: 0.2s;
-    text-align: center;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.list-orders__badge--pending {
+    background: #fff3cd;
+    color: #8a6d1d;
+}
+
+.list-orders__badge--paid,
+.list-orders__badge--completed {
+    background: var(--primary-100);
+    color: var(--primary-950);
+}
+
+.list-orders__badge--cancelled {
+    background: #fde2e4;
+    color: #b42318;
+}
+
+/* ===============================
+   BOTONES
+================================ */
+.list-orders__actions {
+    min-width: 150px;
+}
+
+.list-orders__btn,
+.list-orders__btnback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    height: 24px;
+}
+
+.list-orders__btn {
+    background: var(--secundary-900);
+    color: var(--black);
 }
 
 .list-orders__btn:hover {
-  transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
-/* VACÍO */
-.list-orders__empty {
-  text-align: center;
-  padding: 20px;
-  color: var(--gray-400);
-}
-
-/* BOTÓN VOLVER */
 .list-orders__back {
-  margin-top: 16px;
-  text-align: center;
-  color: var(--primary-900);
+    margin-top: 28px;
+    display: flex;
+}
+
+.list-orders__btnback {
+    background: var(--primary-200);
+    color: var(--black);
+}
+
+.list-orders__btnback:hover {
+    background: var(--gray-300);
 }
 
 /* ===============================
-   TABLET
-/* ===============================
-   TABLET (≤1024px) FIX SCROLL
+   TABLET (mejor legibilidad)
 ================================ */
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
 
-  .list-orders__table-container {
-    overflow-x: hidden; /* 🔥 elimina scroll */
-  }
+    .list-orders__card {
+        padding: 24px;
+    }
 
-  .list-orders__table {
-    width: 100%;
-    min-width: 0; /* ❌ quitamos el causante */
-    table-layout: fixed; /* 🔥 distribuye columnas */
-  }
+    .list-orders__table {
+        min-width: 600px; /* menos scroll */
+    }
 
-  .list-orders__cell {
-    padding: 8px;
-    font-size: 12px;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  /* evitar que botones o textos dañen el ancho */
-  .list-orders__btn {
-    display: block;
-    width: 100%;
-    font-size: 11px;
-    padding: 6px;
-  }
-
-  /* si alguna columna es muy larga */
-  .list-orders__cell--actions {
-    width: 120px;
-  }
+    .list-orders__cell {
+        padding: 14px 10px;
+        font-size: 12px;
+    }
 }
 
 /* ===============================
-   CELULAR (CARDS PRO)
-================================ */
-/* ===============================
-   CELULAR (FIX REAL)
+   CELULAR (modo tarjetas PRO)
 ================================ */
 @media (max-width: 768px) {
 
-  .list-orders__table-container {
-    overflow: visible;
-  }
+    .list-orders {
+        width: 94%;
+        margin: 24px auto 60px;
+    }
 
-  /* 🔥 CORRECCIÓN AQUÍ (nombre correcto) */
-  .list-orders__table,
-  .list-orders__table-body,
-  .list-orders__row,
-  .list-orders__cell {
-    display: block;
-    width: 100%;
-  }
+    .list-orders__card {
+        padding: 16px;
+        border-radius: 20px;
+    }
 
-  .list-orders__table {
-    min-width: 0;
-  }
+    .list-orders__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
 
-  .list-orders__head {
-    display: none;
-  }
+    .list-orders__counter {
+        width: 100%;
+        text-align: center;
+    }
 
-  /* 💳 CARD */
-  .list-orders__row {
-    background: var(--white);
-    margin-bottom: 16px;
-    padding: 16px;
-    border-radius: 14px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-    width: 100%; /* 🔥 CLAVE */
-  }
+    /* convertir tabla en cards */
+    .list-orders__table-container {
+        overflow: visible;
+        border: none;
+    }
 
-  /* 📄 CONTENIDO */
-  .list-orders__cell {
-    display: flex;
-    flex-direction: column;
-    padding: 8px 0;
-    border: none;
-    font-size: 13px;
-    width: 100%;
-  }
+    .list-orders__table,
+    .list-orders__table-body,
+    .list-orders__row,
+    .list-orders__cell {
+        display: block;
+        width: 100%;
+    }
 
-  /* 🏷️ LABEL */
-  .list-orders__cell::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: var(--gray-600);
-    font-size: 11px;
-    margin-bottom: 3px;
-  }
+    .list-orders__head {
+        display: none;
+    }
 
-  /* 🔘 BOTÓN */
-  .list-orders__btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 13px;
-    margin-top: 6px;
-  }
+    .list-orders__table {
+        min-width: 0;
+        background: transparent;
+    }
 
-  /* 🔙 BOTÓN VOLVER */
-  .list-orders__btnback {
-    width: 100%;
-    display: block;
-    margin-top: 12px;
-    padding: 12px;
-  }
+    .list-orders__row {
+        background: var(--white);
+        border: 1px solid var(--gray-200);
+        border-radius: 18px;
+        padding: 16px;
+        margin-bottom: 14px;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
 
-  /* 📦 CONTENEDOR MÁS CENTRADO */
-  .list-orders__card {
-    padding: 16px;
-  }
+    .list-orders__cell {
+        padding: 8px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
 
-  .list-orders {
-    padding: 12px;
-  }
+    .list-orders__cell::before {
+        content: attr(data-label);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--gray-500);
+    }
+
+    /* botones en fila (no uno debajo del otro) */
+    .list-orders__actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .list-orders__btn {
+        flex: 1;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .list-orders__btnback {
+        width: 100%;
+    }
+
+    .list-orders__back {
+        margin-top: 12px;
+    }
 }
-

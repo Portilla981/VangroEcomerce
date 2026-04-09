@@ -1,143 +1,172 @@
-/* RESET */
 * {
   box-sizing: border-box;
 }
 
 /* CONTENEDOR */
 .gestion-ventas {
-  max-width: 1400px;
-  margin: 24px auto;
-  padding: 16px;
-  overflow-x: hidden; /* 🔥 ANTI-SCROLL GLOBAL */
+  width: min(1400px, 96%);
+  margin: 32px auto;
+  padding: 0;
 }
 
 /* TITULO */
 .gestion-ventas__title {
   font-size: var(--fs-md);
-  margin-bottom: 16px;
+  font-weight: 700;
   text-align: center;
+  color: var(--primary-900);
+  margin-bottom: 18px;
+  margin-top: -8px;
 }
 
-/* CONTENEDOR SCROLL */
+/* CONTENEDOR TABLA */
 .gestion-ventas__table-container {
   width: 100%;
   overflow-x: auto;
+  border-radius: 18px;
+  background: var(--white);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* TABLA */
+.gestion-ventas__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+  background: var(--white);
+}
 
 /* HEAD */
 .gestion-ventas__table-head {
   background: var(--primary-900);
+}
+
+.gestion-ventas__row--head .gestion-ventas__cell {
   color: var(--white);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.4px;
+  padding: 16px 14px;
+  border: none;
 }
 
 /* FILAS */
 .gestion-ventas__row {
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
+}
+
+.gestion-ventas__table-body .gestion-ventas__row:nth-child(even) {
+  background: var(--gray-100);
+}
+
+.gestion-ventas__table-body .gestion-ventas__row:hover {
+  background: var(--primary-100);
 }
 
 /* CELDAS */
 .gestion-ventas__cell {
   padding: 14px;
   border-bottom: 1px solid var(--gray-200);
-  font-size: var(--fs-xxxs);
+  color: var(--gray-800);
+  font-size: var(--fs-xxs);
+  vertical-align: middle;
   text-align: left;
+  line-height: 1.4;
+}
+
+/* ACCIONES */
+.gestion-ventas__cell--actions {
+  min-width: 170px;
 }
 
 /* BOTONES */
 .gestion-ventas__action-btn {
-  padding: 6px 12px;
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  padding: 10px 14px;
   border: none;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 12px;
-  transition: 0.2s;
+  text-decoration: none;
+  font-size: var(--fs-xxs);
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-/* VARIANTES */
 .gestion-ventas__action-btn--primary {
   background: var(--terciary-700);
   color: var(--white);
-  text-decoration: none;
-  display: inline-block;
 }
 
-.gestion-ventas__action-btn:hover {
-  transform: scale(1.05);
+.gestion-ventas__action-btn--primary:hover {
+  background: var(--terciary-800);
+  transform: translateY(-2px);
 }
 
-/* DESHABILITADO */
 .gestion-ventas__action-btn:disabled {
   background: var(--gray-300);
+  color: var(--gray-600);
   cursor: not-allowed;
 }
 
-/* VACIO */
+/* BADGES */
+.gestion-ventas .badge {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: var(--fs-xxs);
+  font-weight: 600;
+}
+
+/* VACÃO */
 .gestion-ventas__empty {
   text-align: center;
-  color: var(--gray-400);
-  padding: 20px;
+  padding: 28px 16px;
+  color: var(--gray-500);
+  font-size: var(--fs-xs);
 }
 
-/* =========================
-   TABLA (FIX SCROLL)
-========================= */
-.gestion-ventas__table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--white);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-
-  /* 🔥 CAMBIO CLAVE */
-  min-width: unset;
-}
-
-/* =========================
-   TABLET (FIX REAL)
-========================= */
+/* TABLET */
 @media (max-width: 1024px) {
 
-  .gestion-ventas__table-container {
-    overflow-x: hidden; /* 🔥 mata el scroll */
+  .gestion-ventas {
+    width: min(100%, 96%);
   }
 
   .gestion-ventas__table {
-    width: 100%;
-    min-width: 0; /* ❌ quitamos el problema */
-    table-layout: fixed; /* 🔥 distribuye columnas */
+    min-width: 760px;
+  }
+
+  .gestion-ventas__row--head .gestion-ventas__cell {
+    font-size: var(--fs-xs);
+    padding: 14px 10px;
   }
 
   .gestion-ventas__cell {
-    padding: 10px;
-    font-size: 12px;
-    overflow-wrap: break-word;
-    word-break: break-word;
+    padding: 12px 10px;
+    font-size: var(--fs-xxs);
   }
 
-  /* BOTONES CONTROLADOS */
-  .gestion-ventas__action-btn {
-    width: 100%;
-    font-size: 11px;
-    padding: 6px;
+  .gestion-ventas__action-btn,
+  .gestion-ventas .badge {
+    font-size: var(--fs-xxs);
   }
 }
 
-/* =========================
-   MOBILE FIX REAL
-========================= */
-/* =========================
-   MOBILE FIX REAL (CORREGIDO)
-========================= */
+/* MOBILE */
 @media (max-width: 768px) {
 
   .gestion-ventas__table-container {
     overflow: visible;
+    background: transparent;
+    box-shadow: none;
   }
 
-  /* 🔥 RESET CORRECTO (AQUÍ ESTABA EL ERROR) */
   .gestion-ventas__table,
   .gestion-ventas__table-body,
   .gestion-ventas__row,
@@ -148,62 +177,49 @@
 
   .gestion-ventas__table {
     min-width: 0;
+    background: transparent;
   }
 
   .gestion-ventas__table-head {
     display: none;
   }
 
-  /* 💳 CARD (AHORA SÍ OCUPA TODO) */
   .gestion-ventas__row {
-    width: 100%;
     background: var(--white);
-    margin-bottom: 16px;
-    padding: 16px;
-    border-radius: 14px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    border-radius: 18px;
+    margin-bottom: 18px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   }
 
-  /* 📄 CONTENIDO */
   .gestion-ventas__cell {
-    display: flex;
-    flex-direction: column;
-    padding: 8px 0;
     border: none;
-    font-size: 13px;
-    width: 100%;
+    padding: 8px 0;
+    font-size: var(--fs-xxs);
   }
 
-  /* 🏷️ LABEL */
   .gestion-ventas__cell::before {
     content: attr(data-label);
-    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
     color: var(--gray-600);
-    font-size: 11px;
-    margin-bottom: 3px;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
-  /* 🔘 ACCIONES */
   .gestion-ventas__cell--actions {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 10px;
-    width: 100%;
+    margin-top: 12px;
   }
 
-  /* 🔥 BOTONES FULL WIDTH */
   .gestion-ventas__action-btn {
     width: 100%;
+    font-size: var(--fs-xxs);
     padding: 12px;
-    font-size: 13px;
-    text-align: center;
   }
 
-  /* 🔥 FIX PARA LINKS Y FORM */
-  .gestion-ventas__cell a,
-  .gestion-ventas__cell form {
-    display: block;
+  .gestion-ventas .badge {
     width: 100%;
+    font-size: var(--fs-xxs);
   }
 }

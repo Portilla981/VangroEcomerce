@@ -1,257 +1,158 @@
-/* RESET */
+/* =========================
+  RESET
+========================= */
 * {
   box-sizing: border-box;
 }
 
-/* CONTENEDOR */
+/* =========================
+  CONTENEDOR GENERAL
+========================= */
 .user-list {
+  width: 100%;
   max-width: 1400px;
-  margin: 24px auto;
-  padding: 16px;
+  margin: 0 auto;
+  padding: 12px 16px 40px;
 }
 
-/* TÍTULO */
 .user-list__title {
-  font-size: var(--fs-md);
-  margin-bottom: 16px;
-  margin-top: 1px;
+  font-size: clamp(1.4rem, 2vw, 2rem);
   text-align: center;
+  /* margin-bottom: 24px; */
+  color: var(--primary-900);
+  font-weight: 700;
+  margin-top: auto;
 }
 
-/* SCROLL PARA TABLET */
+/* =========================
+  CONTENEDOR TABLA DESKTOP
+========================= */
 .user-list__table-container {
   width: 100%;
   overflow-x: auto;
+  border-radius: 22px;
+  background: var(--white);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
 }
 
-/* TABLA */
 .user-list__table {
   width: 100%;
+  min-width: 1050px;
   border-collapse: collapse;
   background: var(--white);
-  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-  min-width: 1000px;
 }
 
-/* HEAD */
+/* =========================
+  HEAD
+========================= */
 .user-list__table-head {
-  background: var(--primary-900);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--primary-900), var(--primary-700));
 }
 
-/* FILAS */
+.user-list__row--head .user-list__cell {
+  color: var(--white);
+  font-size: var(--fs-xxs);
+  font-weight: 700;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.4px;
+  border-bottom: none;
+  padding: 18px 14px;
+}
+
+/* =========================
+  FILAS Y CELDAS
+========================= */
 .user-list__row {
-  transition: all 0.2s ease;
+  transition: 0.25s ease;
 }
 
-/*.user-list__action-btn a{
-  color: inherit;
-  text-decoration: none;
-}*/
+.user-list__row:not(.user-list__row--head):hover {
+  background: rgba(0, 0, 0, 0.025);
+}
 
-/* CELDAS */
 .user-list__cell {
-  padding: 14px;
+  padding: 16px 14px;
   border-bottom: 1px solid var(--gray-200);
-  font-size: var(--fs-xxxs);
-  text-align: left;
+  font-size: var(--fs-xxs);
+  color: var(--gray-800);
+  vertical-align: middle;
+  word-break: break-word;
 }
 
-/* IMAGEN */
+.user-list__row:last-child .user-list__cell {
+  border-bottom: none;
+}
+
+/* =========================
+  IMAGEN
+========================= */
 .user-list__image {
-  width: 50px;
-  height: 50px;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
   object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid var(--gray-300);
+  border: 2px solid var(--gray-200);
+  display: block;
+  margin: 0 auto;
 }
 
-/* BOTONES */
-.user-list__action-btn {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: var(--fs-xxxs);
-  transition: 0.2s;
+/* =========================
+  BOTONES
+========================= */
+.user-list__cell--actions {
+  min-width: 120px;
 }
 
-/* VARIANTES */
-.user-list__action-btn--enable {
-  background: var(--primary-700);
-  color: var(--white);
-}
 
-.user-list__action-btn--disable {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 8px;
-  background: var(--terciary-700);
-  color: var(--white);
-  text-decoration: none;
-  font-size: 12px;
-  transition: 0.2s;
-  text-align: center;
-}
-
-.user-list__action-btn--edit {
-  background: var(--primary-900);
-  color: var(--white);
-  text-decoration: none;
-}
-
-.user-list__action-btn:hover {
-  transform: scale(1.05);
-}
-
-/* BOTONES DESHABILITADOS */
-.user-list__action-btn:disabled {
-  background: var(--gray-300);
-  cursor: not-allowed;
-}
-
-/* TEXTO VACÍO */
+/* =========================
+  VACÍO
+========================= */
 .user-list__empty {
+  padding: 28px;
   text-align: center;
-  color: var(--gray-400);
-  padding: 20px;
+  color: var(--gray-500);
+  font-size: 1rem;
 }
 
-/* ===============================
-   RESPONSIVE
-================================ */
-
-/* ===============================
-   TABLET (≤1024px)
-================================ */
-@media (max-width: 1024px) {
+/* =========================
+  LAPTOP MEDIANO
+========================= */
+@media (max-width: 1100px) {
+  .user-list {
+    padding: 20px 12px 32px;
+  }
 
   .user-list__table {
-    width: 100%;
-    min-width: unset; /* ❌ quitamos el forzado */
-    font-size: 12px;
-    table-layout: fixed; /* distribuye mejor el espacio */
+    min-width: 900px;
   }
 
   .user-list__cell {
-    padding: 8px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    padding: 14px 10px;
+    font-size: 0.82rem;
   }
 
-  /* TEXTO MÁS CONTROLADO */
-  .user-list__cell span,
-  .user-list__cell p {
-    font-size: 12px;
-  }
-
-  /* BOTONES MÁS COMPACTOS */
-  .user-list__action-btn {
-    padding: 5px 8px;
-    font-size: 10px;
-    white-space: normal; /* permite salto de línea */
-  }
-
-  /* CONTENEDOR DE BOTONES */
-  .user-list__actions {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  /* IMAGEN MÁS PEQUEÑA */
   .user-list__image {
-    width: 35px;
-    height: 35px;
+    width: 48px;
+    height: 48px;
   }
 
-  /* OCULTAR COLUMNAS MENOS IMPORTANTES (OPCIONAL) */
-  .user-list__cell--email,
-  .user-list__cell--direccion {
-    display: none;
-  }
 }
 
-/* ===============================
-   iPad Air (820px aprox)
-================================ */
-@media (min-width: 768px) and (max-width: 912px) {
-
-  .user-list__table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  /* quitamos compresión rara */
-  .user-list__row {
-    display: block;
-    width: 95%;
-    margin: 0 auto 18px auto;
-    background: #fff;
-    border-radius: 12px;
-    padding: 14px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-  }
-
-  /* cada celda en línea vertical */
-  .user-list__cell {
-    display: block;
-    width: 100%;
-    padding: 6px 0;
-    font-size: 14px;
-  }
-
-  /* etiquetas arriba (como tu imagen) */
-  .user-list__cell::before {
-    content: attr(data-label);
-    display: block;
-    font-weight: 600;
-    color: #555;
-    font-size: 12px;
-    margin-bottom: 2px;
-  }
-
-  /* imagen centrada */
-  .user-list__image {
-    display: block;
-    margin: 10px auto;
-    width: 55px;
-    height: 55px;
-  }
-
-  /* botones tipo barra como tu ejemplo */
-  .user-list__actions {
-    margin-top: 10px;
-  }
-
-  .user-list__action-btn {
-    width: 100%;
-    display: block;
-    margin: 6px 0;
-    padding: 10px;
-    font-size: 13px;
-    border-radius: 6px;
-  }
-
-  /* ocultar encabezado */
-  .user-list__table-head {
-    display: none;
-  }
-}
-
-
-/* ===============================
-   CELULAR (≤768px)
-================================ */
-@media (max-width: 768px) {
-
+/* =========================
+  TABLET
+========================= */
+@media (max-width: 820px) {
   .user-list__table-container {
-    overflow-x: hidden;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
   }
 
-  .user-list__table {
+  .user-list__table,
+  .user-list__table-head,
+  .user-list__table-body {
     display: block;
     width: 100%;
     min-width: 100%;
@@ -261,97 +162,342 @@
     display: none;
   }
 
-  .user-list__table-body {
-    display: block;
-  }
-
-  /* CARD */
   .user-list__row {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     background: var(--white);
-    margin-bottom: 16px;
-    padding: 16px;
-    border-radius: 14px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    border-radius: 22px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  /* CELDAS */
   .user-list__cell {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
     padding: 0;
     border: none;
     width: 100%;
+    font-size: 0.92rem;
   }
 
-  /* LABEL */
   .user-list__cell::before {
     content: attr(data-label);
-    font-weight: 600;
-    color: var(--gray-600);
-    font-size: 11px;
+    flex: 0 0 42%;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
   }
 
-  /* TEXTO */
-  .user-list__cell span,
-  .user-list__cell {
-    word-break: break-word;
-  }
-
-  /* IMAGEN */
-  .user-list__image {
-    width: 70px;
-    height: 70px;
-    align-self: center;
-  }
-
-  /* CONTENEDOR DE BOTONES */
-  .user-list__cell--actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 6px;
-  }
-
-  /* BOTONES */
-  .user-list__action-btn {
+  .user-list__cell > *:not(form) {
     flex: 1;
-    min-width: 90px;
-    padding: 8px;
-    font-size: 11px;
-    text-align: center;
+    text-align: right;
   }
 
-  /* LINKS Y FORM */
-  .user-list__cell form,
-  .user-list__cell a {
-    display: contents;
+  .user-list__cell form {
+    width: 100%;
   }
+
+  .user-list__cell--actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .user-list__cell--actions::before {
+    margin-bottom: 6px;
+  }
+
+  .user-list__image {
+    width: 74px;
+    height: 74px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
 }
 
-
-/* ===============================
-   CELULARES PEQUEÑOS (≤480px)
-================================ */
-@media (max-width: 480px) {
-
-  .user-list__row {
-    padding: 12px;
+/* =========================
+  CELULAR
+========================= */
+@media (max-width: 560px) {
+  .user-list {
+    padding: 16px 10px 28px;
   }
 
   .user-list__title {
-    font-size: var(--fs-sm);
+    margin-bottom: 18px;
+  }
+
+  .user-list__row {
+    padding: 16px 14px;
+    border-radius: 18px;
+    gap: 10px;
   }
 
   .user-list__cell {
-    font-size: 11px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 
-  .user-list__action-btn {
-    font-size: 11px;
-    padding: 8px;
+  .user-list__cell::before {
+    flex: unset;
+    font-size: 0.72rem;
   }
+
+  .user-list__cell > *:not(form) {
+    width: 100%;
+    text-align: left;
+  }
+
+  .user-list__image {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto;
+  }
+
+}
+/*--------------------------------------------*/
+.report-sales {
+    width: min(1150px, 92%);
+    margin: 2.5rem auto 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.report-sales__header {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 2.4rem 2rem;
+    text-align: center;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.report-sales__eyebrow {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary-color);
+}
+
+.report-sales__title {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    color: var(--primary-dark);
+    font-family: var(--title-font);
+}
+
+.report-sales__subtitle {
+    margin: 1rem auto 0;
+    max-width: 700px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.report-sales__filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1.2rem;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 1.8rem;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.07);
+}
+
+.report-sales__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.report-sales__field label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.report-sales__input {
+    min-height: 54px;
+    padding: 0 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    background: var(--background-soft);
+    font-family: var(--main-font);
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+}
+
+.report-sales__input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(89, 171, 36, 0.15);
+}
+
+.report-sales__actions {
+    display: flex;
+    align-items: end;
+    gap: 0.8rem;
+}
+
+.report-sales__clear-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.report-sales__table-wrapper {
+    overflow: hidden;
+    border-radius: 26px;
+    background: var(--white);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.report-sales .user-list__table-head {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+}
+
+.report-sales .user-list__table-head .user-list__cell {
+    color: var(--white);
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+}
+
+.report-sales .user-list__cell {
+    padding: 1.2rem 1rem;
+}
+
+.report-sales .user-list__row:not(.user-list__row--head):hover {
+    background: rgba(89, 171, 36, 0.05);
+}
+
+.report-sales__subtotal {
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.report-sales__total-row {
+    background: var(--background-soft);
+}
+
+.report-sales__total-label {
+    padding: 1.3rem 1rem;
+    text-align: right;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.report-sales__total-value {
+    padding: 1.3rem 1rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+.report-sales__footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.report-sales__footer .btn-informe {
+    min-width: 260px;
+}
+
+@media (max-width: 900px) {
+    .report-sales__filters {
+        grid-template-columns: 1fr;
+    }
+
+    .report-sales__actions {
+        width: 100%;
+    }
+
+    .report-sales__actions button,
+    .report-sales__actions a {
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .report-sales {
+        width: min(95%, 100%);
+    }
+
+    .report-sales__header,
+    .report-sales__filters {
+        padding: 1.4rem;
+    }
+
+    .report-sales .user-list__table,
+    .report-sales .user-list__table-body,
+    .report-sales .user-list__row,
+    .report-sales .user-list__cell {
+        display: block;
+        width: 100%;
+    }
+
+    .report-sales .user-list__table-head {
+        display: none;
+    }
+
+    .report-sales .user-list__row {
+        background: var(--white);
+        border-radius: 20px;
+        margin: 1rem;
+        padding: 0.5rem;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.07);
+    }
+
+    .report-sales .user-list__cell {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid var(--border-color);
+        text-align: right;
+    }
+
+    .report-sales .user-list__cell:last-child {
+        border-bottom: none;
+    }
+
+    .report-sales .user-list__cell::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: left;
+    }
+
+    .report-sales__total-row {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem;
+        border-radius: 20px;
+    }
+
+    .report-sales__total-label,
+    .report-sales__total-value {
+        width: 100%;
+        text-align: center;
+    }
+
+    .report-sales__footer {
+        justify-content: stretch;
+    }
+
+    .report-sales__footer .btn-informe {
+        width: 100%;
+    }
 }

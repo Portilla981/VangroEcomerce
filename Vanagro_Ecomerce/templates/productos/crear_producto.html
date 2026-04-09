@@ -12,15 +12,15 @@
 {% block producto %}
 
 <div class="product-form">
-	<div class="product-form__header">
-		<h2 class="product-form__title">Crear Producto</h2>
-		<p class="product-form__subtitle">
-			Complete la información del producto que desea publicar.
-		</p>
-  	</div>
+    <div class="product-form__header">
+        <h2 class="product-form__title">Crear Producto</h2>
+        <p class="product-form__subtitle">
+            Complete la información del producto que desea publicar.
+        </p>
+    </div>
 
-	<form action="" method="post" class="product-form__container" enctype="multipart/form-data">
-		{% csrf_token %}
+    <form action="" method="post" class="product-form__container" enctype="multipart/form-data">
+        {% csrf_token %}
 
 		<!-- FILA 1 -->
 		<div class="product-form__row">

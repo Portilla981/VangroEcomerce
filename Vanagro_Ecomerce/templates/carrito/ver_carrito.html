@@ -42,7 +42,8 @@
 
             {% if items %}
             <div class="shopping-cart__layout">
-                <!-- IZQUIERDA: PRODUCTOS -->
+                
+                <!-- SECCIÓN IZQUIERDA: DETALLE DE PRODUCTOS -->
                 <div class="shopping-cart__products">
                     <table class="shopping-cart__table">
                         <thead class="shopping-cart__thead">
@@ -55,82 +56,105 @@
                                 <th class="shopping-cart__cell">Eliminar</th>
                             </tr>
                         </thead>
+
                         <tbody class="shopping-cart__tbody">
                             {% for item in items %}
                             <tr class="shopping-cart__row" data-id="{{ item.id }}">
+                                
+                                <!-- Visualización de Imagen -->
                                 <td class="shopping-cart__cell">
                                     {% if item.producto.imagen_producto %}
-                                        <img class="shopping-cart__image" src="{{ item.producto.imagen_producto.url }}" alt="{{ item.producto.nombre_producto }}" />
+                                        <img class="shopping-cart__image" src="{{ item.producto.imagen_producto.url }}" alt="{{ item.producto.nombre_producto }}">
                                     {% else %}
-                                        <img class="shopping-cart__image" src="{% static 'img/sin_imagen.png' %}" alt="Sin imagen" />
+                                        <img class="shopping-cart__image" src="{% static 'img/sin_imagen.png' %}" alt="Sin imagen">
                                     {% endif %}
                                 </td>
+
+                                <!-- Información del Producto -->
                                 <td class="shopping-cart__cell">
-                                    {{ item.producto.nombre_producto }}
+                                    <span class="shopping-cart__product-name">{{ item.producto.nombre_producto }}</span>
                                 </td>
+
+                                <!-- Controles de Cantidad -->
                                 <td class="shopping-cart__cell">
-                                    <div class="shopping-cart__controls input-group">
-                                        <button class="btn-restar">-</button>
+                                    <div class="shopping-cart__controls">
+                                        <button type="button" class="btn-restar">-</button>
                                         <input type="number" class="cantidad-input" value="{{ item.cantidad }}" min="1" max="{{ item.producto.stock }}" step="1">
-                                        <button class="btn-sumar">+</button>
+                                        <button type="button" class="btn-sumar">+</button>
                                     </div>
                                     <div class="shopping-cart__stock mensaje-stock">
-                                        <small class="stock-msg d-none">
-                                            Stock disponible: {{ item.producto.stock }}
-                                        </small>
+                                        <small class="stock-msg d-none">Stock disponible: {{ item.producto.stock }}</small>
                                     </div>
                                 </td>
+
+                                <!-- Precio Unitario -->
                                 <td class="shopping-cart__cell">
-                                    $ {{ item.producto.precio|floatformat:0|intcomma }}
+                                    <span class="shopping-cart__product-price">$ {{ item.producto.precio|floatformat:0|intcomma }}</span>
                                 </td>
+
+                                <!-- Subtotal dinámico -->
                                 <td class="shopping-cart__cell subtotal">
                                     $ {{ item.subtotal|floatformat:0|intcomma }}
                                 </td>
+
+                                <!-- Acción de eliminación -->
                                 <td class="shopping-cart__cell">
-                                    <button class="btn-eliminar">🗑</button>
+                                    <button type="button" class="btn-eliminar">❌</button>
                                 </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
 
-                    <div class="shopping-cart__actions buttons">
-                        <!-- Limpieza de estilos para quitar la raya del link -->
-                        <a href="{% url 'ver_productos' %}" class="button__action--buy btn-cancel" style="text-decoration: none;">
-                            Seguir comprando
+                    <div class="shopping-cart__actions">
+                        <a href="{% url 'ver_productos' %}" class="buttons__action--secondary btn-cancel" style="text-decoration: none;">
+                            Continuar comprando
                         </a>
                     </div>
                 </div>
 
-                <!-- DERECHA: RESUMEN -->
+                <!-- SECCIÓN DERECHA: RESUMEN DE COMPRA -->
                 <div class="shopping-cart__summary">
                     <h3 class="shopping-cart__summary-title">Resumen del pedido</h3>
+                    
                     <div class="shopping-cart__summary-row">
                         <span>Subtotal</span>
                         <span class="total-general">$ {{ total|floatformat:0|intcomma }}</span>
                     </div>
+
                     <div class="shopping-cart__summary-row">
                         <span>Envío</span>
-                        <span>gratis</span>
+                        <span class="shopping-cart__free">Gratis</span>
                     </div>
+
                     <div class="shopping-cart__summary-total">
-                        Total: $ <span class="total-general">{{ total|floatformat:0|intcomma }}</span>
+                        <span>Total</span>
+                        <span>$ <span class="total-general">{{ total|floatformat:0|intcomma }}</span></span>
                     </div>
-                    <button 
-                        class="shopping-cart__btn shopping-cart__btn--primary btn-confirmar"
-                        data-url="{% url 'finalizar_compra' %}" 
-                        data-titulo="Registrar compra" 
-                        data-mensaje="¿Desea comprar los productos seleccionados?">
+
+                    <button type="button" 
+                            class="buttons__action--primary btn-save btn-confirmar" 
+                            data-url="{% url 'finalizar_compra' %}" 
+                            data-titulo="Confirmar compra" 
+                            data-mensaje="¿Desea proceder con la compra de los productos seleccionados?">
                         Finalizar compra
                     </button>
                 </div>
             </div>
+
             {% else %}
-            <div class="alert alert-warning">
-                Tu carrito está vacío.
+            <!-- ESTADO DE CARRITO VACÍO -->
+            <div class="shopping-cart__empty">
+                <div class="shopping-cart__empty-icon">🛒</div>
+                <h3>Su carrito está vacío</h3>
+                <p>Le invitamos a explorar nuestra tienda para añadir productos.</p>
+                <a href="{% url 'ver_productos' %}" class="buttons__action--secondary btn-cancel">
+                    Regresar a la tienda
+                </a>
             </div>
             {% endif %}
         </div>
+
         {% endblock carrito %}
     </div>
 
