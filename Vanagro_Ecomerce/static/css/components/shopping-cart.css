@@ -24,7 +24,7 @@
 .shopping-cart__title {
     font-size: var(--fs-md);
     color: var(--primary-900);
-    margin-bottom: 0.4rem;
+    margin-bottom: auto;
 }
 
 .shopping-cart__subtitle {
@@ -231,7 +231,7 @@
 .shopping-cart__title {
     font-size: var(--fs-md);
     color: var(--primary-900);
-    margin-bottom: 2rem;
+    margin-bottom: auto;
 }
 
 .shopping-cart__layout {
@@ -249,11 +249,12 @@
 }
 
 .shopping-cart__thead .shopping-cart__cell {
-    background: transparent;
+    background: var(--primary-500);
+    /* border-radius: 2px; */
     border: none;
     padding: 6px;
     font-size: var(--fs-xs);
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 0.08em;
     color: var(--black);
     text-align: unset;
@@ -271,6 +272,7 @@
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
 }
 
+
 .shopping-cart__tbody .shopping-cart__cell {
     padding: 1.5rem 1rem;
     vertical-align: middle;
@@ -278,7 +280,7 @@
     border-bottom: 1px solid var(--gray-200);
     background: var(--white);
     color: var(--gray-900);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
 }
 
 /* Bordes redondeados para simular tarjetas en la tabla */
@@ -384,9 +386,9 @@
 }
 
 .shopping-cart__summary-title {
-    font-size: 1.4rem;
+    font-size: var(--fs-sm);
     color: var(--gray-900);
-    margin-bottom: 1.5rem;
+    margin-top: auto;
 }
 
 .shopping-cart__summary-row {
@@ -399,16 +401,17 @@
 
 .shopping-cart__summary-total {
     margin-top: 1rem;
-    padding-top: 1rem;
+    padding-top: 12px;
     border-top: 1px solid var(--gray-200);
     display: flex;
     justify-content: space-between;
     font-size: var(--fs-sm);
     font-weight: 700;
     color: var(--primary-900);
+    margin-bottom: 12px;
 }
 
-/* BotÃ³n Finalizar (btn-confirmar es tu clase JS) */
+/* BotÃ³n Finalizar (btn-confirmar es tu clase JS) 
 .btn-confirmar {
     width: 100%;
     border: none;
@@ -428,7 +431,7 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* --- BOTÃ“N SEGUIR COMPRANDO --- */
+/* --- BOTÃ“N SEGUIR COMPRANDO --- 
 .btn-cancel {
     display: inline-flex;
     align-items: center;
@@ -446,6 +449,38 @@
     background: var(--gray-100);
     transform: translateY(-2px);
 }
+
+
+.btn-confirmar {
+    width: auto !important; 
+    display: inline-block;
+    min-width: 120px; 
+}
+
+.btn-cancel {
+    width: auto !important;
+    margin-top: 0; 
+}
+
+
+.btn-confirmar {
+    width: auto !important; 
+    display: inline-block !important;
+    vertical-align: middle;
+    margin-top: 1rem !important; 
+}
+
+.btn-cancel {
+    display: inline-flex !important;
+    vertical-align: middle;
+    margin-top: 1rem !important; 
+}
+
+.btn-cancel + .btn-confirmar, 
+.btn-confirmar + .btn-cancel {
+    margin-left: 15px; 
+}*/
+
 
 /* --- RESPONSIVE --- */
 @media (max-width: 1100px) {

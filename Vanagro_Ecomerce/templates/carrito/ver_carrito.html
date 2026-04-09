@@ -108,7 +108,7 @@
                     </table>
 
                     <div class="shopping-cart__actions">
-                        <a href="{% url 'ver_productos' %}" class="btn-cancel" style="text-decoration: none;">
+                        <a href="{% url 'ver_productos' %}" class="buttons__action--secondary btn-cancel" style="text-decoration: none;">
                             Continuar comprando
                         </a>
                     </div>
@@ -134,7 +134,7 @@
                     </div>
 
                     <button type="button" 
-                            class="btn-confirmar" 
+                            class="buttons__action--primary btn-save btn-confirmar" 
                             data-url="{% url 'finalizar_compra' %}" 
                             data-titulo="Confirmar compra" 
                             data-mensaje="¿Desea proceder con la compra de los productos seleccionados?">
@@ -149,7 +149,7 @@
                 <div class="shopping-cart__empty-icon">🛒</div>
                 <h3>Su carrito está vacío</h3>
                 <p>Le invitamos a explorar nuestra tienda para añadir productos.</p>
-                <a href="{% url 'ver_productos' %}" class="btn-cancel">
+                <a href="{% url 'ver_productos' %}" class="buttons__action--secondary btn-cancel">
                     Regresar a la tienda
                 </a>
             </div>
