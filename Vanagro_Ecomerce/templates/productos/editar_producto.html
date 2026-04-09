@@ -23,33 +23,7 @@
 		<!-- FILA 1 -->
 		<div class="product-form__row">
 			<label class="product-form__label">
-				Categoría
-				<select class="product-form__select" name="categoria" id="id_categoria" required>
-					{% for categoria, label in form.categoria.field.choices %}
-					<option value="{{ categoria }}" {% if categoria == form.instance.categoria %}selected{% endif %}>
-						{{ label }}
-					</option>
-					{% endfor %}
-				</select>
-			</label>			
-
-			<label class="product-form__label">
-				Unidad de medida
-				<select class="product-form__select" name="unidad_medida" id="id_unidad_medida" required>
-					{% for unidad, label in form.unidad_medida.field.choices %}
-					<option value="{{ unidad }}" {% if unidad == form.instance.unidad_medida %}selected{% endif %}>
-						{{ label }}
-					</option>
-					{% endfor %}
-				</select>
-			</label>
-		</div>
-
-		<!-- FILA 2 -->
-		<div class="product-form__row">
-
-			<label class="product-form__label">
-				Nombre
+				*Nombre
 				<input 
 					class="product-form__input"
 					name="nombre_producto"
@@ -57,24 +31,27 @@
 					required>
 			</label>
 
-			<label class="product-form__label">
-				Cantidad disponible
-				<input 
-					type="number"
-					class="product-form__input solo-numeros"
-					name="stock"
-					placeholder="0"
-					value="{{ form.instance.stock|default_if_none:'' }}"
-					min="1"
-					step="1"
-					required>
-			</label>			
+			<label class="product-form__label product-form__image">
+                *Imagen del producto
+                <input
+                    type="file"
+                    class="product-form__image-upload"
+                    name="imagen_producto"
+                    accept="image/*">
+
+                {% if form.instance.imagen_producto %}
+                    <div class="product-form__image-preview">
+                        <img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
+                    </div>
+                {% endif %}
+            </label>
+
 		</div>
 
-		<!-- FILA 3 -->
+		<!-- FILA 2 -->
 		<div class="product-form__row">
 			<label class="product-form__label">
-				Precio
+				*Precio por unidad
 				<input 
 					type="number"
 					class="product-form__input solo-numeros"
@@ -86,7 +63,46 @@
 					required>
 			</label>
 			
+			<label class="product-form__label">
+				*Cantidad disponible
+				<input 
+					type="number"
+					class="product-form__input solo-numeros"
+					name="stock"
+					placeholder="0"
+					value="{{ form.instance.stock|default_if_none:'' }}"
+					min="1"
+					step="1"
+					required>
+			</label>	
 		</div>
+
+		<!-- FILA 3 -->
+
+		<div class="product-form__row">
+			<label class="product-form__label">
+				*Categoría
+				<select class="product-form__select" name="categoria" id="id_categoria" required>
+					{% for categoria, label in form.categoria.field.choices %}
+					<option value="{{ categoria }}" {% if categoria == form.instance.categoria %}selected{% endif %}>
+						{{ label }}
+					</option>
+					{% endfor %}
+				</select>
+			</label>
+
+			<label class="product-form__label">
+				*Unidad de medida
+				<select class="product-form__select" name="unidad_medida" id="id_unidad_medida" required>
+					{% for unidad, label in form.unidad_medida.field.choices %}
+					<option value="{{ unidad }}" {% if unidad == form.instance.unidad_medida %}selected{% endif %}>
+						{{ label }}
+					</option>
+					{% endfor %}
+				</select>
+			</label>
+					
+		</div>		
 
 		<!-- DESCRIPCIÓN -->
 		<div class="product-form__row product-form__row--full">

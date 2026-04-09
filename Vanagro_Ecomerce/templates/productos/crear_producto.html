@@ -2,14 +2,18 @@
 {% load humanize %}
 {% load static %}
 
+
 {% block navbar %}
-{% include 'components/navbar-simple.html' %}
+    {% include 'components/navbar-simple_inicio.html' %}
 {% endblock navbar %}
+
 
 {% block script %}
 {% endblock script %}
 
+
 {% block producto %}
+
 
 <div class="product-form">
     <div class="product-form__header">
@@ -19,117 +23,120 @@
         </p>
     </div>
 
+
     <form action="" method="post" class="product-form__container" enctype="multipart/form-data">
         {% csrf_token %}
 
-		<!-- FILA 1 -->
-		<div class="product-form__row">
+
+        <!-- FILA 1 -->
+        <div class="product-form__row">
+            <label class="product-form__label">
+                *Nombre
+                <input
+                    type="text"
+                    class="product-form__input"
+                    name="nombre_producto"
+                    placeholder="Ingrese el nombre del producto"
+                    value="{{ form.instance.nombre_producto|default_if_none:'' }}"
+                    required>
+            </label>
+
+
+            <label class="product-form__label product-form__image">
+                *Imagen del producto
+                <input
+                    type="file"
+                    class="product-form__image-upload"
+                    name="imagen_producto"
+                    accept="image/*">
+
+
+                {% if form.instance.imagen_producto %}
+                    <div class="product-form__image-preview">
+                        <img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
+                    </div>
+                {% endif %}
+            </label>
+        </div>
+
+
+        <!-- FILA 2 -->
+        <div class="product-form__row">
+            <label class="product-form__label">
+                *Precio por unidad
+                <input
+                    type="number"
+                    class="product-form__input"
+                    name="precio"
+                    placeholder="Ingrese el precio"
+                    value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
+                    required>
+            </label>
+
+
+            <label class="product-form__label">
+                *Cantidad disponible
+                <input
+                    type="number"
+                    class="product-form__input"
+                    name="stock"
+                    placeholder="0"
+                    value="{{ form.instance.stock|default_if_none:'' }}"
+                    required>
+            </label>
+        </div>
+
+
+        <!-- FILA 3 -->
+        <div class="product-form__row">
+            <label class="product-form__label">
+                *Categoría
+                <select class="product-form__select" name="categoria" id="id_categoria" required>
+                    {% for categoria, label in form.categoria.field.choices %}
+                        <option value="{{ categoria }}" {% if categoria == form.instance.categoria %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label class="product-form__label">
+                *Unidad de medida
+                <select class="product-form__select" name="unidad_medida" id="id_unidad_medida" required>
+                    {% for unidad, label in form.unidad_medida.field.choices %}
+                        <option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+
+        <!-- FILA 4 -->
+        <div class="product-form__row">
+            <label class="product-form__label">
+                Fecha de elaboración
+                <input
+                    type="date"
+                    class="product-form__dates-input"
+                    name="fecha_elaboracion"
+                    value="{{ form.instance.fecha_elaboracion|date:'Y-m-d' }}">
+            </label>
+
+            <label class="product-form__label">
+                Fecha de caducidad
+                <input
+                    type="date"
+                    class="product-form__dates-input"
+                    name="fecha_vencimiento"
+                    value="{{ form.instance.fecha_vencimiento|date:'Y-m-d' }}">
+            </label>
+        </div>
+
+        <!-- FILA 5 - ANCHO COMPLETO -->
+        <div class="product-form__row product-form__row--full">
 			<label class="product-form__label">
-				Categoría
-				<select class="product-form__select" name="categoria" id="id_categoria" required>
-					{% for categoria, label in form.categoria.field.choices %}
-						<option value="{{ categoria }}" {% if categoria == form.instance.categoria %}selected{% endif %}>
-							{{ label }}
-						</option>
-					{% endfor %}
-				</select>
-			</label>
-
-			<label class="product-form__label">
-				Unidad de medida
-				<select class="product-form__select" name="unidad_medida" id="id_unidad_medida" required>
-				{% for unidad, label in form.unidad_medida.field.choices %}
-				<option value="{{ unidad }}" {% if unidad == form.unidad_medida.value %}selected{% endif %}>
-					{{ label }}
-				</option>
-				{% endfor %}
-				</select>
-			</label>
-		</div>
-
-		<!-- FILA 2 -->
-		<div class="product-form__row">
-			<label class="product-form__label">
-				Nombre
-				<input
-				class="product-form__input"
-				name="nombre_producto"
-				placeholder="Ingrese el nombre del producto"
-				value="{{ form.instance.nombre_producto|default_if_none:'' }}"
-				required>
-			</label>
-
-			<div class="product-form__image">
-				<label class="product-form__label">Imagen del producto</label>
-
-				<label class="product-form__image-upload">
-					<input type="file" name="imagen_producto">
-				</label>
-
-				{% if form.instance.imagen_producto %}
-				<div class="product-form__image-preview">
-					<img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
-				</div>
-				{% endif %}
-			</div>
-		</div>
-
-		<div class="product-form__row">
-			<label class="product-form__label">
-				Cantidad disponible
-				<input
-					type="number"
-					class="product-form__input solo-numeros"
-					name="stock"
-					placeholder="0"
-					value="{{ form.instance.stock|default_if_none:'' }}"
-					min="1"
-					step="1"
-					required>
-			</label>
-
-			<label class="product-form__label">
-				Precio por unidad
-				<input
-					type="number"
-					class="product-form__input solo-numeros"
-					name="precio"
-					placeholder="Ingrese el precio"
-					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
-					min="1"
-					step="1"
-					required>
-			</label>			
-			
-		</div>
-
-			<div class="product-form__row product-form__row--full">
-					
-					<div class="product-form__row">
-					<label class="product-form__label">
-						Fecha de elaboración
-						<input
-						type="date"
-						class="product-form__dates-input"
-						name="fecha_elaboracion"
-						value="{{ form.instance.fecha_elaboracion|date:'Y-m-d' }}">
-					</label>
-
-					<label class="product-form__label">
-						Fecha de caducidad
-						<input
-						type="date"
-						class="product-form__dates-input"
-						name="fecha_vencimiento"
-						value="{{ form.instance.fecha_vencimiento|date:'Y-m-d' }}">
-					</label>
-				</div>	
-			</div>
-
-			<!-- FILA 5 (FULL WIDTH) -->
-		<div class="product-form__row product-form__row--full">
-			<label class="product-form__label">
-				Descripción del producto
+				*Descripción
 				<textarea
 					class="product-form__textarea"
 					name="descripcion"
@@ -137,32 +144,29 @@
 					required>{{ form.instance.descripcion|default_if_none:'' }}</textarea>
 			</label>
 		</div>
-		
-		</div>	
 
-		<!-- BOTONES -->
-		<div class="product-form__actions">
-			<button
-				type="button"
-				name="accion"
-				value="cancelar"
-				class="buttons__action--secondary btn-cancel btn-confirmar"
-				data-url="{% url 'tienda_usuario' %}"
-				data-titulo="Cancelar creación"
-				data-mensaje="La información ingresada no se guardará.">
-				Cancelar
-			</button>
+        <!-- BOTONES -->
+        <div class="product-form__actions">
+            <button
+                type="button"
+                name="accion"
+                value="cancelar"
+                class="buttons__action--secondary btn-cancel btn-confirmar"
+                data-url="{% url 'tienda_usuario' %}"
+                data-titulo="Cancelar creación"
+                data-mensaje="La información ingresada no se guardará.">
+                Cancelar
+            </button>
 
-			<button
-				type="submit"
-				class="buttons__action--primary"
-				name="accion"
-				value="vista_previa">
-				Vista previa
-			</button>
-		</div>
-
-	</form>
+            <button
+                type="submit"
+                class="buttons__action--primary"
+                name="accion"
+                value="vista_previa">
+                Vista previa
+            </button>
+        </div>
+    </form>
 </div>
 
 {% endblock producto %}

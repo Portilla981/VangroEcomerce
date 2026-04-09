@@ -37,7 +37,7 @@
 
     <div class="navbar-vanagro__icons"> 
       <a href="{% url 'sesion_inicio' %}">     
-      <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />
+      <!--<img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />-->
       </a>
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
