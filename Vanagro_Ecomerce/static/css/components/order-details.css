@@ -1,6 +1,6 @@
-/* ===============================
+/* 
    CONTENEDOR
-================================ */
+ */
 .order-details {
   max-width: 1100px;
   margin: 24px auto;
@@ -52,7 +52,7 @@
 
 .order-details__badge {
   padding: 6px 12px;
-  border-radius: 20px; /* 🔥 más moderno */
+  border-radius: 20px; 
   font-weight: 600;
   font-size: 12px;
   background: var(--secundary-900);
@@ -84,7 +84,7 @@
   text-align: center;
 }
 
-/* 🔥 RESTAURAR COLORES */
+/* RESTAURAR COLORES */
 .order-details__btn--primary {
   background: var(--primary-900);
   color: var(--white);
@@ -95,13 +95,13 @@
   color: var(--black);
 }
 
-/* 🔥 EFECTO */
+/* EFECTO */
 .order-details__btn:hover {
   transform: scale(1.03);
 }
-/* ===============================
+/* 
    TABLET FIX
-================================ */
+ */
 @media (max-width: 1024px) {
 
   .order-details__table-container {
@@ -119,9 +119,9 @@
   }
 }
 
-/* ===============================
+/* 
    MOBILE FIX REAL (EL IMPORTANTE)
-================================ */
+ */
 @media (max-width: 768px) {
 
   .order-details__head {
@@ -133,14 +133,14 @@
     overflow: visible;
   }
 
-  /* 🔥 RESET TOTAL CORRECTO */
+  /*  RESET TOTAL CORRECTO */
   .order-details__table {
     display: block;
     width: 100%;
   }
 
   .order-details__body {
-    display: block; /* 🔥 ESTE ERA EL ERROR */
+    display: block; /* ESTE ERA EL ERROR */
     width: 100%;
   }
 
