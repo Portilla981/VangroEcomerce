@@ -1,3 +1,4 @@
+
 {% extends "usuario/login.html" %}
 {% load static %}
 
@@ -6,131 +7,143 @@
 {% endblock script %}
 
 {% block navbar %}
-{% include 'components/navbar-simple_inicio.html' %}
+{% include 'components/navbar-simple_inicio.html' %} 
 {% endblock navbar %}
 
 {% block login %}
 
-<div class="user-list">
+<div class="producto-admin">
 
-  <h2 class="user-list__title">Lista general de productos</h2>
+  <div class="producto-admin__card">
 
-  <div class="user-list__table-container">
+    <!-- HEADER -->
+    <div class="producto-admin__header">
+      <h2 class="producto-admin__eyebrow">Lista de productos</h2>
 
-    <table class="user-list__table">
+      <div class="producto-admin__counter">
+        {{ productos|length }} productos
+      </div>
+    </div>
 
-      <thead class="user-list__table-head">
-        <tr class="user-list__row user-list__row--head">
-          <th class="user-list__cell">Usuario</th>
-          <th class="user-list__cell">ID</th>
-          <th class="user-list__cell">Imagen</th>
-          <th class="user-list__cell">Nombre</th>
-          <th class="user-list__cell">Unidad</th>
-          <th class="user-list__cell">Precio</th>
-          <th class="user-list__cell">Stock</th>
-          <th class="user-list__cell">Estado</th>
-          <th class="user-list__cell">Editar</th>
-          <th class="user-list__cell">Imagen</th>
-        </tr>
-      </thead>
+    <!-- TABLA -->
+    <div class="producto-admin__table-container">
 
-      <tbody class="user-list__table-body" id="user-table-body">
+      <table class="producto-admin__table">
 
-        {% for producto in productos %}
-        <tr class="user-list__row">
+        <thead class="producto-admin__table-head">
+          <tr class="producto-admin__row">
+            <th class="producto-admin__cell">Usuario</th>
+            <th class="producto-admin__cell">ID</th>
+            <th class="producto-admin__cell">Imagen</th>
+            <th class="producto-admin__cell">Nombre</th>
+            <th class="producto-admin__cell">Unidad</th>
+            <th class="producto-admin__cell">Precio</th>
+            <th class="producto-admin__cell">Stock</th>
+            <th class="producto-admin__cell">Acciones</th>
+          </tr>
+        </thead>
 
-          <td class="user-list__cell" data-label="Usuario">
-            {{ producto.productor.user.username }}
-          </td>
+        <tbody class="producto-admin__table-body">
 
-          <td class="user-list__cell" data-label="ID producto">
-            PDV-{{ producto.id }}
-          </td>
+          {% for producto in productos %}
+          <tr class="producto-admin__row">
 
-          <td class="user-list__cell" data-label="Imagen">
-            <img
-              class="user-list__image"
-              src="{% if producto.imagen_producto %}{{ producto.imagen_producto.url }}{% else %}{% static 'img/products/sin_foto_2.jpg' %}{% endif %}"
-              alt="{{ producto.nombre_producto }}"
-            >
-          </td>
+            <td class="producto-admin__cell" data-label="Usuario">
+              {{ producto.productor.user.username }}
+            </td>
 
-          <td class="user-list__cell" data-label="Nombre del producto">
-            {{ producto.nombre_producto }}
-          </td>
+            <td class="producto-admin__cell" data-label="ID">
+              PDV-{{ producto.id }}
+            </td>
 
-          <td class="user-list__cell" data-label="Unidad de medida">
-            {{ producto.unidad_medida }}
-          </td>
-
-          <td class="user-list__cell" data-label="Precio">
-            ${{ producto.precio|floatformat:2 }}
-          </td>
-
-          <td class="user-list__cell" data-label="Stock disponible">
-            {{ producto.stock }}
-          </td>
-
-          <td class="user-list__cell user-list__cell--actions" data-label="Estado del producto">
-            <form method="post" action="{% url 'accion_producto' producto.id %}">
-              {% csrf_token %}
-              <input type="hidden" name="next" value="{{ request.path }}">
-
-              {% if producto.activo %}
-              <button
-                type="submit"
-                class="user-list__action-btn user-list__action-btn--disable">
-                Desactivar
-              </button>
+            <td class="producto-admin__cell" data-label="Imagen">
+              {% if producto.imagen_producto %}
+                <img src="{{ producto.imagen_producto.url }}" 
+                     alt="{{ producto.nombre_producto }}" 
+                     class="producto-admin__image">
               {% else %}
-              <button
-                type="submit"
-                class="user-list__action-btn user-list__action-btn--enable">
-                Activar
-              </button>
+                <img src="{% static 'img/products/sin_foto_2.jpg' %}" 
+                     class="producto-admin__image">
               {% endif %}
-            </form>
-          </td>
+            </td>
 
-          <td class="user-list__cell user-list__cell--actions" data-label="Editar producto">
-            <a href="{% url 'editar_producto' producto.id %}?next={{ request.path }}">
-              <button
-                type="button"
-                class="user-list__action-btn user-list__action-btn--edit">
-                Editar
-              </button>
-            </a>
-          </td>
+            <td class="producto-admin__cell" data-label="Nombre">
+              {{ producto.nombre_producto }}
+            </td>
 
-          <td class="user-list__cell user-list__cell--actions" data-label="Cambiar imagen">
-            <button
-              type="button"
-              class="user-list__action-btn user-list__action-btn--img"
-              data-id="{{ producto.id }}"
-              data-imagen="{% if producto.imagen_producto %}{{ producto.imagen_producto.url }}{% else %}{% static 'img/products/sin_foto_2.jpg' %}{% endif %}">
-              Cambiar imagen
-            </button>
-          </td>
+            <td class="producto-admin__cell" data-label="Unidad">
+              {{ producto.unidad_medida }}
+            </td>
 
-        </tr>
+            <td class="producto-admin__cell" data-label="Precio">
+              ${{ producto.precio|floatformat:2 }}
+            </td>
 
-        {% empty %}
-        <tr class="user-list__row">
-          <td colspan="10" class="user-list__cell user-list__empty">
-            No hay productos registrados actualmente.
-          </td>
-        </tr>
-        {% endfor %}
+            <td class="producto-admin__cell" data-label="Stock">
+              {{ producto.stock }}
+            </td>
 
-      </tbody>
+            <!-- ACCIONES -->
+            <td class="producto-admin__cell producto-admin__cell--actions" data-label="Acciones">
 
-    </table>
+              <div class="producto-admin__actions-group">
+
+                <!-- Estado -->
+                <form method="post" action="{% url 'accion_producto' producto.id %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.path }}">
+
+                  {% if producto.activo %}
+                    <button type="submit" class="producto-admin__action-btn producto-admin__action-btn--disable">
+                      Deshabilitar
+                    </button>
+                  {% else %}
+                    <button type="submit" class="producto-admin__action-btn producto-admin__action-btn--enable">
+                      Habilitar
+                    </button>
+                  {% endif %}
+                </form>
+
+                <!-- Editar -->
+                <a href="{% url 'editar_producto' producto.id %}?next={{ request.path }}" 
+                   class="producto-admin__action-btn producto-admin__action-btn--edit">
+                  Editar
+                </a>
+
+                <!-- Cambiar imagen -->
+                <button 
+                  type="button" 
+                  class="producto-admin__action-btn producto-admin__action-btn--img"
+                  data-id="{{ producto.id }}"
+                  data-imagen="{% if producto.imagen_producto %}{{ producto.imagen_producto.url }}{% else %}{% static 'img/products/sin_foto_2.jpg' %}{% endif %}">
+                  Imagen
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+          {% empty %}
+          <tr>
+            <td colspan="8" class="producto-admin__cell producto-admin__empty">
+              No hay productos disponibles.
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
 </div>
 
-<!-- MODAL CAMBIAR IMAGEN -->
+<!-- MODAL -->
 <div id="modalImagen" class="modal-actualizar">
 
   <div class="modal-actualizar__card">

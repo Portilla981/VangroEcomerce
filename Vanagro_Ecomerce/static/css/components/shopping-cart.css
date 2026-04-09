@@ -249,7 +249,6 @@
 }
 
 .shopping-cart__thead .shopping-cart__cell {
-    background: var(--primary-500);
     /* border-radius: 2px; */
     border: none;
     padding: 6px;

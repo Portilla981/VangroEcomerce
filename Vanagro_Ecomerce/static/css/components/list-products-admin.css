@@ -1,0 +1,310 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+
+
+/* CONTENEDOR */
+.producto-admin {
+  width: min(1400px, 96%);
+  margin: 40px auto;
+}
+
+
+/* CARD */
+.producto-admin__card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+
+/* HEADER */
+.producto-admin__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+
+.producto-admin__eyebrow {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--primary-700);
+}
+
+
+.producto-admin__counter {
+  background: var(--primary-100);
+  color: var(--primary-900);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* TABLA */
+.producto-admin__table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid var(--gray-200);
+}
+
+
+.producto-admin__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 950px;
+}
+
+
+/* HEADER TABLA */
+.producto-admin__table-head {
+  background: var(--primary-900);
+}
+
+
+.producto-admin__table-head .producto-admin__cell {
+  color: var(--white);
+  padding: 14px;
+  font-size: 13px;
+  text-align: left;
+}
+
+
+/* FILAS */
+.producto-admin__row {
+  border-bottom: 1px solid var(--gray-200);
+  transition: 0.2s;
+}
+
+
+
+
+/* CELDAS */
+.producto-admin__cell {
+  padding: 14px;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+
+/* IMAGEN */
+.producto-admin__image {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+
+/* TEXTO VACÍO */
+.producto-admin__empty {
+  text-align: center;
+  color: var(--gray-500);
+}
+
+
+/* ===============================
+   BOTONES
+================================ */
+
+
+.producto-admin__cell--actions {
+  text-align: center;
+}
+
+
+/* CONTENEDOR BOTONES */
+.producto-admin__actions-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+
+/* BOTÓN BASE */
+.producto-admin__action-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* EDITAR */
+.producto-admin__action-btn--edit {
+  background: var(--primary-900);
+  color: var(--white);
+}
+
+
+/* HABILITAR */
+.producto-admin__action-btn--enable {
+  background: var(--primary-100);
+  color: var(--primary-900);
+}
+
+
+/* DESHABILITAR */
+.producto-admin__action-btn--disable {
+  background: #fde2e4;
+  color: #b42318;
+}
+
+
+/* CAMBIAR IMAGEN */
+.producto-admin__action-btn--img {
+  background: var(--gray-200);
+  color: var(--black);
+}
+
+
+/* DISABLED */
+.producto-admin__action-btn:disabled {
+  background: var(--gray-300);
+  color: var(--gray-500);
+  cursor: not-allowed;
+}
+
+
+/* ===============================
+   TABLET
+================================ */
+@media (max-width: 1024px) {
+
+
+  .producto-admin {
+    width: 95%;
+  }
+
+
+  .producto-admin__table {
+    min-width: 750px;
+  }
+
+
+  .producto-admin__cell {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+
+  .producto-admin__actions-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+
+  .producto-admin__action-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+}
+
+
+/* ===============================
+   CELULAR (MODO CARDS 🔥)
+================================ */
+@media (max-width: 768px) {
+
+
+  .producto-admin {
+    width: 94%;
+    margin: 20px auto;
+  }
+
+
+  .producto-admin__card {
+    padding: 16px;
+  }
+
+
+  /* QUITAR SCROLL */
+  .producto-admin__table-container {
+    overflow: visible;
+    border: none;
+  }
+
+
+  /* ROMPER TABLA */
+  .producto-admin__table {
+    display: block;
+    min-width: 0;
+  }
+
+
+  .producto-admin__table-head {
+    display: none;
+  }
+
+
+  .producto-admin__table-body {
+    display: block;
+    width: 100%;
+  }
+
+
+  /* CARD */
+  .producto-admin__row {
+    display: block;
+    width: 100%;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  }
+
+
+  .producto-admin__cell {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+    border: none;
+    width: 100%;
+  }
+
+
+  .producto-admin__cell::before {
+    content: attr(data-label);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray-600);
+    margin-bottom: 2px;
+  }
+
+
+  /* BOTONES EN FILA */
+  .producto-admin__actions-group {
+    flex-direction: row;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+
+  .producto-admin__action-btn {
+    flex: 1;
+    font-size: 11px;
+    padding: 8px;
+  }
+
+
+  /* IMAGEN CENTRADA */
+  .producto-admin__image {
+    width: 70px;
+    height: 70px;
+    margin: 10px auto;
+  }
+}

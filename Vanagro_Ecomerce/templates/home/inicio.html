@@ -17,25 +17,40 @@
 
         {% comment %}Lado derecho: formulario{% endcomment %}
         <div class="session__form-container">
+
             {% if request.session.usuario_inactivo %}
-                <div style="margin-top:20px; padding:15px; background:#fff3cd; border-radius:5px;">
-                    <p>Tu cuenta no está activada.</p>
+            <div class="alert-activation">
+                <div class="alert-activation__content">
+
+                    <p class="alert-activation__text">
+                        ⚠️ Tu cuenta no está activada
+                    </p>
+
                     <form method="post" action="{% url 'reenviar_activacion' %}">
-                        {% csrf_token %}                        
+                        {% csrf_token %}
                         <input type="hidden" name="email" value="{{ request.session.usuario_inactivo }}">
-                        <button type="submit">Reenviar correo de activación</button>
+
+                        <button type="submit" class="alert-activation__btn">
+                            Reenviar correo de activación
+                        </button>
                     </form>
+
                 </div>
+            </div>
             {% endif %}
 
+            <!-- 🔥 EL FORM DEBE IR DENTRO -->
             <form class="beginner-form" method="POST">
+
                 <h2 class="session__subtitle">Iniciar Sesión</h2>
                 {% csrf_token %}
+
                 <div class="beginner-form__credential">
+
                     <div class="beginner-form__info">
                         <label class="beginner-form__label">Username/Correo Electrónico</label>
-                        <input name="username" class="beginner-form__input" type="text" placeholder="Ingrese su usuario"
-                            required>
+                        <input name="username" class="beginner-form__input" type="text"
+                            placeholder="Ingrese su usuario" required>
                     </div>
 
                     <div class="beginner-form__info">
@@ -43,20 +58,29 @@
                         <input name="password" class="beginner-form__input" type="password"
                             placeholder="Ingrese su contraseña" required>
                     </div>
+
                 </div>
 
-                <a class="begin-lost_password recovery" href="#forget__block" id="abrirRecuperar">¿Olvidaste la contraseña?</a>
-                
+                <a class="begin-lost_password recovery" href="#forget__block" id="abrirRecuperar">
+                    ¿Olvidaste la contraseña?
+                </a>
+
                 <div class="buttons">
                     <a href="{% url 'registro_usuario' %}" onclick="navegarConMensaje(event)">
-                        <button type="button" class="buttons__action--secondary">Crear Cuenta</button>
+                        <button type="button" class="buttons__action--secondary">
+                            Crear Cuenta
+                        </button>
                     </a>
-                    <button class="buttons__action--primary session-alert" type="submit">Iniciar Sesión</button>
+
+                    <button class="buttons__action--primary session-alert" type="submit">
+                        Iniciar Sesión
+                    </button>
                 </div>
+
             </form>
+
         </div>
-    </div>
-    </div>
+    
 
     <div id="modalRecuperar" class="modal-recuperacion">
 
