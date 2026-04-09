@@ -2,12 +2,8 @@
 {% load humanize %}
 {% load static %}
 
-{% block navbar %}
-  {% if user.is_superuser %}
-    {% include 'components/navbar-profile_admin.html' %} 
-  {% else %}
-    {% include 'components/navbar-simple_inicio.html' %} 
-  {% endif %}  
+{% block navbar %}  
+    {% include 'components/navbar-simple.html' %}     
 {% endblock navbar %}
 
 {% block carrito %}

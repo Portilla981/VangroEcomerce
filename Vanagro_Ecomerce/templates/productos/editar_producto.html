@@ -61,13 +61,14 @@
 				Cantidad disponible
 				<input 
 					type="number"
-					class="product-form__input"
+					class="product-form__input solo-numeros"
 					name="stock"
-					value="{{ form.instance.stock }}"
+					placeholder="0"
+					value="{{ form.instance.stock|default_if_none:'' }}"
+					min="1"
+					step="1"
 					required>
-			</label>
-
-			
+			</label>			
 		</div>
 
 		<!-- FILA 3 -->
@@ -75,9 +76,13 @@
 			<label class="product-form__label">
 				Precio
 				<input 
-					class="product-form__input"
+					type="number"
+					class="product-form__input solo-numeros"
 					name="precio"
-					value="{{ form.instance.precio|floatformat:0 }}"
+					placeholder="Ingrese el precio"
+					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
+					min="1"
+					step="1"
 					required>
 			</label>
 			

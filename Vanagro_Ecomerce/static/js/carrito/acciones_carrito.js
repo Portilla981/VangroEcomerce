@@ -17,6 +17,20 @@ function actualizarContador(totalItems) {
     });
 }
 
+function verificarCarritoVacio() {
+    const carrito = document.querySelector(".shopping-cart");
+    const filas = document.querySelectorAll(".shopping-cart__row");
+
+    if (carrito && filas.length === 0) {
+        carrito.innerHTML = `
+            <div class="alert alert-warning">
+                Tu carrito está vacío.
+            </div>
+        `;
+    }
+}
+
+
 /* ejecuta la página cuando tiene todo listo */
 document.addEventListener("DOMContentLoaded", function () {
 console.log("SCRIPT CARGADO");        
@@ -72,11 +86,8 @@ document.addEventListener("click", function (e) {
                     "El producto fue añadido al carrito",
                     "ok",                        
                     );
-        
-                // const contador = document.getElementById("carrito-contador");
-                /* Actualiza el número de elementos en el carrito de forma automática  */
-                // contador.textContent = data.total_items;
-                // contador.style.display = "inline-block";
+                        
+                /* Actualiza el número de elementos en el carrito de forma automática  */                
                 actualizarContador(data.total_items);
 
             } else {
@@ -178,21 +189,27 @@ document.addEventListener("click", function (e) {
             if (data.success) {
                 /* si todo es correcto elimina la fila */
                 fila.remove();
-                /* actualiza el total */
-                // totalGeneral.textContent = data.total;
-
-                // const contador = document.getElementById("carrito-contador");
-
-                // if (data.total_items > 0) {
-                //     /* actualiza el contador del carrito */
-                //     contador.textContent = data.total_items;
-                // } else {
-                //     /* se oculta */
-                //     contador.style.display = "none";
-                // }
-
+                /* actualiza el total */                
                 actualizarContador(data.total_items);
-            }
+                actualizarTotalEnPantalla(formatoNumero(data.total));
+                mostrarPopup(   
+                    "Producto eliminado",   
+                        "El producto fue eliminado del carrito",
+                        "ok",
+                    );  
+
+                } else {
+                    mostrarPopup(
+                    "Error al eliminar",
+                    "No se pudo eliminar el producto del carrito",
+                    "error",    
+                    false,
+                    true
+                    );
+                } 
+                
+                verificarCarritoVacio();       
+            
         });
     }
 });

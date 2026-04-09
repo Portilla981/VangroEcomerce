@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'fontawesomefree',
+    # 'fontawesomefree',
     'Home.apps.HomeConfig',
     'Usuario.apps.UsuarioConfig',
     'Producto.apps.ProductoConfig',
