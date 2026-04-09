@@ -163,9 +163,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     formulario.reportValidity();
                     return;
                 }
-            }
-
-            
+            }           
 
             confirmarAccion(titulo, mensaje, "warning", () => {
                 if (url) {
