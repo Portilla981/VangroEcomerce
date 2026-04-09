@@ -1,60 +1,39 @@
-// document.addEventListener("DOMContentLoaded", function () {
+function validarNumeros(selector = ".solo-numeros") {
 
-//     const tipo = document.getElementById("tipo_producto"); // frontend
-//     const unidad = document.getElementById("id_unidad_medida"); // django
+    const inputs = document.querySelectorAll(selector);
 
-//     if (!tipo || !unidad) {
-//         console.log("No se encontraron los elementos");
-//         return;
-//     }
+    inputs.forEach(input => {
 
-//     // Guardar TODAS las opciones originales
-//     const opcionesOriginales = Array.from(unidad.options);
+        // Evitar letras
+        input.addEventListener("keypress", (e) => {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
 
-//     //Reglas escalables
-//     const reglas = {
-//         liquido: ["Lt"],
-//         solido: ["Kg", "Lb", "Und"],
-//         otro: "ALL"
-//     };
+        // Validar en tiempo real
+        input.addEventListener("input", () => {
+            let value = parseInt(input.value);
 
-//     function filtrarUnidades() {
-//         const valor = tipo.value;
+            if (isNaN(value) || value < 1) {
+                input.value = "";
+            }
+        });
 
-//         // Limpiar opciones actuales
-//         unidad.innerHTML = "";
+        // Evitar pegar texto inválido
+        input.addEventListener("paste", (e) => {
+            let paste = (e.clipboardData || window.clipboardData).getData("text");
 
-//         let opcionesFiltradas;
+            if (!/^\d+$/.test(paste)) {
+                e.preventDefault();
+            }
+        });
 
-//         if (reglas[valor] === "ALL") {
-//             opcionesFiltradas = opcionesOriginales;
-//         } else {
-//             opcionesFiltradas = opcionesOriginales.filter(op =>
-//                 reglas[valor].includes(op.value)
-//             );
-//         }
-
-//         // Insertar nuevas opciones
-//         opcionesFiltradas.forEach(op => {
-//             unidad.appendChild(op.cloneNode(true));
-//         });
-
-//         // Evitar selección inválida
-//         if (!opcionesFiltradas.some(op => op.value === unidad.value)) {
-//             unidad.selectedIndex = 0;
-//         }
-//     }
-
-//     // Evento al cambiar tipo
-//     tipo.addEventListener("change", filtrarUnidades);
-
-//     // Ejecutar al cargar (por si hay valor por defecto)
-//     filtrarUnidades();
-
-// });
+    });
+}
 
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {  
 
     const categoria = document.getElementById("id_categoria");
     const unidad = document.getElementById("id_unidad_medida");
@@ -106,4 +85,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Ejecutar al cargar (modo edición)
     filtrarUnidades();
 
+    validarNumeros(); 
 });
