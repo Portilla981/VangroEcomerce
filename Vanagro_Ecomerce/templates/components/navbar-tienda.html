@@ -36,7 +36,7 @@
         <div class="navbar-vanagro__icons">  
             <a href="{% url 'sesion_inicio' %}"> 
                 {% if request.user.is_superuser %}
-                    <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />
+                    <!--<img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />-->
                 {% else %}      
                     {% if request.user.usuario.fotografia %}
                         <img class="navbar-vanagro__profile-img" src="{{ request.user.usuario.fotografia.url }}" alt="Foto del productor" />
