@@ -34,7 +34,7 @@
 
                         <form method="POST" id="form-cancel_preview1" action="{% url 'cancelar_producto' producto.id %}">
                             {% csrf_token %}
-                            <button type="button" 
+                            <button type="submit" 
                                     class="buttons__action--terciary btn-confirmar" 
                                     data-form="form-cancel_preview1" 
                                     data-titulo="Cancelar creación" 
@@ -51,7 +51,7 @@
 
                         <form method="POST" id="form-save_product" action="{% url 'guardar_producto' producto.id %}">
                             {% csrf_token %}
-                            <button type="button" 
+                            <button type="submit" 
                                     class="buttons__action--primary btn-confirmar"
                                     data-form="form-save_product" 
                                     data-titulo="Confirmar creación" 

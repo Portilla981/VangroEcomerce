@@ -11,7 +11,7 @@ botones.forEach(btn => {
 
     btn.addEventListener("click", function(){
 
-        // console.log("click detectado")
+        console.log("click detectado")
 
         let id = this.dataset.id
         let imagen = this.dataset.imagen

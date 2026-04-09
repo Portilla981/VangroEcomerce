@@ -102,8 +102,8 @@
 
                 <!-- Cambiar Imagen -->
                 <button 
-                  type="button" 
-                  class="producto-admin__action-btn producto-admin__action-btn--img"
+                  type="submit" 
+                  class="producto-admin__action-btn user-list__action-btn--img"
                   data-id="{{ producto.id }}"
                   data-imagen="{% if producto.imagen_producto %}{{ producto.imagen_producto.url }}{% else %}{% static 'img/products/sin_foto_2.jpg' %}{% endif %}">
                   Imagen
@@ -126,7 +126,70 @@
         </tbody>
       </table>
 
+      <!-- MODAL -->
+<div id="modalImagen" class="modal-actualizar">
+
+  <div class="modal-actualizar__card">
+
+    <form 
+      id="form-product__img"
+      class="modal-actualizar__form" 
+      method="POST" 
+      enctype="multipart/form-data"
+      action="{% url 'actualizar_img' %}">
+
+      {% csrf_token %}
+
+      <input 
+        class="modal-actualizar__input" 
+        type="hidden" 
+        name="producto_id" 
+        id="producto_id"
+      >
+
+      <h3>Cambiar imagen</h3>
+
+      <img 
+        class="modal-actualizar__img-preview" 
+        id="previewImagen"
+      >
+
+      <input 
+        class="modal-actualizar__input" 
+        type="file" 
+        name="imagen"
+      >
+
+      <h3>¿Desea cambiar la imagen?</h3>
+
+      <div class="modal-actualizar__button-box">
+        <button 
+          class="modal-actualizar__button modal-button-cerrar" 
+          type="button" 
+          id="cerrarModal">
+          Cancelar
+        </button>
+
+        <button 
+          type="submit" 
+          class="buttons__action--primary btn-save btn-confirmar" 
+          data-form="form-product__img" 
+          data-titulo="Cambiar imagen" 
+          data-mensaje="¿Desea cambiar la imagen">
+          Cambiar
+        </button>       
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
     </div>
+
+    
+
+
   </div>
 
 </div>
