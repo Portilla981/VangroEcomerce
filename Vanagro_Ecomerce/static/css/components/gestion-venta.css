@@ -1,3 +1,4 @@
+/* RESET */
 * {
   box-sizing: border-box;
 }
@@ -5,221 +6,205 @@
 /* CONTENEDOR */
 .gestion-ventas {
   width: min(1400px, 96%);
-  margin: 32px auto;
-  padding: 0;
+  margin: 40px auto;
 }
 
-/* TITULO */
-.gestion-ventas__title {
-  font-size: var(--fs-md);
-  font-weight: 700;
-  text-align: center;
-  color: var(--primary-900);
-  margin-bottom: 18px;
-  margin-top: -8px;
-}
-
-/* CONTENEDOR TABLA */
+/* CARD */
 .gestion-ventas__table-container {
   width: 100%;
   overflow-x: auto;
-  border-radius: 18px;
+  border-radius: 16px;
+  border: 1px solid var(--gray-200);
   background: var(--white);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.gestion-ventas__title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--primary-700);
+  margin-bottom: 20px;
 }
 
 /* TABLA */
 .gestion-ventas__table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 900px;
-  background: var(--white);
+  min-width: 950px;
 }
 
-/* HEAD */
+/* HEADER TABLA */
 .gestion-ventas__table-head {
   background: var(--primary-900);
 }
 
-.gestion-ventas__row--head .gestion-ventas__cell {
+.gestion-ventas__table-head .gestion-ventas__cell {
   color: var(--white);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  /* text-transform: uppercase; */
-  letter-spacing: 0.4px;
-  padding: 16px 14px;
-  border: none;
+  padding: 14px;
+  font-size: 13px;
 }
 
 /* FILAS */
 .gestion-ventas__row {
-  transition: background 0.2s ease;
-}
-
-.gestion-ventas__table-body .gestion-ventas__row:nth-child(even) {
-  background: var(--gray-100);
-}
-
-.gestion-ventas__table-body .gestion-ventas__row:hover {
-  background: var(--primary-100);
+  border-bottom: 1px solid var(--gray-200);
+  transition: 0.2s;
 }
 
 /* CELDAS */
 .gestion-ventas__cell {
   padding: 14px;
-  border-bottom: 1px solid var(--gray-200);
-  color: var(--gray-800);
-  font-size: var(--fs-xxs);
+  font-size: 13px;
   vertical-align: middle;
-  text-align: left;
-  line-height: 1.4;
 }
 
 /* ACCIONES */
 .gestion-ventas__cell--actions {
-  min-width: 170px;
+  text-align: center;
 }
 
-/* BOTONES */
+/* GRUPO BOTONES */
+.gestion-ventas__actions-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+/* BOTÓN BASE */
 .gestion-ventas__action-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 70%;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: var(--fs-xxs);
-  font-weight: 600;
-  transition: all 0.2s ease;
 }
 
+/* PRIMARY */
 .gestion-ventas__action-btn--primary {
-  background: var(--terciary-700);
+  background: var(--primary-900);
   color: var(--white);
 }
 
-.gestion-ventas__action-btn--primary:hover {
-  background: var(--terciary-800);
-  transform: translateY(-2px);
-}
-
+/* DISABLED */
 .gestion-ventas__action-btn:disabled {
   background: var(--gray-300);
-  color: var(--gray-600);
+  color: var(--gray-500);
   cursor: not-allowed;
 }
 
-/* BADGES */
-.gestion-ventas .badge {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: var(--fs-xxs);
-  font-weight: 600;
-}
-
-/* VACÃO */
+/* TEXTO VACÍO */
 .gestion-ventas__empty {
   text-align: center;
-  padding: 28px 16px;
   color: var(--gray-500);
-  font-size: var(--fs-xs);
 }
 
-/* TABLET */
+/* ===============================
+   TABLET
+================================ */
 @media (max-width: 1024px) {
 
   .gestion-ventas {
-    width: min(100%, 96%);
+    width: 95%;
   }
 
   .gestion-ventas__table {
-    min-width: 760px;
-  }
-
-  .gestion-ventas__row--head .gestion-ventas__cell {
-    font-size: var(--fs-xs);
-    padding: 14px 10px;
+    min-width: 750px;
   }
 
   .gestion-ventas__cell {
-    padding: 12px 10px;
-    font-size: var(--fs-xxs);
+    padding: 10px;
+    font-size: 12px;
   }
 
-  .gestion-ventas__action-btn,
-  .gestion-ventas .badge {
-    font-size: var(--fs-xxs);
+  .gestion-ventas__actions-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .gestion-ventas__action-btn {
+    padding: 6px 10px;
+    font-size: 11px;
   }
 }
 
-/* MOBILE */
+/* ===============================
+   CELULAR (MODO CARDS 🔥)
+================================ */
 @media (max-width: 768px) {
 
+  .gestion-ventas {
+    width: 94%;
+    margin: 20px auto;
+  }
+
+  /* QUITAR SCROLL */
   .gestion-ventas__table-container {
     overflow: visible;
-    background: transparent;
+    border: none;
     box-shadow: none;
   }
 
-  .gestion-ventas__table,
-  .gestion-ventas__table-body,
-  .gestion-ventas__row,
-  .gestion-ventas__cell {
-    display: block;
-    width: 100%;
-  }
-
+  /* ROMPER TABLA */
   .gestion-ventas__table {
+    display: block;
     min-width: 0;
-    background: transparent;
   }
 
   .gestion-ventas__table-head {
     display: none;
   }
 
+  .gestion-ventas__table-body {
+    display: block;
+    width: 100%;
+  }
+
+  /* CARD */
   .gestion-ventas__row {
+    display: block;
+    width: 100%;
     background: var(--white);
-    border-radius: 18px;
-    margin-bottom: 18px;
-    padding: 18px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
   }
 
   .gestion-ventas__cell {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
     border: none;
-    padding: 8px 0;
-    font-size: var(--fs-xxs);
+    width: 100%;
   }
 
   .gestion-ventas__cell::before {
     content: attr(data-label);
-    display: block;
-    margin-bottom: 4px;
-    color: var(--gray-600);
-    font-size: var(--fs-xs);
+    font-size: 11px;
     font-weight: 700;
-    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 2px;
   }
 
+  /* BOTONES */
   .gestion-ventas__cell--actions {
-    margin-top: 12px;
+    margin-top: 10px;
   }
 
   .gestion-ventas__action-btn {
     width: 100%;
-    font-size: var(--fs-xxs);
-    padding: 12px;
+    font-size: 11px;
+    padding: 10px;
   }
 
-  .gestion-ventas .badge {
+  .gestion-ventas__cell a,
+  .gestion-ventas__cell form {
     width: 100%;
-    font-size: var(--fs-xxs);
   }
 }

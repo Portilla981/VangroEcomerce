@@ -1,193 +1,297 @@
 /* RESET */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-/* CONTENEDOR */
+/* ===============================
+   CONTENEDOR
+================================ */
 .list-message {
-    max-width: 1400px;
-    margin: 24px auto;
-    padding: 16px;
+  width: min(1300px, 94%);
+  margin: 40px auto 80px;
 }
 
-/* TITULO */
+/* CARD */
+.list-message__card {
+  background: var(--white);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--gray-200);
+}
+
+/* ===============================
+   HEADER
+================================ */
+.list-message__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
 .list-message__title {
-    font-size: var(--fs-md);
-    margin-bottom: 16px;
-    text-align: center;
+  font-size: var(--fs-md);
+  color: var(--primary-900);
 }
 
-/* CONTENEDOR SCROLL (IMPORTANTE PARA TABLET) */
+/* ===============================
+   TABLA
+================================ */
 .list-message__table-container {
-    width: 100%;
-    overflow-x: auto;
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 22px;
+  border: 1px solid var(--gray-200);
 }
 
-/* TABLA */
 .list-message__table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--white);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    min-width: 900px; 
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  background: var(--white);
 }
 
 /* HEAD */
 .list-message__head {
-    background: var(--primary-900);
-    color: var(--white);
+  background: var(--primary-900);
 }
 
+.list-message__head .list-message__cell {
+  color: var(--white);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  border: none;
+  padding: 12px 16px;
+}
 
+/* ROW */
+.list-message__row {
+  transition: 0.2s;
+}
 
-/* CELDAS */
+.list-message__row:not(:last-child) {
+  border-bottom: 1px solid var(--gray-200);
+}
+
+/* CELLS */
 .list-message__cell {
-    padding: 12px;
-    border-bottom: 1px solid var(--gray-200);
-    font-size: var(--fs-xxxs);
-    text-align: left;
+  padding: 18px 16px;
+  font-size: var(--fs-xxs);
+  color: var(--black);
+  vertical-align: middle;
 }
 
-/* BOTONES */
+/* ===============================
+   BOTONES
+================================ */
 .list-message__btn {
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s;
 }
 
 .list-message__btn--primary {
-    background: var(--primary-900);
-    color: var(--white);
+  background: var(--primary-900);
+  color: var(--white);
+}
+
+.list-message__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
 }
 
 .list-message__btn:disabled {
-    background: var(--gray-200);
+  background: var(--gray-200);
+  cursor: not-allowed;
 }
 
-/* TEXTO VACIO */
+/* VACÍO */
 .list-message__empty {
-    color: var(--gray-400);
+  text-align: center;
+  padding: 20px;
+  color: var(--gray-400);
 }
 
+/* ===============================
+   TABLET
+================================ */
+@media (max-width: 992px) {
 
+  .list-message__card {
+    padding: 24px;
+  }
 
+  .list-message__table {
+    min-width: 600px;
+  }
+
+  .list-message__cell {
+    padding: 14px 10px;
+    font-size: 12px;
+  }
+}
+
+/* ===============================
+   CELULAR (CARDS PRO)
+================================ */
 @media (max-width: 768px) {
 
-    .list-message__table-container {
-        overflow-x: hidden;
-    }
+  .list-message {
+    width: 94%;
+    margin: 24px auto 60px;
+  }
 
+  .list-message__card {
+    padding: 16px;
+    border-radius: 20px;
+  }
 
-    .list-message__table {
-        min-width: 100%;
-    }
+  .list-message__table-container {
+    overflow: visible;
+    border: none;
+  }
 
-    /* OCULTAR ENCABEZADO */
-    .list-message__head {
-        display: none;
-    }
-
-    /* TABLA → BLOQUES */
-    .list-message__table,
-    .list-message__body,
-    .list-message__row {
-        display: block;
-        width: 100%;
-    }
-
-    /* CARD */
-    .list-message__row {
-        background: var(--white);
-        margin-bottom: 16px;
-        padding: 16px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-
-    /* CAMPOS */
-    .list-message__cell {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        padding: 6px 0;
-        border: none;
-        font-size: var(--fs-xxs);
-        flex-wrap: wrap;
-    }
-
-    /* ETIQUETA */
-    .list-message__cell::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: var(--gray-700);
-    }
-
-    /* TEXTO LARGO */
-    .list-message__cell {
-        word-break: break-word; 
-    }
-
-    /* BOTONES */
-    .list-message__btn {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-
-
-@media (max-width: 1024px) {
-
-    .list-message__table {
-        font-size: 12px;
-    }
-
-    .list-message__cell {
-        padding: 10px;
-    }
-}
-
-
-
-.modal-message {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-message__card {
-    background: var(--white);
-    padding: 24px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-}
-
-.modal-message__textarea {
+  .list-message__table,
+  .list-message__body,
+  .list-message__row,
+  .list-message__cell {
+    display: block;
     width: 100%;
-    min-height: 100px;
+  }
+
+  .list-message__head {
+    display: none;
+  }
+
+  .list-message__table {
+    min-width: 0;
+    background: transparent;
+  }
+
+  /* CARD */
+  .list-message__row {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  }
+
+  /* CAMPOS */
+  .list-message__cell {
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .list-message__cell::before {
+    content: attr(data-label);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+
+  /* BOTÓN FULL */
+  .list-message__btn {
+    width: 100%;
     margin-top: 8px;
-    padding: 10px;
+  }
 }
 
+/* ===============================
+   MODAL (ESTILO PRO IGUAL AL TUYO)
+================================ */
+.modal-message {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* CARD MODAL */
+.modal-message__card {
+  background: var(--white);
+  padding: 28px 24px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: modalFade 0.3s ease;
+}
+
+/* ANIMACIÓN */
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* TEXTAREA */
+.modal-message__textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--gray-300);
+  outline: none;
+}
+
+/* BOTONES */
 .modal-message__actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.modal-message__btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 .modal-message__btn--primary {
-    background: var(--primary-900);
-    color: var(--white);
+  background: var(--primary-900);
+  color: white;
 }
 
 .modal-message__btn--cancel {
-    background: var(--gray-500);
+  background: var(--gray-300);
+}
+
+/* RESPONSIVE MODAL */
+@media (max-width: 480px) {
+
+  .modal-message__card {
+    margin: 0 16px;
+    padding: 20px;
+  }
+
+  .modal-message__btn {
+    font-size: 12px;
+    padding: 8px;
+  }
 }

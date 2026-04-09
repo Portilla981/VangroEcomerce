@@ -1,196 +1,262 @@
 {% extends "usuario/login.html" %}
 
+
 {% load static %}
+
 
 {% block script %}
 <script src="{% static 'js/modal_actualizar_img.js' %}" defer></script>
 {% endblock script %}
 
+
 {% block navbar %}
-{% include 'components/navbar-simple_inicio.html' %} 
+{% include 'components/navbar-simple_inicio.html' %}
 {% endblock navbar %}
+
 
 {% block login %}
 
+
 <div class="user-list">
-  <h2 class="user-list__title">Lista de usuarios</h2>
 
-  <div class="user-list__table-container">
 
-    <table class="user-list__table">
-      <thead class="user-list__table-head">
-        <tr class="user-list__row user-list__row--head">
-          <th class="user-list__cell">ID</th>
-          <th class="user-list__cell">Usuario</th>
-          <th class="user-list__cell">Imagen</th>
-          <th class="user-list__cell">Nombre Completo</th>
-          <th colspan="2" class="user-list__cell">Acciones usuario</th>
-          <th class="user-list__cell">¿Es productor?</th>
-          <th class="user-list__cell">Nombre finca</th>
-          <th class="user-list__cell" colspan="2">Acciones finca</th>
-        </tr>
-      </thead>
+  <div class="user-list__card">
 
-      <tbody class="user-list__table-body" id="user-table-body">
-        {% for usuario in usuarios %}
-        <tr class="user-list__row"> 
 
-          <td class="user-list__cell" data-label="ID">
-            {{ usuario.user.id }}
-          </td>
+    <!-- HEADER -->
+    <div class="user-list__header">
+      <div class="user-list__title-box">
+        <h2 class="user-list__eyebrow">Usuarios registrados</h2>
+      </div>
 
-          <td class="user-list__cell" data-label="Usuario">
-            {{ usuario.user.username }}
-          </td>
 
-          <td class="user-list__cell" data-label="Imagen">
-            {% if usuario.fotografia %}
-              <img src="{{ usuario.fotografia.url }}" alt="{{ usuario.name }}" class="user-list__image">
-            {% else %}
-              <img src="{% static 'img/products/sin_foto_2.jpg' %}" alt="{{ usuario.name }}" class="user-list__image">
-            {% endif %}
-          </td>
+      <div class="user-list__counter">
+        {{ usuarios|length }} usuarios
+      </div>
+    </div>
 
-          <td class="user-list__cell" data-label="Nombre Completo">
-            {{ usuario.user.first_name }} {{ usuario.user.last_name }}
-          </td>
 
-          <!-- ACCIÓN USUARIO -->
-          <td class="user-list__cell user-list__cell--actions" data-label="Estado usuario">
-            <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">            
-              {% csrf_token %}
-              <input type="hidden" name="tipo" value="usuario">
-              <input type="hidden" name="next" value="{{ request.path }}">
+    <!-- TABLA -->
+    <div class="user-list__table-container">
 
-              {% if usuario.user.is_active %}
-                <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
-                  Desactivar
-                </button>
+
+      <table class="user-list__table">
+
+
+        <thead class="user-list__table-head">
+          <tr class="user-list__row">
+            <th class="user-list__cell">ID</th>
+            <th class="user-list__cell">Usuario</th>
+            <th class="user-list__cell">Imagen</th>
+            <th class="user-list__cell">Nombre</th>
+            <th class="user-list__cell">Estado</th>
+            <th class="user-list__cell">Editar</th>
+            <th class="user-list__cell">Productor</th>
+            <th class="user-list__cell">Tienda</th>
+            <th class="user-list__cell">Acciones tienda</th>
+          </tr>
+        </thead>
+
+
+        <tbody class="user-list__table-body">
+
+
+          {% for usuario in usuarios %}
+          <tr class="user-list__row">
+
+
+            <td class="user-list__cell" data-label="ID">
+              {{ usuario.user.id }}
+            </td>
+
+
+            <td class="user-list__cell" data-label="Usuario">
+              {{ usuario.user.username }}
+            </td>
+
+
+            <td class="user-list__cell" data-label="Imagen">
+              {% if usuario.fotografia %}
+                <img src="{{ usuario.fotografia.url }}" class="user-list__image">
               {% else %}
-                <button type="submit" class="user-list__action-btn user-list__action-btn--enable">
-                  Activar
-                </button>
+                <img src="{% static 'img/products/sin_foto_2.jpg' %}" class="user-list__image">
               {% endif %}
-            </form>
-          </td>
+            </td>
 
-          <!-- EDITAR USUARIO -->
-          <td class="user-list__cell user-list__cell--actions" data-label="Editar usuario">
-            <a href="{% url 'editar_usuario' usuario.id %}?next={{ request.path }}">
-              <button type="button" class="user-list__action-btn user-list__action-btn--edit">
+
+            <td class="user-list__cell" data-label="Nombre">
+              {{ usuario.user.first_name }} {{ usuario.user.last_name }}
+            </td>
+
+
+            <!-- ESTADO USUARIO -->
+            <td class="user-list__cell user-list__cell--actions" data-label="Estado">
+              <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="tipo" value="usuario">
+                <input type="hidden" name="next" value="{{ request.path }}">
+
+
+                {% if usuario.user.is_active %}
+                  <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
+                    Deshabilitar
+                  </button>
+                {% else %}
+                  <button type="submit" class="user-list__action-btn user-list__action-btn--enable">
+                    Habilitar
+                  </button>
+                {% endif %}
+              </form>
+            </td>
+
+
+            <!-- EDITAR USUARIO -->
+            <td class="user-list__cell user-list__cell--actions" data-label="Editar">
+              <a href="{% url 'editar_usuario' usuario.id %}?next={{ request.path }}"
+                 class="user-list__action-btn user-list__action-btn--edit">
                 Editar
-              </button>
-            </a>
-          </td>
+              </a>
+            </td>
 
-          <!-- ES PRODUCTOR -->
-          <td class="user-list__cell" data-label="¿Productor?">
-            {% if usuario.es_productor %}
-              <span style="color: green;">✔ Sí</span>
-            {% else %}
-              <span style="color: red;">✖ No</span>
-            {% endif %}
-          </td>
 
-          <!-- NOMBRE TIENDA -->
-          <td class="user-list__cell" data-label="Finca">
-            {{ usuario.user.productor.nombre_finca }}
-          </td>
-
-          {% if usuario.es_productor %}
-
-          <!-- EDITAR TIENDA -->
-          <td class="user-list__cell user-list__cell--actions" data-label="Editar finca">          
-            <a href="{% url 'editar_tienda' usuario.user.productor.id %}?next={{ request.path }}"
-              class="user-list__action-btn user-list__action-btn--edit">
-              Editar finca      
-            </a>            
-          </td>
-
-          <!-- ESTADO TIENDA -->
-          <td class="user-list__cell user-list__cell--actions" data-label="Estado finca">
-            <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">              
-              {% csrf_token %}
-              <input type="hidden" name="tipo" value="productor">
-              <input type="hidden" name="next" value="{{ request.path }}">
-
-              {% if usuario.user.productor.activo %}
-                <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
-                  Desactivar finca
-                </button>
+            <!-- PRODUCTOR -->
+            <td class="user-list__cell" data-label="Productor">
+              {% if usuario.es_productor %}
+                <span class="user-list__badge user-list__badge--yes">✔ Sí</span>
               {% else %}
-                <button type="submit" class="user-list__action-btn user-list__action-btn--enable">
-                  Activar finca
-                </button>
+                <span class="user-list__badge user-list__badge--no">✖ No</span>
               {% endif %}
-            </form>           
-          </td>
+            </td>
 
-          {% else %}
 
-          <td class="user-list__cell user-list__cell--actions" data-label="Editar finca">
-            <button class="user-list__action-btn" disabled>
-              Editar
-            </button>
-          </td>
+            <!-- TIENDA -->
+            <td class="user-list__cell" data-label="Tienda">
+              {% if usuario.es_productor %}
+                {{ usuario.user.productor.nombre_finca }}
+              {% else %}
+                ---
+              {% endif %}
+            </td>
 
-          <td class="user-list__cell user-list__cell--actions" data-label="Estado finca">
-            <button class="user-list__action-btn" disabled>
-              Activar
-            </button>
-          </td>
 
-          {% endif %}
+            <!-- ACCIONES TIENDA -->
+            <td class="user-list__cell user-list__cell--actions" data-label="Acciones tienda">
 
-        </tr>
 
-        {% empty %}
-        <tr>
-          <td colspan="9" class="user-list__cell user-list__empty">
-            No se han registrado usuarios.
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+              {% if usuario.es_productor %}
+              <div class="user-list__actions-group">
+
+
+                <a href="{% url 'editar_tienda' usuario.user.productor.id %}?next={{ request.path }}"
+                  class="user-list__action-btn user-list__action-btn--edit">
+                  Editar
+                </a>
+
+
+                <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="tipo" value="productor">
+                  <input type="hidden" name="next" value="{{ request.path }}">
+
+
+                  {% if usuario.user.productor.activo %}
+                    <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
+                      Deshabilitar
+                    </button>
+                  {% else %}
+                    <button type="submit" class="user-list__action-btn user-list__action-btn--enable">
+                      Habilitar
+                    </button>
+                  {% endif %}
+                </form>
+
+
+              </div>
+
+
+              {% else %}
+              <div class="user-list__actions-group">
+                <button class="user-list__action-btn" disabled>Editar</button>
+                <button class="user-list__action-btn" disabled>---</button>
+              </div>
+              {% endif %}
+
+
+            </td>
+
+
+          </tr>
+
+
+          {% empty %}
+          <tr>
+            <td colspan="9" class="user-list__cell user-list__empty">
+              No se han registrado usuarios.
+            </td>
+          </tr>
+          {% endfor %}
+
+
+        </tbody>
+
+
+      </table>
+
+
+    </div>
+
 
   </div>
+
+
 </div>
+
 
 <!-- MODAL -->
 <div id="modalImagen" class="modal-actualizar">
   <div class="modal-actualizar__card">
 
+
     <form id="form-change__img" class="modal-actualizar__form" method="POST" enctype="multipart/form-data"
       action="{% url 'actualizar_img' %}">
 
+
       {% csrf_token %}
+
 
       <input class="modal-actualizar__input" type="hidden" name="usuario_id" id="producto_id">
 
+
       <h3>Cambiar imagen</h3>
+
 
       <img class="modal-actualizar__img-preview" id="previewImagen">
 
+
       <input class="modal-actualizar__input" type="file" name="imagen">
 
+
       <h3>¿Desea cambiar la imagen?</h3>
+
 
       <div class="modal-actualizar__button-box">
         <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">
           Cancelar
         </button>
 
-        <button type="button" class="buttons__action--primary btn-save btn-confirmar" 
-          data-form="form-change__img" 
-          data-titulo="Guardar cambios" 
-          data-mensaje="¿Confirma el cambio de la imagen?">Guardar cambios
 
-        </button> 
+        <button type="button" class="buttons__action--primary btn-save btn-confirmar"
+          data-form="form-change__img"
+          data-titulo="💾 Guardar"
+          data-mensaje="¿Confirmas cambiar la imagen?">
+          Guardar Imagen
+        </button>
       </div>
+
 
     </form>
   </div>
 </div>
+
 
 {% endblock login %}
