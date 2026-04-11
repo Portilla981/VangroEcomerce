@@ -23,12 +23,17 @@
         </a>
 
         <div class="profile_producter--card-head">
-          {% if productor.foto_finca %}
-            <img class="profile_producter--store-image" src="{{ productor.foto_finca.url }}" alt="Foto de la finca" />
-          {% else %}
-            <img class="profile_producter--store-image" src="{% static 'img/interfaz_vanagro/finca_default.png' %}" alt="Foto por defecto" />
-          {% endif %}
-
+          <img 
+            class="profile_producter--store-image"
+            src="{% if productor.foto_finca %}
+            {{ productor.foto_finca.url }}
+            {% else %}
+            {% static 'img/interfaz_vanagro/finca_default.png' %}
+            {% endif %}"
+            alt="Foto del usuario"
+            onerror="this.onerror=null;
+            this.src='{% static 'img/interfaz_vanagro/finca_default.png' %}';"/>
+          
           <div>
             <h2 class="profile_producter--card-title">{{ productor.nombre_finca }}</h2>
             <p class="profile_producter--card-subtitle">

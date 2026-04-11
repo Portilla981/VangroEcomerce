@@ -65,12 +65,16 @@
 
 
       <a href="{% url 'sesion_inicio' %}"> 
-        {% if perfil.fotografia %}
-          <img class="navbar-vanagro__profile-img" src="{{ perfil.fotografia.url }}" alt="Foto del productor" />
-        {% else %}
-          <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}"
-              alt="Foto del productor" />
-        {% endif %}
+        <img 
+          class="navbar-vanagro__profile-img"
+          src="{% if request.user.usuario.fotografia %}
+          {{ request.user.usuario.fotografia.url }}
+          {% else %}
+          {% static 'img/interfaz_vanagro/usuario_default.png' %}
+          {% endif %}"
+          alt="Foto del usuario"
+          onerror="this.onerror=null;
+          this.src='{% static 'img/interfaz_vanagro/usuario_default.png' %}';"/>
       </a>      
 
       <form method="post" action="{% url 'logout' %}">

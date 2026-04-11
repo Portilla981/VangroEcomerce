@@ -1,37 +1,33 @@
 {% load static %}
 <footer class="footer-vanagro">
-  <!-- FRANJA VERDE: Información y Redes -->
+  {% comment %} FRANJA VERDE: Información y Redes sociales {% endcomment %}
     <div class="footer-vanagro__content">
         <div class="footer-vanagro__text">
           <p class="footer-vanagro__parafo">© {% now "Y" %} VANAGRO - Todos los derechos reservados</p>
         </div>
 
         <div class="footer-vanagro__social">
-            <!-- Correo Oficial -->
+            {% comment %} Correo Oficial {% endcomment %}
             <a href="mailto:vanagromercadocampesino@gmail.com" class="footer-vanagro__icon">
-               <!-- <ion-icon name="mail-outline"></ion-icon> -->
-               <i class="fa-regular fa-envelope"></i>
+                <i class="fa-regular fa-envelope"></i>
                 <span>vanagromercadocampesino@gmail.com</span>
             </a>
 
-            <!-- Instagram -->
+            {% comment %} Instagram {% endcomment %}
             <a href="https://www.instagram.com/vanagro_risaralda/?hl=es" target="_blank" class="footer-vanagro__icon">
-                <!-- <ion-icon name="logo-instagram"></ion-icon> -->
-                 <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-instagram"></i>
                 <span>Vanagro_Risaralda</span>
             </a>
           
-
-            <!-- Facebook -->
+            {% comment %} Facebook {% endcomment %}
             <a href="https://www.facebook.com/share/1HodyzDncN/" target="_blank" class="footer-vanagro__icon">
-                <!-- <ion-icon name="logo-facebook"></ion-icon> -->
-                 <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-facebook"></i>
                 <span>Vanagro Risaralda</span>
             </a>
         </div>
     </div>
 
-    <!-- FRANJA AZUL: Logo Institucional -->
+    {% comment %} FRANJA AZUL: Logo Institucional {% endcomment %}
    <div class="logo_gov">
         <a class="image_gov" href="https://www.gov.co/" target="_blank" >
             <img class="image_gov" src="{% static 'img/interfaz_vanagro/govco2.png'%}" alt="pagina del gobierno de Colombia">

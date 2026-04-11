@@ -3,44 +3,36 @@
 {% load static %}
 
 {% block navbar %}
-
-{% if user.is_authenticated %}
-{% include 'components/navbar-profile_acciones.html' %}
-{% else %}
-{% include 'components/navbar_vanagro.html' %}
-{% endif %}
-
+    {% if user.is_authenticated %}
+        {% include 'components/navbar-profile_acciones.html' %}
+    {% else %}
+        {% include 'components/navbar_vanagro.html' %}
+    {% endif %}
 {% endblock navbar %}
 
 {% block script %}
-<script src="{% static 'js/carrito/barra_buscar.js' %}" defer></script>
+    <script src="{% static 'js/carrito/barra_buscar.js' %}" defer></script>
 {% endblock script %}
 
 {% block producto %}
-<div class="section-catalogo">
-
-    <div class="search-bar">
-        <!--<h2>Buscador</h2>-->
-
-        <select id="filtro-categoria">
-            <option value="">Todas las categorías</option>
-            {% for valor, nombre in categorias %}
-            <option value="{{ valor }}">{{ nombre }}</option>
-            {% endfor %}
-        </select>
-
-        <input type="text" id="buscador-productos" class="form-control" placeholder="Buscar producto...">
-    </div>
-    
-    <section class="card-section__product" id="productos-container">
-
-        {% for producto in productos %}
-        <div class="product-item">
-            {% include 'components/card-producto.html' %}
+    <div class="section-catalogo">
+        <div class="search-bar">            
+            <select id="filtro-categoria">
+                <option value="">Todas las categorías</option>
+                    {% for valor, nombre in categorias %}
+                <option value="{{ valor }}">{{ nombre }}</option>
+                    {% endfor %}
+            </select>
+            <input type="text" id="buscador-productos" class="form-control" placeholder="Buscar producto...">
         </div>
-        {% endfor %}
-
-    </section>
-</div>
+        
+        <section class="card-section__product" id="productos-container">
+            {% for producto in productos %}
+                <div class="product-item">
+                    {% include 'components/card-producto.html' %}
+                </div>
+            {% endfor %}
+        </section>
+    </div>
 
 {% endblock producto %}

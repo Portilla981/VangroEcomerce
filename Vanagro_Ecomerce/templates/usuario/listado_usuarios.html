@@ -1,48 +1,30 @@
 {% extends "usuario/login.html" %}
 
-
 {% load static %}
-
 
 {% block script %}
 <script src="{% static 'js/modal_actualizar_img.js' %}" defer></script>
 {% endblock script %}
 
-
 {% block navbar %}
 {% include 'components/navbar-simple_inicio.html' %}
 {% endblock navbar %}
 
-
 {% block login %}
-
-
 <div class="user-list">
-
-
   <div class="user-list__card">
-
-
     <!-- HEADER -->
     <div class="user-list__header">
       <div class="user-list__title-box">
         <h2 class="user-list__eyebrow">Usuarios registrados</h2>
       </div>
-
-
       <div class="user-list__counter">
         {{ usuarios|length }} usuarios
       </div>
     </div>
-
-
     <!-- TABLA -->
     <div class="user-list__table-container">
-
-
       <table class="user-list__table">
-
-
         <thead class="user-list__table-head">
           <tr class="user-list__row">
             <th class="user-list__cell">ID</th>
@@ -56,47 +38,37 @@
             <th class="user-list__cell">Acciones tienda</th>
           </tr>
         </thead>
-
-
         <tbody class="user-list__table-body">
-
-
           {% for usuario in usuarios %}
           <tr class="user-list__row">
-
-
             <td class="user-list__cell" data-label="ID">
               {{ usuario.user.id }}
             </td>
-
-
             <td class="user-list__cell" data-label="Usuario">
               {{ usuario.user.username }}
             </td>
-
-
             <td class="user-list__cell" data-label="Imagen">
-              {% if usuario.fotografia %}
-                <img src="{{ usuario.fotografia.url }}" class="user-list__image">
-              {% else %}
-                <img src="{% static 'img/products/sin_foto_2.jpg' %}" class="user-list__image">
-              {% endif %}
+              <img 
+                class="user-list__image"
+                src="{% if usuario.fotografia %}
+                {{ usuario.fotografia.url }}
+                {% else %}
+                {% static 'img/interfaz_vanagro/usuario_default.png' %}
+                {% endif %}"
+                alt="Foto de {{ usuario.user.first_name }} {{ usuario.user.last_name }}"
+                onerror="this.onerror=null;
+                this.src='{% static 'img/interfaz_vanagro/usuario_default.png' %}';"/>
+                              
             </td>
-
-
             <td class="user-list__cell" data-label="Nombre">
               {{ usuario.user.first_name }} {{ usuario.user.last_name }}
             </td>
-
-
             <!-- ESTADO USUARIO -->
             <td class="user-list__cell user-list__cell--actions" data-label="Estado">
               <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">
                 {% csrf_token %}
                 <input type="hidden" name="tipo" value="usuario">
                 <input type="hidden" name="next" value="{{ request.path }}">
-
-
                 {% if usuario.user.is_active %}
                   <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
                     Deshabilitar
@@ -108,8 +80,6 @@
                 {% endif %}
               </form>
             </td>
-
-
             <!-- EDITAR USUARIO -->
             <td class="user-list__cell user-list__cell--actions" data-label="Editar">
               <a href="{% url 'editar_usuario' usuario.id %}?next={{ request.path }}"
@@ -117,8 +87,6 @@
                 Editar
               </a>
             </td>
-
-
             <!-- PRODUCTOR -->
             <td class="user-list__cell" data-label="Productor">
               {% if usuario.es_productor %}
@@ -127,8 +95,6 @@
                 <span class="user-list__badge user-list__badge--no">✖ No</span>
               {% endif %}
             </td>
-
-
             <!-- TIENDA -->
             <td class="user-list__cell" data-label="Tienda">
               {% if usuario.es_productor %}
@@ -137,28 +103,18 @@
                 ---
               {% endif %}
             </td>
-
-
             <!-- ACCIONES TIENDA -->
             <td class="user-list__cell user-list__cell--actions" data-label="Acciones tienda">
-
-
               {% if usuario.es_productor %}
               <div class="user-list__actions-group">
-
-
                 <a href="{% url 'editar_tienda' usuario.user.productor.id %}?next={{ request.path }}"
                   class="user-list__action-btn user-list__action-btn--edit">
                   Editar
                 </a>
-
-
                 <form method="post" action="{% url 'accion_usuario' usuario.user.id %}">
                   {% csrf_token %}
                   <input type="hidden" name="tipo" value="productor">
                   <input type="hidden" name="next" value="{{ request.path }}">
-
-
                   {% if usuario.user.productor.activo %}
                     <button type="submit" class="user-list__action-btn user-list__action-btn--disable">
                       Deshabilitar
@@ -169,25 +125,15 @@
                     </button>
                   {% endif %}
                 </form>
-
-
               </div>
-
-
               {% else %}
               <div class="user-list__actions-group">
                 <button class="user-list__action-btn" disabled>Editar</button>
                 <button class="user-list__action-btn" disabled>---</button>
               </div>
               {% endif %}
-
-
             </td>
-
-
           </tr>
-
-
           {% empty %}
           <tr>
             <td colspan="9" class="user-list__cell user-list__empty">
@@ -195,56 +141,27 @@
             </td>
           </tr>
           {% endfor %}
-
-
         </tbody>
-
-
       </table>
-
-
     </div>
-
-
   </div>
-
-
 </div>
-
 
 <!-- MODAL -->
 <div id="modalImagen" class="modal-actualizar">
   <div class="modal-actualizar__card">
-
-
     <form id="form-change__img" class="modal-actualizar__form" method="POST" enctype="multipart/form-data"
       action="{% url 'actualizar_img' %}">
-
-
       {% csrf_token %}
-
-
       <input class="modal-actualizar__input" type="hidden" name="usuario_id" id="producto_id">
-
-
       <h3>Cambiar imagen</h3>
-
-
       <img class="modal-actualizar__img-preview" id="previewImagen">
-
-
       <input class="modal-actualizar__input" type="file" name="imagen">
-
-
       <h3>¿Desea cambiar la imagen?</h3>
-
-
       <div class="modal-actualizar__button-box">
         <button class="modal-actualizar__button modal-button-cerrar" type="button" id="cerrarModal">
           Cancelar
         </button>
-
-
         <button type="submit" class="buttons__action--primary btn-save btn-confirmar"
           data-form="form-change__img"
           data-titulo="💾 Guardar"
@@ -252,11 +169,8 @@
           Guardar Imagen
         </button>
       </div>
-
-
     </form>
   </div>
 </div>
-
 
 {% endblock login %}

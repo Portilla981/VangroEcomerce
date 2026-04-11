@@ -289,13 +289,12 @@ def editar_usuario(request, pk):
 
     if request.method == 'POST':        
         user_form = Form_Actualizar_User(request.POST, instance = user)
-        perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil)
+        perfil_form = Formulario_Usuario(request.POST, request.FILES,  instance = perfil,  user=request.user)
         
         if user_form.is_valid() and perfil_form.is_valid():            
             user_form.save()
             perfil_form.save()
-            messages.success(request, f'El usuario {user.username} ha sido editado exitosamente')            
-            
+            messages.success(request, f'El usuario {user.username} ha sido editado exitosamente') 
             return redirect('sesion_inicio')
            
         # 1. Creamos una cadena de texto vacía
@@ -317,7 +316,7 @@ def editar_usuario(request, pk):
     else:
         # messages.success(request, 'Ingresando al modulo de edición de usuario') 
         user_form = Form_Actualizar_User(instance= user)
-        perfil_form = Formulario_Usuario(instance= perfil)
+        perfil_form = Formulario_Usuario(instance= perfil,  user=request.user)
         
     context = {
         'user_form': user_form,
@@ -566,10 +565,7 @@ def informe_ventas_productor(request):
 
     # 3. Aplicar filtro de rango de fechas si se enviaron
     if fecha_inicio and fecha_fin:
-        # Convertimos los strings a objetos datetime
-        # f_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%d')
-        # f_fin = datetime.strptime(fecha_fin, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
-
+        
         # Los hacemos "conscientes" de la zona horaria del proyecto
         f_inicio = make_aware(datetime.strptime(fecha_inicio, '%Y-%m-%d'))
         f_fin = make_aware(datetime.strptime(fecha_fin, '%Y-%m-%d').replace(hour=23, minute=59, second=59))

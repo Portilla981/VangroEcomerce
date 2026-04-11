@@ -31,21 +31,7 @@
 					required>
 			</label>
 
-			<label class="product-form__label product-form__image">
-                *Imagen del producto
-                <input
-                    type="file"
-                    class="product-form__image-upload"
-                    name="imagen_producto"
-                    accept="image/*">
-
-                {% if form.instance.imagen_producto %}
-                    <div class="product-form__image-preview">
-                        <img src="{{ form.instance.imagen_producto.url }}" alt="Imagen del producto">
-                    </div>
-                {% endif %}
-            </label>
-
+			
 		</div>
 
 		<!-- FILA 2 -->

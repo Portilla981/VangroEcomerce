@@ -56,12 +56,16 @@
         {% if request.user.is_superuser %}
           <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />
         {% else %}      
-          {% if request.user.usuario.fotografia %}
-            <img class="navbar-vanagro__profile-img" src="{{ request.user.usuario.fotografia.url }}" alt="Foto del productor" />
-          {% else %}
-            <img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/usuario_default.png' %}"
-          alt="Foto del productor" />
-          {% endif %}
+          <img 
+            class="navbar-vanagro__profile-img"
+            src="{% if request.user.usuario.fotografia %}
+            {{ request.user.usuario.fotografia.url }}
+            {% else %}
+            {% static 'img/interfaz_vanagro/usuario_default.png' %}
+            {% endif %}"
+            alt="Foto del usuario"
+            onerror="this.onerror=null;
+            this.src='{% static 'img/interfaz_vanagro/usuario_default.png' %}';"/>
         {% endif %}
       </a>  
       

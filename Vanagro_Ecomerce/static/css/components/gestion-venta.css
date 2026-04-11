@@ -106,7 +106,7 @@
 
 /* ===============================
    TABLET
-  }
+  }*/
 
   /* ROMPER TABLA */
   .gestion-ventas__table {
@@ -167,4 +167,4 @@
     width: 100%;
     font-size: var(--fs-xxs);
   }
-}
+

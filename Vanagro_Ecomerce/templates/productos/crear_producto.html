@@ -4,7 +4,7 @@
 
 
 {% block navbar %}
-    {% include 'components/navbar-simple_inicio.html' %}
+    {% include 'components/navbar-simple.html' %}
 {% endblock navbar %}
 
 
@@ -66,11 +66,13 @@
                 *Precio por unidad
                 <input
                     type="number"
-                    class="product-form__input"
-                    name="precio"
-                    placeholder="Ingrese el precio"
-                    value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
-                    required>
+					class="product-form__input solo-numeros"
+					name="precio"
+					placeholder="Ingrese el precio"
+					value="{{ form.instance.precio|default_if_none:''|floatformat:0 }}"
+					min="1"
+					step="1"
+					required>
             </label>
 
 
@@ -78,11 +80,13 @@
                 *Cantidad disponible
                 <input
                     type="number"
-                    class="product-form__input"
-                    name="stock"
-                    placeholder="0"
-                    value="{{ form.instance.stock|default_if_none:'' }}"
-                    required>
+					class="product-form__input solo-numeros"
+					name="stock"
+					placeholder="0"
+					value="{{ form.instance.stock|default_if_none:'' }}"
+					min="1"
+					step="1"
+					required>
             </label>
         </div>
 

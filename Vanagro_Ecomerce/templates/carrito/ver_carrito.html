@@ -15,10 +15,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}" />
     <link rel="manifest" href="{% static 'img/favicon/site.webmanifest' %}" />    
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
     <script src="{% static 'js/cerrar_sesion.js' %}" defer></script>
     <script src="{% static 'js/carrito/acciones_carrito.js' %}" defer></script>
     <script src="{% static 'js/alertas/alert-sent.js' %}" defer></script>
@@ -63,11 +61,16 @@
                                 
                                 <!-- Visualización de Imagen -->
                                 <td class="shopping-cart__cell">
-                                    {% if item.producto.imagen_producto %}
-                                        <img class="shopping-cart__image" src="{{ item.producto.imagen_producto.url }}" alt="{{ item.producto.nombre_producto }}">
-                                    {% else %}
-                                        <img class="shopping-cart__image" src="{% static 'img/sin_imagen.png' %}" alt="Sin imagen">
-                                    {% endif %}
+                                    <img 
+                                        class="shopping-cart__image"
+                                        src="{% if item.producto.imagen_producto %}
+                                        {{ item.producto.imagen_producto.url }}
+                                        {% else %}
+                                        {% static 'img/products/sin_foto_2.jpg' %}
+                                        {% endif %}"
+                                        alt="Foto de producto"
+                                        onerror="this.onerror=null;
+                                        this.src='{% static 'img/products/sin_foto_2.jpg' %}';"/>                                    
                                 </td>
 
                                 <!-- Información del Producto -->

@@ -35,10 +35,7 @@
       </ul>
     </nav>
 
-    <div class="navbar-vanagro__icons"> 
-      <a href="{% url 'sesion_inicio' %}">     
-      <!--<img class="navbar-vanagro__profile-img" src="{% static 'img/interfaz_vanagro/avatar1.jpg' %}"alt="Foto del productor" />-->
-      </a>
+    <div class="navbar-vanagro__icons">
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit" style="background: none; border: none;">
@@ -46,8 +43,7 @@
             name="log-out-outline"
             href="{% url 'logout' %}"></ion-icon>
         </button>
-      </form>
-      
+      </form>      
     </div>
   </div>
 

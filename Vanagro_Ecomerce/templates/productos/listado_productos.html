@@ -51,9 +51,16 @@
 
             <td class="producto-admin__cell" data-label="Imagen">
               <img 
-                src="{% if producto.imagen_producto %}{{ producto.imagen_producto.url }}{% else %}{% static 'img/products/sin_foto_2.jpg' %}{% endif %}" 
-                alt="{{ producto.nombre_producto }}" 
-                class="producto-admin__image">
+                class="producto-admin__image"
+                src="{% if producto.imagen_producto %}
+                {{ producto.imagen_producto.url }}
+                {% else %}
+                {% static 'img/products/sin_foto_2.jpg' %}
+                {% endif %}"
+                alt="Foto de {{ producto.nombre_producto }}"
+                onerror="this.onerror=null;
+                this.src='{% static 'img/products/sin_foto_2.jpg' %}';"/>
+              
             </td>
 
             <td class="producto-admin__cell" data-label="Nombre">
