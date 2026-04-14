@@ -1,5 +1,7 @@
 {% extends "usuario/login.html" %}
+
 {% load static %}
+{% comment %} accion necesaria para comprender formatos de números en la plantilla {% endcomment %}
 {% load humanize %}
 
 {% block navbar %}
@@ -13,38 +15,27 @@
 {% block login %}
 
 <div class="informe-admin">
-
     <div class="informe-admin__card">
-
         <!-- HEADER -->
         <div class="informe-admin__header">
             <h2 class="informe-admin__title">Informe administrativo / Ventas</h2>
         </div>
-
         <!-- FILTRO -->
         <form method="GET" class="informe-admin__filter">
-
             <input type="date" name="fecha_inicio" value="{{ fecha_inicio }}" class="informe-admin__input">
-
             <input type="date" name="fecha_fin" value="{{ fecha_fin }}" class="informe-admin__input">
-
             <div class="informe-admin__filter-actions">
                 <button type="submit" class="informe-admin__btn informe-admin__btn--primary">
                     Filtrar
                 </button>
-
                 <a href="{% url 'informe_ventas' %}" class="informe-admin__btn informe-admin__btn--secondary">
                     Limpiar
                 </a>
             </div>
-
         </form>
-
         <!-- TABLA -->
         <div class="informe-admin__table-container">
-
             <table class="informe-admin__table">
-
                 <thead class="informe-admin__table-head">
                     <tr>
                         <th class="informe-admin__cell">Fecha</th>
@@ -54,31 +45,24 @@
                         <th class="informe-admin__cell">Subtotal</th>
                     </tr>
                 </thead>
-
                 <tbody class="informe-admin__table-body">
                     {% for venta in ventas %}
                     <tr class="informe-admin__row">
-
                         <td class="informe-admin__cell" data-label="Fecha">
                             {{ venta.pedido.fecha|date:"d/m/Y" }}
                         </td>
-
                         <td class="informe-admin__cell" data-label="Producto">
                             {{ venta.producto.nombre_producto }}
                         </td>
-
                         <td class="informe-admin__cell" data-label="Cantidad">
                             {{ venta.cantidad }}
                         </td>
-
                         <td class="informe-admin__cell" data-label="Valor Und">
                             {{ venta.precio|floatformat:0|intcomma }}
                         </td>
-
                         <td class="informe-admin__cell" data-label="Subtotal">
                             $ {{ venta.subtotal|floatformat:0|intcomma }}
                         </td>
-
                     </tr>
                     {% empty %}
                     <tr class="informe-admin__row">
@@ -88,7 +72,6 @@
                     </tr>
                     {% endfor %}
                 </tbody>
-
                 <tfoot>
                     <tr class="informe-admin__row">
                         <td colspan="4" class="informe-admin__cell">
@@ -99,42 +82,32 @@
                         </td>
                     </tr>
                 </tfoot>
-
             </table>
-
         </div>
-
         <!-- BOTÓN -->
         <button type="button" class="informe-admin__btn informe-admin__btn--terciary btn-informe" onclick="abrirModal()">
             Visualizar Resumen PDF
         </button>
-
     </div>
 </div>
 
 <!-- MODAL (NO TOCADO FUNCIONALMENTE) -->
 <div id="modalResumen" class="modal-fondo">
     <div class="modal-contenido">
-
         <div class="modal-cabecera">
             <span class="cerrar" onclick="cerrarModal()">&times;</span>
             <h2>Vista Previa del Reporte</h2>
         </div>
-        
         <div class="modal-cuerpo">
-
             <div id="areaImpresion">
-
                 <div class="encabezado-pdf">
                     <img src="{% static 'img/interfaz_vanagro/vanagro_logo2.jpeg' %}" class="logo-tienda">
-                    
                     <div class="datos-tienda">
                         <h1>RESUMEN DE VENTAS</h1>
                         <p>Productor: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                         <p>Periodo: {{ fecha_inicio|default:"Todos" }} / {{ fecha_fin|default:"Hoy" }}</p>
                     </div>
                 </div>
-
                 <table class="tabla-pdf">
                     <thead>
                         <tr>
@@ -143,7 +116,6 @@
                             <th>Subtotal</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         {% for item in resumen %}
                         <tr>
@@ -154,21 +126,15 @@
                         {% endfor %}
                     </tbody>
                 </table>
-
                 <div class="total-pdf">
                     <p><strong>TOTAL RECAUDADO: ${{ total_general }}</strong></p>
                 </div>
-
             </div>
-
         </div>
-
         <div class="modal-pie">
             <button onclick="cerrarModal()" class="buttons__action--secondary">Cerrar</button>
             <button onclick="window.print()" class="buttons__action--primary">Imprimir / PDF</button>
         </div>
-
     </div>
-    {% endif %}
-
+    
 {% endblock login %}

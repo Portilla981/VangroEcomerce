@@ -29,8 +29,8 @@
         {% csrf_token %}
         <button type="button" class="buttons__action--primary btn-cancel btn-confirmar" 
                 data-form="form-cancel_preview" 
-                data-titulo="¿Salir?" 
-                data-mensaje="Se perderán los cambios.">Cancela y salir
+                data-titulo="Cancelar?"
+                data-mensaje="No se guardarán los cambios.">Cancelar
         </button> 
         
     </form>
@@ -43,8 +43,8 @@
         {% csrf_token %}
         <button type="submit" class="buttons__action--primary btn-save btn-confirmar" 
                 data-form="form-product__create" 
-                data-titulo="💾 Guardar" 
-                data-mensaje="¿Deseas guardar el producto?">Guardar cambios
+                data-titulo="Guardar" 
+                data-mensaje="¿Desea guardar el producto?">Guardar cambios
         </button>  
     </form>
 </div>

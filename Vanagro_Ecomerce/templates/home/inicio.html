@@ -23,7 +23,7 @@
                 <div class="alert-activation__content">
 
                     <p class="alert-activation__text">
-                        ⚠️ Tu cuenta no está activada
+                        ⚠️ Su cuenta no ha sido activada
                     </p>
 
                     <form method="post" action="{% url 'reenviar_activacion' %}">
@@ -39,7 +39,7 @@
             </div>
             {% endif %}
 
-            <!-- 🔥 EL FORM DEBE IR DENTRO -->
+            <!-- EL FORM DEBE IR DENTRO -->
             <form class="beginner-form" method="POST">
 
                 <h2 class="session__subtitle">Iniciar Sesión</h2>
@@ -48,13 +48,13 @@
                 <div class="beginner-form__credential">
 
                     <div class="beginner-form__info">
-                        <label class="beginner-form__label">Username/Correo Electrónico</label>
+                        <label class="beginner-form__label">*Usuario / Correo electrónico</label>
                         <input name="username" class="beginner-form__input" type="text"
-                            placeholder="Ingrese su usuario" required>
+                            placeholder="Ingrese su usuario / correo electrónico" required>
                     </div>
 
                     <div class="beginner-form__info">
-                        <label class="beginner-form__label">Contraseña</label>
+                        <label class="beginner-form__label">*Contraseña</label>
                         <input name="password" class="beginner-form__input" type="password"
                             placeholder="Ingrese su contraseña" required>
                     </div>
@@ -62,7 +62,7 @@
                 </div>
 
                 <a class="begin-lost_password recovery" href="#forget__block" id="abrirRecuperar">
-                    ¿Olvidaste la contraseña?
+                    ¿Olvidó la contraseña?
                 </a>
 
                 <div class="buttons">
@@ -100,14 +100,14 @@
                     </h3>
 
                     <p class="modal-recuperacion__text">
-                    Ingresa tu correo y te enviaremos un enlace para restablecerla.
+                    Ingrese su correo electrónico y le enviaremos un enlace para restablecerla.
                     </p>
                 </div>
 
                 <!-- INPUT -->
                 <div class="modal-recuperacion__input-group">
                     <label class="modal-recuperacion__label">
-                    Correo electrónico
+                    *Correo electrónico
                     </label>
 
                     <input 

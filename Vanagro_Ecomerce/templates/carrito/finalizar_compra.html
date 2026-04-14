@@ -1,5 +1,7 @@
 {% extends "carrito/ver_carrito.html" %}
+
 {% load humanize %}
+
 {% load static %}
 
 {% block carrito %}
@@ -35,11 +37,7 @@
                         <span class="compra-info_label">Apellido</span>
                         <span class="compra-info_value">{{ request.user.last_name }}</span>
                     </div>
-
-                    <!--<div class="compra-info_item compra-info_item--full">
-                        <span class="compra-info_label">Correo</span>
-                        <span class="compra-info_value">{{ request.user.email }}</span>
-                    </div>-->
+              
 
                     <div class="compra-info_item compra-info_item--full">
                         <span class="compra-info_label">Dirección</span>
@@ -107,12 +105,17 @@
                     <div class="card-compra_item">
 
                         <div class="card-compra_item-main">
-                            {% if item.producto.imagen_producto %}
-                                <img class="compra-card_image" src="{{ item.producto.imagen_producto.url }}" alt="{{ item.producto.nombre_producto }}">
-                            {% else %}
-                                <img class="compra-card_image" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Sin imagen">
-                            {% endif %}
-
+                            <img 
+                                class="compra-card_image"
+                                src="{% if item.producto.imagen_producto %}
+                                {{ item.producto.imagen_producto.url }}
+                                {% else %}
+                                {% static 'img/products/sin_foto_2.jpg' %}
+                                {% endif %}"
+                                alt="Foto de producto"
+                                onerror="this.onerror=null;
+                                this.src='{% static 'img/products/sin_foto_2.jpg' %}';"/> 
+                            
                             <div class="card-compra_item-valor">
                                 <strong>{{ item.producto.nombre_producto }}</strong>
                                 <small class="text-compra">Cantidad: {{ item.cantidad }}</small>

@@ -151,15 +151,7 @@ class Inicio(LoginView):
     template_name = 'home/inicio.html'        
     # Condición para redireccionar si el usuario ya esta autenticado
     redirect_authenticated_user = True
-    # Redireccion después de iniciar sesion exitosamente
-    # def get_success_url(self):
-    #     user = self.request.user
-    #     if user.is_superuser:
-    #         return reverse_lazy('sesion_inicio')
-
-    #     # Redireccion a la vista después de iniciar sesion
-    #     return reverse_lazy('sesion_inicio')  
-    
+        
     def get(self, request, *args, **kwargs):
         request.session.pop('usuario_inactivo', None)
         return super().get(request, *args, **kwargs)
@@ -168,17 +160,19 @@ class Inicio(LoginView):
     def form_valid(self, form):
         username = self.request.POST.get('username')
         user = form.get_user()
+
         if user.is_superuser:
             messages.success(self.request, f"Le damos la bienvenida, {username}. Ha ingresado al sistema con éxito.")
             return super().form_valid(form)
 
-        perfil = user.usuario  
+        # perfil = user.usuario 
+        perfil = getattr(user, "usuario", None)        
 
         if not user.is_active:
             messages.error(self.request,
                 "Su usuario se encuentra desactivado. Por favor, comuníquese con soporte."
             )
-            return self.form_invalid(form)               
+            return super().form_invalid(form)              
 
         if not perfil.verificado:
             messages.error(
@@ -198,12 +192,21 @@ class Inicio(LoginView):
         username = self.request.POST.get('username')
         try:
             user = User.objects.get(username=username)
-            perfil = user.usuario  
+            # perfil = user.usuario  
+            perfil = getattr(user, "usuario", None) 
+
+            if not perfil:
+                messages.error(
+                    self.request,
+                    "El usuario no tiene perfil asociado. Contacte al administrador."
+                )
+                return super().form_invalid(form)
+
 
             if not user.is_active:
                 messages.error(
                     self.request,
-                    "La cuenta se encuentra desctivada actualmente. Por favor, comuníquese con soporte."
+                    "La cuenta se encuentra desactivada actualmente. Por favor, comuníquese con soporte."
                 )
                 return super().form_invalid(form)
             

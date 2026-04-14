@@ -13,8 +13,7 @@
     <h2 class="gestion-ventas__title">Gestión de Mis Ventas</h2>
 
 <div class="gestion-ventas__table-container">
-    <table class="gestion-ventas__table">
-        
+    <table class="gestion-ventas__table">        
         <thead class="gestion-ventas__table-head">
             <tr class="gestion-ventas__row gestion-ventas__row--head">
                 <th class="gestion-ventas__cell">Id compra</th>
@@ -30,27 +29,21 @@
         <tbody class="gestion-ventas__table-body">
             {% for detalle in ventas %}
             <tr class="gestion-ventas__row">
-
                 <td class="gestion-ventas__cell" data-label="Id compra">
                     #{{ detalle.pedido.id }}
                 </td>
-
                 <td class="gestion-ventas__cell" data-label="Comprador">
                     {{ detalle.pedido.usuario.first_name }} {{ detalle.pedido.usuario.last_name }}
                 </td>
-
                 <td class="gestion-ventas__cell" data-label="Producto">
                     {{ detalle.producto.nombre_producto }}
                 </td>
-
                 <td class="gestion-ventas__cell" data-label="Cantidad">
                     {{ detalle.cantidad }}
                 </td>
-
                 <td class="gestion-ventas__cell" data-label="Total item">
                     $ {{ detalle.subtotal|floatformat:0|intcomma }}
                 </td>
-
                 <td class="gestion-ventas__cell" data-label="Estado pago">
                     {% if detalle.pedido.estado == 'Pagado' %}
                         <span class="badge bg-success" style="display:inline-block;">
@@ -62,7 +55,6 @@
                         </span>
                     {% endif %}
                 </td>
-
                 <td class="gestion-ventas__cell gestion-ventas__cell--actions" data-label="Acciones">
                     {% if detalle.pedido.estado == 'Pagado' %}
                         {% if not detalle.despachado %}
@@ -81,7 +73,6 @@
                         </button>
                     {% endif %}
                 </td>
-
             </tr>
             {% empty %}
             <tr class="gestion-ventas__row">
@@ -94,8 +85,6 @@
 
     </table>
 </div>
-
-
 </div>
 
 {% endblock login %}

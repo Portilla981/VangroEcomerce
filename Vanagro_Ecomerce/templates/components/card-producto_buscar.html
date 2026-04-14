@@ -1,13 +1,9 @@
 {% for producto in productos %}
 
 <div class="product-item">
-
     {% include 'components/card-producto.html' %}
-
 </div>
 
 {% empty %}
-
-<p>No se encontraron productos</p>
-
+    <p>No se encontraron productos</p>
 {% endfor %}

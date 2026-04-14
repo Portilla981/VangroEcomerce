@@ -62,14 +62,45 @@ class UserForm(forms.ModelForm):
         
 
 class Form_Actualizar_User(forms.ModelForm):
-
     class Meta:
         model = User
         fields =[
             'first_name',
             'last_name',
-            'email'
+            'email', 
+            'username'
         ]
+
+    def clean_first_name(self):
+        nombre = self.cleaned_data.get('first_name')
+        if nombre:
+            return fomato_texto(nombre)
+        return nombre
+    
+    def clean_last_name(self):
+        apellido = self.cleaned_data.get('last_name')
+        if apellido:
+            return fomato_texto(apellido)
+        return apellido
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            email = email.lower() # Normalizamos a minúsculas
+            # Buscamos si ya existe alguien con ese correo (excluyendo al propio usuario si es edición)
+            if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+                raise forms.ValidationError("Ya existe una cuenta asociada a ese correo electrónico.\nPor favor, verifique sus datos.")
+        return email
+    
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # recibimos el usuario logueado
+        super().__init__(*args, **kwargs)
+
+        # Bloquear email si NO es superusuario
+        if user and not user.is_superuser:
+            self.fields['email'].disabled = True
+
+        self.user_request = user  # lo guardamos por si lo usamos después
 
 #========================================================        
 class Formulario_Usuario(forms.ModelForm):
@@ -172,7 +203,14 @@ class Formulario_Usuario(forms.ModelForm):
 
         
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+
+        campos_bloqueados = ['numero_identificacion', 'tipo_identificacion']
+
+        if user and not user.is_superuser:
+            for campo in campos_bloqueados:
+                self.fields[campo].disabled = True
         
         if 'departamento' in self.data:
             dep_id = self.data.get('departamento')

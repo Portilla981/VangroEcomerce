@@ -4,12 +4,17 @@
 <div class="card-product">
 
     <h3 class="card-product__title">{{ producto.nombre_producto }}</h3>
-
-    {% if producto.imagen_producto %}
-        <img class="card-product__image" src="{{ producto.imagen_producto.url }}" alt="Foto de producto"/>
-    {% else %}
-        <img class="card-product__image" src="{% static 'img/products/sin_foto_2.jpg' %}" alt="Foto de producto"/>
-    {% endif %}
+    
+    <img 
+        class="card-product__image"
+        src="{% if producto.imagen_producto %}
+        {{ producto.imagen_producto.url }}
+        {% else %}
+        {% static 'img/products/sin_foto_2.jpg' %}
+        {% endif %}"
+        alt="Foto de producto"
+        onerror="this.onerror=null;
+        this.src='{% static 'img/products/sin_foto_2.jpg' %}';"/>
     
     <div class="card-product__info">        
         

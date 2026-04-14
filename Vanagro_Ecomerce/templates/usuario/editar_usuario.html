@@ -20,10 +20,23 @@
             Actualice la información de su perfil. El documento, el correo electrónico y el nombre de usuario no pueden modificarse.
         </p>
     </div>
-
     <div class="form-register__block--form">
         <form method="POST" class="form-register__form" enctype="multipart/form-data" id="form-edit__user">
             {% csrf_token %}
+            {% comment %} <div class="form-register__group"> {% endcomment %}
+                <div class="form-register__images">
+                    <img 
+                        class="form-register__images--img"
+                        src="{% if perfil_form.instance.fotografia %}
+                        {{ perfil_form.instance.fotografia.url }}
+                        {% else %}
+                        {% static 'img/interfaz_vanagro/usuario_default.png' %}
+                        {% endif %}"
+                        alt="Foto del usuario"
+                        onerror="this.onerror=null;
+                        this.src='{% static 'img/interfaz_vanagro/usuario_default.png' %}';"/>                                
+                </div>
+            {% comment %} </div> {% endcomment %}
 
             <div class="form-register__group">
                 <label class="form-register__label">Nombres
@@ -44,28 +57,19 @@
                         value="{{ user_form.instance.last_name|default_if_none:'' }}"
                         placeholder="Ingrese sus apellidos"
                         required>
-                </label>
-
-                <div class="form-register__images">
-                    {% if perfil_form.instance.fotografia %}
-                        <img
-                            class="form-register__images--img"
-                            src="{{ perfil_form.instance.fotografia.url }}"
-                            alt="Foto de perfil actual">
-                    {% endif %}
-
-                    <label class="form-register__label">Foto de perfil
+                </label> 
+                <label class="form-register__label">Foto de perfil
                         <input
                             class="form-register__file"
                             type="file"
                             name="fotografia">
-                    </label>
-                </div>
+                </label>
+                
             </div>
 
             <div class="form-register__group">
                 <label class="form-register__label">Tipo de documento
-                    {% if es_superuser %}
+                    {% if user.is_superuser %}
                     <select
                         class="form-register__input"
                         name="tipo_identificacion"
@@ -102,7 +106,7 @@
                         id="number_id"
                         value="{{ perfil_form.numero_identificacion.value|default_if_none:'' }}"
                         placeholder="Número de documento registrado"
-                        {% if not es_superuser %} readonly {% endif %}>
+                        {% if not user.is_superuser %} readonly {% endif %}>
                 </label>
 
                 <label class="form-register__label">Fecha de nacimiento
@@ -172,7 +176,7 @@
                         name="email"
                         value="{{ user_form.instance.email|default_if_none:'' }}"
                         placeholder="Correo electrónico registrado"
-                        disabled>
+                        {% if not user.is_superuser %} readonly {% endif %}>
                 </label>
 
                 <label class="form-register__label">Teléfono
@@ -201,9 +205,13 @@
                         class="form-register__input"
                         type="text"
                         name="username"
-                        value="{{ user_form.instance.username|default_if_none:'' }}"
+                        value="{{ user_form.username.value|default_if_none:'' }}"
                         placeholder="Nombre de usuario registrado"
-                        disabled>
+                        {% comment %}
+                        {% if not user.is_superuser %} readonly {% endif %} 
+                        {% endcomment %}
+                        required>
+
                 </label>
             </div>
 
